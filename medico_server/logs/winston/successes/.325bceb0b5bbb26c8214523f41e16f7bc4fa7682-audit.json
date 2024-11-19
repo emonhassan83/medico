@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\Abul Ala Jobayar\\Desktop\\medico\\medico_server\\logs\\winston\\successes\\.325bceb0b5bbb26c8214523f41e16f7bc4fa7682-audit.json",
+    "files": [
+        {
+            "date": 1732007011969,
+            "name": "C:\\Users\\Abul Ala Jobayar\\Desktop\\medico\\medico_server\\logs\\winston\\successes\\phu-2024-19-11-15-success.log",
+            "hash": "870d8b0f167dc4dc5cd06fcc346e8a466307908630f3910f988a058b06bb9ab8"
+        }
+    ],
+    "hashType": "sha256"
+}
