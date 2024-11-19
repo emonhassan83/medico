@@ -1,0 +1,20 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\Abul Ala Jobayar\\Desktop\\medico\\medico_server\\logs\\winston\\errors\\.f4c3d885ade4811c996cad03266bff68d1f852aa-audit.json",
+    "files": [
+        {
+            "date": 1732024597118,
+            "name": "C:\\Users\\Abul Ala Jobayar\\Desktop\\medico\\medico_server\\logs\\winston\\errors\\medico-2024-19-11-19-error.log",
+            "hash": "da06cfa4d903027886ab818e9776cea75ed7fa2cde96c56efc77eebda364fc4c"
+        },
+        {
+            "date": 1732024807584,
+            "name": "C:\\Users\\Abul Ala Jobayar\\Desktop\\medico\\medico_server\\logs\\winston\\errors\\medico-2024-19-11-20-error.log",
+            "hash": "606643e253f2542da75de0d0d7ce450adcddc3483544736ad250ef6b916d50b2"
+        }
+    ],
+    "hashType": "sha256"
+}
