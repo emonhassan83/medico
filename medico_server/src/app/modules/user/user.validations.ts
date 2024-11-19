@@ -32,6 +32,7 @@ const createPatient = z.object({
   patient: z.object({
     email: z.string().email(),
     name: z.string(),
+    profilePhoto:z.string(),
     contactNumber: z.string({
       required_error: "Contact number is required!"
     }),

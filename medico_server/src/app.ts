@@ -27,9 +27,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/v1', routes);
 
-app.get('/test', async (req: Request, res: Response) => {
+app.get('/up', async (req: Request, res: Response) => {
   res.status(200).json({
-    message: 'Server working....!',
+    message: 'Medico Server working....!',
   });
 });
 
