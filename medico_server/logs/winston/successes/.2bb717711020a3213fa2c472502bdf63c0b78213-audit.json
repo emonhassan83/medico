@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\Level 2 Dev\\portfolio-project\\medico\\medico_server\\logs\\winston\\successes\\.2bb717711020a3213fa2c472502bdf63c0b78213-audit.json",
+    "files": [
+        {
+            "date": 1732032524626,
+            "name": "D:\\Level 2 Dev\\portfolio-project\\medico\\medico_server\\logs\\winston\\successes\\medico-2024-19-11-22-success.log",
+            "hash": "ea1762ebcf006327d50048d9c25deb1980aba49583719194bf636f86f8d51050"
+        }
+    ],
+    "hashType": "sha256"
+}
