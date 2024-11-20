@@ -1,19 +1,11 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Post` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Profile` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
-
-*/
 -- CreateEnum
-CREATE TYPE "UserRole" AS ENUM ('ADMIN', 'DOCTOR', 'PATIENT', 'SUPER_ADMIN');
+CREATE TYPE "UserRole" AS ENUM ('ADMIN', 'RECEPTIONIST', 'DOCTOR', 'PATIENT');
 
 -- CreateEnum
 CREATE TYPE "UserStatus" AS ENUM ('BLOCKED', 'ACTIVE', 'PENDING', 'DELETED');
 
 -- CreateEnum
-CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE');
+CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE', 'UNKNOWN');
 
 -- CreateEnum
 CREATE TYPE "MaritalStatus" AS ENUM ('MARRIED', 'UNMARRIED');
@@ -26,21 +18,6 @@ CREATE TYPE "AppointmentStatus" AS ENUM ('SCHEDULED', 'INPROGRESS', 'COMPLETED',
 
 -- CreateEnum
 CREATE TYPE "PaymentStatus" AS ENUM ('UNPAID', 'PAID');
-
--- DropForeignKey
-ALTER TABLE "Post" DROP CONSTRAINT "Post_authorId_fkey";
-
--- DropForeignKey
-ALTER TABLE "Profile" DROP CONSTRAINT "Profile_userId_fkey";
-
--- DropTable
-DROP TABLE "Post";
-
--- DropTable
-DROP TABLE "Profile";
-
--- DropTable
-DROP TABLE "User";
 
 -- CreateTable
 CREATE TABLE "users" (
@@ -60,7 +37,8 @@ CREATE TABLE "users" (
 CREATE TABLE "doctors" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
     "profilePhoto" TEXT,
     "contactNumber" TEXT NOT NULL,
     "address" TEXT,
@@ -100,9 +78,10 @@ CREATE TABLE "doctor_specialties" (
 CREATE TABLE "patients" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
     "profilePhoto" TEXT,
-    "contactNumber" TEXT,
+    "contactNumber" TEXT NOT NULL,
     "address" TEXT,
     "isDeleted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -122,6 +101,8 @@ CREATE TABLE "patientHelthDatas" (
     "hasDiabetes" BOOLEAN DEFAULT false,
     "height" TEXT,
     "weight" TEXT,
+    "diet" TEXT,
+    "pulse" TEXT,
     "smokingStatus" BOOLEAN DEFAULT false,
     "dietaryPreferences" TEXT,
     "pregnancyStatus" BOOLEAN DEFAULT false,
@@ -153,7 +134,8 @@ CREATE TABLE "medicalReports" (
 CREATE TABLE "admins" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
     "profilePhoto" TEXT,
     "contactNumber" TEXT,
     "isDeleted" BOOLEAN NOT NULL DEFAULT false,
@@ -161,6 +143,21 @@ CREATE TABLE "admins" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "admins_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "receptionist" (
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
+    "profilePhoto" TEXT,
+    "contactNumber" TEXT,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "receptionist_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -264,6 +261,12 @@ CREATE UNIQUE INDEX "admins_id_key" ON "admins"("id");
 CREATE UNIQUE INDEX "admins_email_key" ON "admins"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "receptionist_id_key" ON "receptionist"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "receptionist_email_key" ON "receptionist"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "appointments_scheduleId_key" ON "appointments"("scheduleId");
 
 -- CreateIndex
@@ -298,6 +301,9 @@ ALTER TABLE "medicalReports" ADD CONSTRAINT "medicalReports_patientId_fkey" FORE
 
 -- AddForeignKey
 ALTER TABLE "admins" ADD CONSTRAINT "admins_email_fkey" FOREIGN KEY ("email") REFERENCES "users"("email") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "receptionist" ADD CONSTRAINT "receptionist_email_fkey" FOREIGN KEY ("email") REFERENCES "users"("email") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "doctorSchedule" ADD CONSTRAINT "doctorSchedule_doctorId_fkey" FOREIGN KEY ("doctorId") REFERENCES "doctors"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

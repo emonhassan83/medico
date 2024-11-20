@@ -32,7 +32,16 @@ router.post(
   UserController.createAdmin,
 );
 
-router.post('/create-patient', UserController.createPatient);
+router.post(
+  '/create-patient',
+  auth(ENUM_USER_ROLE.ADMIN),
+  UserController.createPatient,
+);
+router.post(
+  '/create-receptionist',
+  auth(ENUM_USER_ROLE.ADMIN),
+  UserController.createReceptionist,
+);
 
 router.patch(
   '/:id/status',
