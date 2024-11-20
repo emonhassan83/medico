@@ -12,18 +12,20 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model User {
-  id                 String     @id @default(uuid())
-  email              String     @unique
+  id                 String        @id @default(uuid())
+  email              String        @unique
   password           String
   role               UserRole
-  needPasswordChange Boolean    @default(true)
-  status             UserStatus @default(ACTIVE)
-  createdAt          DateTime   @default(now())
-  updatedAt          DateTime   @updatedAt
+  needPasswordChange Boolean       @default(true)
+  status             UserStatus    @default(ACTIVE)
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
   doctor             Doctor?
   patient            Patient?
   admin              Admin?
+  receptionist       Receptionist?
 
   @@map("users")
 }
@@ -31,7 +33,8 @@ model User {
 model Doctor {
   id                  String              @id @default(uuid())
   email               String              @unique
-  name                String
+  firstName           String
+  lastName            String
   profilePhoto        String?
   contactNumber       String
   address             String?
@@ -79,9 +82,10 @@ model DoctorSpecialties {
 model Patient {
   id               String            @id @unique @default(uuid())
   email            String            @unique
-  name             String
+  firstName        String
+  lastName         String
   profilePhoto     String?
-  contactNumber    String?
+  contactNumber    String
   address          String?
   isDeleted        Boolean           @default(false)
   createdAt        DateTime          @default(now())
@@ -107,6 +111,8 @@ model PatientHelthData {
   hasDiabetes         Boolean?      @default(false)
   height              String?
   weight              String?
+  diet                String?
+  pulse               String?
   smokingStatus       Boolean?      @default(false)
   dietaryPreferences  String?
   pregnancyStatus     Boolean?      @default(false)
@@ -138,7 +144,8 @@ model MedicalReport {
 model Admin {
   id            String   @id @unique @default(uuid())
   email         String   @unique
-  name          String
+  firstName     String
+  lastName      String
   profilePhoto  String?
   contactNumber String?
   isDeleted     Boolean  @default(false)
@@ -148,6 +155,22 @@ model Admin {
   user User @relation(references: [email], fields: [email])
 
   @@map("admins")
+}
+
+model Receptionist {
+  id            String   @id @unique @default(uuid())
+  email         String   @unique
+  firstName     String
+  lastName      String
+  profilePhoto  String?
+  contactNumber String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user User @relation(references: [email], fields: [email])
+
+  @@map("receptionist")
 }
 
 model Schedule {
@@ -259,9 +282,9 @@ model Review {
 
 enum UserRole {
   ADMIN
+  RECEPTIONIST
   DOCTOR
   PATIENT
-  SUPER_ADMIN
 }
 
 enum UserStatus {
@@ -274,6 +297,7 @@ enum UserStatus {
 enum Gender {
   MALE
   FEMALE
+  UNKNOWN
 }
 
 enum MaritalStatus {

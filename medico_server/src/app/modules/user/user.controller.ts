@@ -39,6 +39,15 @@ const createPatient = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const createReceptionist = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserServices.createReceptionist(req);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Receptionist created successfully!',
+    data: result,
+  });
+});
 
 const changeProfileStatus = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -95,6 +104,7 @@ export const UserController = {
   createDoctor,
   createAdmin,
   createPatient,
+  createReceptionist,
   changeProfileStatus,
   getAllUser,
   getMyProfile,
