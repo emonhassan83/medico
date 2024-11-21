@@ -24,6 +24,11 @@
             "date": 1732097667515,
             "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\errors\\medico-2024-20-11-16-error.log",
             "hash": "5537ddbe45c828033f8a1d2ee0398d43f58d5f9eb784300a71a9ccd9471b27d0"
+        },
+        {
+            "date": 1732179675334,
+            "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\errors\\medico-2024-21-11-15-error.log",
+            "hash": "71ee1e977612e793fbaaa499bb27de0fc51b0a03b5078e9821d1ccc35c558068"
         }
     ],
     "hashType": "sha256"
