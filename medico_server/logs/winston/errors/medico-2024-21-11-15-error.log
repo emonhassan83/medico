@@ -1,0 +1,174 @@
+Thu Nov 21 2024 15:18:45 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ You are not authorized
+Thu Nov 21 2024 15:18:58 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+Authentication failed against database server at `localhost`, the provided database credentials for `postgres` are not valid.
+
+Please make sure to provide valid database credentials for the database server at `localhost`.
+Thu Nov 21 2024 15:19:17 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ 
+Invalid `prisma.user.findMany()` invocation:
+
+
+Authentication failed against database server at `localhost`, the provided database credentials for `postgres` are not valid.
+
+Please make sure to provide valid database credentials for the database server at `localhost`.
+Thu Nov 21 2024 15:19:23 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ 
+Invalid `prisma.user.findMany()` invocation:
+
+
+Authentication failed against database server at `localhost`, the provided database credentials for `postgres` are not valid.
+
+Please make sure to provide valid database credentials for the database server at `localhost`.
+Thu Nov 21 2024 15:19:50 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ 
+Invalid `prisma.user.findMany()` invocation:
+
+
+Authentication failed against database server at `localhost`, the provided database credentials for `postgres` are not valid.
+
+Please make sure to provide valid database credentials for the database server at `localhost`.
+Thu Nov 21 2024 15:28:2 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ You are not authorized
+Thu Nov 21 2024 15:34:18 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ 
+Invalid `prisma.patient.findMany()` invocation:
+
+{
+  include: {
+    medicalReport: true,
+    patientHelthData: true
+  },
+  where: {
+    AND: [
+      {
+        OR: [
+          {
+            firstName: {
+              contains: "pt",
+              mode: "insensitive"
+            }
+          },
+          {
+            email: {
+              contains: "pt",
+              mode: "insensitive"
+            }
+          },
+          {
+            contactNo: {
+              contains: "pt",
+              mode: "insensitive"
+            }
+          }
+        ]
+      },
+      {
+        AND: [
+          {
+            email: {
+              equals: "rafi@example.com"
+            }
+          }
+        ]
+      },
+      {
+        isDeleted: false
+      }
+    ]
+  },
+  skip: 0,
+  take: 10,
+  orderBy: {
+    createdAt: "desc"
+  }
+}
+
+Unknown argument `contactNo`. Available options are marked with ?.
+Thu Nov 21 2024 15:34:27 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ 
+Invalid `prisma.patient.findMany()` invocation:
+
+{
+  include: {
+    medicalReport: true,
+    patientHelthData: true
+  },
+  where: {
+    AND: [
+      {
+        OR: [
+          {
+            firstName: {
+              contains: "rafi",
+              mode: "insensitive"
+            }
+          },
+          {
+            email: {
+              contains: "rafi",
+              mode: "insensitive"
+            }
+          },
+          {
+            contactNo: {
+              contains: "rafi",
+              mode: "insensitive"
+            }
+          }
+        ]
+      },
+      {
+        AND: [
+          {
+            email: {
+              equals: "rafi@example.com"
+            }
+          }
+        ]
+      },
+      {
+        isDeleted: false
+      }
+    ]
+  },
+  skip: 0,
+  take: 10,
+  orderBy: {
+    createdAt: "desc"
+  }
+}
+
+Unknown argument `contactNo`. Available options are marked with ?.
+Thu Nov 21 2024 15:37:22 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ You are not authorized
+Thu Nov 21 2024 15:39:53 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ 
+Invalid `prisma.patientHelthData.delete()` invocation:
+
+
+An operation failed because it depends on one or more records that were required but not found. Record to delete does not exist.
+Thu Nov 21 2024 15:40:48 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ 
+Invalid `prisma.patientHelthData.delete()` invocation:
+
+
+An operation failed because it depends on one or more records that were required but not found. Record to delete does not exist.
+Thu Nov 21 2024 15:43:42 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ 
+Invalid `prisma.patientHelthData.delete()` invocation:
+
+
+An operation failed because it depends on one or more records that were required but not found. Record to delete does not exist.
+Thu Nov 21 2024 15:44:36 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ 
+Invalid `prisma.patientHelthData.delete()` invocation:
+
+
+An operation failed because it depends on one or more records that were required but not found. Record to delete does not exist.
+Thu Nov 21 2024 15:44:38 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ 
+Invalid `prisma.patientHelthData.delete()` invocation:
+
+
+An operation failed because it depends on one or more records that were required but not found. Record to delete does not exist.
+Thu Nov 21 2024 15:47:41 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ 
+Invalid `prisma.patientHelthData.delete()` invocation:
+
+
+An operation failed because it depends on one or more records that were required but not found. Record to delete does not exist.
+Thu Nov 21 2024 15:47:52 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ 
+Invalid `prisma.patientHelthData.delete()` invocation:
+
+
+An operation failed because it depends on one or more records that were required but not found. Record to delete does not exist.
