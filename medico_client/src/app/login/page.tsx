@@ -1,8 +1,11 @@
 'use client'
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+
 const Login = () => {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,6 +26,7 @@ const Login = () => {
     e.preventDefault();
     console.log("Login data:", formData);
     // Add login logic here
+    router.push("/")
   };
 
 
