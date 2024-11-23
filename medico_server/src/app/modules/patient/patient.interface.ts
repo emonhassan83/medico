@@ -10,7 +10,7 @@ export type IPatientUpdate = {
   profilePhoto: string;
   contactNumber: string;
   address: string;
-  patientHelthData: IPatientHelthData;
+  patientHealthData: IPatientHealthData;
   medicalReport: IMedicalReport;
 };
 
@@ -18,7 +18,8 @@ export type IMedicalReport = {
   reportName: string;
   reportLink: string;
 };
-export type IPatientHelthData = {
+
+export type IPatientHealthData = {
   dateOfBirth: string | Date;
   gender: 'MALE' | 'FEMALE';
   bloodGroup:
