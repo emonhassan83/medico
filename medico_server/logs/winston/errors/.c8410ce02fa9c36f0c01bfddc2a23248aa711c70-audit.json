@@ -19,6 +19,11 @@
             "date": 1732301870868,
             "name": "D:\\Level 2 Dev\\portfolio-project\\medico\\medico_server\\logs\\winston\\errors\\medico-2024-23-11-00-error.log",
             "hash": "5cc9c1f58ee431f873ce908c4f2b2c15691d8135af8b4adadfacc5dd75b57d2e"
+        },
+        {
+            "date": 1732302635819,
+            "name": "D:\\Level 2 Dev\\portfolio-project\\medico\\medico_server\\logs\\winston\\errors\\medico-2024-23-11-01-error.log",
+            "hash": "db3fdbd836c26b660d0616fa482438d4db20b75b62e68bf9e9eaa53672c46c30"
         }
     ],
     "hashType": "sha256"

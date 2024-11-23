@@ -4,6 +4,7 @@ import validateRequest from '../../middlewares/validateRequest';
 import { UserValidation } from './user.validations';
 import auth from '../../middlewares/auth';
 import { ENUM_USER_ROLE } from '../../../enums/user';
+import { UserRole } from '@prisma/client';
 
 const router = express.Router();
 
@@ -16,10 +17,10 @@ router.get(
 router.get(
   '/me',
   auth(
-    ENUM_USER_ROLE.ADMIN,
-    ENUM_USER_ROLE.DOCTOR,
-    ENUM_USER_ROLE.PATIENT,
-    ENUM_USER_ROLE.SUPER_ADMIN,
+    UserRole.ADMIN,
+    UserRole.RECEPTIONIST,
+    UserRole.DOCTOR,
+    UserRole.PATIENT,
   ),
   UserController.getMyProfile,
 );
@@ -53,10 +54,10 @@ router.patch(
 router.patch(
   '/update-my-profile',
   auth(
-    ENUM_USER_ROLE.SUPER_ADMIN,
-    ENUM_USER_ROLE.ADMIN,
-    ENUM_USER_ROLE.DOCTOR,
-    ENUM_USER_ROLE.PATIENT,
+    UserRole.ADMIN,
+    UserRole.RECEPTIONIST,
+    UserRole.DOCTOR,
+    UserRole.PATIENT,
   ),
   UserController.updateMyProfile,
 );

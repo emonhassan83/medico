@@ -1,0 +1,22 @@
+Sat Nov 23 2024 1:10:35 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ 
+Invalid `prisma.user.findMany()` invocation:
+
+
+Authentication failed against database server at `localhost`, the provided database credentials for `postgres` are not valid.
+
+Please make sure to provide valid database credentials for the database server at `localhost`.
+Sat Nov 23 2024 1:11:13 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ jwt malformed
+Sat Nov 23 2024 1:11:24 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ 
+Invalid `prisma.user.findMany()` invocation:
+
+
+Authentication failed against database server at `localhost`, the provided database credentials for `postgres` are not valid.
+
+Please make sure to provide valid database credentials for the database server at `localhost`.
+Sat Nov 23 2024 1:14:3 } [Medico] error: 🐱‍🏍 globalErrorHandler ~~ 
+Invalid `prisma.user.findMany()` invocation:
+
+
+Authentication failed against database server at `localhost`, the provided database credentials for `postgres` are not valid.
+
+Please make sure to provide valid database credentials for the database server at `localhost`.
