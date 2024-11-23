@@ -3,7 +3,7 @@ import validateRequest from '../../middlewares/validateRequest';
 import { AuthController } from './auth.controller';
 import { AuthValidation } from './auth.validation';
 import auth from '../../middlewares/auth';
-import { ENUM_USER_ROLE } from '../../../enums/user';
+import { UserRole } from '@prisma/client';
 
 const router = express.Router();
 
@@ -23,13 +23,14 @@ router.post(
     '/change-password',
     validateRequest(AuthValidation.changePasswordZodSchema),
     auth(
-        ENUM_USER_ROLE.SUPER_ADMIN,
-        ENUM_USER_ROLE.ADMIN,
-        ENUM_USER_ROLE.DOCTOR,
-        ENUM_USER_ROLE.PATIENT
+        UserRole.ADMIN,
+        UserRole.RECEPTIONIST,
+        UserRole.DOCTOR,
+        UserRole.PATIENT
     ),
     AuthController.changePassword
 );
+
 router.post(
     '/forgot-password',
     AuthController.forgotPass

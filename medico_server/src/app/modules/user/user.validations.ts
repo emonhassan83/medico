@@ -135,7 +135,7 @@ const createPatient = z.object({
 
 const updateStatus = z.object({
   body: z.object({
-    status: z.enum([UserStatus.ACTIVE, UserStatus.BLOCKED, UserStatus.DELETED]),
+    status: z.enum([UserStatus.ACTIVE, UserStatus.PENDING, UserStatus.BLOCKED, UserStatus.DELETED]),
   }),
 });
 
