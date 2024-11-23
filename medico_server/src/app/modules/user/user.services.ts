@@ -19,8 +19,31 @@ import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { userSearchableFields } from './user.constant';
 import { Request } from 'express';
 
+const createAdmin = async (req: Request): Promise<Admin> => {
+  const hashPassword = await hashedPassword(req.body.password);
+
+  const result = await prisma.$transaction(async transactionClient => {
+    await transactionClient.user.create({
+      data: {
+        email: req.body.admin.email,
+        password: hashPassword,
+        role: UserRole.ADMIN,
+      },
+    });
+
+    const newAdmin = await transactionClient.admin.create({
+      data: req.body.admin,
+    });
+
+    return newAdmin;
+  });
+
+  return result;
+};
+
 const createDoctor = async (req: Request) => {
   const hashPassword = await hashedPassword(req.body.password);
+
   const result = await prisma.$transaction(async transactionClient => {
     await transactionClient.user.create({
       data: {
@@ -40,21 +63,23 @@ const createDoctor = async (req: Request) => {
   return result;
 };
 
-const createAdmin = async (req: Request): Promise<Admin> => {
+const createReceptionist = async (req: Request): Promise<Receptionist> => {
   const hashPassword = await hashedPassword(req.body.password);
+
   const result = await prisma.$transaction(async transactionClient => {
-    const newUser = await transactionClient.user.create({
+    await transactionClient.user.create({
       data: {
-        email: req.body.admin.email,
+        email: req.body.receptionist.email,
         password: hashPassword,
-        role: UserRole.ADMIN,
+        role: UserRole.RECEPTIONIST,
       },
     });
-    const newAdmin = await transactionClient.admin.create({
-      data: req.body.admin,
+
+    const newReceptionist = await transactionClient.receptionist.create({
+      data: req.body.receptionist,
     });
 
-    return newAdmin;
+    return newReceptionist;
   });
 
   return result;
@@ -62,6 +87,7 @@ const createAdmin = async (req: Request): Promise<Admin> => {
 
 const createPatient = async (req: Request): Promise<Patient> => {
   const hashPassword = await hashedPassword(req.body.password);
+
   const result = await prisma.$transaction(async transactionClient => {
     await transactionClient.user.create({
       data: {
@@ -70,30 +96,12 @@ const createPatient = async (req: Request): Promise<Patient> => {
         role: UserRole.PATIENT,
       },
     });
+
     const newPatient = await transactionClient.patient.create({
       data: req.body.patient,
     });
 
     return newPatient;
-  });
-
-  return result;
-};
-const createReceptionist = async (req: Request): Promise<Receptionist> => {
-  const hashPassword = await hashedPassword(req.body.password);
-  const result = await prisma.$transaction(async transactionClient => {
-    await transactionClient.user.create({
-      data: {
-        email: req.body.patient.email,
-        password: hashPassword,
-        role: UserRole.RECEPTIONIST,
-      },
-    });
-    const newReceptionist = await transactionClient.receptionist.create({
-      data: req.body.patient,
-    });
-
-    return newReceptionist;
   });
 
   return result;
@@ -170,6 +178,10 @@ const getAllUser = async (
       status: true,
       createdAt: true,
       updatedAt: true,
+      admin: true,
+      receptionist: true,
+      patient: true,
+      doctor: true,
     },
   });
   const total = await prisma.user.count({
@@ -203,6 +215,12 @@ const getMyProfile = async (authUser: any) => {
   let profileData;
   if (userData?.role === UserRole.ADMIN) {
     profileData = await prisma.admin.findUnique({
+      where: {
+        email: userData.email,
+      },
+    });
+  } else if (userData?.role === UserRole.RECEPTIONIST) {
+    profileData = await prisma.receptionist.findUnique({
       where: {
         email: userData.email,
       },
@@ -242,6 +260,12 @@ const updateMyProfile = async (authUser: any, req: Request) => {
         email: userData.email,
       },
       data: req.body,
+    });
+  } else if (userData?.role === UserRole.RECEPTIONIST) {
+    profileData = await prisma.receptionist.findUnique({
+      where: {
+        email: userData.email,
+      },
     });
   } else if (userData?.role === UserRole.DOCTOR) {
     profileData = await prisma.doctor.update({
