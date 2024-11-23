@@ -7,7 +7,6 @@ import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import routes from './app/routes';
 import cookieParser from 'cookie-parser';
 import cron from 'node-cron';
-import { errorlogger } from './shared/logger';
 import config from './config';
 
 const app: Application = express();
