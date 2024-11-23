@@ -24,6 +24,16 @@
             "date": 1732179675319,
             "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\successes\\medico-2024-21-11-15-success.log",
             "hash": "bf11accea79133776a7a539293ea675da7c5766772a102f3d8a343f211a3643a"
+        },
+        {
+            "date": 1732282981158,
+            "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\successes\\medico-2024-22-11-19-success.log",
+            "hash": "fa131ee616ff8bb43b8bb58bd796ce0a11836932837f37245cfdc8e7f15f005e"
+        },
+        {
+            "date": 1732346086164,
+            "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\successes\\medico-2024-23-11-13-success.log",
+            "hash": "d689612ae1dc924eaad2dea0db4844cda12e0077c98153cd43dde14f3133ccbf"
         }
     ],
     "hashType": "sha256"
