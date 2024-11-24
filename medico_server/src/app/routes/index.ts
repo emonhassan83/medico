@@ -3,12 +3,13 @@ import { userRoutes } from '../modules/user/user.route';
 import { AuthRoutes } from '../modules/auth/auth.routes';
 import { AdminRoutes } from '../modules/Admin/admin.routes';
 import { PatientRoutes } from '../modules/patient/patient.route';
-import { DoctorRoutes } from '../modules/doctor/doctor.route';
+import { ReceptionistRoutes } from '../modules/Receptionist/receptionist.routes';
+import { SpecialtiesRoutes } from '../modules/Specialties/specialties.routes';
+
 
 const router = express.Router();
 
 const moduleRoutes = [
-  // ... routes
   {
     path: '/auth',
     route: AuthRoutes,
@@ -22,12 +23,18 @@ const moduleRoutes = [
     route: AdminRoutes,
   },
   {
+    path: '/receptionist',
+    route: ReceptionistRoutes,
+  },
+  {
     path: '/patient',
     route: PatientRoutes,
   },
   {
-    path: '/doctor',
-    route: DoctorRoutes,
+
+    path: '/specialties',
+    route: SpecialtiesRoutes,
+
   },
 ];
 

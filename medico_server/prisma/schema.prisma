@@ -14,20 +14,55 @@ datasource db {
 }
 
 model User {
-  id                 String        @id @default(uuid())
-  email              String        @unique
+  id                 String     @id @default(uuid())
+  email              String     @unique
   password           String
   role               UserRole
-  needPasswordChange Boolean       @default(true)
-  status             UserStatus    @default(ACTIVE)
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @updatedAt
-  doctor             Doctor?
-  patient            Patient?
-  admin              Admin?
-  receptionist       Receptionist?
+  needPasswordChange Boolean    @default(true)
+  status             UserStatus @default(ACTIVE)
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+
+  doctor       Doctor?
+  patient      Patient?
+  admin        Admin?
+  receptionist Receptionist?
 
   @@map("users")
+}
+
+model Admin {
+  id            String   @id @unique @default(uuid())
+  email         String   @unique
+  firstName     String
+  lastName      String
+  contactNumber String
+  profilePhoto  String?
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user User @relation(references: [email], fields: [email])
+
+  @@map("admins")
+}
+
+model Receptionist {
+  id            String   @id @unique @default(uuid())
+  email         String   @unique
+  firstName     String
+  lastName      String
+  profilePhoto  String?
+  contactNumber String
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user User @relation(references: [email], fields: [email])
+
+  @@map("receptionist")
 }
 
 model Doctor {
@@ -41,7 +76,7 @@ model Doctor {
   registrationNumber  String
   experience          Int                 @default(0)
   gender              Gender
-  apointmentFee       Int
+  appointmentFee      Int
   qualification       String
   currentWorkingPlace String
   designation         String
@@ -51,19 +86,43 @@ model Doctor {
   updatedAt           DateTime            @updatedAt
   user                User                @relation(references: [email], fields: [email])
   averageRating       Float               @default(0.0)
-  appointments        Appointment[]
-  schedules           DoctorSchedule[]
-  prescription        Prescription[]
-  review              Review[]
+
+  appointments Appointment[]
+  schedules    DoctorSchedule[]
+  prescription Prescription[]
+  review       Review[]
 
   @@map("doctors")
 }
 
+model Patient {
+  id            String   @id @unique @default(uuid())
+  email         String   @unique
+  firstName     String
+  lastName      String
+  profilePhoto  String?
+  contactNumber String
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  medicalReport     MedicalReport[]
+  patientHealthData PatientHealthData?
+  user              User               @relation(references: [email], fields: [email])
+  appointments      Appointment[]
+  prescription      Prescription[]
+  review            Review[]
+
+  @@map("patients")
+}
+
 model Specialties {
-  id      String              @id @default(uuid())
-  title   String
-  icon    String?
-  doctors DoctorSpecialties[]
+  id          String              @id @default(uuid())
+  title       String
+  icon        String?
+  description String
+  doctors     DoctorSpecialties[]
 
   @@map("specialties")
 }
@@ -71,36 +130,14 @@ model Specialties {
 model DoctorSpecialties {
   specialtiesId String
   specialties   Specialties @relation(fields: [specialtiesId], references: [id])
-
-  doctorId String
-  doctor   Doctor @relation(fields: [doctorId], references: [id])
+  doctorId      String
+  doctor        Doctor      @relation(fields: [doctorId], references: [id])
 
   @@id([specialtiesId, doctorId])
   @@map("doctor_specialties")
 }
 
-model Patient {
-  id               String            @id @unique @default(uuid())
-  email            String            @unique
-  firstName        String
-  lastName         String
-  profilePhoto     String?
-  contactNumber    String
-  address          String?
-  isDeleted        Boolean           @default(false)
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  medicalReport    MedicalReport[]
-  patientHelthData PatientHelthData?
-  user             User              @relation(references: [email], fields: [email])
-  appointments     Appointment[]
-  prescription     Prescription[]
-  review           Review[]
-
-  @@map("patients")
-}
-
-model PatientHelthData {
+model PatientHealthData {
   id                  String        @id @default(uuid())
   patientId           String        @unique
   patient             Patient       @relation(fields: [patientId], references: [id])
@@ -125,7 +162,7 @@ model PatientHelthData {
   createdAt           DateTime      @default(now())
   updatedAt           DateTime      @updatedAt
 
-  @@map("patientHelthDatas")
+  @@map("patientHealthsData")
 }
 
 model MedicalReport {
@@ -141,45 +178,14 @@ model MedicalReport {
   @@map("medicalReports")
 }
 
-model Admin {
-  id            String   @id @unique @default(uuid())
-  email         String   @unique
-  firstName     String
-  lastName      String
-  profilePhoto  String?
-  contactNumber String?
-  isDeleted     Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  user User @relation(references: [email], fields: [email])
-
-  @@map("admins")
-}
-
-model Receptionist {
-  id            String   @id @unique @default(uuid())
-  email         String   @unique
-  firstName     String
-  lastName      String
-  profilePhoto  String?
-  contactNumber String?
-  isDeleted     Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  user User @relation(references: [email], fields: [email])
-
-  @@map("receptionist")
-}
-
 model Schedule {
   id        String   @id @default(uuid())
   startDate DateTime
   endDate   DateTime
 
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   doctorSchedules DoctorSchedule[]
   Appointment     Appointment?
 
@@ -192,11 +198,9 @@ model DoctorSchedule {
 
   scheduleId String
   schedule   Schedule @relation(fields: [scheduleId], references: [id])
-
-  isBooked Boolean @default(false)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isBooked   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   appointment   Appointment? @relation(fields: [appointmentId], references: [id])
   appointmentId String?
@@ -222,6 +226,7 @@ model Appointment {
   notes          String?
   createdAt      DateTime          @default(now())
   updatedAt      DateTime          @updatedAt
+
   payment        Payment?
   prescription   Prescription?
   review         Review?

@@ -17,7 +17,6 @@ const createDoctor = catchAsync(async (req: Request, res: Response, next: NextFu
   });
 });
 
-
 const createAdmin = catchAsync(async (req: Request, res: Response) => {
   //const { admin, ...userData } = req.body;
   const result = await UserServices.createAdmin(req);
@@ -39,6 +38,7 @@ const createPatient = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+
 const createReceptionist = catchAsync(async (req: Request, res: Response) => {
   const result = await UserServices.createReceptionist(req);
   sendResponse(res, {
@@ -60,7 +60,6 @@ const changeProfileStatus = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-
 const getAllUser = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, userFilterableFields);
   const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
@@ -76,7 +75,6 @@ const getAllUser = catchAsync(async (req: Request, res: Response) => {
 
 const getMyProfile = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
-
   const result = await UserServices.getMyProfile(user);
 
   sendResponse(res, {
@@ -89,13 +87,12 @@ const getMyProfile = catchAsync(async (req: Request, res: Response) => {
 
 const updateMyProfile = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
-
   const result = await UserServices.updateMyProfile(user, req);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Profile data fetched!',
+    message: 'Update my Profile data Successfully!',
     data: result
   });
 });

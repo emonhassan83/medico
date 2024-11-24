@@ -20,6 +20,6 @@ const update = z.object({
   }),
 });
 
-export const adminValidationSchemas = {
+export const receptionistValidationSchemas = {
   update,
 };

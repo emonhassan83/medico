@@ -1,51 +1,60 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express from 'express';
 import { UserController } from './user.controller';
 import validateRequest from '../../middlewares/validateRequest';
 import { UserValidation } from './user.validations';
 import auth from '../../middlewares/auth';
-import { ENUM_USER_ROLE } from '../../../enums/user';
+import { UserRole } from '@prisma/client';
 
 const router = express.Router();
 
 router.get(
   '/',
-  // auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  // auth(UserRole.ADMIN, UserRole.RECEPTIONIST),
   UserController.getAllUser,
 );
 
 router.get(
   '/me',
   auth(
-    ENUM_USER_ROLE.ADMIN,
-    ENUM_USER_ROLE.DOCTOR,
-    ENUM_USER_ROLE.PATIENT,
-    ENUM_USER_ROLE.SUPER_ADMIN,
+    UserRole.ADMIN,
+    UserRole.RECEPTIONIST,
+    UserRole.DOCTOR,
+    UserRole.PATIENT,
   ),
   UserController.getMyProfile,
 );
 
-router.post('/create-doctor', UserController.createDoctor);
-
 router.post(
   '/create-admin',
-  // auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  auth(UserRole.ADMIN),
+  validateRequest(UserValidation.createAdmin),
   UserController.createAdmin,
 );
 
 router.post(
-  '/create-patient',
-  auth(ENUM_USER_ROLE.ADMIN),
-  UserController.createPatient,
-);
-router.post(
   '/create-receptionist',
-  auth(ENUM_USER_ROLE.ADMIN),
+  auth(UserRole.ADMIN),
+  validateRequest(UserValidation.createReceptionist),
   UserController.createReceptionist,
+);
+
+router.post(
+  '/create-doctor',
+  validateRequest(UserValidation.createDoctor),
+  auth(UserRole.ADMIN),
+  UserController.createDoctor,
+);
+
+router.post(
+  '/create-patient',
+  auth(UserRole.ADMIN),
+  validateRequest(UserValidation.createPatient),
+  UserController.createPatient,
 );
 
 router.patch(
   '/:id/status',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  auth(UserRole.ADMIN),
   validateRequest(UserValidation.updateStatus),
   UserController.changeProfileStatus,
 );
@@ -53,10 +62,10 @@ router.patch(
 router.patch(
   '/update-my-profile',
   auth(
-    ENUM_USER_ROLE.SUPER_ADMIN,
-    ENUM_USER_ROLE.ADMIN,
-    ENUM_USER_ROLE.DOCTOR,
-    ENUM_USER_ROLE.PATIENT,
+    UserRole.ADMIN,
+    UserRole.RECEPTIONIST,
+    UserRole.DOCTOR,
+    UserRole.PATIENT,
   ),
   UserController.updateMyProfile,
 );

@@ -1,34 +1,26 @@
 import express from 'express';
-import validateRequest from '../../middlewares/validateRequest';
 import { PatientController } from './patient.controller';
-import { ENUM_USER_ROLE } from '../../../enums/user';
 import auth from '../../middlewares/auth';
+import { UserRole } from '@prisma/client';
 
 const router = express.Router();
 
-router.get('/', auth(ENUM_USER_ROLE.ADMIN), PatientController.getAllFromDB);
+router.get('/', auth(UserRole.ADMIN), PatientController.getAllFromDB);
 
 router.get(
   '/:id',
-  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.DOCTOR),
+  auth(UserRole.ADMIN, UserRole.DOCTOR),
   PatientController.getByIdFromDB,
 );
 
 router.patch(
   '/:id',
-  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.PATIENT),
+  auth(UserRole.ADMIN, UserRole.PATIENT),
   PatientController.updateIntoDB,
 );
 
-router.delete(
-  '/:id',
-  auth(ENUM_USER_ROLE.ADMIN),
-  PatientController.deleteFromDB,
-);
-router.delete(
-  '/soft/:id',
-  auth(ENUM_USER_ROLE.ADMIN),
-  PatientController.softDelete,
-);
+router.delete('/:id', auth(UserRole.ADMIN), PatientController.deleteFromDB);
+
+router.delete('/soft/:id', auth(UserRole.ADMIN), PatientController.softDelete);
 
 export const PatientRoutes = router;
