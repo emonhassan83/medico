@@ -1,6 +1,7 @@
 import { Gender, UserStatus } from '@prisma/client';
 import { z } from 'zod';
 
+
 const createAdmin = z.object({
   body: z.object({
     password: z.string({
@@ -96,6 +97,7 @@ const createDoctor = z.object({
         required_error: 'Designation is required!',
       }),
     }),
+
   }),
 });
 
@@ -129,6 +131,7 @@ const createPatient = z.object({
           required_error: 'Address is required for records.',
         })
         .optional(),
+
     }),
   }),
 });
