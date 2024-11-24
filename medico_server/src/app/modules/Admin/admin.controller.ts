@@ -67,7 +67,7 @@ const softDeleteFromDB = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Admin data deleted!',
+    message: 'Admin data soft deleted!',
     data: result,
   });
 });

@@ -49,7 +49,7 @@ const getAllFromDB = async (
   const result = await prisma.patient.findMany({
     include: {
       medicalReport: true,
-      patientHelthData: true,
+      patientHealthData: true
     },
     where: whereConditions,
     skip,
@@ -83,22 +83,23 @@ const getByIdFromDB = async (id: string): Promise<Patient | null> => {
     },
     include: {
       medicalReport: true,
-      patientHelthData: true,
+      patientHealthData: true,
     },
   });
   return result;
 };
 
+//! TODO: FIX HERE UPDATE MEDICAL HEALTH DATA
 const updateIntoDB = async (
   id: string,
   payload: Partial<IPatientUpdate>,
 ): Promise<Patient | null> => {
-  const { patientHelthData, medicalReport, ...patientData } = payload;
+  const { patientHealthData, medicalReport, ...patientData } = payload;
   await prisma.$transaction(async transactionClient => {
     const result = await transactionClient.patient.update({
       include: {
         medicalReport: true,
-        patientHelthData: true,
+        patientHealthData: true,
       },
       where: {
         id,
@@ -109,19 +110,19 @@ const updateIntoDB = async (
     if (!result) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Unable to update Patient');
     }
-    if (result?.patientHelthData && patientHelthData) {
-      const updateHelthData = await transactionClient.patientHelthData.update({
+    if (result?.patientHealthData && patientHealthData) {
+      const updateHelthData = await transactionClient.patientHealthData.update({
         where: {
-          id: result?.patientHelthData.id,
+          id: result?.patientHealthData.id,
         },
-        data: patientHelthData,
+        data: patientHealthData,
       });
     }
-    if (!result?.patientHelthData && patientHelthData) {
-      const newHelthData = await transactionClient.patientHelthData.create({
+    if (!result?.patientHealthData && patientHealthData) {
+      const newHelthData = await transactionClient.patientHealthData.create({
         data: {
           patientId: id,
-          ...patientHelthData,
+          ...patientHealthData,
         },
       });
     }
@@ -144,15 +145,16 @@ const updateIntoDB = async (
     },
     include: {
       medicalReport: true,
-      patientHelthData: true,
+      patientHealthData: true,
     },
   });
   return responseData;
 };
 
+//! TODO: FIX HERE DELETE USING TRANSITION CLIENT AND DELETE patientHealthData, medicalReport, patient, user TABLE DATA
 const deleteFromDB = async (id: string): Promise<Patient> => {
   //   return await prisma.$transaction(async transactionClient => {
-  //     await transactionClient.patientHelthData.delete({
+  //     await transactionClient.patientHealthData.delete({
   //       where: {
   //         patientId: id,
   //       },
