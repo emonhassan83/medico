@@ -18,7 +18,7 @@ const NavLink = ({
   return (
     <Link
       href={href}
-      className={`flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-[#5d7e7d] hover:text-white ${
+      className={`flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-[#5d7e7d] hover:text-white text-sm ${
         isActive ? "bg-[#5d7e7d] text-white" : "text-[#a6b0cf]"
       }`}
       aria-current={isActive ? "page" : undefined}
@@ -48,7 +48,7 @@ const CollapsibleMenu = ({
         }`}
       >
         <div className="flex items-center">{icon}</div>
-        <div className="flex w-full flex-1 truncate font-semibold">{title}</div>
+        <div className="flex w-full flex-1 truncate font-semibold text-sm">{title}</div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -87,13 +87,13 @@ export default function SideBar() {
       <aside
         id="nav-menu-1"
         aria-label="Side navigation"
-        className={`fixed top-16 lg:top-0 bottom-0 left-0 z-40 flex w-80 flex-col border-r border-r-slate-200 bg-[#2a2f42] transition-transform lg:translate-x-0 duration-500 ${
+        className={`fixed top-16 lg:top-0 bottom-0 left-0 z-40 flex w-64 flex-col border-r border-r-slate-200 bg-[#2a2f42] transition-transform lg:translate-x-0 duration-500 ${
           isSideNavOpen ? "translate-x-0" : " -translate-x-full"
         }`}
       >
         <Link href="/" className="relative p-6 text-xl font-medium">
-          <Image src="/Logo.png" className="mx-auto size-28" width={195} height={40} alt="Logo" />
-          <p className="absolute text-white font-[1000] text-4xl uppercase tracking-[0.2em] left-0 right-0 mx-auto text-center bottom-5 ">Medico</p>
+          <Image src="/Logo.png" className="mx-auto size-24" width={195} height={40} alt="Logo" />
+          <p className="absolute text-white font-[1000] text-3xl uppercase tracking-[0.1em] left-0 right-0 mx-auto text-center bottom-5">Medico</p>
         </Link>
         <nav>
           <ul className="px-3">
@@ -109,12 +109,12 @@ export default function SideBar() {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="size-6 lucide lucide-house"
+                className="size-5 lucide lucide-house"
               >
                 <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
                 <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
               </svg>
-              <div className="flex w-full truncate">Dashboard</div>
+              <div className="flex w-full truncate text-sm">Dashboard</div>
             </NavLink>
 
             <li className="px-3 mt-4 mb-2 text-[#6A7187]">Hospital</li>
@@ -129,7 +129,7 @@ export default function SideBar() {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="5"
-                  className="size-8 lucide lucide-plus"
+                  className="size-7 lucide lucide-plus"
                 >
                   <path d="M5 12h14" />
                   <path d="M12 5v14" />
@@ -152,7 +152,7 @@ export default function SideBar() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="size-6 mx-1 lucide lucide-users-round"
+                  className="size-5 mx-1 lucide lucide-users-round"
                 >
                   <path d="M18 21a8 8 0 0 0-16 0" />
                   <circle cx="10" cy="8" r="5" />
@@ -173,10 +173,10 @@ export default function SideBar() {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  className="size-6 mx-1 lucide lucide-user-round-cog"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="size-5 mx-1 lucide lucide-user-round-cog"
                 >
                   <path d="M2 21a8 8 0 0 1 10.434-7.62" />
                   <circle cx="10" cy="8" r="5" />
