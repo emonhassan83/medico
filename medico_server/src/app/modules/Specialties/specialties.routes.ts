@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from "express";
+import express from "express";
 import { SpecialtiesController } from "./specialties.controller";
 import auth from "../../middlewares/auth";
 import { UserRole } from "@prisma/client";
@@ -14,6 +14,15 @@ router.post(
   auth(UserRole.ADMIN),
   validateRequest(SpecialtiesValidation.create),
   SpecialtiesController.createSpecialties,
+);
+
+router.get('/:id', auth(UserRole.ADMIN), SpecialtiesController.getByIdFromDB);
+
+router.patch(
+  '/:id',
+  auth(UserRole.ADMIN),
+  validateRequest(SpecialtiesValidation.update),
+  SpecialtiesController.updateIntoDB,
 );
 
 router.delete(
