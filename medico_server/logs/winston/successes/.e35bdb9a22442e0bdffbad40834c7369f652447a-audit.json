@@ -1,0 +1,40 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\successes\\.e35bdb9a22442e0bdffbad40834c7369f652447a-audit.json",
+    "files": [
+        {
+            "date": 1732077821224,
+            "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\successes\\medico-2024-20-11-10-success.log",
+            "hash": "2d8531b394daf5b3479be9a9ae60ee351ea0d9df951e315c35e80cb3e2d6d5c3"
+        },
+        {
+            "date": 1732079159356,
+            "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\successes\\medico-2024-20-11-11-success.log",
+            "hash": "1b88dd374b0400fe54d1a42367c8a5fa0fbde52654c3c6e90c7f5533a0232e1e"
+        },
+        {
+            "date": 1732096469292,
+            "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\successes\\medico-2024-20-11-15-success.log",
+            "hash": "9bf4e7fc9b5cab1c3d0b920c850032b53517e03ee042f64a2d7436eb7199e04a"
+        },
+        {
+            "date": 1732179675319,
+            "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\successes\\medico-2024-21-11-15-success.log",
+            "hash": "bf11accea79133776a7a539293ea675da7c5766772a102f3d8a343f211a3643a"
+        },
+        {
+            "date": 1732282981158,
+            "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\successes\\medico-2024-22-11-19-success.log",
+            "hash": "fa131ee616ff8bb43b8bb58bd796ce0a11836932837f37245cfdc8e7f15f005e"
+        },
+        {
+            "date": 1732346086164,
+            "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\successes\\medico-2024-23-11-13-success.log",
+            "hash": "d689612ae1dc924eaad2dea0db4844cda12e0077c98153cd43dde14f3133ccbf"
+        }
+    ],
+    "hashType": "sha256"
+}

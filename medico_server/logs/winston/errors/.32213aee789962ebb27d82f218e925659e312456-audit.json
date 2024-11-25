@@ -1,0 +1,45 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\errors\\.32213aee789962ebb27d82f218e925659e312456-audit.json",
+    "files": [
+        {
+            "date": 1732077821234,
+            "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\errors\\medico-2024-20-11-10-error.log",
+            "hash": "35eb1838b6082d3d6551d0e89e27edb27a710ba54c5e4a027111f3a23dc44788"
+        },
+        {
+            "date": 1732079130636,
+            "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\errors\\medico-2024-20-11-11-error.log",
+            "hash": "f64f030d15abcb59100b8440cf5eea980b3aa3f9ddda5081e6610180ae38d81c"
+        },
+        {
+            "date": 1732094670988,
+            "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\errors\\medico-2024-20-11-15-error.log",
+            "hash": "7b2e1dd2a4c09948ec997e454b51ece63ae62d43afc9a35675e5242c63c4a36a"
+        },
+        {
+            "date": 1732097667515,
+            "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\errors\\medico-2024-20-11-16-error.log",
+            "hash": "5537ddbe45c828033f8a1d2ee0398d43f58d5f9eb784300a71a9ccd9471b27d0"
+        },
+        {
+            "date": 1732179675334,
+            "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\errors\\medico-2024-21-11-15-error.log",
+            "hash": "71ee1e977612e793fbaaa499bb27de0fc51b0a03b5078e9821d1ccc35c558068"
+        },
+        {
+            "date": 1732282981173,
+            "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\errors\\medico-2024-22-11-19-error.log",
+            "hash": "3f1f8141ffd1bbb0f0911c2d01d1e188ec840f7cf589f3b4cb00fe75c217b408"
+        },
+        {
+            "date": 1732346086182,
+            "name": "C:\\NextLevel\\groupProject\\hospital-managment\\medico\\medico_server\\logs\\winston\\errors\\medico-2024-23-11-13-error.log",
+            "hash": "39ef65d16e289b82f3361a44ff1c16a9a79c9f10be223a8dfb28ffaa756212b7"
+        }
+    ],
+    "hashType": "sha256"
+}
