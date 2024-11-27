@@ -41,8 +41,7 @@ const Login = () => {
           body: JSON.stringify(loginData), 
       });
 
-      
-
+    
       const data = await response.json(); 
       console.log('Login successfully:', data);
      // Reset the form after successful login
