@@ -21,11 +21,50 @@ const RegisterForm = () => {
 
 
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     console.log(formData)
 
+    const patient = {
+      password: formData.password,
+      patient: {
+          email: formData.email,
+          firstName: formData.firstName,
+          lastName: formData.lastname,
+          contactNumber: formData.contactNo,
+          // address: formData.contactNo, // Confirm if the duplication is intentional
+          // profilePhoto: "http://ash.org/"
+      }
+  };
+
+  try {
+      const response = await fetch('http://localhost:5000/api/v1/user/create-patient', { // Replace with your API URL
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json', 
+          },
+          body: JSON.stringify(patient), 
+      });
+
+      
+
+      const data = await response.json(); 
+      console.log('Patient data submitted successfully:', data);
+      // Reset the form after successful register 
+      setFormData({
+        firstName: '',
+        lastname: '',
+        contactNo: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      });
+  } catch (error) {
+      console.error('Error submitting patient data:', error);
   }
+};
+
+  
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">

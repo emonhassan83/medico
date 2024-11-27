@@ -60,14 +60,14 @@ const Navbar = ({
           </div>
 
           <h1 className="text-[1rem] font-[400] text-gray-600 sm:block hidden">
-            Dhon Deo
+            Jhon Deo
           </h1>
 
           <div
             className={`${
               accountMenuOpen
-                ? "translate-y-0 opacity-100 z-[1]"
-                : "translate-y-[10px] opacity-0 z-[-1]"
+                ? "translate-y-0 opacity-100 z-50"
+                : "translate-y-[10px] opacity-0 -z-10"
             } bg-white w-max rounded-md shadow-lg absolute top-8 lg:top-12 right-0 p-[10px] flex flex-col transition-all duration-300 gap-2`}
           >
             <p className="flex items-center gap-2 rounded-md p-2 pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50">

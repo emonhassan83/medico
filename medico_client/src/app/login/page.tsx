@@ -1,18 +1,18 @@
 'use client'
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 
 const Login = () => {
-  const router = useRouter()
+  // const router = useRouter()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     // console.log({name})
     console.log({value})
@@ -22,11 +22,37 @@ const Login = () => {
 
 
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Login data:", formData);
     // Add login logic here
-    router.push("/")
+    // router.push("/")
+    const loginData = {
+       email: formData.email,
+       password: formData.password
+    }
+
+  try {
+      const response = await fetch('http://localhost:5000/api/v1/auth/login', { 
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json', 
+          },
+          body: JSON.stringify(loginData), 
+      });
+
+      
+
+      const data = await response.json(); 
+      console.log('Login successfully:', data);
+     // Reset the form after successful login
+      setFormData({
+        email: "",
+        password: "",
+      });
+  } catch (error) {
+      console.error('Error submitting login:', error);
+  }
   };
 
 
