@@ -49,7 +49,7 @@ const getAllFromDB = async (
   const result = await prisma.patient.findMany({
     include: {
       medicalReport: true,
-      patientHealthData: true
+      patientHealthData: true,
     },
     where: whereConditions,
     skip,
