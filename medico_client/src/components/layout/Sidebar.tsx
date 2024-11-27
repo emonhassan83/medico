@@ -48,7 +48,9 @@ const CollapsibleMenu = ({
         }`}
       >
         <div className="flex items-center">{icon}</div>
-        <div className="flex w-full flex-1 truncate font-semibold text-sm">{title}</div>
+        <div className="flex w-full flex-1 truncate text-sm">
+          {title}
+        </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -80,6 +82,7 @@ const CollapsibleMenu = ({
 };
 
 export default function SideBar() {
+  const [user, setUser] = useState("ADMIN");
   const [isSideNavOpen, setIsSideNavOpen] = useState(true);
 
   return (
@@ -92,8 +95,16 @@ export default function SideBar() {
         }`}
       >
         <Link href="/" className="relative p-6 text-xl font-medium">
-          <Image src="/Logo.png" className="mx-auto size-24" width={195} height={40} alt="Logo" />
-          <p className="absolute text-white font-[1000] text-3xl uppercase tracking-[0.1em] left-0 right-0 mx-auto text-center bottom-5">Medico</p>
+          <Image
+            src="/Logo.png"
+            className="mx-auto size-24"
+            width={195}
+            height={40}
+            alt="Logo"
+          />
+          <p className="absolute text-white font-[1000] text-3xl uppercase tracking-[0.1em] left-0 right-0 mx-auto text-center bottom-5">
+            Medico
+          </p>
         </Link>
         <nav>
           <ul className="px-3">
@@ -118,85 +129,279 @@ export default function SideBar() {
             </NavLink>
 
             <li className="px-3 mt-4 mb-2 text-[#6A7187]">Hospital</li>
-            <CollapsibleMenu
-              title="Doctor"
-              icon={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="5"
-                  className="size-7 lucide lucide-plus"
+            {user === "ADMIN" && (
+              <>
+                <CollapsibleMenu
+                  title="Doctor"
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="5"
+                      className="size-7 lucide lucide-plus"
+                    >
+                      <path d="M5 12h14" />
+                      <path d="M12 5v14" />
+                    </svg>
+                  }
                 >
-                  <path d="M5 12h14" />
-                  <path d="M12 5v14" />
-                </svg>
-              }
-            >
-              <NavLink href="/doctor">List of Doctors</NavLink>
-              <NavLink href="/doctor/create">Add New Doctor</NavLink>
-            </CollapsibleMenu>
-            <CollapsibleMenu
-              title="Patient"
-              icon={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="size-5 mx-1 lucide lucide-users-round"
+                  <NavLink href="/doctor">List of Doctors</NavLink>
+                  <NavLink href="/doctor/create">Add New Doctor</NavLink>
+                </CollapsibleMenu>
+                <CollapsibleMenu
+                  title="Patient"
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="size-5 mx-1 lucide lucide-users-round"
+                    >
+                      <path d="M18 21a8 8 0 0 0-16 0" />
+                      <circle cx="10" cy="8" r="5" />
+                      <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" />
+                    </svg>
+                  }
                 >
-                  <path d="M18 21a8 8 0 0 0-16 0" />
-                  <circle cx="10" cy="8" r="5" />
-                  <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" />
-                </svg>
-              }
-            >
-              <NavLink href="/patient">List of Patients</NavLink>
-              <NavLink href="/patient/create">Add New Patient</NavLink>
-            </CollapsibleMenu>
-            <CollapsibleMenu
-              title="Receptionist"
-              icon={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="size-5 mx-1 lucide lucide-user-round-cog"
+                  <NavLink href="/patient">List of Patients</NavLink>
+                  <NavLink href="/patient/create">Add New Patient</NavLink>
+                </CollapsibleMenu>
+                <CollapsibleMenu
+                  title="Receptionist"
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="size-5 mx-1 lucide lucide-user-round-cog"
+                    >
+                      <path d="M2 21a8 8 0 0 1 10.434-7.62" />
+                      <circle cx="10" cy="8" r="5" />
+                      <circle cx="18" cy="18" r="3" />
+                      <path d="m19.5 14.3-.4.9" />
+                      <path d="m16.9 20.8-.4.9" />
+                      <path d="m21.7 19.5-.9-.4" />
+                      <path d="m15.2 16.9-.9-.4" />
+                      <path d="m21.7 16.5-.9.4" />
+                      <path d="m15.2 19.1-.9.4" />
+                      <path d="m19.5 21.7-.4-.9" />
+                      <path d="m16.9 15.2-.4-.9" />
+                    </svg>
+                  }
                 >
-                  <path d="M2 21a8 8 0 0 1 10.434-7.62" />
-                  <circle cx="10" cy="8" r="5" />
-                  <circle cx="18" cy="18" r="3" />
-                  <path d="m19.5 14.3-.4.9" />
-                  <path d="m16.9 20.8-.4.9" />
-                  <path d="m21.7 19.5-.9-.4" />
-                  <path d="m15.2 16.9-.9-.4" />
-                  <path d="m21.7 16.5-.9.4" />
-                  <path d="m15.2 19.1-.9.4" />
-                  <path d="m19.5 21.7-.4-.9" />
-                  <path d="m16.9 15.2-.4-.9" />
-                </svg>
-              }
-            >
-              <NavLink href="/receptionist">List of Receptionists</NavLink>
-              <NavLink href="/receptionist/create">
-                Add New Receptionist
-              </NavLink>
-            </CollapsibleMenu>
+                  <NavLink href="/receptionist">List of Receptionists</NavLink>
+                  <NavLink href="/receptionist/create">
+                    Add New Receptionist
+                  </NavLink>
+                </CollapsibleMenu>
+              </>
+            )}
+
+            {user === "PATIENT" && (
+              <>
+                <NavLink href="/appointments">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="size-5 lucide lucide-house"
+                  >
+                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  </svg>
+                  <div className="flex w-full truncate text-sm">
+                    Appointments
+                  </div>
+                </NavLink>
+                <NavLink href="/appointment-list">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="size-5 lucide lucide-house"
+                  >
+                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  </svg>
+                  <div className="flex w-full truncate text-sm">
+                    Appointment List
+                  </div>
+                </NavLink>
+                <NavLink href="/doctor">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="size-5 lucide lucide-house"
+                  >
+                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  </svg>
+                  <div className="flex w-full truncate text-sm">Doctors</div>
+                </NavLink>
+                <NavLink href="/prescription">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="size-5 lucide lucide-house"
+                  >
+                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  </svg>
+                  <div className="flex w-full truncate text-sm">
+                    Prescription
+                  </div>
+                </NavLink>
+              </>
+            )}
+
+            {user === "RECEPTIONIST" && (
+              <>
+                <NavLink href="/appointments">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="size-5 lucide lucide-house"
+                  >
+                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  </svg>
+                  <div className="flex w-full truncate text-sm">
+                    Appointments
+                  </div>
+                </NavLink>
+                <NavLink href="/appointment-list">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="size-5 lucide lucide-house"
+                  >
+                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  </svg>
+                  <div className="flex w-full truncate text-sm">
+                    Appointment List
+                  </div>
+                </NavLink>
+                <NavLink href="/doctor">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="size-5 lucide lucide-house"
+                  >
+                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  </svg>
+                  <div className="flex w-full truncate text-sm">Doctors</div>
+                </NavLink>
+                <CollapsibleMenu
+                  title="Patient"
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="size-4 lucide lucide-users-round"
+                    >
+                      <path d="M18 21a8 8 0 0 0-16 0" />
+                      <circle cx="10" cy="8" r="5" />
+                      <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" />
+                    </svg>
+                  }
+                >
+                  <NavLink href="/patient">List of Patients</NavLink>
+                  <NavLink href="/patient/create">Add New Patient</NavLink>
+                </CollapsibleMenu>
+                <NavLink href="/prescription">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="size-5 lucide lucide-house"
+                  >
+                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  </svg>
+                  <div className="flex w-full truncate text-sm">
+                    Prescription
+                  </div>
+                </NavLink>
+              </>
+            )}
           </ul>
         </nav>
       </aside>
