@@ -9,6 +9,9 @@ import { FieldValues } from "react-hook-form";
 import { IRegisterUser } from "@/types";
 import { toast } from "sonner";
 import { registerUsers } from "@/services/actions/registerPatient";
+import { storeUserInfo } from "@/services/auth.services";
+import { userLogin } from "@/services/actions/loginUsers";
+import { useRouter } from "next/navigation";
 
 export const defaultValues = {
   password: "",
@@ -21,6 +24,8 @@ export const defaultValues = {
 };
 
 const RegisterPage = () => {
+  const router = useRouter();
+
   const handleRegister = async (values: FieldValues) => {
     const { password, patient } = values;
 
@@ -46,14 +51,14 @@ const RegisterPage = () => {
         if (res?.data) {
           toast.success(res?.message);
 
-          // const result = await userLogin({
-          //   email,
-          //   password,
-          // });
-          // if (result?.data?.token) {
-          //   storeUserInfo({ accessToken: result?.data?.token });
-          //   router.push("/dashboard");
-          // }
+          const result = await userLogin({
+            email: patient?.email,
+            password,
+          });
+          if (result?.data?.token) {
+            storeUserInfo({ accessToken: result?.data?.token });
+            router.push("/dashboard/patient");
+          }
         }
         
       } catch (error: any) {

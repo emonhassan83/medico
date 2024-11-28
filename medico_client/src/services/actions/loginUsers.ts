@@ -1,7 +1,7 @@
 // "use server";
 import { jwtDecode } from "jwt-decode";
 import { FieldValues } from "react-hook-form";
-// import setAccessToken from "./setAccessToken";
+import setAccessToken from "./setAccessToken";
 
 export const userLogin = async (data: FieldValues) => {
   const res = await fetch(
@@ -26,21 +26,28 @@ export const userLogin = async (data: FieldValues) => {
   console.log(decodedData);
   
 
-//   const role = (decodedData?.role).toLowerCase();
+  const role = (decodedData?.role).toLowerCase();
 
-//   if (userInfo.data.accessToken) {
-//     let redirectUrl = "/dashboard/profile";
+  if (userInfo.data.accessToken) {
+    let redirectUrl = "/dashboard";
 
-//     if (role === "admin") {
-//       redirectUrl = "/dashboard/admin";
-//     } else if (role === "user") {
-//       redirectUrl = "/dashboard/profile";
-//     }
+    if (role === "admin") {
+      redirectUrl = "/dashboard/admin";
+    } 
+    else if (role === "receptionist") {
+      redirectUrl = "/dashboard/receptionist";
+    }
+    else if (role === "doctor") {
+      redirectUrl = "/dashboard/doctor";
+    }
+     else if (role === "patient") {
+      redirectUrl = "/dashboard/patient";
+    }
 
-//     setAccessToken(userInfo.data.accessToken, {
-//       redirect: redirectUrl,
-//     });
-//   }
+    setAccessToken(userInfo.data.accessToken, {
+      redirect: redirectUrl,
+    });
+  }
 
   return userInfo;
 };

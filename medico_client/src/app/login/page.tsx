@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import { userLogin } from "@/services/actions/loginUsers";
+import { storeUserInfo } from "@/services/auth.services";
 
 // Demo credentials array
 const demoCredentials = [
@@ -30,7 +31,7 @@ const LoginPage = () => {
 
       if (res?.data?.accessToken) {
         toast.success(res?.message);
-        // storeUserInfo({ accessToken: res?.data?.accessToken });
+        storeUserInfo({ accessToken: res?.data?.accessToken });
         // router.push("/dashboard");
       } else {
         toast.error(res?.message);
