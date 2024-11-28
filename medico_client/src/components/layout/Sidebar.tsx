@@ -80,7 +80,7 @@ const CollapsibleMenu = ({
 };
 
 export default function SideBar() {
-  const [user, setUser] = useState("ADMIN");
+  const [user, setUser] = useState("DOCTOR");
   const [isSideNavOpen, setIsSideNavOpen] = useState(true);
 
   return (
