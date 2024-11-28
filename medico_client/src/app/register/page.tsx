@@ -8,6 +8,7 @@ import React from "react";
 import { FieldValues } from "react-hook-form";
 import { IRegisterUser } from "@/types";
 import { toast } from "sonner";
+import { registerUsers } from "@/services/actions/registerPatient";
 
 export const defaultValues = {
   password: "",
@@ -40,7 +41,20 @@ const RegisterPage = () => {
 
     if (password === patient?.confirmPassword) {
       try {
-        console.log("hello");
+        const res = await registerUsers(userData);
+        console.log(res);
+        if (res?.data) {
+          toast.success(res?.message);
+
+          // const result = await userLogin({
+          //   email,
+          //   password,
+          // });
+          // if (result?.data?.token) {
+          //   storeUserInfo({ accessToken: result?.data?.token });
+          //   router.push("/dashboard");
+          // }
+        }
         
       } catch (error: any) {
         toast.error(error.message);

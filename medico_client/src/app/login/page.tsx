@@ -6,6 +6,8 @@ import MedicoInput from "@/components/Forms/MedicoInput";
 import Link from "next/link";
 import React, { useState } from "react";
 import { FieldValues } from "react-hook-form";
+import { toast } from "sonner";
+import { userLogin } from "@/services/actions/loginUsers";
 
 // Demo credentials array
 const demoCredentials = [
@@ -20,11 +22,23 @@ const LoginPage = () => {
     email: "alice.smith@example.com",
     password: "admin123",
   });
-  console.log(defaultValues);
   
-
   const handleLogin = async (values: FieldValues) => {
-    console.log("Login values:", values);
+    try {
+      const res = await userLogin(values);
+      console.log(res);
+
+      if (res?.data?.accessToken) {
+        toast.success(res?.message);
+        // storeUserInfo({ accessToken: res?.data?.accessToken });
+        // router.push("/dashboard");
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (err: any) {
+      toast.error(err.message);
+      console.error(err.message);
+    }
   };
 
   const setDemoCredentials = (email: string, password: string) => {
