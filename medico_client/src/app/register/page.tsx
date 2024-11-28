@@ -6,6 +6,8 @@ import MedicoInput from "@/components/Forms/MedicoInput";
 import Link from "next/link";
 import React from "react";
 import { FieldValues } from "react-hook-form";
+import { IRegisterUser } from "@/types";
+import { toast } from "sonner";
 
 export const defaultValues = {
   password: "",
@@ -13,14 +15,38 @@ export const defaultValues = {
     firstName: "",
     lastName: "",
     email: "",
-    password: "",
     confirmPassword: "",
   },
 };
 
 const RegisterPage = () => {
   const handleRegister = async (values: FieldValues) => {
-    console.log(values);
+    const { password, patient } = values;
+
+    const userData: IRegisterUser = {
+      password,
+      patient: {
+          firstName: patient?.firstName,
+          lastName: patient?.lastName,
+          email: patient?.email,
+          contactNumber: patient?.contactNumber
+      },
+    };
+    
+    if (password !== patient?.confirmPassword) {
+      toast.error("Password and Confirm Passwords do not match!");
+      return;
+    }
+
+    if (password === patient?.confirmPassword) {
+      try {
+        console.log("hello");
+        
+      } catch (error: any) {
+        toast.error(error.message);
+        console.error(error.message);
+      }
+    }
   };
 
   return (
@@ -37,15 +63,15 @@ const RegisterPage = () => {
           </div>
           <div className="px-8 pb-8">
             <MedicoForm onSubmit={handleRegister} defaultValues={defaultValues}>
-              <MedicoInput label="First Name" type="text" name="firstName" />
-              <MedicoInput label="Last Name" type="text" name="lastName" />
-              <MedicoInput label="Contact No" type="text" name="contactNo" />
-              <MedicoInput label="Email" type="text" name="email" />
+              <MedicoInput label="First Name" type="text" name="patient.firstName" />
+              <MedicoInput label="Last Name" type="text" name="patient.lastName" />
+              <MedicoInput label="Contact No" type="text" name="patient.contactNumber" />
+              <MedicoInput label="Email" type="text" name="patient.email" />
               <MedicoInput label="Password" type="password" name="password" />
               <MedicoInput
                 label="Confirm Password"
                 type="password"
-                name="confirmPassword"
+                name="patient.confirmPassword"
               />
               <Button
                 htmlType="submit"
