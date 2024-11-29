@@ -1,7 +1,15 @@
 "use client";
+import {
+  useCreateAppointmentMutation,
+  useGetAllAppointmentQuery,
+} from "@/redux/api/allApi/appointmentApi";
 import React, { useState } from "react";
 
 const CreateAppointmentForm = () => {
+  const [createAppointment] = useCreateAppointmentMutation();
+  const { data } = useGetAllAppointmentQuery({});
+  console.log(data);
+  console.log(createAppointment);
   const [formData, setFormData] = useState({
     doctor: "",
     date: "",
@@ -23,7 +31,7 @@ const CreateAppointmentForm = () => {
 
   // try {
   //   const response = await fetch(
-  //     "http://localhost:5000/api/v1/user/create-patient",
+  //     "http://localhost:5000/api/v1/appointment",
   //     {
   //       // Replace with your API URL
   //       method: "POST",

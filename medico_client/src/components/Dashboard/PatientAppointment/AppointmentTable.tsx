@@ -4,9 +4,9 @@ import type { TableColumnsType } from "antd";
 
 interface DataType {
   key: React.Key;
-  name: string;
-  age: number;
-  address: string;
+  doctorName: string;
+  number: string;
+  time: string;
   SrNo: number;
 }
 
@@ -21,11 +21,11 @@ const columns: TableColumnsType<DataType> = [
   },
   {
     title: "Doctor Number",
-    dataIndex: "age",
+    dataIndex: "number",
   },
   {
     title: "Time",
-    dataIndex: "address",
+    dataIndex: "time",
   },
 ];
 
@@ -33,23 +33,23 @@ const data: DataType[] = [
   {
     key: "1",
     SrNo: 1,
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
+    doctorName: "John Brown",
+    number: "32",
+    time: "New York No. 1 Lake Park",
   },
   {
     key: "2",
     SrNo: 2,
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
+    doctorName: "Jim Green",
+    number: "42",
+    time: "London No. 1 Lake Park",
   },
   {
     key: "3",
     SrNo: 3,
-    name: "Joe Black",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
+    doctorName: "Joe Black",
+    number: "32",
+    time: "Sydney No. 1 Lake Park",
   },
 ];
 
@@ -64,12 +64,17 @@ const AppointmentTable = () => {
     year: "numeric",
   });
   return (
-    <div className="w-full">
+    <div className="w-full bg-white p-5 ">
       <div className="flex items-center gap-2">
         <h2 className="text-lg font-semibold">Appointment List |</h2>
         <p>{formattedDate}</p>
       </div>
-      <Table<DataType> columns={columns} dataSource={data} size="middle" />
+      <Table<DataType>
+        columns={columns}
+        dataSource={data}
+        size="middle"
+        pagination={false}
+      />
     </div>
   );
 };

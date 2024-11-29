@@ -20,7 +20,7 @@ const CreateCalender = () => {
   ]);
 
   return (
-    <div className="mt-5 flex flex-col md:flex-row items-center justify-between gap-10">
+    <div className="mt-5 flex flex-col md:flex-row  justify-between gap-10">
       <div className="bg-white p-5">
         <div className="w-full md:w-[565px] overflow-hidden">
           <FullCalendar
