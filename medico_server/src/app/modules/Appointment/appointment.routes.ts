@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.post(
   '/',
-  auth(UserRole.PATIENT),
+  // auth(UserRole.PATIENT),
   validateRequest(AppointmentValidation.create),
   AppointmentController.createAppointment,
 );

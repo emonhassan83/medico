@@ -363,7 +363,7 @@ export default function SideBar() {
                     Appointments
                   </div>
                 </NavLink>
-                <NavLink href="/appointment-list">
+                <NavLink href="/patient-appointment">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
