@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  // auth(UserRole.ADMIN, UserRole.RECEPTIONIST),
+  auth(UserRole.ADMIN, UserRole.RECEPTIONIST),
   UserController.getAllUser,
 );
 
