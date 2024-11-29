@@ -162,7 +162,7 @@ model PatientHealthData {
   createdAt           DateTime      @default(now())
   updatedAt           DateTime      @updatedAt
 
-  @@map("patientHealthsData")
+  @@map("patientHealthData")
 }
 
 model MedicalReport {

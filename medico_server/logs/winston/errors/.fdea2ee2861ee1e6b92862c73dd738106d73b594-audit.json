@@ -1,0 +1,25 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\projects\\medico\\medico_server\\logs\\winston\\errors\\.fdea2ee2861ee1e6b92862c73dd738106d73b594-audit.json",
+    "files": [
+        {
+            "date": 1732633848013,
+            "name": "C:\\projects\\medico\\medico_server\\logs\\winston\\errors\\medico-2024-26-11-21-error.log",
+            "hash": "124b0458cb9cea4f8eedd2907fa3cb544ab3be82320baa086e91d11f701c6e55"
+        },
+        {
+            "date": 1732638515716,
+            "name": "C:\\projects\\medico\\medico_server\\logs\\winston\\errors\\medico-2024-26-11-22-error.log",
+            "hash": "9d2a7932d79b3c5424ecda000163b471a0d21bdd47df5abad18f06404aa32a88"
+        },
+        {
+            "date": 1732641278311,
+            "name": "C:\\projects\\medico\\medico_server\\logs\\winston\\errors\\medico-2024-26-11-23-error.log",
+            "hash": "bf0c7677ca649bb345b0442537d91d4aa1f41a26d40b5c0e3fc1098148d5118c"
+        }
+    ],
+    "hashType": "sha256"
+}

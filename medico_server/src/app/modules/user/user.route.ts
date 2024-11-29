@@ -47,7 +47,7 @@ router.post(
 
 router.post(
   '/create-patient',
-  auth(UserRole.ADMIN),
+  // auth(UserRole.ADMIN),
   validateRequest(UserValidation.createPatient),
   UserController.createPatient,
 );

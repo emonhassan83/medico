@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+// import ReduxProvider from "@/providers/ReduxProvider";
+import { Toaster } from "sonner";
+import Providers from "@/lib/Providers/Providers";
 
 const poppins = Poppins({ weight: "400", subsets: ["latin"] });
 
@@ -15,8 +18,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html>
-      <body className={`${poppins.className}`}>{children}</body>
-    </html>
+    <Providers>
+      <html>
+        <body className={`${poppins.className}`}>
+          <>
+            <Toaster position="top-center" />
+            {children}
+          </>
+        </body>
+      </html>
+    </Providers>
   );
 }
