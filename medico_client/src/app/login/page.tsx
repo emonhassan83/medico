@@ -13,9 +13,17 @@ import { storeUserInfo } from "@/services/auth.services";
 // Demo credentials array
 const demoCredentials = [
   { role: "Admin", email: "alice.smith@example.com", password: "admin123" },
-  { role: "Receptionist", email: "emily.clark@example.com", password: "receptionist123" },
+  {
+    role: "Receptionist",
+    email: "emily.clark@example.com",
+    password: "receptionist123",
+  },
   { role: "Doctor", email: "michael.adams@example.com", password: "doctor123" },
-  { role: "Patient", email: "ethan.miller@example.com", password: "patient123" },
+  {
+    role: "Patient",
+    email: "ethan.miller@example.com",
+    password: "patient123",
+  },
 ];
 
 const LoginPage = () => {
@@ -23,12 +31,12 @@ const LoginPage = () => {
     email: "alice.smith@example.com",
     password: "admin123",
   });
-  
+
   const handleLogin = async (values: FieldValues) => {
     try {
       const res = await userLogin(values);
       console.log(res);
-
+      console.log(res?.data?.accessToken);
       if (res?.data?.accessToken) {
         toast.success(res?.message);
         storeUserInfo({ accessToken: res?.data?.accessToken });
@@ -52,8 +60,12 @@ const LoginPage = () => {
         <div className="bg-white">
           {/* Welcome Section */}
           <div className="bg-[#D4DBF9] pt-7 pb-10 pl-4 mb-10 rounded">
-            <h5 className="text-[#485EC4] font-medium text-lg">Welcome Back!</h5>
-            <p className="text-[#485EC4] text-sm">Sign in to continue to Medico.</p>
+            <h5 className="text-[#485EC4] font-medium text-lg">
+              Welcome Back!
+            </h5>
+            <p className="text-[#485EC4] text-sm">
+              Sign in to continue to Medico.
+            </p>
           </div>
 
           {/* Login Form */}
@@ -70,11 +82,16 @@ const LoginPage = () => {
               </Button>
             </MedicoForm>
 
-            <p className="text-sm mt-2 text-center text-gray-600">Forgot your password?</p>
+            <p className="text-sm mt-2 text-center text-gray-600">
+              Forgot your password?
+            </p>
 
             {/* Demo Credentials */}
             {demoCredentials.map(({ role, email, password }) => (
-              <div className="flex justify-between items-center mt-4" key={role}>
+              <div
+                className="flex justify-between items-center mt-4"
+                key={role}
+              >
                 <div>
                   <h3 className="text-md text-gray-500">{role}:</h3>
                   <p className="text-sm text-gray-600">Email - {email}</p>

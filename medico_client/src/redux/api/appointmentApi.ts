@@ -14,6 +14,7 @@ export const appointmentApi = baseApi.injectEndpoints({
     }),
     getAllAppointments: build.query({
       query: (arg: Record<string, any>) => {
+        console.log(arg);
         return {
           url: "/appointment",
           method: "GET",
@@ -28,6 +29,13 @@ export const appointmentApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.appointment],
     }),
+    // getAllAppointments: build.query({
+    //   query: () => ({
+    //     url: "/appointment",
+    //     method: "GET",
+    //   }),
+    //   providesTags: [tagTypes.user],
+    // }),
     getMyAppointments: build.query({
       query: (arg: Record<string, any>) => {
         return {

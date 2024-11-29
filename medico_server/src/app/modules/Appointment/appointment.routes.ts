@@ -9,14 +9,14 @@ const router = express.Router();
 
 router.post(
   '/',
-  auth(UserRole.PATIENT),
+  // auth(UserRole.PATIENT),
   validateRequest(AppointmentValidation.create),
   AppointmentController.createAppointment,
 );
 
 router.get(
   '/',
-  auth(UserRole.RECEPTIONIST, UserRole.PATIENT, UserRole.ADMIN),
+  // auth(UserRole.RECEPTIONIST, UserRole.PATIENT, UserRole.ADMIN),
   AppointmentController.getAllFromDB,
 );
 

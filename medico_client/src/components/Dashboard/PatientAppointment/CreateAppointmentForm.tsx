@@ -3,7 +3,7 @@ import {
   useCreateAppointmentMutation,
   useGetAllAppointmentsQuery,
 } from "@/redux/api/appointmentApi";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const CreateAppointmentForm = () => {
   const [createAppointment] = useCreateAppointmentMutation();
@@ -29,6 +29,12 @@ const CreateAppointmentForm = () => {
     e.preventDefault();
     console.log(formData);
   };
+  // useEffect(async () => {
+  //   const data = await fetch("http://localhost:5000/api/v1/appointment").then((res) =>
+  //     res.json()
+  //   );
+  //   console.log(data);
+  // }, []);
 
   // try {
   //   const response = await fetch(
