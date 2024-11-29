@@ -1,8 +1,6 @@
 "use client";
 import CreateAppointmentForm from "@/components/Dashboard/PatientAppointment/CreateAppointmentForm";
-// import MForm from "@/components/Forms/MForm";
-// import MInput from "@/components/Forms/MInput";
-// import MSelect from "@/components/Forms/MSelect";
+
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";

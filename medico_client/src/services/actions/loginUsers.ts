@@ -23,7 +23,7 @@ export const userLogin = async (data: FieldValues) => {
   if (userInfo.data.accessToken) {
     decodedData = jwtDecode(userInfo.data.accessToken) as any;
   }
-
+  console.log({ decodedData, userInfo, res });
   const role = (decodedData?.role).toLowerCase();
 
   if (userInfo.data.accessToken) {
@@ -31,14 +31,11 @@ export const userLogin = async (data: FieldValues) => {
 
     if (role === "admin") {
       redirectUrl = "/dashboard/admin";
-    } 
-    else if (role === "receptionist") {
+    } else if (role === "receptionist") {
       redirectUrl = "/dashboard/receptionist";
-    }
-    else if (role === "doctor") {
+    } else if (role === "doctor") {
       redirectUrl = "/dashboard/doctor";
-    }
-     else if (role === "patient") {
+    } else if (role === "patient") {
       redirectUrl = "/dashboard/patient";
     }
 
