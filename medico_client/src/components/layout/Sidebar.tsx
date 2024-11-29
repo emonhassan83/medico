@@ -80,7 +80,8 @@ const CollapsibleMenu = ({
 };
 
 export default function SideBar() {
-  const [user, setUser] = useState("ADMIN");
+  const [user, setUser] = useState("PATIENT");
+  // const [user, setUser] = useState("DOCTOR");
   const [isSideNavOpen, setIsSideNavOpen] = useState(true);
 
   return (
@@ -342,7 +343,7 @@ export default function SideBar() {
 
             {user === "PATIENT" && (
               <>
-                <NavLink href="/appointments">
+                <NavLink href="/appointments/create">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
