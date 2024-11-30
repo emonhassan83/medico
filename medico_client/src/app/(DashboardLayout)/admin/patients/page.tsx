@@ -20,7 +20,7 @@ const PatientPage = () => {
       </div>
       <div className="mt-5">
         <Link
-          href="/patient/create-appointment"
+          href="#"
           className="text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
         >
           + New Patient
