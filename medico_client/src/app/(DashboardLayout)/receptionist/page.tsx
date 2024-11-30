@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Receptionist = () => {
+const ReceptionistDashboard = () => {
   return (
-    <div>Receptionist page</div>
+    <div>ReceptionistDashboard</div>
   )
 }
 
-export default Receptionist
+export default ReceptionistDashboard

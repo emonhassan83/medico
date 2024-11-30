@@ -25,7 +25,7 @@ const CreateAppoinment = () => {
       </div>
       <div className="mt-5">
         <Link
-          href="/appointments/create"
+          href="/patient/appointments"
           className="flex items-center gap-2 w-[100px] text-white text-sm bg-[#556ee6] hover:bg-blue-700 py-3 px-3 rounded-md"
         >
           <TiArrowLeft className="text-lg" /> Back
