@@ -14,7 +14,6 @@ export const appointmentApi = baseApi.injectEndpoints({
     }),
     getAllAppointments: build.query({
       query: (arg: Record<string, any>) => {
-        console.log(arg);
         return {
           url: "/appointment",
           method: "GET",
@@ -60,10 +59,10 @@ export const appointmentApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.appointment],
     }),
     appointmentStatusChange: build.mutation({
-      query: (data) => ({
-        url: `/appointment/status/${data.id}`,
+      query: ({ id, status }) => ({
+        url: `/appointment/status/${id}`,
         method: "PATCH",
-        data: data.body,
+        data: { status },
       }),
       invalidatesTags: [tagTypes.appointment],
     }),

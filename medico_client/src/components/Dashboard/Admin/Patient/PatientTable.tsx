@@ -1,49 +1,22 @@
 "use client";
 import React, { useState } from "react";
-import { Table, Button, Input, Divider } from "antd";
+import { Table, Button, Input, Divider, Space } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
+import { useGetAllPatientQuery } from "@/redux/api/patientApi";
+import Link from "next/link";
+import { FaEye } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 
-const DoctorTable = () => {
-  const { data } = useGetAllDoctorsQuery({});
-  // console.log(data?.doctors);
-  // console.log(data?.meta);
-
+const PatientTable = () => {
+  const { data } = useGetAllPatientQuery({});
+  //   console.log(data);
   const [searchText, setSearchText] = useState("");
 
-  // Filter data based on search text
-  const filteredData = data?.doctors?.filter((doctor) =>
-    doctor.firstName.toLowerCase().includes(searchText.toLowerCase())
+  //   Filter data based on search text
+  const filteredData = data?.patients?.filter((pt: any) =>
+    pt.firstName.toLowerCase().includes(searchText.toLowerCase())
   );
-
-  // const dataSource = [
-  //   {
-  //     key: "1",
-  //     title: "Miss",
-  //     name: "Ruchi Rani",
-  //     department: "Cardiology",
-  //     contact: "9988776655",
-  //     email: "r@gmail.com",
-  //   },
-  //   {
-  //     key: "2",
-  //     title: "asdasd",
-  //     name: "t ad",
-  //     department: "Oncology",
-  //     contact: "1234567890",
-  //     email: "doctor11@themesbrand.website",
-  //   },
-  //   {
-  //     key: "3",
-  //     title: "dcdc",
-  //     name: "test trst",
-  //     department: "Dental",
-  //     contact: "1111111111",
-  //     email: "doctors@demo.com",
-  //   },
-  //   // Add more data here
-  // ];
-
   const columns = [
     {
       title: "Sr. No",
@@ -53,31 +26,59 @@ const DoctorTable = () => {
       render: (_: any, __: any, index: number) => index + 1,
     },
     {
-      title: "Title",
-      dataIndex: "qualification",
-      key: "title",
-    },
-    {
       title: "Name",
       dataIndex: "firstName",
-      key: "name",
-    },
-    {
-      title: "Department",
-      dataIndex: "designation",
-      key: "designation",
+      key: "firstName",
     },
     {
       title: "Contact No",
       dataIndex: "contactNumber",
-      key: "contact",
+      key: "contactNumber",
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
     },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Options",
+      key: "action",
+      render: () => (
+        <div className="flex gap-1">
+          {/* update Button */}
+          <Link href="#">
+            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
+              <FaEye />
+            </button>
+          </Link>
+
+          {/* edit button */}
+          <Link href="#">
+            <button
+              className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
+              //   onClick={() => handleEdit(items)}
+            >
+              <MdEdit />
+            </button>
+          </Link>
+
+          {/* delete button */}
+          <button
+            className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
+            //   onClick={() => handleDelete(items)}
+          >
+            <RiDeleteBin6Fill />
+          </button>
+        </div>
+      ),
+    },
   ];
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
@@ -137,4 +138,4 @@ const DoctorTable = () => {
   );
 };
 
-export default DoctorTable;
+export default PatientTable;
