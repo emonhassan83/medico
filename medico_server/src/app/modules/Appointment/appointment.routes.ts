@@ -8,28 +8,28 @@ import { AppointmentValidation } from './appointment.validation';
 const router = express.Router();
 
 router.post(
-    '/',
-    auth(UserRole.PATIENT),
-    validateRequest(AppointmentValidation.create),
-    AppointmentController.createAppointment
+  '/',
+  // auth(UserRole.PATIENT),
+  validateRequest(AppointmentValidation.create),
+  AppointmentController.createAppointment,
 );
 
 router.get(
-    '/',
-    auth(UserRole.RECEPTIONIST, UserRole.ADMIN, UserRole.PATIENT),
-    AppointmentController.getAllFromDB
+  '/',
+  // auth(UserRole.RECEPTIONIST, UserRole.PATIENT, UserRole.ADMIN),
+  AppointmentController.getAllFromDB,
 );
 
 router.get(
-    '/my-appointment',
-    auth(UserRole.DOCTOR, UserRole.PATIENT),
-    AppointmentController.getMyAppointment
+  '/my-appointment',
+  auth(UserRole.DOCTOR, UserRole.PATIENT),
+  AppointmentController.getMyAppointment,
 );
 
 router.patch(
-    '/status/:id',
-    auth(UserRole.RECEPTIONIST, UserRole.ADMIN, UserRole.DOCTOR),
-    AppointmentController.changeAppointmentStatus
+  '/status/:id',
+  auth(UserRole.RECEPTIONIST, UserRole.ADMIN, UserRole.DOCTOR),
+  AppointmentController.changeAppointmentStatus,
 );
 
 export const AppointmentRoutes = router;

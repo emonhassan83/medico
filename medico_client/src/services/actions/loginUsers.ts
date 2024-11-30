@@ -20,29 +20,26 @@ export const userLogin = async (data: FieldValues) => {
   let decodedData = null;
   const userInfo = await res.json();
 
-  if (userInfo.data.accessToken) {
-    decodedData = jwtDecode(userInfo.data.accessToken) as any;
+  if (userInfo?.data?.accessToken) {
+    decodedData = jwtDecode(userInfo?.data?.accessToken) as any;
   }
-
+  console.log({ decodedData, userInfo, res });
   const role = (decodedData?.role).toLowerCase();
 
-  if (userInfo.data.accessToken) {
+  if (userInfo?.data?.accessToken) {
     let redirectUrl = "/dashboard";
 
     if (role === "admin") {
       redirectUrl = "/dashboard/admin";
-    } 
-    else if (role === "receptionist") {
+    } else if (role === "receptionist") {
       redirectUrl = "/dashboard/receptionist";
-    }
-    else if (role === "doctor") {
+    } else if (role === "doctor") {
       redirectUrl = "/dashboard/doctor";
-    }
-     else if (role === "patient") {
+    } else if (role === "patient") {
       redirectUrl = "/dashboard/patient";
     }
 
-    setAccessToken(userInfo.data.accessToken, {
+    setAccessToken(userInfo?.data?.accessToken, {
       redirect: redirectUrl,
     });
   }
