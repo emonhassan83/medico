@@ -7,7 +7,7 @@ import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 const DoctorTable = () => {
   const { data } = useGetAllDoctorsQuery({});
   // console.log(data?.doctors);
-  console.log(data?.meta);
+  // console.log(data?.meta);
 
   const [searchText, setSearchText] = useState("");
 

@@ -38,7 +38,6 @@ const CreateAppoinment = () => {
               Book Appointment
             </h2>
           </div>
-
           <CreateAppointmentForm />
         </div>
       </div>

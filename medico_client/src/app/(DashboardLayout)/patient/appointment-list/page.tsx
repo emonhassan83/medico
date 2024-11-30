@@ -3,183 +3,119 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Button, Table, Tag, Space, TableColumnsType } from "antd";
 import { BsSlash } from "react-icons/bs";
+import {
+  useAppointmentStatusChangeMutation,
+  useGetAllAppointmentsQuery,
+} from "@/redux/api/appointmentApi";
+import { Appointment } from "@/types/appointmentType";
+import { ColumnsType } from "antd/es/table";
 
-interface AppointmentData {
-  key: React.Key;
+type AppointmentData = {
+  key: string;
   srNo: number;
+  status: string;
   doctorName: string;
   date: string;
   time: string;
-  status: string;
-}
-
-const columns = (
-  handleCancel: (key: React.Key) => void
-): TableColumnsType<AppointmentData> => [
-  {
-    title: "Sr. No",
-    dataIndex: "srNo",
-    key: "srNo",
-  },
-  {
-    title: "Doctor Name",
-    dataIndex: "doctorName",
-    key: "doctorName",
-  },
-  {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
-  },
-  {
-    title: "Time",
-    dataIndex: "time",
-    key: "time",
-  },
-  {
-    title: "Status",
-    dataIndex: "status",
-    key: "status",
-    render: (status: string) => {
-      const backgroundColor = status === "Pending" ? "#f1b44c" : "#f46a6a";
-      return (
-        <span
-          style={{
-            backgroundColor: backgroundColor,
-            color: "white",
-            fontSize: "10px",
-            border: "none",
-            padding: "2px 8px",
-            borderRadius: "4px",
-          }}
-          className="text"
-        >
-          {status}
-        </span>
-      );
-    },
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: (_: any, record: AppointmentData) => (
-      <Space>
-        {record.status === "Pending" && (
-          <Button
-            type="primary"
-            style={{ backgroundColor: "#f46a6a" }}
-            onClick={() => handleCancel(record.key)}
-          >
-            Cancel
-          </Button>
-        )}
-      </Space>
-    ),
-  },
-];
-
-const dataSource: AppointmentData[] = [
-  {
-    key: 1,
-    srNo: 1,
-    doctorName: "Houston Greenfelder",
-    date: "2024-11-29",
-    time: "10:00:00 to 12:30:00",
-    status: "Pending",
-  },
-  {
-    key: 2,
-    srNo: 2,
-    doctorName: "Grace Nicolas II",
-    date: "2024-11-28",
-    time: "10:00:00 to 12:30:00",
-    status: "Pending",
-  },
-  {
-    key: 3,
-    srNo: 3,
-    doctorName: "Andre Cronin",
-    date: "2024-11-27",
-    time: "16:00:00 to 17:30:00",
-    status: "Pending",
-  },
-  {
-    key: 4,
-    srNo: 4,
-    doctorName: "Andre Cronin",
-    date: "2024-11-27",
-    time: "16:00:00 to 17:30:00",
-    status: "Pending",
-  },
-  {
-    key: 5,
-    srNo: 5,
-    doctorName: "Andre Cronin",
-    date: "2024-11-27",
-    time: "16:00:00 to 17:30:00",
-    status: "Pending",
-  },
-  {
-    key: 6,
-    srNo: 6,
-    doctorName: "Andre Cronin",
-    date: "2024-11-27",
-    time: "16:00:00 to 17:30:00",
-    status: "Pending",
-  },
-  {
-    key: 7,
-    srNo: 7,
-    doctorName: "Andre Cronin",
-    date: "2024-11-27",
-    time: "16:00:00 to 17:30:00",
-    status: "Pending",
-  },
-  {
-    key: 8,
-    srNo: 8,
-    doctorName: "Andre Cronin",
-    date: "2024-11-27",
-    time: "16:00:00 to 17:30:00",
-    status: "Pending",
-  },
-  {
-    key: 9,
-    srNo: 9,
-    doctorName: "Andre Cronin",
-    date: "2024-11-27",
-    time: "16:00:00 to 17:30:00",
-    status: "Pending",
-  },
-  {
-    key: 10,
-    srNo: 10,
-    doctorName: "Andre Cronin",
-    date: "2024-11-27",
-    time: "16:00:00 to 17:30:00",
-    status: "Pending",
-  },
-  {
-    key: 11,
-    srNo: 11,
-    doctorName: "Andre Cronin",
-    date: "2024-11-27",
-    time: "16:00:00 to 17:30:00",
-    status: "Pending",
-  },
-];
+};
 
 const PatientAppointment = () => {
-  const [appointments, setAppointments] = useState(dataSource);
+  // const [appointments, setAppointments] = useState(dataSource);
+  const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
+  const { data, refetch } = useGetAllAppointmentsQuery({});
+  console.log(data?.appointments);
 
-  const handleCancel = (key: React.Key) => {
-    const updatedAppointments = appointments.map((appointment) =>
-      appointment.key === key
-        ? { ...appointment, status: "Cancel" }
-        : appointment
-    );
-    setAppointments(updatedAppointments);
+  // Map data with proper keys and types
+  const tableData: AppointmentData[] =
+    data?.appointments?.map((appointment: Appointment, index: number) => ({
+      key: appointment.id || `${index}`, // Use _id or fallback
+      srNo: index + 1,
+      status: appointment.status || "N/A",
+      doctorName: `${appointment?.doctor?.firstName || "N/A"} ${
+        appointment?.doctor?.lastName || ""
+      }`,
+      date: appointment.createdAt?.slice(0, 10) || "N/A",
+      time: appointment.createdAt?.slice(11, 19) || "N/A",
+    })) || [];
+  // console.log(tableData);
+
+  //update status function in here
+  const handleCancel = async (appointmentId: string) => {
+    console.log(appointmentId);
+    try {
+      await appointmentStatusChange({
+        id: appointmentId,
+        status: "CANCELED",
+      }).unwrap();
+      refetch(); // Explicitly fetch the latest data
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
   };
+
+  const columns: ColumnsType<AppointmentData> = [
+    {
+      title: "Sr.No",
+      dataIndex: "srNo",
+      key: "srNo",
+      render: (_: any, __: any, index: number) => index + 1,
+    },
+    {
+      title: "Doctor Name",
+      dataIndex: "doctorName",
+      key: "doctorName",
+    },
+    {
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Time",
+      dataIndex: "time",
+      key: "time",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status: string) => {
+        const backgroundColor = status !== "CANCELED" ? "#f1b44c" : "#f46a6a";
+        return (
+          <span
+            style={{
+              backgroundColor: backgroundColor,
+              color: "white",
+              fontSize: "10px",
+              border: "none",
+              padding: "2px 8px",
+              borderRadius: "4px",
+            }}
+            className="text"
+          >
+            {status}
+          </span>
+        );
+      },
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_: any, record: AppointmentData) => (
+        <Space>
+          {record.status !== "CANCELED" && (
+            <Button
+              type="primary"
+              style={{ backgroundColor: "#f46a6a" }}
+              onClick={() => handleCancel(record.key)}
+            >
+              Cancel
+            </Button>
+          )}
+        </Space>
+      ),
+    },
+  ];
 
   return (
     <div className="mx-5">
@@ -201,13 +137,32 @@ const PatientAppointment = () => {
 
       {/* Table Section */}
       <div className="p-5  bg-white ">
-        <div className="border border-[#f4f2f2]">
-          <Table
-            dataSource={appointments}
-            columns={columns(handleCancel)}
-            pagination={{ pageSize: 10 }}
-          />
-        </div>
+        <Table
+          dataSource={tableData}
+          columns={columns}
+          pagination={{ pageSize: 10 }}
+          bordered
+        />
+      </div>
+      <div className="relative hidden md:block p-5">
+        {data?.meta?.page === 1 ? (
+          <div className="absolute text-[#495072] text-sm bottom-20">
+            {data?.meta?.total <= 10 ? (
+              <div>
+                showing 1 to {data?.meta?.total} of {data?.meta?.total} entries
+              </div>
+            ) : (
+              <div>
+                showing 1 to {data?.meta?.limit} of {data?.meta?.total} entries
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="absolute text-[#495072]  text-sm bottom-20">
+            showing 1 to (({data?.meta?.page} - 1)* {data?.meta?.limit} ) of{" "}
+            {data?.meta?.total} entries
+          </div>
+        )}
       </div>
     </div>
   );
