@@ -9,15 +9,21 @@ const router = express.Router();
 
 router.post(
   '/',
-  auth(UserRole.PATIENT),
+  // auth(UserRole.PATIENT),
   validateRequest(AppointmentValidation.create),
   AppointmentController.createAppointment,
 );
 
 router.get(
+<<<<<<< HEAD
     '/',
     auth(UserRole.RECEPTIONIST, UserRole.ADMIN, UserRole.PATIENT),
     AppointmentController.getAllFromDB
+=======
+  '/',
+  // auth(UserRole.RECEPTIONIST, UserRole.PATIENT, UserRole.ADMIN),
+  AppointmentController.getAllFromDB,
+>>>>>>> b2028668b1b3acba9ed65b5a553bb3e59fb0f9cf
 );
 
 router.get(
@@ -28,7 +34,7 @@ router.get(
 
 router.patch(
   '/status/:id',
-  auth(UserRole.RECEPTIONIST, UserRole.ADMIN, UserRole.DOCTOR),
+  // auth(UserRole.RECEPTIONIST, UserRole.ADMIN, UserRole.DOCTOR),
   AppointmentController.changeAppointmentStatus,
 );
 

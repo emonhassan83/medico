@@ -1,38 +1,36 @@
-import CreateCalender from "@/components/Dashboard/PatientAppointment/CreateCalender";
+import DoctorTAble from "@/components/Dashboard/Admin/Doctor/DoctorTable";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
 
-const AppointmentPage = () => {
+const Doctor = () => {
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
         <div>
-          <h2 className="text-lg text-[#495057] font-semibold">
-            Book Appointment
-          </h2>
+          <h2 className="text-lg text-[#495057] font-semibold">DOCTOR LIST</h2>
         </div>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
           <Link href="#" className="">
             Dashboard
           </Link>
           <BsSlash className="text-[#ccc]" />
-          <Link href="#">Appointment</Link>
+          <Link href="#">Doctors</Link>
         </div>
       </div>
       <div className="mt-5">
         <Link
-          href="/appoinment-create"
+          href="/admin/doctors/create"
           className="text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
         >
-          + New Appointment
+          + New Docto
         </Link>
       </div>
-      <div>
-        <CreateCalender />
+      <div className="pt-5">
+        <DoctorTAble />
       </div>
     </div>
   );
 };
 
-export default AppointmentPage;
+export default Doctor;
