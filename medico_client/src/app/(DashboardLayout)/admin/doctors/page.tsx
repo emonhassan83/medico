@@ -23,7 +23,7 @@ const Doctor = () => {
           href="/admin/doctors/create"
           className="text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
         >
-          + New Docto
+          + New Doctor
         </Link>
       </div>
       <div className="pt-5">

@@ -15,15 +15,9 @@ router.post(
 );
 
 router.get(
-<<<<<<< HEAD
-    '/',
-    auth(UserRole.RECEPTIONIST, UserRole.ADMIN, UserRole.PATIENT),
-    AppointmentController.getAllFromDB
-=======
   '/',
   // auth(UserRole.RECEPTIONIST, UserRole.PATIENT, UserRole.ADMIN),
   AppointmentController.getAllFromDB,
->>>>>>> b2028668b1b3acba9ed65b5a553bb3e59fb0f9cf
 );
 
 router.get(
