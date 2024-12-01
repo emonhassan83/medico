@@ -14,14 +14,6 @@ export const patientApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.patient],
     }),
-    // getAllPatient: build.query({
-    //   query: () => ({
-    //     url: "/patient",
-    //     method: "GET",
-    //   }),
-    //   providesTags: [tagTypes.patient],
-    // }),
-
     getAllPatient: build.query({
       query: (arg: Record<string, any>) => ({
         url: "/patient",
@@ -36,7 +28,50 @@ export const patientApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.patient],
     }),
+
+    getSinglePatient: build.query({
+      query: (id: string | string[] | undefined) => ({
+        url: `/patient/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.patient],
+    }),
+
+    deletePatient: build.mutation({
+      query: (id) => ({
+        url: `/patient/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.patient],
+    }),
+    softDeletePatient: build.mutation({
+      query: (id) => ({
+        url: `/patient/soft/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.patient],
+    }),
+
+    // update a patient
+    updatePatient: build.mutation({
+      query: (data) => {
+        console.log(data);
+        return {
+          url: `/patient/${data.id}`,
+          method: "PATCH",
+          data: data.body,
+        };
+      },
+      invalidatesTags: [tagTypes.patient, tagTypes.user],
+    }),
   }),
 });
 
-export const { useCreatePatientMutation, useGetAllPatientQuery } = patientApi;
+export const {
+  useCreatePatientMutation,
+  useGetAllPatientQuery,
+  useGetSinglePatientQuery,
+  useDeletePatientMutation,
+  useSoftDeletePatientMutation,
+  useUpdatePatientMutation,
+} = patientApi;
