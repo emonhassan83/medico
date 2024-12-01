@@ -7,7 +7,8 @@ import { patientValidation } from './patient.validations';
 
 const router = express.Router();
 
-router.get('/', auth(UserRole.ADMIN), PatientController.getAllFromDB);
+// router.get('/', auth(UserRole.ADMIN), PatientController.getAllFromDB);
+router.get('/', PatientController.getAllFromDB);
 
 router.get(
   '/:id',
