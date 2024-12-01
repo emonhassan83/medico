@@ -16,7 +16,7 @@ router.post(
 
 router.get(
     '/',
-    auth(UserRole.RECEPTIONIST, UserRole.ADMIN),
+    auth(UserRole.RECEPTIONIST, UserRole.ADMIN, UserRole.PATIENT),
     AppointmentController.getAllFromDB
 );
 

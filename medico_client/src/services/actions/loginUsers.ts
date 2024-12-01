@@ -23,8 +23,6 @@ export const userLogin = async (data: FieldValues) => {
   if (userInfo.data.accessToken) {
     decodedData = jwtDecode(userInfo.data.accessToken) as any;
   }
-  console.log(decodedData);
-  
 
   const role = (decodedData?.role).toLowerCase();
 
