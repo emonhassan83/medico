@@ -12,6 +12,14 @@ import MedicoSelect from "@/components/Forms/MedicoSelect";
 
 export const defaultValues = {
   password: "",
+  gender: "",
+  bloodGroup: "",
+  height: "",
+  weight: "",
+  diet: "",
+  pulse: "",
+  dietaryPreferences: "",
+  maritalStatus: "",
   patient: {
     firstName: "",
     lastName: "",
@@ -44,7 +52,7 @@ const CreatePatients = () => {
     // }
   };
 
-  const handleCreateDoctor = async (values: FieldValues) => {
+  const handleCreatePatient = async (values: FieldValues) => {
     console.log(values);
   };
 
@@ -78,7 +86,7 @@ const CreatePatients = () => {
           Basic Information
         </div>
 
-        <MedicoForm onSubmit={handleCreateDoctor} defaultValues={defaultValues}>
+        <MedicoForm onSubmit={handleCreatePatient} defaultValues={defaultValues}>
           {/* Rows of Input Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
             <MedicoInput
