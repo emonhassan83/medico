@@ -1,12 +1,17 @@
+/* eslint-disable react/jsx-key */
 "use client";
 
 import Link from "next/link";
 import React from "react";
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined
+} from "@ant-design/icons";
 import MedicoForm from "@/components/Forms/MedicoForm";
 import MedicoInput from "@/components/Forms/MedicoInput";
-import { Button } from "antd";
+import { Button, Image, Card, Upload } from "antd";
 import { FieldValues } from "react-hook-form";
+import MedicoSelect from "@/components/Forms/MedicoSelect";
+import { useGetAllSpecialtiesQuery } from "@/redux/api/specialitiesApi";
 
 export const defaultValues = {
   password: "",
@@ -19,7 +24,6 @@ export const defaultValues = {
     gender: "",
     designation: "",
     registrationNumber: "",
-    doctorSpecialties: "",
     qualification: "",
     experience: "",
     appointmentFee: "",
@@ -29,6 +33,34 @@ export const defaultValues = {
 };
 
 const Doctor = () => {
+  const { data: specialties } = useGetAllSpecialtiesQuery([]);
+
+  const specialtiesOptions = specialties?.data?.map((item: any) => ({
+    value: item.id,
+    label: `${item.title}`,
+  }));
+
+  const handleFileUpload = async (file: File) => {
+    console.log(file);
+
+    // try {
+    //   const image = await uploadImageToImgbb(file);
+
+    //   const updatedUserData = {
+    //     id: data?.data?._id,
+    //     userData: {
+    //       photoUrl: image },
+    //   };
+
+    //   const upload = await updateMyProfile(updatedUserData).unwrap();
+    //   if (upload?.success) {
+    //     toast.success("Profile photo updated successfully");
+    //   }
+    // } catch (error) {
+    //   console.error("Failed to upload image:", error);
+    // }
+  };
+
   const handleCreateDoctor = async (values: FieldValues) => {
     console.log(values);
   };
@@ -64,7 +96,11 @@ const Doctor = () => {
         <MedicoForm onSubmit={handleCreateDoctor} defaultValues={defaultValues}>
           {/* Rows of Input Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-            <MedicoInput label="First Name" type="text" name="doctor.firstName" />
+            <MedicoInput
+              label="First Name"
+              type="text"
+              name="doctor.firstName"
+            />
             <MedicoInput label="Last Name" type="text" name="doctor.lastName" />
 
             <MedicoInput
@@ -75,7 +111,15 @@ const Doctor = () => {
             <MedicoInput label="Email" type="text" name="doctor.email" />
 
             <MedicoInput label="Address" type="text" name="doctor.address" />
-            <MedicoInput label="Gender" type="text" name="doctor.gender" />
+            <MedicoSelect
+              name="gender"
+              label="Gender"
+              options={[
+                { value: "MALE", label: "Male" },
+                { value: "FEMALE", label: "Female" },
+                { value: "UNKNOWN", label: "Unknown" },
+              ]}
+            />
 
             <MedicoInput
               label="Designation"
@@ -88,10 +132,11 @@ const Doctor = () => {
               name="doctor.registrationNumber"
             />
 
-            <MedicoInput
+            <MedicoSelect
+              name="specialties"
               label="Specialties"
-              type="text"
-              name="doctor.doctorSpecialties"
+              mode="multiple"
+              options={specialtiesOptions}
             />
             <MedicoInput
               label="Qualification"
@@ -111,11 +156,56 @@ const Doctor = () => {
               type="text"
               name="doctor.currentWorkingPlace"
             />
-            <MedicoInput
+            {/* <MedicoInput
               label="Profile Photo"
               type="text"
               name="doctor.profilePhoto"
-            />
+            /> */}
+            <div className="h-10 w-full">
+              <p
+                className="block text-sm font-medium text-gray-700"
+                style={{ marginBottom: "5px" }}
+              >
+                Profile URL
+              </p>
+              <Card
+                cover={
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "180px",
+                      width: "180px",
+                      margin: "auto",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    <Upload
+                      customRequest={({ file }) =>
+                        handleFileUpload(file as File)
+                      }
+                      showUploadList={false}
+                      accept="image/*"
+                    >
+                      <Image
+                        src="https://i.ibb.co/Gx3Rg6S/download.jpg"
+                        alt="User Photo"
+                        preview={false}
+                        style={{
+                          height: "140px",
+                          width: "140px",
+                          objectFit: "cover",
+                          cursor: "pointer",
+                          borderRadius: "50%",
+                          border: "2px solid #ddd",
+                        }}
+                      />
+                    </Upload>
+                  </div>
+                }
+              />
+            </div>
           </div>
 
           {/* Submit Button */}
