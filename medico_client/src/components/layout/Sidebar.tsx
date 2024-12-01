@@ -91,8 +91,8 @@ const CollapsibleMenu = ({
 
 export default function SideBar() {
   // const [user, setUser] = useState("PATIENT");
-  // const [user, setUser] = useState("DOCTOR");
-  const [user, setUser] = useState("ADMIN");
+  const [user, setUser] = useState("DOCTOR");
+  // const [user, setUser] = useState("ADMIN");
   // const [user, setUser] = useState("RECEPTIONIST");
   const [isSideNavOpen, setIsSideNavOpen] = useState(true);
 
@@ -105,15 +105,18 @@ export default function SideBar() {
           isSideNavOpen ? "translate-x-0" : " -translate-x-full"
         }`}
       >
-        <Link href="/" className="relative p-6 text-xl font-medium">
+        <Link
+          href="/"
+          className=" py-6 mx-8 text-xl font-medium flex items-center gap-1"
+        >
           <Image
             src="/Logo.png"
-            className="mx-auto size-24"
-            width={195}
+            className="mx-auto font-extrabold"
+            width={50}
             height={40}
             alt="Logo"
           />
-          <p className="absolute text-white font-[1000] text-3xl uppercase tracking-[0.1em] left-0 right-0 mx-auto text-center bottom-5">
+          <p className=" text-[#b2b2b2] font-bold text-2xl uppercase tracking-[0.1em] left-0 right-0 mx-auto text-center bottom-5">
             Medico
           </p>
         </Link>
