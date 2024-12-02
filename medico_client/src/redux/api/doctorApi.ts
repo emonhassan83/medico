@@ -9,7 +9,6 @@ export const doctorApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: "/user/create-doctor",
         method: "POST",
-        contentType: "multipart/form-data",
         data,
       }),
       invalidatesTags: [tagTypes.doctor],
@@ -37,6 +36,7 @@ export const doctorApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.doctor],
     }),
+
     //get single doctor
     getDoctor: build.query({
       query: (id: string | string[] | undefined) => ({
@@ -45,6 +45,7 @@ export const doctorApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.doctor],
     }),
+
     // update a doctor
     updateDoctor: build.mutation({
       query: (data) => {
@@ -52,7 +53,7 @@ export const doctorApi = baseApi.injectEndpoints({
         return {
           url: `/doctor/${data.id}`,
           method: "PATCH",
-          data: data.body,
+          data: data?.data,
         };
       },
       invalidatesTags: [tagTypes.doctor, tagTypes.user],

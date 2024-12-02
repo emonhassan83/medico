@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import {
   ArrowLeftOutlined
 } from "@ant-design/icons";
@@ -12,6 +12,9 @@ import { Button, Image, Card, Upload } from "antd";
 import { FieldValues } from "react-hook-form";
 import MedicoSelect from "@/components/Forms/MedicoSelect";
 import { useGetAllSpecialtiesQuery } from "@/redux/api/specialitiesApi";
+import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
+import { toast } from "sonner";
+import { useCreateDoctorMutation, useUpdateDoctorMutation } from "@/redux/api/doctorApi";
 
 export const defaultValues = {
   password: "",
@@ -33,7 +36,10 @@ export const defaultValues = {
 };
 
 const Doctor = () => {
+  const [photo, setPhoto] = useState("");
   const { data: specialties } = useGetAllSpecialtiesQuery([]);
+  const [createDoctor] = useCreateDoctorMutation();
+  const [updateDoctor] = useUpdateDoctorMutation();
 
   const specialtiesOptions = specialties?.data?.map((item: any) => ({
     value: item.id,
@@ -41,24 +47,16 @@ const Doctor = () => {
   }));
 
   const handleFileUpload = async (file: File) => {
-    console.log(file);
-
-    // try {
-    //   const image = await uploadImageToImgbb(file);
-
-    //   const updatedUserData = {
-    //     id: data?.data?._id,
-    //     userData: {
-    //       photoUrl: image },
-    //   };
-
-    //   const upload = await updateMyProfile(updatedUserData).unwrap();
-    //   if (upload?.success) {
-    //     toast.success("Profile photo updated successfully");
-    //   }
-    // } catch (error) {
-    //   console.error("Failed to upload image:", error);
-    // }
+    try {
+      const image = await uploadImageToImgbb(file);
+      
+      if (image) {
+        toast.success("Doctor Photo Upload successfully");
+      }
+      setPhoto(image);
+    } catch (error) {
+      console.error("Failed to upload image:", error);
+    }
   };
 
   const handleCreateDoctor = async (values: FieldValues) => {
@@ -156,11 +154,7 @@ const Doctor = () => {
               type="text"
               name="doctor.currentWorkingPlace"
             />
-            {/* <MedicoInput
-              label="Profile Photo"
-              type="text"
-              name="doctor.profilePhoto"
-            /> */}
+
             <div className="h-10 w-full">
               <p
                 className="block text-sm font-medium text-gray-700"
