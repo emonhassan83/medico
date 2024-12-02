@@ -7,14 +7,15 @@ import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 
-const PatientTable = () => {
-  const { data } = useGetAllPatientQuery({});
-  //   console.log(data);
+const ReceptionistTable = () => {
+  const { data } = useGetAllReceptionQuery({});
+  // console.log(data);
   const [searchText, setSearchText] = useState("");
 
   //   Filter data based on search text
-  const filteredData = data?.patients?.filter((pt: any) =>
+  const filteredData = data?.receptionist?.filter((pt: any) =>
     pt.firstName.toLowerCase().includes(searchText.toLowerCase())
   );
   const columns = [
@@ -29,6 +30,8 @@ const PatientTable = () => {
       title: "Name",
       dataIndex: "firstName",
       key: "firstName",
+      sorter: (a: any, b: any) =>
+        a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase()),
     },
     {
       title: "Contact No",
@@ -39,8 +42,9 @@ const PatientTable = () => {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      sorter: (a: any, b: any) =>
+        a.email.toLowerCase().localeCompare(b.email.toLowerCase()),
     },
-
     {
       title: "Options",
       key: "action",
@@ -134,4 +138,4 @@ const PatientTable = () => {
   );
 };
 
-export default PatientTable;
+export default ReceptionistTable;
