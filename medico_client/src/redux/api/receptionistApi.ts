@@ -5,6 +5,15 @@ import { TReceptionist } from "@/types/receptionistType";
 
 export const receptionistApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
+    createReceptionist: build.mutation({
+      query: (data) => ({
+        url: "/user/create-receptionist",
+        method: "POST",
+        data,
+      }),
+      invalidatesTags: [tagTypes.receptionist],
+    }),
+
     getAllReception: build.query({
       query: (arg: Record<string, any>) => ({
         url: "/receptionist",
@@ -36,6 +45,7 @@ export const receptionistApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.receptionist],
     }),
+
     softDeleteReceptionist: build.mutation({
       query: (id) => ({
         url: `/receptionist/soft/${id}`,
@@ -47,7 +57,6 @@ export const receptionistApi = baseApi.injectEndpoints({
     // update a doctor
     updateReceptionist: build.mutation({
       query: (data) => {
-        console.log(data);
         return {
           url: `/receptionist/${data.id}`,
           method: "PATCH",
@@ -60,6 +69,7 @@ export const receptionistApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useCreateReceptionistMutation,
   useGetAllReceptionQuery,
   useGetReceptionistQuery,
   useDeleteReceptionistMutation,

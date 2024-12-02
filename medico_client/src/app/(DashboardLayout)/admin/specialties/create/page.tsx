@@ -2,43 +2,58 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import MedicoForm from "@/components/Forms/MedicoForm";
 import MedicoInput from "@/components/Forms/MedicoInput";
 import { Button, Image, Card, Upload } from "antd";
 import { FieldValues } from "react-hook-form";
 import MedicoTextArea from "@/components/Forms/MedicoTextArea";
+import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
+import { toast } from "sonner";
+import { useCreateSpecialtyMutation } from "@/redux/api/specialitiesApi";
 
 export const defaultValues = {
   title: "",
-  descriptions: "",
+  icon: "",
+  description: "",
 };
 
 const CreateSpecialties = () => {
+  const [icon, setIcon] = useState("");
+  const [createSpecialty] = useCreateSpecialtyMutation();
+
   const handleFileUpload = async (file: File) => {
-    console.log(file);
-
-    // try {
-    //   const image = await uploadImageToImgbb(file);
-
-    //   const updatedUserData = {
-    //     id: data?.data?._id,
-    //     userData: {
-    //       photoUrl: image },
-    //   };
-
-    //   const upload = await updateMyProfile(updatedUserData).unwrap();
-    //   if (upload?.success) {
-    //     toast.success("Profile photo updated successfully");
-    //   }
-    // } catch (error) {
-    //   console.error("Failed to upload image:", error);
-    // }
+    try {
+      const image = await uploadImageToImgbb(file);
+      
+      if (image) {
+        toast.success("Specialties Icon Upload successfully");
+      }
+      setIcon(image);
+    } catch (error) {
+      console.error("Failed to upload image:", error);
+    }
   };
 
   const handleCreateSpecialties = async (values: FieldValues) => {
-    console.log(values);
+    try {
+      const specialtiesData = {
+        title: values.title,
+        icon,
+        description: values.description
+      }
+      
+      const res = await createSpecialty(specialtiesData).unwrap();
+      
+      if(res?.id){
+        toast.success("Specialties created successfully!");
+      }
+      
+    } catch (err: any) {
+      toast.error(err.message);
+      console.error(err.message);
+    }
   };
 
   return (
@@ -117,7 +132,7 @@ const CreateSpecialties = () => {
                           alt="Specialties Icon"
                           preview={false}
                           style={{
-                            marginTop: "40px",
+                            marginTop: "60px",
                             height: "100%", 
                             width: "100%",
                             objectFit: "cover",

@@ -2,12 +2,15 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import MedicoForm from "@/components/Forms/MedicoForm";
 import MedicoInput from "@/components/Forms/MedicoInput";
 import { Button, Image, Card, Upload } from "antd";
 import { FieldValues } from "react-hook-form";
+import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
+import { toast } from "sonner";
+import { useCreateReceptionistMutation } from "@/redux/api/receptionistApi";
 
 export const defaultValues = {
   password: "",
@@ -22,29 +25,46 @@ export const defaultValues = {
 };
 
 const CreateReceptionist = () => {
+  const [photo, setPhoto] = useState("");
+  const [createReceptionist] = useCreateReceptionistMutation();
+
   const handleFileUpload = async (file: File) => {
-    console.log(file);
-
-    // try {
-    //   const image = await uploadImageToImgbb(file);
-
-    //   const updatedUserData = {
-    //     id: data?.data?._id,
-    //     userData: {
-    //       photoUrl: image },
-    //   };
-
-    //   const upload = await updateMyProfile(updatedUserData).unwrap();
-    //   if (upload?.success) {
-    //     toast.success("Profile photo updated successfully");
-    //   }
-    // } catch (error) {
-    //   console.error("Failed to upload image:", error);
-    // }
+    try {
+      const image = await uploadImageToImgbb(file);
+      
+      if (image) {
+        toast.success("Receptionist Photo Upload successfully");
+      }
+      setPhoto(image);
+    } catch (error) {
+      console.error("Failed to upload image:", error);
+    }
   };
 
-  const handleCreateReceptionist = async (values: FieldValues) => {
-    console.log(values);
+  const handleCreateReceptionist = async (values: FieldValues) => {    
+    try {
+      const receptionistData = {
+        password: "receptionist123",
+        receptionist: {
+          firstName: values.receptionist.firstName,
+          lastName: values.receptionist.lastName,
+          email: values.receptionist.email,
+          contactNumber: values.receptionist.contactNumber,
+          address: values.receptionist.address,
+          profilePhoto: photo,
+        },
+      }
+
+      const res = await createReceptionist(receptionistData).unwrap();
+      
+      if(res?.id){
+        toast.success("Receptionist created successfully!");
+      }
+      
+    } catch (err: any) {
+      toast.error(err.message);
+      console.error(err.message);
+    }
   };
 
   return (
