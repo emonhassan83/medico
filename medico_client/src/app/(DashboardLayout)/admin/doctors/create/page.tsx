@@ -169,6 +169,13 @@ const Doctor = () => {
                 Profile URL
               </p>
               <Card
+              style={{
+                height: "180px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
                 cover={
                   <div
                     style={{
@@ -193,6 +200,7 @@ const Doctor = () => {
                         alt="User Photo"
                         preview={false}
                         style={{
+                          marginTop: "40px",
                           height: "140px",
                           width: "140px",
                           objectFit: "cover",
@@ -212,7 +220,7 @@ const Doctor = () => {
           <Button
             htmlType="submit"
             size="large"
-            className="mt-4 rounded-md bg-[#485EC4] px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full md:w-auto"
+            className="mt-20 rounded-md bg-[#485EC4] px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full md:w-auto"
           >
             Add New Doctor
           </Button>

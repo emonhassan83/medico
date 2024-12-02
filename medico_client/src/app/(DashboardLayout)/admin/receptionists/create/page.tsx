@@ -106,14 +106,21 @@ const CreateReceptionist = () => {
                 Profile URL
               </p>
               <Card
+              style={{
+                height: "180px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
                 cover={
                   <div
                     style={{
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      height: "180px",
-                      width: "180px",
+                      height: "160px",
+                      width: "160px",
                       margin: "auto",
                       borderRadius: "8px",
                     }}
@@ -130,6 +137,7 @@ const CreateReceptionist = () => {
                         alt="User Photo"
                         preview={false}
                         style={{
+                          marginTop: "40px",
                           height: "140px",
                           width: "140px",
                           objectFit: "cover",

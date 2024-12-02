@@ -115,6 +115,13 @@ const CreatePatients = () => {
                 Profile URL
               </p>
               <Card
+              style={{
+                height: "180px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
                 cover={
                   <div
                     style={{
@@ -139,6 +146,7 @@ const CreatePatients = () => {
                         alt="User Photo"
                         preview={false}
                         style={{
+                          marginTop: "40px",
                           height: "140px",
                           width: "140px",
                           objectFit: "cover",

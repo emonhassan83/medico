@@ -6,13 +6,13 @@ import React from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import MedicoForm from "@/components/Forms/MedicoForm";
 import MedicoInput from "@/components/Forms/MedicoInput";
-import { Button, Image, Card, Upload} from "antd";
+import { Button, Image, Card, Upload } from "antd";
 import { FieldValues } from "react-hook-form";
 import MedicoTextArea from "@/components/Forms/MedicoTextArea";
 
 export const defaultValues = {
   title: "",
-  descriptions: ""
+  descriptions: "",
 };
 
 const CreateSpecialties = () => {
@@ -71,65 +71,64 @@ const CreateSpecialties = () => {
           Basic Information
         </div>
 
-        <MedicoForm onSubmit={handleCreateSpecialties} defaultValues={defaultValues}>
+        <MedicoForm
+          onSubmit={handleCreateSpecialties}
+          defaultValues={defaultValues}
+        >
           {/* Rows of Input Fields */}
-          <div className="flex items-center gap-4 w-full">
-            <div>
-            <MedicoInput
-              label="Title"
-              type="text"
-              name="title"
-            />
-            <MedicoTextArea
-              label="Description"
-              name="description"
-              rows={4}
-            />
+          <div className="flex flex-wrap gap-4 w-full">
+            <div className="w-[60%]">
+              <MedicoInput label="Title" type="text" name="title" />
+              <MedicoTextArea label="Description" name="description" rows={4} />
             </div>
-            <div>
-              <p
-                className="block text-sm font-medium text-gray-700"
-                style={{ marginBottom: "5px" }}
-              >
-                Profile URL
-              </p>
-              <Card
-                cover={
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: "180px",
-                      width: "180px",
-                      margin: "auto",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <Upload
-                      customRequest={({ file }) =>
-                        handleFileUpload(file as File)
-                      }
-                      showUploadList={false}
-                      accept="image/*"
+            <div className="w-[38%]">
+              <div>
+                <p className="block text-sm font-semibold mb-2">Icon</p>
+                <Card
+                  style={{
+                    height: "180px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  cover={
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "160px",
+                        width: "160px",
+                        margin: "auto",
+                        borderRadius: "4px",
+                        overflow: "hidden",
+                      }}
                     >
-                      <Image
-                        src="https://i.ibb.co/Gx3Rg6S/download.jpg"
-                        alt="User Photo"
-                        preview={false}
-                        style={{
-                          height: "140px",
-                          width: "140px",
-                          objectFit: "cover",
-                          cursor: "pointer",
-                          borderRadius: "50%",
-                          border: "2px solid #ddd",
-                        }}
-                      />
-                    </Upload>
-                  </div>
-                }
-              />
+                      <Upload
+                        customRequest={({ file }) =>
+                          handleFileUpload(file as File)
+                        }
+                        showUploadList={false}
+                        accept="image/*"
+                      >
+                        <Image
+                          src="https://i.ibb.co/qsdyjP8/placeholder-img.png"
+                          alt="Specialties Icon"
+                          preview={false}
+                          style={{
+                            marginTop: "40px",
+                            height: "100%", 
+                            width: "100%",
+                            objectFit: "cover",
+                            cursor: "pointer",
+                          }}
+                        />
+                      </Upload>
+                    </div>
+                  }
+                />
+              </div>
             </div>
           </div>
 
