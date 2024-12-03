@@ -1,37 +1,28 @@
-import { baseApi } from "./baseApi";
 import { tagTypes } from "../tag-types";
-import { IMeta } from "@/types/common";
-import { IDoctor } from "@/types/doctor";
+import { baseApi } from "./baseApi";
 
-export const prescriptionApi = baseApi.injectEndpoints({
+const prescriptionsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     createPrescription: build.mutation({
       query: (data) => ({
         url: "/prescription",
         method: "POST",
-        contentType: "multipart/form-data",
         data,
       }),
-      invalidatesTags: [tagTypes.prescription],
+       invalidatesTags: [tagTypes.prescription],
     }),
 
-    getAllPrescription: build.query({
-      query: (arg: Record<string, any>) => ({
+    getAllPrescriptions: build.query({
+      query: () => ({
         url: "/prescription",
         method: "GET",
-        params: arg,
       }),
-      transformResponse: (response: IDoctor[], meta: IMeta) => {
-        return {
-          prescription: response,
-          meta,
-        };
-      },
-      providesTags: [tagTypes.prescription],
+        providesTags: [tagTypes.prescription],
     }),
-    getMyPrescription: build.query({
+
+    myPrescription: build.query({
       query: () => ({
-        url: "/prescription/my-prescriptions",
+        url: `/prescription/my-prescription`,
         method: "GET",
       }),
       providesTags: [tagTypes.prescription],
@@ -41,6 +32,6 @@ export const prescriptionApi = baseApi.injectEndpoints({
 
 export const {
   useCreatePrescriptionMutation,
-  useGetAllPrescriptionQuery,
-  useGetMyPrescriptionQuery,
-} = prescriptionApi;
+  useGetAllPrescriptionsQuery,
+  useMyPrescriptionQuery,
+} = prescriptionsApi;
