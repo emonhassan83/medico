@@ -1,4 +1,7 @@
+import { useGetMyProfileQuery } from "@/redux/api/userApi";
+import { logoutUser } from "@/services/actions/logoutUser";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { Dispatch, SetStateAction, useState } from "react";
 
 const Navbar = ({
@@ -8,7 +11,14 @@ const Navbar = ({
   setOpen: Dispatch<SetStateAction<boolean>>;
   open: boolean;
 }) => {
+  const { data } = useGetMyProfileQuery({});
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logoutUser(router);
+    router.push("/login");
+  };
 
   return (
     <nav
@@ -50,7 +60,11 @@ const Navbar = ({
         >
           <div className="relative">
             <Image
-              src="https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg?t=st=1724605498~exp=1724609098~hmac=7f6fc106bae2c17b0c93af1b2e5483d9d8368f3e51284aaec7c7d50590d2bae5&w=740"
+              src={
+                data
+                  ? data?.profilePhoto
+                  : "https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg?t=st=1724605498~exp=1724609098~hmac=7f6fc106bae2c17b0c93af1b2e5483d9d8368f3e51284aaec7c7d50590d2bae5&w=740"
+              }
               alt="avatar"
               width={35}
               height={35}
@@ -60,7 +74,7 @@ const Navbar = ({
           </div>
 
           <h1 className="text-[1rem] font-[400] text-gray-600 sm:block hidden">
-            Jhon Deo
+            {data && data?.firstName + " " + data?.lastName}
           </h1>
 
           <svg
@@ -124,7 +138,10 @@ const Navbar = ({
             Settings
           </p>
 
-          <div className="mt-3 border-t border-gray-200 pt-[5px]">
+          <div
+            onClick={handleLogout}
+            className="mt-3 border-t border-gray-200 pt-[5px]"
+          >
             <p className="flex items-center gap-2 rounded-md p-2 pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50 hover:cursor-default">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
