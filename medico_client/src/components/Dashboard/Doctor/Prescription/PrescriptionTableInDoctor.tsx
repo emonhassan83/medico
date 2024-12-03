@@ -4,12 +4,12 @@ import { Table } from "antd";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
 
-const PrescriptionListTable = () => {
+const PrescriptionTableInDoctor = () => {
   const { data } = useGetAllPrescriptionQuery({});
   // console.log(data);
-  console.log(data);
 
   const dataSource = data?.prescription?.map((presecription: any) => ({
     patientName: presecription?.patient?.firstName,
@@ -66,6 +66,13 @@ const PrescriptionListTable = () => {
               <MdEmail />
             </button>
           </Link>
+          {/* delete button */}
+          <button
+            className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
+            //   onClick={() => handleDelete(items)}
+          >
+            <RiDeleteBin6Fill />
+          </button>
         </div>
       ),
     },
@@ -106,4 +113,4 @@ const PrescriptionListTable = () => {
   );
 };
 
-export default PrescriptionListTable;
+export default PrescriptionTableInDoctor;
