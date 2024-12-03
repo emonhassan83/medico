@@ -8,9 +8,9 @@ import MedicoInput from "@/components/Forms/MedicoInput";
 import { Button } from "antd";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
-import { useCreateReceptionistMutation } from "@/redux/api/receptionistApi";
 import MedicoDatePiker from "@/components/Forms/MedicoDatePiker";
 import MedicoTextArea from "@/components/Forms/MedicoTextArea";
+import { useCreatePrescriptionMutation } from "@/redux/api/prescriptionApi";
 
 export const defaultValues = {
   appointmentId: "",
@@ -19,7 +19,7 @@ export const defaultValues = {
 };
 
 const CreatePrescription = () => {
-  const [createReceptionist] = useCreateReceptionistMutation();
+  const [createPrescription] = useCreatePrescriptionMutation();
 
   const handleCreatePrescription = async (values: FieldValues) => {
     try {
@@ -29,7 +29,7 @@ const CreatePrescription = () => {
         followUpDate: values.followUpDate,
       };
 
-      const res = await createReceptionist(prescriptionData).unwrap();
+      const res = await createPrescription(prescriptionData).unwrap();
 
       if (res?.id) {
         toast.success("Prescription created successfully!");
