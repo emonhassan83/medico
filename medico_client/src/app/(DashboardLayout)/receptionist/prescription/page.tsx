@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 // import PrescriptionListTable from "@/components/Dashboard/Receptionist/Prescription/PrescriptionListTable";
-=======
 import PatientTable from "@/components/Dashboard/Admin/Patient/PatientTable";
->>>>>>> fdb210484cdfd4c190e094a0a125f9e6be95060e
 import PrescriptionListTable from "@/components/Dashboard/Receptionist/Prescription/PrescriptionListTable";
 import Link from "next/link";
 import React from "react";

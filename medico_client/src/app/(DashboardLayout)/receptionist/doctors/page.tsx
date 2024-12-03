@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 import DoctorTAble from "@/components/Dashboard/Admin/Doctor/DoctorTable";
->>>>>>> fdb210484cdfd4c190e094a0a125f9e6be95060e
 import DoctorTableInReceptionist from "@/components/Dashboard/Receptionist/Doctor/DoctorTableInReceptionist";
 import Link from "next/link";
 import React from "react";
