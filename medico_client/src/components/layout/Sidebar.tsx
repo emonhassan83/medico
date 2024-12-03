@@ -94,7 +94,6 @@ export default function SideBar() {
   // const [user, setUser] = useState("DOCTOR");
   // const [user, setUser] = useState("ADMIN");
   const [user, setUser] = useState("RECEPTIONIST");
-
   const [isSideNavOpen, setIsSideNavOpen] = useState(true);
 
   return (
@@ -170,7 +169,7 @@ export default function SideBar() {
                     Add New Specialties
                   </NavLink>
                 </CollapsibleMenu>
-                <NavLink href="/admin/appointment-list">
+                <NavLink href="/admin/appointment-list/scheduled">
                   <div className="flex items-center">
                     <AppointmentList />
                   </div>
