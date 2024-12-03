@@ -1,20 +1,20 @@
 "use client";
 import React, { useState } from "react";
-import { Table, Button, Input, Divider, Space } from "antd";
+import { Table, Button, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 
-const PatientTable = () => {
-  const { data } = useGetAllPatientQuery({});
-    console.log(data);
+const DoctorTableInReceptionist = () => {
+  const { data } = useGetAllDoctorsQuery({});
+  // console.log(data);
   const [searchText, setSearchText] = useState("");
 
   //   Filter data based on search text
-  const filteredData = data?.patients?.filter((pt: any) =>
+  const filteredData = data?.doctors?.filter((pt: any) =>
     pt.firstName.toLowerCase().includes(searchText.toLowerCase())
   );
   const columns = [
@@ -22,13 +22,14 @@ const PatientTable = () => {
       title: "Sr. No",
       dataIndex: "key",
       key: "key",
-      sorter: (a: any, b: any) => a.key - b.key,
       render: (_: any, __: any, index: number) => index + 1,
     },
     {
       title: "Name",
       dataIndex: "firstName",
       key: "firstName",
+      sorter: (a: any, b: any) =>
+        a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase()),
     },
     {
       title: "Contact No",
@@ -39,41 +40,26 @@ const PatientTable = () => {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      sorter: (a: any, b: any) =>
+        a.email.toLowerCase().localeCompare(b.email.toLowerCase()),
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Appointment Fee",
+      dataIndex: "appointmentFee",
+      key: "appointmentFee",
+      sorter: (a: any, b: any) => a.appointmentFee - b.appointmentFee,
     },
+
     {
       title: "Options",
       key: "action",
-      render: (data: any) => (
+      render: () => (
         <div className="flex gap-1">
-          {/* update Button */}
-          <Link href={`/admin/patients/${data?.id}`}>
+          <Link href="#">
             <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
               <FaEye />
             </button>
           </Link>
-
-          {/* edit button */}
-          <Link href="#">
-            <button
-              className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-              //   onClick={() => handleEdit(items)}
-            >
-              <MdEdit />
-            </button>
-          </Link>
-
-          {/* delete button */}
-          <button
-            className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-            //   onClick={() => handleDelete(items)}
-          >
-            <RiDeleteBin6Fill />
-          </button>
         </div>
       ),
     },
@@ -138,4 +124,4 @@ const PatientTable = () => {
   );
 };
 
-export default PatientTable;
+export default DoctorTableInReceptionist;
