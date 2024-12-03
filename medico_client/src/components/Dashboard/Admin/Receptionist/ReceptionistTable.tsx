@@ -11,7 +11,11 @@ import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 
 const ReceptionistTable = () => {
   const { data } = useGetAllReceptionQuery({});
+<<<<<<< HEAD
   console.log(data);
+=======
+  // console.log(data);
+>>>>>>> fdb210484cdfd4c190e094a0a125f9e6be95060e
   const [searchText, setSearchText] = useState("");
 
   //   Filter data based on search text

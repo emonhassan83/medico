@@ -8,7 +8,11 @@ import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
 
 const PrescriptionListTable = () => {
   const { data } = useGetAllPrescriptionQuery({});
+<<<<<<< HEAD
   // console.log(data);
+=======
+  console.log(data);
+>>>>>>> fdb210484cdfd4c190e094a0a125f9e6be95060e
 
   const dataSource = data?.prescription?.map((presecription: any) => ({
     patientName: presecription?.patient?.firstName,
