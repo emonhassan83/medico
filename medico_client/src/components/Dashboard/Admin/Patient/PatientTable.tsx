@@ -40,14 +40,18 @@ const PatientTable = () => {
       dataIndex: "email",
       key: "email",
     },
-
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
     {
       title: "Options",
       key: "action",
-      render: () => (
+      render: (data: any) => (
         <div className="flex gap-1">
           {/* update Button */}
-          <Link href="#">
+          <Link href={`/admin/patients/${data?.id}`}>
             <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
               <FaEye />
             </button>
