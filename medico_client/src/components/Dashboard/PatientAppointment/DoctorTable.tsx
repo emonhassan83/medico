@@ -6,7 +6,7 @@ import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 
 const DoctorTable = () => {
   const { data } = useGetAllDoctorsQuery({});
-  // console.log(data?.doctors);
+  console.log(data?.doctors);
   // console.log(data?.meta);
 
   const [searchText, setSearchText] = useState("");
@@ -15,34 +15,6 @@ const DoctorTable = () => {
   const filteredData = data?.doctors?.filter((doctor) =>
     doctor.firstName.toLowerCase().includes(searchText.toLowerCase())
   );
-
-  // const dataSource = [
-  //   {
-  //     key: "1",
-  //     title: "Miss",
-  //     name: "Ruchi Rani",
-  //     department: "Cardiology",
-  //     contact: "9988776655",
-  //     email: "r@gmail.com",
-  //   },
-  //   {
-  //     key: "2",
-  //     title: "asdasd",
-  //     name: "t ad",
-  //     department: "Oncology",
-  //     contact: "1234567890",
-  //     email: "doctor11@themesbrand.website",
-  //   },
-  //   {
-  //     key: "3",
-  //     title: "dcdc",
-  //     name: "test trst",
-  //     department: "Dental",
-  //     contact: "1111111111",
-  //     email: "doctors@demo.com",
-  //   },
-  //   // Add more data here
-  // ];
 
   const columns = [
     {
