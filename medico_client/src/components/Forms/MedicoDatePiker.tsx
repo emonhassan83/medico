@@ -15,8 +15,9 @@ const MedicoDatePiker = ({
     <Controller
       name={name}
       render={({ field }) => (
-        <Form.Item label={label} style={{ width: "100%", marginBottom: "5px" }}>
-          <DatePicker {...field} size="middle" style={{ width: "100%" }} />
+        <Form.Item style={{ width: "100%", marginTop: "5px" }}>
+          <p className="block text-sm font-medium text-gray-700" style={{ marginBottom: "5px"}}>{label ? label : null}</p>
+          <DatePicker {...field} size="large" style={{ width: "100%" }} />
         </Form.Item>
       )}
     />
