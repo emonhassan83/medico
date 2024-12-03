@@ -29,7 +29,7 @@ const layout = ({
         {
           statusList?.map((value, i: number) => (<div key={i}>
 
-            <Link href={`/appointments/${value.status}`}>
+            <Link href={`/admin/appointment-list/${value.status}`}>
               <button className="focus:text-blue-700 focus:border-b-[2px] focus:border-blue-500 pb-5 border-b text-sm "> {value.title} </button>
             </Link>
 
