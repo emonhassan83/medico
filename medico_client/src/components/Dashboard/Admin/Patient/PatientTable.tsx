@@ -10,7 +10,7 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 
 const PatientTable = () => {
   const { data } = useGetAllPatientQuery({});
-  //   console.log(data);
+    console.log(data);
   const [searchText, setSearchText] = useState("");
 
   //   Filter data based on search text

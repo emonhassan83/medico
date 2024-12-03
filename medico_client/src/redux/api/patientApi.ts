@@ -9,11 +9,11 @@ export const patientApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: "/user/create-patient",
         method: "POST",
-        contentType: "multipart/form-data",
         data,
       }),
       invalidatesTags: [tagTypes.patient],
     }),
+    
     getAllPatient: build.query({
       query: (arg: Record<string, any>) => ({
         url: "/patient",
