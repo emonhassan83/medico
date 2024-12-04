@@ -9,7 +9,7 @@ const Specialties = () => {
       <div className="flex items-center justify-between mt-2">
         <div>
           <h2 className="text-lg text-[#495057] font-semibold">
-            RECEPTIONIST LIST
+            SPECIALTIES LIST
           </h2>
         </div>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
@@ -17,7 +17,7 @@ const Specialties = () => {
             Dashboard
           </Link>
           <BsSlash className="text-[#ccc]" />
-          <Link href="#">Receptionists</Link>
+          <Link href="#">Specialties</Link>
         </div>
       </div>
       <div className="mt-5">
