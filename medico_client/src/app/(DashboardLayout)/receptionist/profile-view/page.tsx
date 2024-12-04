@@ -3,8 +3,8 @@ import TabComponent from "./components/TabComponent/page"
 
 const ProfileView = () => {
   return (
-    <div>ProfileView
-
+    <div>
+        <p> Here show Profile View ui design!!</p>
     
 
         <TabComponent/>
