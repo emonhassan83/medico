@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Home from "../svg/Home";
 import Doctor from "../svg/Doctor";
@@ -12,6 +12,7 @@ import Specialties from "../svg/Specialties";
 import AppointmentList from "../svg/AppointmentList";
 import Appointments from "../svg/Appointments";
 import Prescription from "../svg/Prescription";
+import { getUserInfo } from "@/services/auth.services";
 
 const NavLink = ({
   href,
@@ -90,10 +91,13 @@ const CollapsibleMenu = ({
 };
 
 export default function SideBar() {
-  const [user, setUser] = useState("PATIENT");
-  // const [user, setUser] = useState("DOCTOR");
-  // const [user, setUser] = useState("ADMIN");
-  // const [user, setUser] = useState("RECEPTIONIST");
+  const [userRole, setUserRole] = useState("");
+
+  useEffect(() => {
+    const { role } = getUserInfo() as any;
+    setUserRole(role);
+  }, []);
+
   const [isSideNavOpen, setIsSideNavOpen] = useState(true);
 
   return (
@@ -125,13 +129,13 @@ export default function SideBar() {
             <li className="px-3 mb-4 text-[#6A7187]">Dashboard</li>
             <NavLink
               href={
-                user === "ADMIN"
+                userRole === "admin"
                   ? "/admin"
-                  : user === "DOCTOR"
+                  : userRole === "doctor"
                   ? "/doctor"
-                  : user === "PATIENT"
+                  : userRole === "patient"
                   ? "/patient"
-                  : user === "RECEPTIONIST"
+                  : userRole === "receptionist"
                   ? "/receptionist"
                   : "/login"
               }
@@ -141,7 +145,7 @@ export default function SideBar() {
             </NavLink>
 
             <li className="px-3 !mt-3 mb-2 text-[#6A7187]">Hospital</li>
-            {user === "ADMIN" && (
+            {userRole === "admin" && (
               <>
                 <CollapsibleMenu title="Doctor" icon={<Doctor />}>
                   <NavLink href="/admin/doctors">List of Doctors</NavLink>
@@ -169,7 +173,7 @@ export default function SideBar() {
                     Add New Specialties
                   </NavLink>
                 </CollapsibleMenu>
-                <NavLink href="/admin/appointment-list">
+                <NavLink href="/admin/appointment-list/scheduled">
                   <div className="flex items-center">
                     <AppointmentList />
                   </div>
@@ -180,7 +184,7 @@ export default function SideBar() {
               </>
             )}
 
-            {user === "DOCTOR" && (
+            {userRole === "doctor" && (
               <>
                 <NavLink href="/doctor/appointments">
                   <div className="flex items-center">
@@ -215,7 +219,7 @@ export default function SideBar() {
               </>
             )}
 
-            {user === "PATIENT" && (
+            {userRole === "patient" && (
               <>
                 <NavLink href="/patient/appointments">
                   <div className="flex items-center">
@@ -253,7 +257,7 @@ export default function SideBar() {
               </>
             )}
 
-            {user === "RECEPTIONIST" && (
+            {userRole === "receptionist" && (
               <>
                 <NavLink href="/receptionist/appointments">
                   <div className="flex items-center">

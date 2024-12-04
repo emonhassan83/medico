@@ -7,7 +7,8 @@ import { receptionistValidationSchemas } from './receptionist.validation';
 
 const router = express.Router();
 
-router.get('/', auth(UserRole.ADMIN), ReceptionistController.getAllFromDB);
+// router.get('/', auth(UserRole.ADMIN), ReceptionistController.getAllFromDB);
+router.get('/', ReceptionistController.getAllFromDB);
 
 router.get('/:id', auth(UserRole.ADMIN), ReceptionistController.getByIdFromDB);
 
@@ -18,7 +19,11 @@ router.patch(
   ReceptionistController.updateIntoDB,
 );
 
-router.delete('/:id', auth(UserRole.ADMIN), ReceptionistController.deleteFromDB);
+router.delete(
+  '/:id',
+  auth(UserRole.ADMIN),
+  ReceptionistController.deleteFromDB,
+);
 
 router.delete(
   '/soft/:id',

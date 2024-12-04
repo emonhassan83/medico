@@ -8,7 +8,7 @@ import auth from '../../middlewares/auth';
 const router = express.Router();
 router.get(
   '/',
-  auth(ENUM_USER_ROLE.ADMIN),
+  // auth(ENUM_USER_ROLE.ADMIN),
   PrescriptionController.getAllFromDB,
 );
 
