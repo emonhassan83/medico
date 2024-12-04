@@ -1,7 +1,7 @@
 import React from "react";
 
-const page = () => {
-  return <div>page</div>;
+const AppointmentList = () => {
+  return <div>AppointmentList</div>;
 };
 
-export default page;
+export default AppointmentList;
