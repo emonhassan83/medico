@@ -11,6 +11,7 @@ import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 
 const ReceptionistTable = () => {
   const { data } = useGetAllReceptionQuery({});
+  console.log(data);
   // console.log(data);
   const [searchText, setSearchText] = useState("");
 

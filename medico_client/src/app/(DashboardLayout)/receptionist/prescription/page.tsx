@@ -1,3 +1,4 @@
+// import PrescriptionListTable from "@/components/Dashboard/Receptionist/Prescription/PrescriptionListTable";
 import PatientTable from "@/components/Dashboard/Admin/Patient/PatientTable";
 import PrescriptionListTable from "@/components/Dashboard/Receptionist/Prescription/PrescriptionListTable";
 import Link from "next/link";
