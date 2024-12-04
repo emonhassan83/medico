@@ -1,9 +1,38 @@
-import React from 'react'
+import SpecialtiesTable from "@/components/Dashboard/Admin/Specialties/SpecialtiesTable";
+import Link from "next/link";
+import React from "react";
+import { BsSlash } from "react-icons/bs";
 
-const page = () => {
+const Specialties = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div className="mx-5">
+      <div className="flex items-center justify-between mt-2">
+        <div>
+          <h2 className="text-lg text-[#495057] font-semibold">
+            RECEPTIONIST LIST
+          </h2>
+        </div>
+        <div className="flex items-center gap-1 text-[#495057] text-sm">
+          <Link href="#" className="">
+            Dashboard
+          </Link>
+          <BsSlash className="text-[#ccc]" />
+          <Link href="#">Receptionists</Link>
+        </div>
+      </div>
+      <div className="mt-5">
+        <Link
+          href="/admin/specialties/create"
+          className="text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
+        >
+          + New Specialties
+        </Link>
+      </div>
+      <div className="pt-5">
+        <SpecialtiesTable />
+      </div>
+    </div>
+  );
+};
 
-export default page
+export default Specialties;
