@@ -1,41 +1,24 @@
 "use client";
-import React, { useState } from "react";
-import { Table, Button, Input, Divider, Space } from "antd";
+import React from "react";
+import { Table, Button, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import {
-  useDeletePatientMutation,
-  useGetAllPatientQuery,
-} from "@/redux/api/patientApi";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import { toast } from "sonner";
+import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
 
-const PatientTable = () => {
-  const { data, refetch } = useGetAllPatientQuery({});
-  const [deletePatient] = useDeletePatientMutation();
-  const [searchText, setSearchText] = useState("");
+const MyAppointmentTable = () => {
+  const { data, isLoading, error } = useGetMyAppointmentsQuery({});
+  console.log(data?.appointments);
+  const dataSource = data?.appointments?.map((appointment: any) => ({
+    patientName: appointment?.patient?.firstName,
+    status: appointment?.status,
+    paymentStatus: appointment?.paymentStatus,
+    appointmentDate: appointment?.createdAt?.slice(0, 10),
+    appointmentTime: appointment?.createdAt?.slice(11, 19),
+  }));
 
-  //   Filter data based on search text
-  const filteredData = data?.patients?.filter((pt: any) =>
-    pt.firstName.toLowerCase().includes(searchText.toLowerCase())
-  );
-
-  ///delete operation---------------------------------
-  const handleDeletRow = async (id: string) => {
-    console.log(id);
-    try {
-      const res = await deletePatient(id).unwrap();
-      console.log(res);
-      if (res?.id) {
-        toast.success("Delete patient successfully");
-        refetch();
-      }
-    } catch (err) {
-      toast.error("Somthing went wrong");
-    }
-  };
   const columns = [
     {
       title: "Sr. No",
@@ -46,50 +29,56 @@ const PatientTable = () => {
     },
     {
       title: "Name",
-      dataIndex: "firstName",
-      key: "firstName",
+      dataIndex: "patientName",
+      key: "patientName",
     },
     {
-      title: "Contact No",
-      dataIndex: "contactNumber",
-      key: "contactNumber",
+      title: "Appointment Status",
+      dataIndex: "status",
+      key: "status",
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Payment Status",
+      dataIndex: "paymentStatus",
+      key: "paymentStatus",
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Date",
+      dataIndex: "appointmentDate",
+      key: "appointmentDate",
     },
+    {
+      title: "Time",
+      dataIndex: "appointmentTime",
+      key: "appointmentTime",
+    },
+
     {
       title: "Options",
       key: "action",
-      render: (data: any) => (
+      render: () => (
         <div className="flex gap-1">
           {/* update Button */}
-          <Link href={`/admin/patients/${data?.id}`}>
+          {/* <Link href="#">
             <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
               <FaEye />
             </button>
-          </Link>
+          </Link> */}
 
           {/* edit button */}
-          <Link href="#">
+          {/* <Link href="#">
             <button
               className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
               //   onClick={() => handleEdit(items)}
             >
               <MdEdit />
             </button>
-          </Link>
+          </Link> */}
 
           {/* delete button */}
           <button
             className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-            onClick={() => handleDeletRow(data?.id)}
+            //   onClick={() => handleDelete(items)}
           >
             <RiDeleteBin6Fill />
           </button>
@@ -98,35 +87,11 @@ const PatientTable = () => {
     },
   ];
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  };
   return (
     <div className="bg-white p-5">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "16px",
-        }}
-      >
-        <div>
-          <Button className="mr-2 bg-[#eaeaea] outline-none">Copy</Button>
-          <Button className="mr-2 bg-[#eaeaea]">Excel</Button>
-          <Button className=" bg-[#eaeaea]">PDF</Button>
-        </div>
-        <Input
-          placeholder="Search by name"
-          prefix={<SearchOutlined />}
-          style={{ width: "200px" }}
-          value={searchText}
-          onChange={handleSearch}
-        />
-      </div>
-
       <div>
         <Table
-          dataSource={filteredData}
+          dataSource={dataSource}
           columns={columns}
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
@@ -157,4 +122,4 @@ const PatientTable = () => {
   );
 };
 
-export default PatientTable;
+export default MyAppointmentTable;

@@ -5,11 +5,11 @@ import {
 } from "@/redux/api/appointmentApi";
 import React, { useEffect, useState } from "react";
 
-const CreateAppointmentForm = () => {
+const CreateAppointmentFormInDoctor = () => {
   const [createAppointment] = useCreateAppointmentMutation();
   const { data } = useGetAllAppointmentsQuery({});
-  console.log(data);
-  console.log(data?.appointments);
+  //   console.log(data);
+  //   console.log(data?.appointments);
   // console.log(createAppointment);
   const [formData, setFormData] = useState({
     doctor: "",
@@ -125,4 +125,4 @@ const CreateAppointmentForm = () => {
   );
 };
 
-export default CreateAppointmentForm;
+export default CreateAppointmentFormInDoctor;

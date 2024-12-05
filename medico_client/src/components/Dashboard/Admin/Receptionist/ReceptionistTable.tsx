@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { Table, Button, Input, Divider, Space } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
