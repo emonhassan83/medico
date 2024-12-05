@@ -91,14 +91,13 @@ const CollapsibleMenu = ({
 };
 
 export default function SideBar() {
+  const [isSideNavOpen, setIsSideNavOpen] = useState(true);
   const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
     const { role } = getUserInfo() as any;
     setUserRole(role);
   }, []);
-
-  const [isSideNavOpen, setIsSideNavOpen] = useState(true);
 
   return (
     <>
