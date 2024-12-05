@@ -53,7 +53,7 @@ const data: DataType[] = [
   },
 ];
 
-const AppointmentTable = () => {
+const AppointmentTableInDoctor = () => {
   // Get the current date
   const date = new Date();
 
@@ -64,12 +64,12 @@ const AppointmentTable = () => {
     year: "numeric",
   });
   return (
-    <div className="w-full  p-5 ">
-      <div className="flex items-center gap-2 bg-white">
+    <div className="w-full">
+      <div className="flex items-center gap-2 bg-white pt-5 ps-5">
         <h2 className="text-lg font-semibold">Appointment List |</h2>
         <p>{formattedDate}</p>
       </div>
-      <div className="bg-white">
+      <div className=" bg-white p-5">
         <Table<DataType>
           columns={columns}
           dataSource={data}
@@ -81,4 +81,4 @@ const AppointmentTable = () => {
   );
 };
 
-export default AppointmentTable;
+export default AppointmentTableInDoctor;
