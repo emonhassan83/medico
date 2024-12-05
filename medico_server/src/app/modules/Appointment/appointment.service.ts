@@ -1,16 +1,16 @@
-import prisma from "../../../shared/prisma";
-import { v4 as uuidv4 } from "uuid";
+import prisma from '../../../shared/prisma';
+import { v4 as uuidv4 } from 'uuid';
 import {
   AppointmentStatus,
   PaymentStatus,
   Prisma,
   UserRole,
-} from "@prisma/client";
-import httpStatus from "http-status";
-import { IAuthUser } from "../../../interfaces/common";
-import { IPaginationOptions } from "../../../interfaces/pagination";
-import { paginationHelpers } from "../../../helpers/paginationHelper";
-import ApiError from "../../../errors/ApiError";
+} from '@prisma/client';
+import httpStatus from 'http-status';
+import { IAuthUser } from '../../../interfaces/common';
+import { IPaginationOptions } from '../../../interfaces/pagination';
+import { paginationHelpers } from '../../../helpers/paginationHelper';
+import ApiError from '../../../errors/ApiError';
 
 const createAppointment = async (user: IAuthUser, payload: any) => {
   const patientData = await prisma.patient.findUniqueOrThrow({
@@ -35,7 +35,7 @@ const createAppointment = async (user: IAuthUser, payload: any) => {
 
   const videoCallingId: string = uuidv4();
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await prisma.$transaction(async tx => {
     const appointmentData = await tx.appointment.create({
       data: {
         patientId: patientData.id,
@@ -67,13 +67,13 @@ const createAppointment = async (user: IAuthUser, payload: any) => {
     const date = new Date();
 
     const transactionId =
-      "MEDICO-" +
+      'MEDICO-' +
       date.getFullYear() +
-      "-" +
+      '-' +
       date.getMonth() +
-      "-" +
+      '-' +
       date.getHours() +
-      "-" +
+      '-' +
       date.getMilliseconds();
 
     await tx.payment.create({
@@ -93,7 +93,7 @@ const createAppointment = async (user: IAuthUser, payload: any) => {
 const getMyAppointment = async (
   user: IAuthUser,
   filters: any,
-  options: IPaginationOptions
+  options: IPaginationOptions,
 ) => {
   const { limit, page, skip } = paginationHelpers.calculatePagination(options);
   const { ...filterData } = filters;
@@ -116,7 +116,7 @@ const getMyAppointment = async (
 
   if (Object.keys(filterData).length > 0) {
     andConditions.push({
-      AND: Object.keys(filterData).map((key) => {
+      AND: Object.keys(filterData).map(key => {
         return {
           [key]: {
             equals: (filterData as any)[key],
@@ -137,7 +137,7 @@ const getMyAppointment = async (
       options.sortBy && options.sortOrder
         ? { [options.sortBy]: options.sortOrder }
         : {
-            createdAt: "desc",
+            createdAt: 'desc',
           },
     include:
       user?.role === UserRole.PATIENT
@@ -170,7 +170,7 @@ const getMyAppointment = async (
 const changeAppointmentStatus = async (
   appointmentId: string,
   status: AppointmentStatus,
-  user: IAuthUser
+  user: IAuthUser,
 ) => {
   const appointmentData = await prisma.appointment.findUniqueOrThrow({
     where: {
@@ -185,7 +185,7 @@ const changeAppointmentStatus = async (
     if (!(user.email === appointmentData.doctor.email)) {
       throw new ApiError(
         httpStatus.BAD_REQUEST,
-        "This is not your appointment!"
+        'This is not your appointment!',
       );
     }
   }
@@ -223,7 +223,7 @@ const getAllFromDB = async (filters: any, options: IPaginationOptions) => {
 
   if (Object.keys(filterData).length > 0) {
     andConditions.push({
-      AND: Object.keys(filterData).map((key) => {
+      AND: Object.keys(filterData).map(key => {
         return {
           [key]: {
             equals: (filterData as any)[key],
@@ -245,7 +245,7 @@ const getAllFromDB = async (filters: any, options: IPaginationOptions) => {
       options.sortBy && options.sortOrder
         ? { [options.sortBy]: options.sortOrder }
         : {
-            createdAt: "desc",
+            createdAt: 'desc',
           },
     include: {
       doctor: true,
@@ -279,10 +279,10 @@ const cancelUnpaidAppointments = async () => {
   });
 
   const appointmentIdsToCancel = unPaidAppointments.map(
-    (appointment) => appointment.id
+    appointment => appointment.id,
   );
 
-  await prisma.$transaction(async (tx) => {
+  await prisma.$transaction(async tx => {
     await tx.payment.deleteMany({
       where: {
         appointmentId: {
@@ -313,10 +313,31 @@ const cancelUnpaidAppointments = async () => {
   });
 };
 
+const deleteAppointment = async (id: string, user: IAuthUser) => {
+  await prisma.user.findUniqueOrThrow({
+    where: {
+      id: user?.userId,
+    },
+  });
+
+  await prisma.$transaction(async tx => {
+    await tx.payment.deleteMany({ where: { appointmentId: id } });
+    await tx.prescription.deleteMany({ where: { appointmentId: id } });
+    await tx.review.deleteMany({ where: { appointmentId: id } });
+
+    const result = await tx.appointment.delete({
+      where: { id },
+    });
+
+    return result;
+  });
+};
+
 export const AppointmentService = {
   createAppointment,
   getMyAppointment,
   getAllFromDB,
   changeAppointmentStatus,
   cancelUnpaidAppointments,
+  deleteAppointment,
 };
