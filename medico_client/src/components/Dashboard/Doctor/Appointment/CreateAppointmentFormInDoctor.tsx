@@ -8,8 +8,8 @@ import React, { useEffect, useState } from "react";
 const CreateAppointmentFormInDoctor = () => {
   const [createAppointment] = useCreateAppointmentMutation();
   const { data } = useGetAllAppointmentsQuery({});
-  console.log(data);
-  console.log(data?.appointments);
+  //   console.log(data);
+  //   console.log(data?.appointments);
   // console.log(createAppointment);
   const [formData, setFormData] = useState({
     doctor: "",
