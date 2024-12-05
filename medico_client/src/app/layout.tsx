@@ -4,6 +4,7 @@ import "./globals.css";
 // import ReduxProvider from "@/providers/ReduxProvider";
 import { Toaster } from "sonner";
 import Providers from "@/lib/Providers/Providers";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 
 const poppins = Poppins({ weight: "400", subsets: ["latin"] });
 
@@ -23,7 +24,7 @@ export default function RootLayout({
         <body className={`${poppins.className}`}>
           <>
             <Toaster position="top-center" />
-            {children}
+            <AntdRegistry>{children}</AntdRegistry>
           </>
         </body>
       </html>
