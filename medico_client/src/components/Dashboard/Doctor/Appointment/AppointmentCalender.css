@@ -1,0 +1,51 @@
+/* General styles for FullCalendar */
+.fc .fc-toolbar {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.fc-prev-button,
+.fc-next-button,
+.fc-today-button,
+.fc-list-button,
+.fc-dayGridMonth-button,
+.fc-dayGridWeek-button,
+.fc-dayGridDay-button {
+  background-color: #556ee6 !important;
+  border: blue !important;
+}
+
+.fc-header-toolbar {
+  font-size: 0.8rem !important;
+  padding: 0 !important; /* Smaller toolbar text */
+}
+
+.fc-daygrid-day {
+  padding: 0 !important; /* Smaller day cells */
+}
+
+.fc-daygrid-day-number {
+  font-size: 0.7rem !important; /* Smaller day numbers */
+}
+
+.fc {
+  overflow: hidden; /* Prevent scrollbars */
+}
+
+.fc-scroller {
+  overflow: hidden !important; /* Ensure no scrollbars appear */
+}
+
+.fc-col-header-cell {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+/* Media query for small screens (mobile devices) */
+@media (max-width: 640px) {
+  .fc .fc-toolbar {
+    flex-direction: column;
+    /* align-items: center; */
+  }
+}

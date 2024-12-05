@@ -14,7 +14,7 @@ const PrescriptionTableListInPatient = () => {
   // const { data } = useGetAllPrescriptionQuery({});
   // console.log(data);
   const { data } = useGetMyPrescriptionQuery({});
-  console.log(data);
+  // console.log(data);
 
   const dataSource = data?.prescription?.map((singlePresecription: any) => ({
     instructions: singlePresecription?.instructions,
@@ -51,36 +51,6 @@ const PrescriptionTableListInPatient = () => {
       title: "Instructions",
       dataIndex: "instructions",
       key: "instructions",
-    },
-
-    {
-      title: "Options",
-      key: "action",
-      render: () => (
-        <div className="flex gap-1">
-          <Link href="#">
-            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
-              <FaEye />
-            </button>
-          </Link>
-
-          {/* <Link href="#">
-            <button
-              className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-              //   onClick={() => handleEdit(items)}
-            >
-              <MdEmail />
-            </button>
-          </Link> */}
-          {/* delete button */}
-          <button
-            className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-            //   onClick={() => handleDelete(items)}
-          >
-            <RiDeleteBin6Fill />
-          </button>
-        </div>
-      ),
     },
   ];
 

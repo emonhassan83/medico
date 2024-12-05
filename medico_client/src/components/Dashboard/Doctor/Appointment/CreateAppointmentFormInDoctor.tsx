@@ -5,7 +5,7 @@ import {
 } from "@/redux/api/appointmentApi";
 import React, { useEffect, useState } from "react";
 
-const CreateAppointmentForm = () => {
+const CreateAppointmentFormInDoctor = () => {
   const [createAppointment] = useCreateAppointmentMutation();
   const { data } = useGetAllAppointmentsQuery({});
   console.log(data);
@@ -125,4 +125,4 @@ const CreateAppointmentForm = () => {
   );
 };
 
-export default CreateAppointmentForm;
+export default CreateAppointmentFormInDoctor;
