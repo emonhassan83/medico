@@ -2,6 +2,7 @@ import { baseApi } from "./baseApi";
 import { tagTypes } from "../tag-types";
 import { IMeta } from "@/types/common";
 import { IDoctor } from "@/types/doctor";
+import { TPrescription } from "@/types/prescriptionType/prescriptionType";
 
 export const prescriptionApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -21,7 +22,7 @@ export const prescriptionApi = baseApi.injectEndpoints({
         method: "GET",
         params: arg,
       }),
-      transformResponse: (response: IDoctor[], meta: IMeta) => {
+      transformResponse: (response: any, meta: IMeta) => {
         return {
           prescription: response,
           meta,
@@ -29,11 +30,25 @@ export const prescriptionApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.prescription],
     }),
+    // getMyPrescription: build.query({
+    //   query: () => ({
+    //     url: "/prescription/my-prescriptions",
+    //     method: "GET",
+    //   }),
+    //   providesTags: [tagTypes.prescription],
+    // }),
     getMyPrescription: build.query({
-      query: () => ({
+      query: (arg: Record<string, any>) => ({
         url: "/prescription/my-prescriptions",
         method: "GET",
+        params: arg,
       }),
+      transformResponse: (response: any, meta: IMeta) => {
+        return {
+          prescription: response,
+          meta,
+        };
+      },
       providesTags: [tagTypes.prescription],
     }),
   }),
