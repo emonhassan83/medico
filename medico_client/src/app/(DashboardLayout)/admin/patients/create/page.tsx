@@ -2,13 +2,19 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import MedicoForm from "@/components/Forms/MedicoForm";
 import MedicoInput from "@/components/Forms/MedicoInput";
 import { Button, Image, Card, Upload } from "antd";
 import { FieldValues } from "react-hook-form";
 import MedicoSelect from "@/components/Forms/MedicoSelect";
+import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
+import { toast } from "sonner";
+import {
+  useCreatePatientMutation,
+  useUpdatePatientMutation,
+} from "@/redux/api/patientApi";
 
 export const defaultValues = {
   password: "",
@@ -31,29 +37,65 @@ export const defaultValues = {
 };
 
 const CreatePatients = () => {
+  const [photo, setPhoto] = useState("");
+  const [createPatient] = useCreatePatientMutation();
+  const [updatePatient] = useUpdatePatientMutation();
+
   const handleFileUpload = async (file: File) => {
-    console.log(file);
+    try {
+      const image = await uploadImageToImgbb(file);
 
-    // try {
-    //   const image = await uploadImageToImgbb(file);
-
-    //   const updatedUserData = {
-    //     id: data?.data?._id,
-    //     userData: {
-    //       photoUrl: image },
-    //   };
-
-    //   const upload = await updateMyProfile(updatedUserData).unwrap();
-    //   if (upload?.success) {
-    //     toast.success("Profile photo updated successfully");
-    //   }
-    // } catch (error) {
-    //   console.error("Failed to upload image:", error);
-    // }
+      if (image) {
+        toast.success("Patient Photo Upload successfully");
+      }
+      setPhoto(image);
+    } catch (error) {
+      console.error("Failed to upload image:", error);
+    }
   };
 
   const handleCreatePatient = async (values: FieldValues) => {
-    console.log(values);
+    try {
+      const patientData = {
+        password: "patient123",
+        patient: {
+          firstName: values?.firstName,
+          lastName: values?.lastName,
+          email: values?.email,
+          contactNumber: values?.contactNumber,
+          profilePhoto: photo,
+          address: values?.address,
+        },
+      };
+  
+      const patientUpdateData = {
+        patientHealthData: {
+          gender: values?.gender,
+          bloodGroup: values?.bloodGroup,
+          height: values?.height,
+          weight: values?.weight,
+          diet: values?.diet,
+          pulse: values?.pulse,
+          dietaryPreferences:values?.dietaryPreferences,
+          maritalStatus: values?.maritalStatus
+        },
+      };
+      const res = await createPatient(patientData).unwrap();
+      
+      if (res?.id) {
+        const response = await updatePatient({
+          id: res.id,
+          data: patientUpdateData,
+        }).unwrap();
+        
+        if (response.id) {
+          toast.success("Patient created successfully!");
+        }
+      }
+    } catch (err: any) {
+      toast.error(err.message);
+      console.error(err.message);
+    } 
   };
 
   return (
@@ -86,27 +128,18 @@ const CreatePatients = () => {
           Basic Information
         </div>
 
-        <MedicoForm onSubmit={handleCreatePatient} defaultValues={defaultValues}>
+        <MedicoForm
+          onSubmit={handleCreatePatient}
+          defaultValues={defaultValues}
+        >
           {/* Rows of Input Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-            <MedicoInput
-              label="First Name"
-              type="text"
-              name="patient.firstName"
-            />
-            <MedicoInput
-              label="Last Name"
-              type="text"
-              name="patient.lastName"
-            />
-            <MedicoInput label="Email" type="text" name="patient.email" />
-            <MedicoInput
-              label="Contact No"
-              type="text"
-              name="patient.contactNumber"
-            />
+            <MedicoInput label="First Name" type="text" name="firstName" />
+            <MedicoInput label="Last Name" type="text" name="lastName" />
+            <MedicoInput label="Email" type="text" name="email" />
+            <MedicoInput label="Contact No" type="text" name="contactNumber" />
 
-            <MedicoInput label="Address" type="text" name="patient.address" />
+            <MedicoInput label="Address" type="text" name="address" />
             <div className="w-full">
               <p
                 className="block text-sm font-medium text-gray-700"
@@ -115,13 +148,13 @@ const CreatePatients = () => {
                 Profile URL
               </p>
               <Card
-              style={{
-                height: "180px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+                style={{
+                  height: "180px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
                 cover={
                   <div
                     style={{
