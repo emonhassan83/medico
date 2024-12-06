@@ -110,7 +110,7 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
 
   const columns: ColumnsType<Appointment> = [
     {
-      title: "Sr. No",
+      title: "SL No",
       dataIndex: "index",
       key: "index",
       render: (_: any, __: any, index: number) => index + 1,
