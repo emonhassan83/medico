@@ -2,8 +2,8 @@ import Link from "next/link";
 const statusList = [
   { id: 1, status: 'scheduled', title: 'Scheduled Appointment List' },
   { id: 2, status: 'inprogress', title: 'Inprogress Appointment List'},
-  { id: 1, status: 'scheduled', title: 'Scheduled Appointment List' },
-  { id: 2, status: 'inprogress', title: 'Inprogress Appointment List'},
+  { id: 3, status: 'completed', title: 'Completed Appointment List' },
+  { id: 4, status: 'canceled', title: 'Canceled Appointment List'},
 ]
 
 const layout = ({
@@ -19,8 +19,8 @@ const layout = ({
             </div>
 
             <div className="flex text-sm">
-              <p>Dashbord</p>
-              <p>/</p>
+              <p>Dashboard</p>
+              / 
               <p>Appointment</p>
             </div>
         </div>
