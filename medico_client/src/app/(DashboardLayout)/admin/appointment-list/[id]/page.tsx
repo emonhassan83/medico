@@ -149,7 +149,6 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
       key: "createdAtTime",
       render: (time: string) => new Date(time).toLocaleTimeString(),
     },
-
     {
       title: "Action",
       dataIndex: "status",
