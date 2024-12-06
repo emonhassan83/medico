@@ -12,6 +12,7 @@ export const appointmentApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.appointment],
     }),
+
     getAllAppointments: build.query({
       query: (arg: Record<string, any>) => {
         return {
@@ -28,13 +29,7 @@ export const appointmentApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.appointment],
     }),
-    // getAllAppointments: build.query({
-    //   query: () => ({
-    //     url: "/appointment",
-    //     method: "GET",
-    //   }),
-    //   providesTags: [tagTypes.user],
-    // }),
+
     getMyAppointments: build.query({
       query: (arg: Record<string, any>) => {
         return {
@@ -51,6 +46,7 @@ export const appointmentApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.appointment],
     }),
+
     getAppointment: build.query({
       query: (id: string | string[] | undefined) => ({
         url: `/appointment/${id}`,
@@ -58,6 +54,7 @@ export const appointmentApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.appointment],
     }),
+
     appointmentStatusChange: build.mutation({
       query: ({ id, status }) => ({
         url: `/appointment/status/${id}`,
@@ -66,9 +63,10 @@ export const appointmentApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.appointment],
     }),
+
     deleteAppointment: build.mutation({
       query: (id) => ({
-        url: `/appointment/soft/${id}`,
+        url: `/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [tagTypes.appointment],
