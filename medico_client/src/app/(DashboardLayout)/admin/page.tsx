@@ -1,5 +1,6 @@
 "use client";
 
+import DashbordTableTab from "@/components/Dashboard/Admin/dashbord/DashbordTableTab";
 import Card from "@/components/Dashboard/Common/Card";
 import DisplayItemCard from "@/components/Dashboard/Common/DisplayItemCard";
 import MonthlyEarningGraph from "@/components/Dashboard/Common/MonthlyEarningGraph";
@@ -81,6 +82,10 @@ const AdminDashboard = () => {
           </div>
         </Col>
       </Row>
+
+
+      
+      <DashbordTableTab/>
     </div>
   );
 };
