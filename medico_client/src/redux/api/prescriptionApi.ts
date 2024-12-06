@@ -8,7 +8,6 @@ export const prescriptionApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: "/prescription",
         method: "POST",
-        contentType: "multipart/form-data",
         data,
       }),
       invalidatesTags: [tagTypes.prescription],

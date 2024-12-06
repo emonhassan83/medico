@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 "use client";
 
 import Link from "next/link";
@@ -23,8 +22,7 @@ const CreatePrescription = () => {
   const {data} = useGetAllAppointmentsQuery({});
   const [createPrescription] = useCreatePrescriptionMutation();
 
-  const prescribePatient = data?.appointments?.filter(appointment => appointment?.status === 'COMPLETED');
-// console.log(prescribePatient);
+  const prescribePatient = data?.appointments?.filter((appointment: any) => appointment?.status === 'COMPLETED');
 
 const patientOptions = prescribePatient?.map((item: any) => ({
   value: item.id,
@@ -84,7 +82,6 @@ const patientOptions = prescribePatient?.map((item: any) => ({
           onSubmit={handleCreatePrescription}
           defaultValues={defaultValues}
         >
-          {/* Rows of Input Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
             <MedicoSelect
               label="Patient Appointment"
