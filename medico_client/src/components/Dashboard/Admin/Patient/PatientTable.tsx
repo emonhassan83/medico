@@ -2,20 +2,40 @@
 import React, { useState } from "react";
 import { Table, Button, Input, Divider, Space } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { useGetAllPatientQuery } from "@/redux/api/patientApi";
+import {
+  useDeletePatientMutation,
+  useGetAllPatientQuery,
+} from "@/redux/api/patientApi";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import { toast } from "sonner";
 
 const PatientTable = () => {
-  const { data } = useGetAllPatientQuery({});
+  const { data, refetch } = useGetAllPatientQuery({});
+  const [deletePatient] = useDeletePatientMutation();
   const [searchText, setSearchText] = useState("");
 
   //   Filter data based on search text
   const filteredData = data?.patients?.filter((pt: any) =>
     pt.firstName.toLowerCase().includes(searchText.toLowerCase())
   );
+
+  ///delete operation---------------------------------
+  const handleDeletRow = async (id: string) => {
+    console.log(id);
+    try {
+      const res = await deletePatient(id).unwrap();
+      console.log(res);
+      if (res?.id) {
+        toast.success("Delete patient successfully");
+        refetch();
+      }
+    } catch (err) {
+      toast.error("Somthing went wrong");
+    }
+  };
   const columns = [
     {
       title: "Sr. No",
@@ -69,7 +89,7 @@ const PatientTable = () => {
           {/* delete button */}
           <button
             className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-            //   onClick={() => handleDelete(items)}
+            onClick={() => handleDeletRow(data?.id)}
           >
             <RiDeleteBin6Fill />
           </button>

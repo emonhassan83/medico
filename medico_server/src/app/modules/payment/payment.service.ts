@@ -1,5 +1,5 @@
 import prisma from "../../../shared/prisma";
-import { PaymentStatus } from "@prisma/client";
+import { AppointmentStatus, PaymentStatus } from "@prisma/client";
 import { SSLService } from "../SSL/ssl.service";
 
 const initPayment = async (appointmentId: string) => {
@@ -67,6 +67,7 @@ const validatePayment = async (payload: any) => {
       },
       data: {
         paymentStatus: PaymentStatus.PAID,
+        status: AppointmentStatus.INPROGRESS
       },
     });
   });

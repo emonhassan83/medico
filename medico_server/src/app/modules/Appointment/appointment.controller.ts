@@ -79,9 +79,28 @@ const changeAppointmentStatus = catchAsync(
   },
 );
 
+const deleteAppointment = catchAsync(
+  async (req: Request & { user?: any }, res: Response) => {
+    const { id } = req.params;
+    const user = req.user;
+
+    const result = await AppointmentService.deleteAppointment(
+      id,
+      user as IAuthUser,
+    );
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Appointment deleted successfully!',
+      data: result,
+    });
+  },
+);
+
 export const AppointmentController = {
   createAppointment,
   getMyAppointment,
   getAllFromDB,
   changeAppointmentStatus,
+  deleteAppointment
 };

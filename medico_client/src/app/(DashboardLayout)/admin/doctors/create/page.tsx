@@ -3,9 +3,7 @@
 
 import Link from "next/link";
 import React, { useState } from "react";
-import {
-  ArrowLeftOutlined
-} from "@ant-design/icons";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import MedicoForm from "@/components/Forms/MedicoForm";
 import MedicoInput from "@/components/Forms/MedicoInput";
 import { Button, Image, Card, Upload } from "antd";
@@ -14,7 +12,10 @@ import MedicoSelect from "@/components/Forms/MedicoSelect";
 import { useGetAllSpecialtiesQuery } from "@/redux/api/specialitiesApi";
 import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
 import { toast } from "sonner";
-import { useCreateDoctorMutation, useUpdateDoctorMutation } from "@/redux/api/doctorApi";
+import {
+  useCreateDoctorMutation,
+  useUpdateDoctorMutation,
+} from "@/redux/api/doctorApi";
 
 export const defaultValues = {
   password: "",
@@ -49,7 +50,7 @@ const Doctor = () => {
   const handleFileUpload = async (file: File) => {
     try {
       const image = await uploadImageToImgbb(file);
-      
+
       if (image) {
         toast.success("Doctor Photo Upload successfully");
       }
@@ -60,7 +61,50 @@ const Doctor = () => {
   };
 
   const handleCreateDoctor = async (values: FieldValues) => {
-    console.log(values);
+    try {
+      const doctorData = {
+        password: "doctor123",
+        doctor: {
+          firstName: values?.firstName,
+          lastName: values?.lastName,
+          email: values?.email,
+          profilePhoto: photo || "",
+          contactNumber: values?.contactNumber,
+          address: values?.address,
+          registrationNumber: values?.registrationNumber,
+          experience: Number(values?.experience),
+          gender: values?.gender,
+          appointmentFee: Number(values?.appointmentFee),
+          qualification: values?.qualification,
+          currentWorkingPlace: values?.currentWorkingPlace,
+          designation: values?.designation,
+        },
+      };
+
+      const specialtiesData = {
+        specialties:
+          values?.specialties?.map((id: string) => ({
+            specialtiesId: id,
+            isDeleted: false,
+          })) ?? [],
+      };
+
+      const res = await createDoctor(doctorData).unwrap();
+
+      if (res?.id) {
+        const response = await updateDoctor({
+          id: res.id,
+          data: specialtiesData,
+        }).unwrap();
+
+        if (response.id) {
+          toast.success("Doctor created successfully!");
+        }
+      }
+    } catch (err: any) {
+      toast.error(err.message);
+      console.error(err.message);
+    }
   };
 
   return (
@@ -94,21 +138,13 @@ const Doctor = () => {
         <MedicoForm onSubmit={handleCreateDoctor} defaultValues={defaultValues}>
           {/* Rows of Input Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-            <MedicoInput
-              label="First Name"
-              type="text"
-              name="doctor.firstName"
-            />
-            <MedicoInput label="Last Name" type="text" name="doctor.lastName" />
+            <MedicoInput label="First Name" type="text" name="firstName" />
+            <MedicoInput label="Last Name" type="text" name="lastName" />
 
-            <MedicoInput
-              label="Contact No"
-              type="text"
-              name="doctor.contactNumber"
-            />
-            <MedicoInput label="Email" type="text" name="doctor.email" />
+            <MedicoInput label="Contact No" type="text" name="contactNumber" />
+            <MedicoInput label="Email" type="text" name="email" />
 
-            <MedicoInput label="Address" type="text" name="doctor.address" />
+            <MedicoInput label="Address" type="text" name="address" />
             <MedicoSelect
               name="gender"
               label="Gender"
@@ -119,15 +155,11 @@ const Doctor = () => {
               ]}
             />
 
-            <MedicoInput
-              label="Designation"
-              type="text"
-              name="doctor.designation"
-            />
+            <MedicoInput label="Designation" type="text" name="designation" />
             <MedicoInput
               label="Registration Number"
               type="text"
-              name="doctor.registrationNumber"
+              name="registrationNumber"
             />
 
             <MedicoSelect
@@ -139,22 +171,17 @@ const Doctor = () => {
             <MedicoInput
               label="Qualification"
               type="text"
-              name="doctor.qualification"
+              name="qualification"
             />
 
-            <MedicoInput
-              label="Experience"
-              type="text"
-              name="doctor.experience"
-            />
-            <MedicoInput label="Fee" type="text" name="doctor.appointmentFee" />
+            <MedicoInput label="Experience" type="text" name="experience" />
+            <MedicoInput label="Fee" type="text" name="appointmentFee" />
 
             <MedicoInput
               label="Current Working Place"
               type="text"
-              name="doctor.currentWorkingPlace"
+              name="currentWorkingPlace"
             />
-
             <div className="h-10 w-full">
               <p
                 className="block text-sm font-medium text-gray-700"
@@ -163,13 +190,13 @@ const Doctor = () => {
                 Profile URL
               </p>
               <Card
-              style={{
-                height: "180px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+                style={{
+                  height: "180px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
                 cover={
                   <div
                     style={{
@@ -214,7 +241,7 @@ const Doctor = () => {
           <Button
             htmlType="submit"
             size="large"
-            className="mt-20 rounded-md bg-[#485EC4] px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full md:w-auto"
+            className="mt-10 rounded-md bg-[#485EC4] px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full md:w-auto"
           >
             Add New Doctor
           </Button>
