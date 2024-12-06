@@ -1,8 +1,13 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { Button, Table } from "antd";
-import { useAppointmentStatusChangeMutation, useDeleteAppointmentMutation } from "@/redux/api/appointmentApi";
+import {
+  useAppointmentStatusChangeMutation,
+  useDeleteAppointmentMutation,
+} from "@/redux/api/appointmentApi";
 import { ColumnsType } from "antd/es/table";
+import { toast } from "sonner";
 
 type AppointmentStatus = "SCHEDULED" | "COMPLETED" | "CANCELED" | "INPROGRESS";
 type PaymentStatus = "PAID" | "UNPAID";
@@ -77,9 +82,35 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
     handle();
   }, [paramsValue]);
 
+  const handleChangeStatus = async (id: string, status: string) => {
+    try {
+      const res = await appointmentStatusChange({ id, status }).unwrap();
+
+      if (res?.id) {
+        toast.success("Appointment status changed successfully!");
+      }
+    } catch (err: any) {
+      toast.error(err.message);
+      console.error(err.message);
+    }
+  };
+
+  const handleDeleteAppointment = async (id: string) => {
+    try {
+      const res = await deleteAppointment(id);
+
+      if (res) {
+        toast.success("Appointment deleted successfully!");
+      }
+    } catch (err: any) {
+      toast.error(err.message);
+      console.error(err.message);
+    }
+  };
+
   const columns: ColumnsType<Appointment> = [
     {
-      title: "Sr. No",
+      title: "SL No",
       dataIndex: "index",
       key: "index",
       render: (_: any, __: any, index: number) => index + 1,
@@ -118,24 +149,40 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
       key: "createdAtTime",
       render: (time: string) => new Date(time).toLocaleTimeString(),
     },
-
     {
       title: "Action",
       dataIndex: "status",
       key: "status",
       align: "center",
-      render: (status: AppointmentStatus) => {
+      render: (status: AppointmentStatus, item) => {
         switch (status) {
           case "SCHEDULED":
             return (
               <div className="flex justify-center">
-                <Button color="primary" variant="filled" size="small" style={{ marginRight: 8 }}>
+                <Button
+                  onClick={() => handleChangeStatus(item.id, "INPROGRESS")}
+                  color="primary"
+                  variant="filled"
+                  size="small"
+                  style={{ marginRight: 8 }}
+                >
                   Inprogress
                 </Button>
-                <Button color="default" variant="filled" size="small" style={{ marginRight: 8 }}>
+                <Button
+                  onClick={() => handleChangeStatus(item.id, "CANCELED")}
+                  color="default"
+                  variant="filled"
+                  size="small"
+                  style={{ marginRight: 8 }}
+                >
                   Canceled
                 </Button>
-                <Button color="danger" variant="filled" size="small">
+                <Button
+                  onClick={() => handleDeleteAppointment(item.id)}
+                  color="danger"
+                  variant="filled"
+                  size="small"
+                >
                   Delete
                 </Button>
               </div>
@@ -143,23 +190,44 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
           case "INPROGRESS":
             return (
               <div className="flex justify-center">
-                <Button color="default" variant="filled" size="small" style={{ marginRight: 8 }}>
+                <Button
+                  onClick={() => handleChangeStatus(item.id, "CANCELED")}
+                  color="default"
+                  variant="filled"
+                  size="small"
+                  style={{ marginRight: 8 }}
+                >
                   Canceled
                 </Button>
-                <Button color="danger" variant="filled" size="small">
+                <Button
+                  onClick={() => handleDeleteAppointment(item.id)}
+                  color="danger"
+                  variant="filled"
+                  size="small"
+                >
                   Delete
                 </Button>
               </div>
             );
           case "COMPLETED":
             return (
-              <Button color="danger" variant="filled" size="small">
+              <Button
+                onClick={() => handleDeleteAppointment(item.id)}
+                color="danger"
+                variant="filled"
+                size="small"
+              >
                 Delete
               </Button>
             );
           case "CANCELED":
             return (
-              <Button color="danger" variant="filled" size="small">
+              <Button
+                onClick={() => handleDeleteAppointment(item.id)}
+                color="danger"
+                variant="filled"
+                size="small"
+              >
                 Delete
               </Button>
             );
@@ -167,7 +235,7 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
             return null;
         }
       },
-    }
+    },
   ];
 
   return (
