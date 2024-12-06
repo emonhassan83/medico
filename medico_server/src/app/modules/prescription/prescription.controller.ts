@@ -5,6 +5,7 @@ import httpStatus from 'http-status';
 import { PrescriptionService } from './prescription.services';
 import pick from '../../../shared/pick';
 import { prescriptionFilterableFields } from './prescription.constants';
+import { IAuthUser } from '../../../interfaces/common';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
@@ -59,9 +60,22 @@ const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const user = req?.user  as IAuthUser;
+  const result = await PrescriptionService.deleteFromDB(id, user);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Prescriptions deleted successfully!',
+    data: result,
+  });
+});
+
 export const PrescriptionController = {
   insertIntoDB,
   patientPrescriptions,
   getAllFromDB,
   getByIdFromDB,
+  deleteFromDB
 };

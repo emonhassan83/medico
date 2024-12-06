@@ -2,28 +2,35 @@ import express from 'express';
 import validateRequest from '../../middlewares/validateRequest';
 import { PrescriptionValidation } from './prescription.validations';
 import { PrescriptionController } from './prescription.controller';
-import { ENUM_USER_ROLE } from '../../../enums/user';
 import auth from '../../middlewares/auth';
+import { UserRole } from '@prisma/client';
 
 const router = express.Router();
+router.get('/', auth(UserRole.ADMIN), PrescriptionController.getAllFromDB);
+
 router.get(
-  '/',
-  // auth(ENUM_USER_ROLE.ADMIN),
-  PrescriptionController.getAllFromDB,
+  '/:id',
+  auth(UserRole.RECEPTIONIST, UserRole.DOCTOR, UserRole.PATIENT),
+  PrescriptionController.getByIdFromDB,
 );
 
-//router.get('/:id', PrescriptionController.getByIdFromDB);
 router.get(
   '/my-prescriptions',
-  auth(ENUM_USER_ROLE.PATIENT),
+  auth(UserRole.PATIENT),
   PrescriptionController.patientPrescriptions,
 );
 
 router.post(
   '/',
-  auth(ENUM_USER_ROLE.DOCTOR),
+  auth(UserRole.DOCTOR),
   validateRequest(PrescriptionValidation.create),
   PrescriptionController.insertIntoDB,
+);
+
+router.post(
+  '/:id',
+  auth(UserRole.DOCTOR, UserRole.PATIENT),
+  PrescriptionController.deleteFromDB,
 );
 
 export const PrescriptionsRoutes = router;

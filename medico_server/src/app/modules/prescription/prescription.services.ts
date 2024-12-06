@@ -2,7 +2,7 @@ import prisma from '../../../shared/prisma';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import { IAuthUser, IGenericResponse } from '../../../interfaces/common';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
-import { PaymentStatus, Prescription, Prisma, UserRole } from '@prisma/client';
+import { PaymentStatus, Prescription, Prisma } from '@prisma/client';
 import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
 import {
@@ -184,9 +184,28 @@ const getByIdFromDB = async (id: string): Promise<Prescription | null> => {
   return result;
 };
 
+const deleteFromDB = async (
+  id: string,
+  user: IAuthUser,
+): Promise<Prescription | null> => {
+  await prisma.user.findFirstOrThrow({
+    where: {
+      id: user?.userId,
+    },
+  });
+
+  const result = await prisma.prescription.delete({
+    where: {
+      id,
+    }
+  });
+  return result;
+};
+
 export const PrescriptionService = {
   insertIntoDB,
   patientPrescriptions,
   getAllFromDB,
   getByIdFromDB,
+  deleteFromDB,
 };

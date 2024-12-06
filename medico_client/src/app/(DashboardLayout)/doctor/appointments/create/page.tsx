@@ -1,6 +1,6 @@
 "use client";
-import CreateAppointmentFormInDoctor from "@/components/Dashboard/Doctor/Appointment/CreateAppointmentFormInDoctor";
 
+import CreateAppointmentFormInDoctor from "@/components/Dashboard/Doctor/Appointment/CreateAppointmentFormInDoctor";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";

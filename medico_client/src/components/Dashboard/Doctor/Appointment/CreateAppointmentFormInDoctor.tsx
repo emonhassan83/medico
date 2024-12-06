@@ -3,29 +3,15 @@
 import MedicoDatePiker from "@/components/Forms/MedicoDatePiker";
 import MedicoForm from "@/components/Forms/MedicoForm";
 import MedicoSelect from "@/components/Forms/MedicoSelect";
-import {
-  useCreateAppointmentMutation,
-} from "@/redux/api/appointmentApi";
+import { useCreateAppointmentMutation } from "@/redux/api/appointmentApi";
 import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 import { useGetAllSchedulesQuery } from "@/redux/api/scheduleApi";
 import { FieldValues } from "react-hook-form";
 
 export const defaultValues = {
-  doctor: {
-    firstName: "",
-    lastName: "",
-    email: "",
-    contactNumber: "",
-    address: "",
-    gender: "",
-    designation: "",
-    registrationNumber: "",
-    qualification: "",
-    experience: "",
-    appointmentFee: "",
-    currentWorkingPlace: "",
-    profilePhoto: "",
-  },
+  doctor: "",
+  date: "",
+  scheduleIds: "",
 };
 
 const CreateAppointmentFormInDoctor = () => {
@@ -56,12 +42,12 @@ const CreateAppointmentFormInDoctor = () => {
       <MedicoForm onSubmit={handleCreateDoctor} defaultValues={defaultValues}>
         {/* Doctor Selection */}
         <div className="sm:flex items-center gap-4 mt-6">
-        <MedicoSelect
-          name="doctor"
-          label="Select Doctor"
-          options={doctorOptions}
-        />
-        <MedicoDatePiker name="Date" label="Date" />
+          <MedicoSelect
+            name="doctor"
+            label="Select Doctor"
+            options={doctorOptions}
+          />
+          <MedicoDatePiker name="date" label="Date" />
         </div>
 
         {/* Available Slot */}
