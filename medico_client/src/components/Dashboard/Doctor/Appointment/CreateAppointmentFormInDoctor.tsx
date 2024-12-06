@@ -1,117 +1,62 @@
 "use client";
-import {
-  useCreateAppointmentMutation,
-  useGetAllAppointmentsQuery,
-} from "@/redux/api/appointmentApi";
-import React, { useEffect, useState } from "react";
+
+import MedicoDatePiker from "@/components/Forms/MedicoDatePiker";
+import MedicoForm from "@/components/Forms/MedicoForm";
+import MedicoSelect from "@/components/Forms/MedicoSelect";
+import { useCreateAppointmentMutation } from "@/redux/api/appointmentApi";
+import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
+import { useGetAllSchedulesQuery } from "@/redux/api/scheduleApi";
+import { FieldValues } from "react-hook-form";
+
+export const defaultValues = {
+  doctor: "",
+  date: "",
+  scheduleIds: "",
+};
 
 const CreateAppointmentFormInDoctor = () => {
   const [createAppointment] = useCreateAppointmentMutation();
-  const { data } = useGetAllAppointmentsQuery({});
-  //   console.log(data);
-  //   console.log(data?.appointments);
-  // console.log(createAppointment);
-  const [formData, setFormData] = useState({
-    doctor: "",
-    date: "",
-    time: "",
-    slot: "",
+  const { data: doctors } = useGetAllDoctorsQuery({});
+  const { data: schedules } = useGetAllSchedulesQuery({
+    name: "limit",
+    value: 20,
   });
+  console.log(schedules);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const doctorOptions = doctors?.doctors?.map((item: any) => ({
+    value: item.id,
+    label: `${item.firstName} ${item.firstName}`,
+  }));
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log(formData);
+  const scheduleOptions = schedules?.data?.map((item: any) => ({
+    value: item.id,
+    label: `${item.startDate} ${item.endDate}`,
+  }));
+
+  const handleCreateDoctor = async (values: FieldValues) => {
+    console.log(values);
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <>
+      <MedicoForm onSubmit={handleCreateDoctor} defaultValues={defaultValues}>
         {/* Doctor Selection */}
-        <div className="mt-5">
-          <label
-            htmlFor="doctor"
-            className="block text-sm font-medium text-gray-700 mb-3"
-          >
-            Doctor <span className="text-red-500">*</span>
-          </label>
-          <select
-            id="doctor"
+        <div className="sm:flex items-center gap-4 mt-6">
+          <MedicoSelect
             name="doctor"
-            className="mt-1 block w-full h-[40px] text-[#495057] rounded-sm border border-gray-300  outline-none"
-            value={formData.doctor}
-            onChange={handleInputChange}
-            required
-          >
-            <option value="">Select</option>
-            <option value="Dr. Smith">Dr. Smith</option>
-            <option value="Dr. Johnson">Dr. Johnson</option>
-          </select>
-        </div>
-
-        {/* Date Picker */}
-        <div className="mt-5">
-          <label
-            htmlFor="date"
-            className="block text-sm font-medium text-gray-700 mb-3"
-          >
-            Date <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="date"
-            id="date"
-            name="date"
-            className="mt-1 block w-full text-[#495057] h-[40px] rounded-sm border border-gray-300 outline-none"
-            value={formData.date}
-            onChange={handleInputChange}
-            required
+            label="Select Doctor"
+            options={doctorOptions}
           />
-        </div>
-
-        {/* Available Time */}
-        <div className="mt-5">
-          <label
-            htmlFor="time"
-            className="block text-sm font-medium text-[#495057] mb-3"
-          >
-            Available Time <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            id="time"
-            name="time"
-            className="mt-1 block w-full h-[40px] outline-none"
-            value={formData.time}
-            onChange={handleInputChange}
-            required
-          />
+          <MedicoDatePiker name="date" label="Date" />
         </div>
 
         {/* Available Slot */}
-        <div className="">
-          <label
-            htmlFor="slot"
-            className="block text-sm font-medium text-gray-700 mb-3"
-          >
-            Available Slot <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            id="slot"
-            name="slot"
-            className="mt-1 block w-full h-[40px] outline-none"
-            value={formData.slot}
-            onChange={handleInputChange}
-            // placeholder="Enter available slot"
-            required
-          />
-        </div>
+        <MedicoSelect
+          name="scheduleIds"
+          label="Available Slot"
+          mode="multiple"
+          options={scheduleOptions}
+        />
 
         {/* Submit Button */}
         <button
@@ -120,8 +65,8 @@ const CreateAppointmentFormInDoctor = () => {
         >
           Create Appointment
         </button>
-      </form>
-    </div>
+      </MedicoForm>
+    </>
   );
 };
 

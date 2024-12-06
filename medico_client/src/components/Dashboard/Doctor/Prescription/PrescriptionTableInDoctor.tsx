@@ -1,22 +1,40 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { Table } from "antd";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
+import {
+  useDeletePrescriptionMutation,
+  useGetAllPrescriptionQuery,
+} from "@/redux/api/prescriptionApi";
+import { toast } from "sonner";
 
 const PrescriptionTableInDoctor = () => {
   const { data } = useGetAllPrescriptionQuery({});
-  // console.log(data);
+  const [deletePrescription] = useDeletePrescriptionMutation();
 
-  const dataSource = data?.prescription?.map((presecription: any) => ({
-    patientName: presecription?.patient?.firstName,
-    doctorName: presecription?.doctor?.firstName,
-    appointmentDate: presecription?.appointment?.createdAt?.slice(0, 10),
-    appointmentTime: presecription?.appointment?.createdAt?.slice(11, 19),
+  const dataSource = data?.prescription?.map((prescription: any) => ({
+    id: prescription?.id,
+    patientName: prescription?.patient?.firstName,
+    doctorName: prescription?.doctor?.firstName,
+    appointmentDate: prescription?.appointment?.createdAt?.slice(0, 10),
+    appointmentTime: prescription?.appointment?.createdAt?.slice(11, 19),
   }));
+
+  const handleDeletePrescription = async (id: string) => {
+    try {
+      const res = await deletePrescription(id).unwrap();
+
+      if (res?.id) {
+        toast.success("Prescription deleted successfully!");
+      }
+    } catch (err: any) {
+      toast.error(err.message);
+      console.error(err.message);
+    }
+  };
 
   const columns = [
     {
@@ -50,7 +68,7 @@ const PrescriptionTableInDoctor = () => {
     {
       title: "Options",
       key: "action",
-      render: () => (
+      render: (items: any) => (
         <div className="flex gap-1">
           <Link href="#">
             <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
@@ -61,7 +79,7 @@ const PrescriptionTableInDoctor = () => {
           <Link href="#">
             <button
               className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-              //   onClick={() => handleEdit(items)}
+              // onClick={() => handleEdit(items)}
             >
               <MdEmail />
             </button>
@@ -69,7 +87,7 @@ const PrescriptionTableInDoctor = () => {
           {/* delete button */}
           <button
             className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-            //   onClick={() => handleDelete(items)}
+            onClick={() => handleDeletePrescription(items?.id)}
           >
             <RiDeleteBin6Fill />
           </button>

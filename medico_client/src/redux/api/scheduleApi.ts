@@ -12,22 +12,20 @@ export const scheduleApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.schedule],
     }),
+
     getAllSchedules: build.query({
       query: (arg: Record<string, any>) => {
+        console.log(arg);
+        
         return {
           url: "/schedule",
           method: "GET",
           params: arg,
         };
       },
-      transformResponse: (response: [], meta: IMeta) => {
-        return {
-          schedules: response,
-          meta,
-        };
-      },
       providesTags: [tagTypes.schedule],
     }),
+
     getSingleSchedule: build.query({
       query: (id: string | string[] | undefined) => ({
         url: `/schedule/${id}`,
