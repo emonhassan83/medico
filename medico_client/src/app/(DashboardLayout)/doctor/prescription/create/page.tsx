@@ -22,7 +22,7 @@ const CreatePrescription = () => {
   const {data} = useGetAllAppointmentsQuery({});
   const [createPrescription] = useCreatePrescriptionMutation();
 
-  const prescribePatient = data?.appointments?.filter((appointment: any) => appointment?.status === 'COMPLETED');
+  const prescribePatient = data?.appointments?.filter((appointment: any) => appointment?.status === 'INPROGRESS');
 
 const patientOptions = prescribePatient?.map((item: any) => ({
   value: item.id,
@@ -38,7 +38,7 @@ const patientOptions = prescribePatient?.map((item: any) => ({
       };
 
       const res = await createPrescription(prescriptionData).unwrap();
-
+      
       if (res?.id) {
         toast.success("Prescription created successfully!");
       }

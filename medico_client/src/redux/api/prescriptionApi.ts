@@ -45,7 +45,7 @@ export const prescriptionApi = baseApi.injectEndpoints({
 
     deletePrescription: build.mutation({
       query: (id) => ({
-        url: `/${id}`,
+        url: `/prescription/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [tagTypes.prescription],
