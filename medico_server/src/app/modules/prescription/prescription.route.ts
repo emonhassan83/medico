@@ -6,7 +6,11 @@ import auth from '../../middlewares/auth';
 import { UserRole } from '@prisma/client';
 
 const router = express.Router();
-router.get('/', auth(UserRole.ADMIN), PrescriptionController.getAllFromDB);
+router.get(
+  '/',
+  auth(UserRole.RECEPTIONIST, UserRole.DOCTOR),
+  PrescriptionController.getAllFromDB,
+);
 
 router.get(
   '/:id',
@@ -27,7 +31,7 @@ router.post(
   PrescriptionController.insertIntoDB,
 );
 
-router.post(
+router.delete(
   '/:id',
   auth(UserRole.DOCTOR, UserRole.PATIENT),
   PrescriptionController.deleteFromDB,

@@ -2,7 +2,12 @@ import prisma from '../../../shared/prisma';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import { IAuthUser, IGenericResponse } from '../../../interfaces/common';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
-import { PaymentStatus, Prescription, Prisma } from '@prisma/client';
+import {
+  AppointmentStatus,
+  PaymentStatus,
+  Prescription,
+  Prisma,
+} from '@prisma/client';
 import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
 import {
@@ -27,15 +32,26 @@ const insertIntoDB = async (
   if (!(user.email === isAppointmentExists.doctor.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'This is not your appointment!');
   }
+  const result = await prisma.$transaction(async tx => {
+    await tx.appointment.update({
+      where: {
+        id: isAppointmentExists.id,
+      },
+      data: {
+        status: AppointmentStatus.COMPLETED,
+      },
+    });
 
-  const result = await prisma.prescription.create({
-    data: {
-      appointmentId: isAppointmentExists.id,
-      doctorId: isAppointmentExists.doctorId,
-      patientId: isAppointmentExists.patientId,
-      followUpDate: data.followUpDate || null,
-      instructions: data.instructions as string,
-    },
+    const prescriptionData = await tx.prescription.create({
+      data: {
+        appointmentId: isAppointmentExists.id,
+        doctorId: isAppointmentExists.doctorId,
+        patientId: isAppointmentExists.patientId,
+        followUpDate: data.followUpDate || null,
+        instructions: data.instructions as string,
+      },
+    });
+    return prescriptionData;
   });
 
   return result;
@@ -197,7 +213,7 @@ const deleteFromDB = async (
   const result = await prisma.prescription.delete({
     where: {
       id,
-    }
+    },
   });
   return result;
 };
