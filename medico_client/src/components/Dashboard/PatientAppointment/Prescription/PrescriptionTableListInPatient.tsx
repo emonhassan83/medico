@@ -1,18 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { Table } from "antd";
-import Link from "next/link";
-import { FaEye } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import {
-  useGetAllPrescriptionQuery,
-  useGetMyPrescriptionQuery,
-} from "@/redux/api/prescriptionApi";
+
+import { useGetMyPrescriptionQuery } from "@/redux/api/prescriptionApi";
 
 const PrescriptionTableListInPatient = () => {
-  // const { data } = useGetAllPrescriptionQuery({});
-  // console.log(data);
   const { data } = useGetMyPrescriptionQuery({});
   // console.log(data);
 
