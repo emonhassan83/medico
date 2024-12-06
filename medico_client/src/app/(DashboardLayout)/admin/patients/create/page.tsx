@@ -114,7 +114,7 @@ const CreatePatients = () => {
 
       <div className="mt-5 ml-4">
         <Link
-          href="/admin/doctors"
+          href="/admin/patients"
           className="text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
         >
           <ArrowLeftOutlined className="mr-1" /> Back to Patient List
