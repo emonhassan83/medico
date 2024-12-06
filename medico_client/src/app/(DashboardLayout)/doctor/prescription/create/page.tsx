@@ -4,13 +4,14 @@
 import Link from "next/link";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import MedicoForm from "@/components/Forms/MedicoForm";
-import MedicoInput from "@/components/Forms/MedicoInput";
 import { Button } from "antd";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import MedicoDatePiker from "@/components/Forms/MedicoDatePiker";
 import MedicoTextArea from "@/components/Forms/MedicoTextArea";
 import { useCreatePrescriptionMutation } from "@/redux/api/prescriptionApi";
+import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
+import MedicoSelect from "@/components/Forms/MedicoSelect";
 
 export const defaultValues = {
   appointmentId: "",
@@ -19,7 +20,16 @@ export const defaultValues = {
 };
 
 const CreatePrescription = () => {
+  const {data} = useGetAllAppointmentsQuery({});
   const [createPrescription] = useCreatePrescriptionMutation();
+
+  const prescribePatient = data?.appointments?.filter(appointment => appointment?.status === 'COMPLETED');
+// console.log(prescribePatient);
+
+const patientOptions = prescribePatient?.map((item: any) => ({
+  value: item.id,
+  label: `${item.patient.firstName} ${item.patient.lastName}`,
+}));
 
   const handleCreatePrescription = async (values: FieldValues) => {
     try {
@@ -76,13 +86,14 @@ const CreatePrescription = () => {
         >
           {/* Rows of Input Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-            <MedicoInput
+            <MedicoSelect
               label="Patient Appointment"
-              type="text"
               name="appointmentId"
+              options={patientOptions}
             />
             <MedicoDatePiker label="Follow Up Date" name="followUpDate" />
           </div>
+
           <MedicoTextArea label="Instructions" rows={5} name="instructions" />
 
           {/* Submit Button */}
