@@ -52,5 +52,7 @@ const specialtiesApi = baseApi.injectEndpoints({
 export const {
   useCreateSpecialtyMutation,
   useGetAllSpecialtiesQuery,
+  useGetSingleSpecialtiesQuery,
+  useUpdateSpecialtiesMutation,
   useDeleteSpecialtyMutation,
 } = specialtiesApi;
