@@ -2,13 +2,14 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import MedicoForm from "@/components/Forms/MedicoForm";
 import MedicoInput from "@/components/Forms/MedicoInput";
 import { Button, Image, Card, Upload } from "antd";
 import { FieldValues } from "react-hook-form";
 import MedicoSelect from "@/components/Forms/MedicoSelect";
+import { useGetSinglePatientQuery } from "@/redux/api/patientApi";
 
 export const defaultValues = {
   password: "",
@@ -30,7 +31,17 @@ export const defaultValues = {
   },
 };
 
-const CreatePatients = () => {
+const EditPatients = ({ params }: any) => {
+    const [load, setLoad] = useState(false)
+  const { data } = useGetSinglePatientQuery(params.id);
+
+  useEffect(() => {
+    defaultValues.patient.firstName = data?.firstName;
+    defaultValues.patient.firstName = "sdfsdf"
+  }, [data]);
+
+  console.log(data?.firstName);
+
   const handleFileUpload = async (file: File) => {
     console.log(file);
 
@@ -61,12 +72,13 @@ const CreatePatients = () => {
       {/* Header Section */}
       <div className="mx-4 flex items-center justify-between mt-4">
         <h2 className="text-lg text-[#495057] font-semibold">
-          Add New Patient
+          Edit Patient Info
         </h2>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
           <Link href="/admin">Dashboard</Link>/
           <Link href="/admin/patients">Patients</Link>/
-          <Link href="#">Add New Patient</Link>
+          <Link href={`/admin/patients/${params.id}`}>Profile</Link>/
+          <Link href="#">Edit</Link>
         </div>
       </div>
 
@@ -86,7 +98,10 @@ const CreatePatients = () => {
           Basic Information
         </div>
 
-        <MedicoForm onSubmit={handleCreatePatient} defaultValues={defaultValues}>
+        <MedicoForm
+          onSubmit={handleCreatePatient}
+          defaultValues={defaultValues}
+        >
           {/* Rows of Input Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
             <MedicoInput
@@ -115,13 +130,13 @@ const CreatePatients = () => {
                 Profile URL
               </p>
               <Card
-              style={{
-                height: "180px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+                style={{
+                  height: "180px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
                 cover={
                   <div
                     style={{
@@ -233,4 +248,4 @@ const CreatePatients = () => {
   );
 };
 
-export default CreatePatients;
+export default EditPatients;

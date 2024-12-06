@@ -57,7 +57,7 @@ const PatientTable = () => {
           </Link>
 
           {/* edit button */}
-          <Link href="#">
+          <Link href={`/admin/patients/${data?.id}/edit`}>
             <button
               className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
               //   onClick={() => handleEdit(items)}
