@@ -1,36 +1,113 @@
 "use client";
+
 import React from "react";
-import { Table, Button, Input } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
-import Link from "next/link";
-import { FaEye } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
+import { Table, Button } from "antd";
+import {
+  useAppointmentStatusChangeMutation,
+  useDeleteAppointmentMutation,
+  useGetMyAppointmentsQuery,
+} from "@/redux/api/appointmentApi";
+import { toast } from "sonner";
+import { ColumnsType } from "antd/es/table";
+
+type AppointmentStatus = "SCHEDULED" | "COMPLETED" | "CANCELED" | "INPROGRESS";
+type PaymentStatus = "PAID" | "UNPAID";
+
+interface Doctor {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  profilePhoto: string;
+  contactNumber: string;
+  address: string;
+  registrationNumber: string;
+  experience: number;
+  gender: "MALE" | "FEMALE" | "OTHER";
+  appointmentFee: number;
+  qualification: string;
+  currentWorkingPlace: string;
+  designation: string;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+  averageRating: number;
+}
+
+interface Patient {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  profilePhoto: string;
+  contactNumber: string;
+  address: string;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface Appointment {
+  id: string;
+  patientId: string;
+  // doctorId: string;
+  // scheduleId: string;
+  // videoCallingId: string;
+  status: AppointmentStatus;
+  paymentStatus: PaymentStatus;
+  // notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+  // doctor: Doctor;
+  // patient: Patient;
+}
 
 const MyAppointmentTable = () => {
-  const { data, isLoading, error } = useGetMyAppointmentsQuery({});
-  console.log(data?.appointments);
-  const dataSource = data?.appointments?.map((appointment: any) => ({
-    patientName: appointment?.patient?.firstName,
-    status: appointment?.status,
-    paymentStatus: appointment?.paymentStatus,
-    appointmentDate: appointment?.createdAt?.slice(0, 10),
-    appointmentTime: appointment?.createdAt?.slice(11, 19),
-  }));
+  const { data, isLoading } = useGetMyAppointmentsQuery({});
+  const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
+  const [deleteAppointment] = useDeleteAppointmentMutation();
 
-  const columns = [
+  const appointments = data?.appointments;
+
+  const handleChangeStatus = async (id: string, status: string) => {
+    try {
+      const res = await appointmentStatusChange({ id, status }).unwrap();
+
+      if (res?.id) {
+        toast.success("Appointment status changed successfully!");
+      }
+    } catch (err: any) {
+      toast.error(err.message);
+      console.error(err.message);
+    }
+  };
+
+  const handleDeleteAppointment = async (id: string) => {
+    try {
+      const res = await deleteAppointment(id);
+
+      if (res) {
+        toast.success("Appointment deleted successfully!");
+      }
+    } catch (err: any) {
+      toast.error(err.message);
+      console.error(err.message);
+    }
+  };
+
+  const columns: ColumnsType<Appointment> = [
     {
-      title: "Sr. No",
+      title: "SL No",
       dataIndex: "key",
       key: "key",
       sorter: (a: any, b: any) => a.key - b.key,
       render: (_: any, __: any, index: number) => index + 1,
     },
     {
-      title: "Name",
-      dataIndex: "patientName",
-      key: "patientName",
+      title: "Patient Name",
+      dataIndex: "patient",
+      key: "patient",
+      render: (patient: Patient) => `${patient.firstName} ${patient.lastName}`,
     },
     {
       title: "Appointment Status",
@@ -44,44 +121,41 @@ const MyAppointmentTable = () => {
     },
     {
       title: "Date",
-      dataIndex: "appointmentDate",
+      dataIndex: "createdAt",
       key: "appointmentDate",
+      render: (date: string) => new Date(date).toLocaleDateString(),
     },
     {
       title: "Time",
-      dataIndex: "appointmentTime",
-      key: "appointmentTime",
+      dataIndex: "createdAt",
+      key: "createdAtTime",
+      render: (time: string) => new Date(time).toLocaleTimeString(),
     },
 
     {
-      title: "Options",
-      key: "action",
-      render: () => (
-        <div className="flex gap-1">
-          {/* update Button */}
-          {/* <Link href="#">
-            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
-              <FaEye />
-            </button>
-          </Link> */}
-
-          {/* edit button */}
-          {/* <Link href="#">
-            <button
-              className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-              //   onClick={() => handleEdit(items)}
-            >
-              <MdEdit />
-            </button>
-          </Link> */}
-
-          {/* delete button */}
-          <button
-            className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-            //   onClick={() => handleDelete(items)}
+      title: "Action",
+      dataIndex: "status",
+      key: "status",
+      align: "center",
+      render: (status: AppointmentStatus, item) => (
+        <div className="flex justify-center">
+          <Button
+            onClick={() => handleChangeStatus(item.id, "CANCELED")}
+            color="default"
+            variant="filled"
+            size="small"
+            style={{ marginRight: 8 }}
           >
-            <RiDeleteBin6Fill />
-          </button>
+            Canceled
+          </Button>
+          <Button
+            onClick={() => handleDeleteAppointment(item.id)}
+            color="danger"
+            variant="filled"
+            size="small"
+          >
+            Delete
+          </Button>
         </div>
       ),
     },
@@ -91,7 +165,7 @@ const MyAppointmentTable = () => {
     <div className="bg-white p-5">
       <div>
         <Table
-          dataSource={dataSource}
+          dataSource={appointments}
           columns={columns}
           pagination={{ pageSize: data?.meta?.limit }}
           bordered

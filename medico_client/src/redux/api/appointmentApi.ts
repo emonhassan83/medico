@@ -66,7 +66,7 @@ export const appointmentApi = baseApi.injectEndpoints({
 
     deleteAppointment: build.mutation({
       query: (id) => ({
-        url: `/${id}`,
+        url: `/appointment/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [tagTypes.appointment],
