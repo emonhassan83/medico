@@ -35,12 +35,10 @@ const LoginPage = () => {
   const handleLogin = async (values: FieldValues) => {
     try {
       const res = await userLogin(values);
-      console.log(res);
-      console.log(res?.data?.accessToken);
+
       if (res?.data?.accessToken) {
         toast.success(res?.message);
         storeUserInfo({ accessToken: res?.data?.accessToken });
-        // router.push("/dashboard");
       } else {
         toast.error(res?.message);
       }
