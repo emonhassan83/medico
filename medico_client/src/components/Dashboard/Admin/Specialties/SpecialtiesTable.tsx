@@ -1,16 +1,18 @@
 "use client";
 import React from "react";
-import { Table, Button, Input } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { Table } from "antd";
 import Link from "next/link";
-import { FaEye } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
-import { useGetAllSpecialtiesQuery } from "@/redux/api/specialitiesApi";
+// import { useGetAllSpecialtiesQuery } from "@/redux/api/specialitiesApi";
+import {
+  useDeleteSpecialtyMutation,
+  useGetAllSpecialtiesQuery,
+} from "@/redux/api/specialtiesApi";
+import { toast } from "sonner";
 
 const SpecialtiesTable = () => {
-  const { data, isLoading, error } = useGetAllSpecialtiesQuery({});
+  const { data, refetch, isLoading, error } = useGetAllSpecialtiesQuery({});
   console.log(data);
 
   const columns = [
@@ -29,32 +31,14 @@ const SpecialtiesTable = () => {
     {
       title: "Options",
       key: "action",
-      render: () => (
+      render: (data: any) => (
         <div className="flex gap-1">
-          {/* update Button */}
-          {/* <Link href="#">
-            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
-              <FaEye />
-            </button>
-          </Link> */}
-
           {/* edit button */}
-          <Link href="#">
-            <button
-              className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-              //   onClick={() => handleEdit(items)}
-            >
+          <Link href={`/admin/specialties/${data?.id}`}>
+            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
               <MdEdit />
             </button>
           </Link>
-
-          {/* delete button */}
-          <button
-            className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-            //   onClick={() => handleDelete(items)}
-          >
-            <RiDeleteBin6Fill />
-          </button>
         </div>
       ),
     },

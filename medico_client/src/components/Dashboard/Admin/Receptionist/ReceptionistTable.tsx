@@ -6,18 +6,38 @@ import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
+import {
+  useDeleteReceptionistMutation,
+  useGetAllReceptionQuery,
+} from "@/redux/api/receptionistApi";
+import { toast } from "sonner";
 
 const ReceptionistTable = () => {
-  const { data } = useGetAllReceptionQuery({});
+  const { data, refetch } = useGetAllReceptionQuery({});
+  const [deleteReceptionist] = useDeleteReceptionistMutation();
   console.log(data);
-  // console.log(data);
   const [searchText, setSearchText] = useState("");
 
   //   Filter data based on search text
   const filteredData = data?.receptionist?.filter((pt: any) =>
     pt.firstName.toLowerCase().includes(searchText.toLowerCase())
   );
+
+  ///delete operation---------------------------------
+  const handleDeletRow = async (id: string) => {
+    console.log(id);
+    try {
+      const res = await deleteReceptionist(id).unwrap();
+      console.log(res);
+      if (res?.id) {
+        toast.success("Delete reception successfully");
+        refetch();
+      }
+    } catch (err) {
+      toast.error("Somthing went wrong");
+    }
+  };
+
   const columns = [
     {
       title: "Sr. No",
@@ -48,7 +68,7 @@ const ReceptionistTable = () => {
     {
       title: "Options",
       key: "action",
-      render: () => (
+      render: (data: any) => (
         <div className="flex gap-1">
           {/* update Button */}
           <Link href="#">
@@ -58,7 +78,7 @@ const ReceptionistTable = () => {
           </Link>
 
           {/* edit button */}
-          <Link href="#">
+          <Link href={`/admin/receptionists/${data?.id}`}>
             <button
               className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
               //   onClick={() => handleEdit(items)}
@@ -70,7 +90,7 @@ const ReceptionistTable = () => {
           {/* delete button */}
           <button
             className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-            //   onClick={() => handleDelete(items)}
+            onClick={() => handleDeletRow(data?.id)}
           >
             <RiDeleteBin6Fill />
           </button>
