@@ -303,7 +303,7 @@ export default function SideBar() {
         </nav>
       </aside>
 
-      <section className="fixed top-0 w-full bg-white">
+      <section className="fixed z-[30] top-0 w-full bg-white">
         <Navbar open={isSideNavOpen} setOpen={setIsSideNavOpen} />
       </section>
 

@@ -7,7 +7,6 @@ import { BsSlash } from "react-icons/bs";
 
 const PatientDetail = ({ params }: any) => {
   const { data } = useGetSinglePatientQuery(params.id);
-  console.log(data);
   return (
     <div className="mx-8">
       <div className="flex items-center justify-between mt-2">
@@ -53,7 +52,7 @@ const PatientDetail = ({ params }: any) => {
         </div>
       </div>
       <div className="w-full lg:w-1/3 mt-5 lg:mt-8 mx-auto bg-white rounded-lg p-5">
-        <p className="text-gray-600 font-semibold">Personal Informantion</p>
+        <p className="text-gray-600 font-semibold text-center">Personal Informantion</p>
         <div className="mt-5 divide-y-2">
           <div className="flex py-2">
             <div className="w-full">
