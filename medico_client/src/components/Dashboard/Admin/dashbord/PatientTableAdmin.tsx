@@ -12,7 +12,7 @@ import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { toast } from "sonner";
 
-const PatientTable = () => {
+const PatientTableAdmin = () => {
   const { data, refetch } = useGetAllPatientQuery([]);
   const [deletePatient] = useDeletePatientMutation();
   const [searchText, setSearchText] = useState("");
@@ -105,26 +105,7 @@ console.log(data)
   };
   return (
     <div className="bg-white p-5">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "16px",
-        }}
-      >
-        <div>
-          <Button className="mr-2 bg-[#eaeaea] outline-none">Copy</Button>
-          <Button className="mr-2 bg-[#eaeaea]">Excel</Button>
-          <Button className=" bg-[#eaeaea]">PDF</Button>
-        </div>
-        <Input
-          placeholder="Search by name"
-          prefix={<SearchOutlined />}
-          style={{ width: "200px" }}
-          value={searchText}
-          onChange={handleSearch}
-        />
-      </div>
+     
 
       <div>
         <Table
@@ -159,4 +140,4 @@ console.log(data)
   );
 };
 
-export default PatientTable;
+export default PatientTableAdmin;
