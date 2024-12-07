@@ -5,11 +5,13 @@ import { IMeta } from "@/types/common";
 export const scheduleApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     createSchedule: build.mutation({
-      query: (data) => ({
-        url: "/schedule",
-        method: "POST",
-        data,
-      }),
+      query: (data) => {
+        return {
+          url: "/schedule",
+          method: "POST",
+          data, 
+        };
+      },
       invalidatesTags: [tagTypes.schedule],
     }),
 

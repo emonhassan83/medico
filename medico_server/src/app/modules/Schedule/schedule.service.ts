@@ -37,7 +37,7 @@ const insertIntoDB = async (payload: ISchedule): Promise<Schedule[]> => {
           `${format(currentDate, "yyyy-MM-dd")}`,
           Number(endTime.split(":")[0])
         ),
-        Number(endTime.split(":")[0])
+        Number(endTime.split(':')[1])
       )
     );
 

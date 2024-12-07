@@ -9,6 +9,7 @@ import { Button } from "antd";
 import MedicoDatePiker from "@/components/Forms/MedicoDatePiker";
 import MedicoTimePicker from "@/components/Forms/MedicoTimePicker";
 import { useCreateScheduleMutation } from "@/redux/api/scheduleApi";
+import dayjs from "dayjs";
 
 export const defaultValues = {
   startDate: "",
@@ -22,13 +23,18 @@ const CreateSchedules = () => {
 
   const handleCreateSchedule = async (values: FieldValues) => {
     try {
-      console.log(values);
+      const formattedValues = {
+        startDate: dayjs(values.startDate).format("YYYY-MM-DD"),
+        endDate: dayjs(values.endDate).format("YYYY-MM-DD"),
+        startTime: dayjs(values.startTime).format("HH:mm"),
+        endTime: dayjs(values.endTime).format("HH:mm"),
+      };
 
-      // const res = await createSchedule(values).unwrap();
+      const res = await createSchedule(formattedValues).unwrap();
 
-      // if (res.id) {
-      //     toast.success("Schedule created successfully!");
-      // }
+      if (res) {
+          toast.success("Schedule created successfully!");
+      }
     } catch (err: any) {
       toast.error(err.message);
       console.error(err.message);
