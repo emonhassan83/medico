@@ -18,7 +18,7 @@ const MedicoTimePicker = ({
   label,
   required,
   fullWidth = true,
-  size = "middle",
+  size = "large",
 }: ITimePickerProps) => {
   const { control, formState } = useFormContext();
   const isError = formState.errors[name] !== undefined;
