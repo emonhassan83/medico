@@ -37,12 +37,11 @@ const UpdateSpecialties = ({ params }: any) => {
   };
   const handleUpdateSpecialties = async (formData: FieldValues) => {
     try {
-      // Prepare the data for the API call
       const updateData = {
-        id: params.updateId, // Pass the specialty ID from params
+        id: params.updateId,
         body: {
           ...formData,
-          icon, // Include the uploaded icon URL
+          icon,
         },
       };
 
