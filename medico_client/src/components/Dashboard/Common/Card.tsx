@@ -8,10 +8,12 @@ const Card = ({ title, number, icon }: PropsType) => {
   return (
     <div className="flex items-center justify-between p-5 bg-white rounded">
       <div>
-        <h4 className="mb-2 text-[#74788d]">{title}</h4>
-        <p className="text-lg text-[495057]">{number}</p>
+        <h4 className="mb-2 text-[#74788d] font-medium ">{title}</h4>
+        <p className="text-lg text-[#495057] font-semibold ">{number}</p>
       </div>
-      <div>{icon}</div>
+      <div className="bg-blue-400 px-1 py-1 rounded-full" >
+        <p className="text-white p-1 " >{icon}</p>
+      </div>
     </div>
   );
 };
