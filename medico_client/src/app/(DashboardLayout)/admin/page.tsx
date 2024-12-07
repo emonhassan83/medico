@@ -92,7 +92,10 @@ const AdminDashboard = () => {
       
 
 
+      <div>
+        <p className="text-[#343A40] font-[600] text-[18px] mb-7 mt-5 ">Latest Users</p>
       <DashbordTableTab/>
+      </div>
     </div>
   );
 };
