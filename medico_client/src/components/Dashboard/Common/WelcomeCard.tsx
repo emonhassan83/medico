@@ -27,46 +27,50 @@ const WelcomeCard = ({
           <h1 className=" font-semibold">Welcome Back !</h1>
           <p>Dashboard</p>
         </div>
+
         <div className="flex-1 ml-[30%] relative z-10 w-[100px] h-[70px]">
           <Image src={"/profile-img.png"} layout="fill" alt="" />
         </div>
+
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 p-5 bg-white font-light">
         <div className="col-span-1 flex flex-col gap-y-1 relative">
           <Avatar
             size={64}
             icon={<TiUserOutline />}
-            className="absolute -top-10 z-10 bg-gray-300"
+            className="absolute -top-14 z-10 bg-gray-300"
           />
-          <div className="-mt-5">
-            <p className="font-semibold">{username}</p>
-            <p className="font-light">{role}</p>
+          <div className="mt-6">
+            <p className="font-semibold text-[#495057] ">{username}</p>
+            <p className="font-[400] text-md text-[#74788D]">{role}</p>
           </div>
         </div>
         <div className="col-span-2 flex justify-between pr-10 md:justify-around md:pr-2">
           <div className="flex flex-col gap-y-4">
             <div>
               <Link href={"/doctors"} className="text-[#556ee6] font-semibold">
-                {admin}
+                <p className="text-lg" >{admin}</p>
               </Link>
-              <p>Admin</p>
+              <p className="font-[400] text-md text-[#74788D] " >Admin</p>
             </div>
             <div>
               <Link
                 href={"/receiptionists"}
                 className="text-[#556ee6] font-semibold"
               >
-                {patient}
+                <p className="text-lg"> {patient} </p>
               </Link>
-              <p>Patients</p>
+              <p className="font-[400] text-md text-[#74788D] " >Patients</p>
+              
             </div>
           </div>
           <div className="flex flex-col gap-y-4">
             <div>
               <Link href={"/patients"} className="text-[#556ee6] font-semibold">
-                {doctor}
+                
+                <p className="text-lg" > {doctor} </p>
               </Link>
-              <p>Doctors</p>
+              <p className="font-[400] text-md text-[#74788D] " >Doctors</p>
             </div>
 
             <div>
@@ -74,9 +78,10 @@ const WelcomeCard = ({
                 href={"/receptionist"}
                 className="text-[#556ee6] font-semibold"
               >
-                {receptionist}
+                <p className="text-lg" > {receptionist} </p>
+              
               </Link>
-              <p>Receptionists</p>
+              <p className="font-[400] text-md text-[#74788D] " >Receptionists</p>
             </div>
           </div>
         </div>
