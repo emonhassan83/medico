@@ -15,20 +15,23 @@ import {
   useGetSinglePatientQuery,
   useUpdatePatientMutation,
 } from "@/redux/api/patientApi";
+import { useRouter } from "next/navigation";
 
 const UpdatePatients = ({ params }: any) => {
+  console.log(params.id);
+  const router = useRouter();
   const [photo, setPhoto] = useState("");
   const [updatePatient] = useUpdatePatientMutation();
 
   const [load, setLoad] = useState(false);
-  const { data } = useGetSinglePatientQuery(params.id);
+  const { data, isLoading } = useGetSinglePatientQuery(params.id);
   console.log(data);
 
-  useEffect(() => {
-    if (data) {
-      setLoad(true);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     setLoad(true);
+  //   }
+  // }, [data]);
 
   const handleFileUpload = async (file: File) => {
     try {
@@ -43,75 +46,94 @@ const UpdatePatients = ({ params }: any) => {
     }
   };
 
-  const handleCreatePatient = async (values: FieldValues) => {
+  const handleUpdatePatient = async (values: FieldValues) => {
     try {
-      const patientData = {
-        firstName: values?.firstName,
-        lastName: values?.lastName,
-        email: values?.email,
-        contactNumber: values?.contactNumber,
-        profilePhoto: photo,
-        address: values?.address,
-        patientHealthData: {
-          gender: values?.gender,
-          bloodGroup: values?.bloodGroup,
-          height: values?.height,
-          weight: values?.weight,
-          diet: values?.diet,
-          pulse: values?.pulse,
-          dietaryPreferences: values?.dietaryPreferences,
-          maritalStatus: values?.maritalStatus,
-        },
+      // const payload = {
+      //   id: params.id,
+      //   body: {
+      //     ...values,
+      //     profilePhoto,
+      //   },
+      // };
+      const updatedData = {
+        ...values,
+        profilePhoto: photo || data?.profilePhoto,
       };
 
-      const res = await updatePatient({
-        body: patientData,
-        id: params.id,
-      }).unwrap();
-    } catch (err: any) {
-      toast.error(err.message);
-      console.error(err.message);
+      // console.log(values);
+
+      const payload = {
+        id: params.id, // Patient's unique ID
+        body: {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          address: values.address,
+          contactNumber: values.contactNumber,
+          profilePhoto: photo || data?.profilePhoto,
+          patientHealthData: {
+            bloodGroup: values.patientHealthData.bloodGroup,
+            diet: values.patientHealthData.diet,
+            dietaryPreferences: values.patientHealthData.dietaryPreferences,
+            gender: values.patientHealthData.gender,
+            height: values.patientHealthData.height,
+            maritalStatus: values.patientHealthData.maritalStatus,
+            pulse: values.patientHealthData.pulse,
+            weight: values.patientHealthData.weight,
+          },
+        },
+      };
+      console.log(payload);
+      const result = await updatePatient(payload).unwrap();
+      console.log(result);
+      if (result) {
+        toast.success("Patients updated successfully!");
+        router.push("/admin/patients");
+      }
+    } catch (error) {
+      // Handle error
+      toast.error("Failed to update patient!");
+      console.error("Update error:", error);
     }
   };
 
-  if (load) {
-    return (
-      <>
-        {/* Header Section */}
-        <div className="mx-4 flex items-center justify-between mt-4">
-          <h2 className="text-lg text-[#495057] font-semibold">
-            Edit Patient Profile
-          </h2>
-          <div className="flex items-center gap-1 text-[#495057] text-sm">
-            <Link href="/admin">Dashboard</Link>/
-            <Link href="/admin/patients">Patients</Link>/
-            <Link href={`/admin/patients/${params.id}`}>Profile</Link>/
-            <Link href="#">Edit Patient Profile</Link>
-          </div>
+  return (
+    <>
+      {/* Header Section */}
+      <div className="mx-4 flex items-center justify-between mt-4">
+        <h2 className="text-lg text-[#495057] font-semibold">
+          Edit Patient Profile
+        </h2>
+        <div className="flex items-center gap-1 text-[#495057] text-sm">
+          <Link href="/admin">Dashboard</Link>/
+          <Link href="/admin/patients">Patients</Link>/
+          <Link href={`/admin/patients/${params.id}`}>Profile</Link>/
+          <Link href="#">Edit Patient Profile</Link>
+        </div>
+      </div>
+
+      <div className="mt-5 ml-4">
+        <Link
+          href="/admin/patients"
+          className="text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
+        >
+          <ArrowLeftOutlined className="mr-1" /> Back to Patient List
+        </Link>
+      </div>
+
+      {/* Doctor Form */}
+      <div className="px-4 sm:px-8 mt-8">
+        {/* Section Header */}
+        <div className="w-full border border-gray-200 rounded-md border-l-blue-500 px-4 py-4 mb-6">
+          Basic Information
         </div>
 
-        <div className="mt-5 ml-4">
-          <Link
-            href="/admin/patients"
-            className="text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
-          >
-            <ArrowLeftOutlined className="mr-1" /> Back to Patient List
-          </Link>
-        </div>
-
-        {/* Doctor Form */}
-        <div className="px-4 sm:px-8 mt-8">
-          {/* Section Header */}
-          <div className="w-full border border-gray-200 rounded-md border-l-blue-500 px-4 py-4 mb-6">
-            Basic Information
-          </div>
-
-          <MedicoForm onSubmit={handleCreatePatient} defaultValues={data}>
+        {!isLoading && data ? (
+          <MedicoForm onSubmit={handleUpdatePatient} defaultValues={data}>
             {/* Rows of Input Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
               <MedicoInput label="First Name" type="text" name="firstName" />
               <MedicoInput label="Last Name" type="text" name="lastName" />
-              <MedicoInput label="Email" type="text" name="email" />
+              {/* <MedicoInput label="Email" type="text" name="email" /> */}
               <MedicoInput
                 label="Contact No"
                 type="text"
@@ -252,10 +274,12 @@ const UpdatePatients = ({ params }: any) => {
               Update Patient
             </Button>
           </MedicoForm>
-        </div>
-      </>
-    );
-  }
+        ) : (
+          <p>Loading</p>
+        )}
+      </div>
+    </>
+  );
 };
 
 export default UpdatePatients;
