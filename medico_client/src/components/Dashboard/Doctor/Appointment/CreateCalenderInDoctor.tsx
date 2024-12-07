@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import FullCalendar from "@fullcalendar/react"; // Main package
 import dayGridPlugin from "@fullcalendar/daygrid"; // For month view

@@ -76,7 +76,7 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
         { headers }
       );
       const data = await res.json();
-      setAppointments(data.data);
+      setAppointments(data?.data);
     };
     handle();
   }, [paramsValue]);
@@ -118,13 +118,13 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
       title: "Doctor Name",
       dataIndex: "doctor",
       key: "doctor",
-      render: (doctor: Doctor) => `${doctor.firstName} ${doctor.lastName}`,
+      render: (doctor: Doctor) => `${doctor?.firstName} ${doctor?.lastName}`,
     },
     {
       title: "Patient Name",
       dataIndex: "patient",
       key: "patient",
-      render: (patient: Patient) => `${patient.firstName} ${patient.lastName}`,
+      render: (patient: Patient) => `${patient?.firstName} ${patient?.lastName}`,
     },
     {
       title: "Patient Contact No",
@@ -140,13 +140,13 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
       title: "Date",
       dataIndex: "createdAt",
       key: "createdAt",
-      render: (date: string) => new Date(date).toLocaleDateString(),
+      render: (date: string) => new Date(date)?.toLocaleDateString(),
     },
     {
       title: "Time",
       dataIndex: "createdAt",
       key: "createdAtTime",
-      render: (time: string) => new Date(time).toLocaleTimeString(),
+      render: (time: string) => new Date(time)?.toLocaleTimeString(),
     },
 
     {
@@ -160,7 +160,7 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
             return (
               <div className="flex justify-center">
                 <Button
-                  onClick={() => handleChangeStatus(item.id, "INPROGRESS")}
+                  onClick={() => handleChangeStatus(item?.id, "INPROGRESS")}
                   color="primary"
                   variant="filled"
                   size="small"
@@ -169,7 +169,7 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
                   Inprogress
                 </Button>
                 <Button
-                  onClick={() => handleChangeStatus(item.id, "CANCELED")}
+                  onClick={() => handleChangeStatus(item?.id, "CANCELED")}
                   color="default"
                   variant="filled"
                   size="small"
@@ -178,7 +178,7 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
                   Canceled
                 </Button>
                 <Button
-                  onClick={() => handleDeleteAppointment(item.id)}
+                  onClick={() => handleDeleteAppointment(item?.id)}
                   color="danger"
                   variant="filled"
                   size="small"
@@ -191,7 +191,7 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
             return (
               <div className="flex justify-center">
                 <Button
-                  onClick={() => handleChangeStatus(item.id, "CANCELED")}
+                  onClick={() => handleChangeStatus(item?.id, "CANCELED")}
                   color="default"
                   variant="filled"
                   size="small"
@@ -200,7 +200,7 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
                   Canceled
                 </Button>
                 <Button
-                  onClick={() => handleDeleteAppointment(item.id)}
+                  onClick={() => handleDeleteAppointment(item?.id)}
                   color="danger"
                   variant="filled"
                   size="small"
@@ -212,7 +212,7 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
           case "COMPLETED":
             return (
               <Button
-                onClick={() => handleDeleteAppointment(item.id)}
+                onClick={() => handleDeleteAppointment(item?.id)}
                 color="danger"
                 variant="filled"
                 size="small"
@@ -223,7 +223,7 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
           case "CANCELED":
             return (
               <Button
-                onClick={() => handleDeleteAppointment(item.id)}
+                onClick={() => handleDeleteAppointment(item?.id)}
                 color="danger"
                 variant="filled"
                 size="small"
