@@ -1,8 +1,8 @@
 "use client"
 import { useState } from "react";
-import PatientTable from "../Patient/PatientTable";
 import DoctorsTableTab from "@/app/(DashboardLayout)/receptionist/dashbord/doctorTableTab/page";
 import ReceptionistTableTab from "./ReceptionishTableTab";
+import PatientTableAdmin from "./PatientTableAdmin";
 
 
 
@@ -20,7 +20,7 @@ const DashbordTableTab = () => {
       case "tab2":
         return <ReceptionistTableTab />
       case "tab3":
-        return <PatientTable/>
+        return <PatientTableAdmin/>
       default:
         return <DoctorsTableTab/>
     }

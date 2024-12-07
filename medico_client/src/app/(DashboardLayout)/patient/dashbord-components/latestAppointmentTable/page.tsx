@@ -103,7 +103,7 @@ const LatestAppointmentTable = () => {
   return (
     <div className="">
       {/* Table Section */}
-      <div className="p-5  bg-white ">
+      <div className="p-5 bg-white ">
         <Table
           dataSource={tableData}
           columns={columns}
