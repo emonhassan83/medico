@@ -97,8 +97,8 @@ const Navbar = ({
         <div
           className={`${
             accountMenuOpen
-              ? "translate-y-0 opacity-100 z-10 block"
-              : "translate-y-[100%] opacity-0 -z-50 cursor-default"
+              ? "translate-y-0 scale-100 opacity-100 !z-[99999] block"
+              : "translate-y-[50%] scale-0 opacity-0 !-z-50 cursor-default"
           } bg-white w-max rounded-md shadow-lg absolute top-8 lg:top-12 right-0 p-[10px] flex flex-col transition-all duration-300 gap-2`}
         >
           <p className="flex items-center gap-2 rounded-md p-2 pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50 hover:cursor-default">

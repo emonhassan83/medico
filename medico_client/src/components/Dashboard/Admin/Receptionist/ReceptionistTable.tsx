@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Table, Button, Input, Divider, Space } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Link from "next/link";
-import { FaEye } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import {
@@ -70,13 +69,6 @@ const ReceptionistTable = () => {
       key: "action",
       render: (data: any) => (
         <div className="flex gap-1">
-          {/* update Button */}
-          <Link href="#">
-            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
-              <FaEye />
-            </button>
-          </Link>
-
           {/* edit button */}
           <Link href={`/admin/receptionists/${data?.id}`}>
             <button

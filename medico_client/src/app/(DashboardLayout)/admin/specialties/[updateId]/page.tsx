@@ -19,7 +19,9 @@ import { useRouter } from "next/navigation";
 const UpdateSpecialties = ({ params }: any) => {
   const router = useRouter();
   const [icon, setIcon] = useState("");
-  const { data, refetch } = useGetSingleSpecialtiesQuery(params.updateId);
+  const { data, refetch, isLoading } = useGetSingleSpecialtiesQuery(
+    params.updateId
+  );
   const [updateSpecialties] = useUpdateSpecialtiesMutation();
   console.log(data);
   const handleFileUpload = async (file: File) => {
@@ -35,12 +37,11 @@ const UpdateSpecialties = ({ params }: any) => {
   };
   const handleUpdateSpecialties = async (formData: FieldValues) => {
     try {
-      // Prepare the data for the API call
       const updateData = {
-        id: params.updateId, // Pass the specialty ID from params
+        id: params.updateId,
         body: {
           ...formData,
-          icon, // Include the uploaded icon URL
+          icon,
         },
       };
 
@@ -90,73 +91,81 @@ const UpdateSpecialties = ({ params }: any) => {
           Basic Information
         </div>
 
-        <MedicoForm onSubmit={handleUpdateSpecialties} defaultValues={data}>
-          {/* Rows of Input Fields */}
-          <div className="flex flex-wrap gap-4 w-full">
-            <div className="w-[60%]">
-              <MedicoInput label="Title" type="text" name="title" />
-              <MedicoTextArea label="Description" name="description" rows={4} />
-            </div>
-            <div className="w-[38%]">
-              <div>
-                <p className="block text-sm font-semibold mb-2">Icon</p>
-                <Card
-                  style={{
-                    height: "180px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  cover={
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "160px",
-                        width: "160px",
-                        margin: "auto",
-                        borderRadius: "4px",
-                        overflow: "hidden",
-                      }}
-                    >
-                      <Upload
-                        customRequest={({ file }) =>
-                          handleFileUpload(file as File)
-                        }
-                        showUploadList={false}
-                        accept="image/*"
-                      >
-                        <Image
-                          src="https://i.ibb.co/qsdyjP8/placeholder-img.png"
-                          alt="Specialties Icon"
-                          preview={false}
-                          style={{
-                            marginTop: "60px",
-                            height: "100%",
-                            width: "100%",
-                            objectFit: "cover",
-                            cursor: "pointer",
-                          }}
-                        />
-                      </Upload>
-                    </div>
-                  }
+        {!isLoading && data ? (
+          <MedicoForm onSubmit={handleUpdateSpecialties} defaultValues={data}>
+            {/* Rows of Input Fields */}
+            <div className="flex flex-wrap gap-4 w-full">
+              <div className="w-[60%]">
+                <MedicoInput label="Title" type="text" name="title" />
+                <MedicoTextArea
+                  label="Description"
+                  name="description"
+                  rows={4}
                 />
               </div>
+              <div className="w-[38%]">
+                <div>
+                  <p className="block text-sm font-semibold mb-2">Icon</p>
+                  <Card
+                    style={{
+                      height: "180px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    cover={
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          height: "160px",
+                          width: "160px",
+                          margin: "auto",
+                          borderRadius: "4px",
+                          overflow: "hidden",
+                        }}
+                      >
+                        <Upload
+                          customRequest={({ file }) =>
+                            handleFileUpload(file as File)
+                          }
+                          showUploadList={false}
+                          accept="image/*"
+                        >
+                          <Image
+                            src="https://i.ibb.co/qsdyjP8/placeholder-img.png"
+                            alt="Specialties Icon"
+                            preview={false}
+                            style={{
+                              marginTop: "60px",
+                              height: "100%",
+                              width: "100%",
+                              objectFit: "cover",
+                              cursor: "pointer",
+                            }}
+                          />
+                        </Upload>
+                      </div>
+                    }
+                  />
+                </div>
+              </div>
             </div>
-          </div>
 
-          {/* Submit Button */}
-          <Button
-            htmlType="submit"
-            size="large"
-            className="my-4 rounded-md bg-[#485EC4] px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full md:w-auto"
-          >
-            Update Specialties
-          </Button>
-        </MedicoForm>
+            {/* Submit Button */}
+            <Button
+              htmlType="submit"
+              size="large"
+              className="my-4 rounded-md bg-[#485EC4] px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full md:w-auto"
+            >
+              Update Specialties
+            </Button>
+          </MedicoForm>
+        ) : (
+          <p>isLoading...</p>
+        )}
       </div>
     </>
   );

@@ -56,7 +56,7 @@ const DoctorTAble = () => {
       render: (data: any) => (
         <div className="flex gap-1">
           {/* edit button */}
-          <Link href="#">
+          <Link href={`/admin/doctors/${data?.id}/edit`}>
             <button
               className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
               //   onClick={() => handleEdit(items)}

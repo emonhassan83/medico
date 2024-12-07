@@ -1,6 +1,8 @@
 import React from "react";
 import { Table } from "antd";
 import type { TableColumnsType } from "antd";
+import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
+import { ColumnsType } from "antd/es/table";
 
 interface DataType {
   key: React.Key;
@@ -10,59 +12,48 @@ interface DataType {
   SrNo: number;
 }
 
-const columns: TableColumnsType<DataType> = [
-  {
-    title: "SrNo",
-    dataIndex: "SrNo",
-  },
-  {
-    title: "Doctor Name",
-    dataIndex: "doctorName",
-  },
-  {
-    title: "Doctor Number",
-    dataIndex: "number",
-  },
-  {
-    title: "Time",
-    dataIndex: "time",
-  },
-];
-
-const data: DataType[] = [
-  {
-    key: "1",
-    SrNo: 1,
-    doctorName: "John Brown",
-    number: "32",
-    time: "New York No. 1 Lake Park",
-  },
-  {
-    key: "2",
-    SrNo: 2,
-    doctorName: "Jim Green",
-    number: "42",
-    time: "London No. 1 Lake Park",
-  },
-  {
-    key: "3",
-    SrNo: 3,
-    doctorName: "Joe Black",
-    number: "32",
-    time: "Sydney No. 1 Lake Park",
-  },
-];
-
 const AppointmentTableInDoctor = () => {
   // Get the current date
-  const date = new Date();
+  const currentDate = new Date();
+
+  const { data, isLoading } = useGetMyAppointmentsQuery({});
+  console.log(data);
 
   // Format the date
-  const formattedDate = date.toLocaleDateString("en-US", {
+  const formattedDate = currentDate.toLocaleDateString("en-US", {
     day: "numeric",
     month: "short",
     year: "numeric",
   });
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: "SL No",
+      dataIndex: "key",
+      key: "key",
+      sorter: (a: any, b: any) => a.key - b.key,
+      render: (_: any, __: any, index: number) => index + 1,
+    },
+    {
+      title: "Patient Name",
+      dataIndex: "patient",
+      key: "patient",
+      render: (patient: any) => `${patient.firstName} ${patient.lastName}`,
+    },
+
+    {
+      title: "Payment Status",
+      dataIndex: "paymentStatus",
+      key: "paymentStatus",
+    },
+
+    {
+      title: "Time",
+      dataIndex: "createdAt",
+      key: "createdAtTime",
+      render: (time: string) => new Date(time).toLocaleTimeString(),
+    },
+  ];
   return (
     <div className="w-full">
       <div className="flex items-center gap-2 bg-white pt-5 ps-5">
@@ -72,8 +63,9 @@ const AppointmentTableInDoctor = () => {
       <div className=" bg-white p-5">
         <Table<DataType>
           columns={columns}
-          dataSource={data}
+          dataSource={data?.appointments}
           size="middle"
+          bordered
           pagination={false}
         />
       </div>

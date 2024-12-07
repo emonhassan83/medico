@@ -55,6 +55,7 @@ export const patientApi = baseApi.injectEndpoints({
     // update a patient
     updatePatient: build.mutation({
       query: (data) => {
+        console.log(data)
         return {
           url: `/patient/${data.id}`,
           method: "PATCH",
