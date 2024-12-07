@@ -12,6 +12,7 @@ import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 import { Row, Col } from "antd";
 import { TiUserOutline } from "react-icons/ti";
+import { AiFillFile } from "react-icons/ai";
 
 const AdminDashboard = () => {
   const { data: doctorsData } = useGetAllDoctorsQuery({});
@@ -29,6 +30,8 @@ const AdminDashboard = () => {
           Welcome to Dashboard
         </p>
       </div>
+
+
       <Row gutter={[32, 32]}>
         <Col span={24} md={8}>
           <div className="flex flex-col gap-7">
@@ -46,6 +49,8 @@ const AdminDashboard = () => {
         </Col>
         <Col span={24} md={16}>
           <div className="flex flex-col gap-y-7">
+ 
+            {/* all cart starting here  */}
             <div className="grid grid-cols-3 gap-7">
               <Card
                 title="Appointments"
@@ -85,6 +90,8 @@ const AdminDashboard = () => {
 
 
       
+
+
       <DashbordTableTab/>
     </div>
   );
