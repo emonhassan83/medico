@@ -1,18 +1,18 @@
 "use client";
-import CreateAppointmentFormInDoctor from "@/components/Dashboard/Doctor/Appointment/CreateAppointmentFormInDoctor";
 
+import CreateAppointmentFormInDoctor from "@/components/Dashboard/Doctor/Appointment/CreateAppointmentFormInDoctor";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
 import { TiArrowLeft } from "react-icons/ti";
 
-const CreateAppoinment = () => {
+const CreateAppointment = () => {
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-5">
         <div>
           <h2 className="text-lg text-[#495057] font-semibold">
-            Book Appointment
+          Create Schedule
           </h2>
         </div>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
@@ -20,7 +20,7 @@ const CreateAppoinment = () => {
             Dashboard
           </Link>
           <BsSlash className="text-[#ccc]" />
-          <Link href="#">Booked Appointment</Link>
+          <Link href="#">Create Doctor Schedule</Link>
         </div>
       </div>
       <div className="mt-5">
@@ -31,11 +31,12 @@ const CreateAppoinment = () => {
           <TiArrowLeft className="text-lg" /> Back
         </Link>
       </div>
+
       <div className="bg-white mt-5 ">
         <div className=" p-5">
           <div className="border border-l-4 border-l-[#556ee6]  py-2">
             <h2 className="text-lg text-[#495057] font-normal ms-7">
-              Book Appointment
+              Create Schedule
             </h2>
           </div>
           <CreateAppointmentFormInDoctor />
@@ -45,4 +46,4 @@ const CreateAppoinment = () => {
   );
 };
 
-export default CreateAppoinment;
+export default CreateAppointment;
