@@ -57,17 +57,20 @@ const LatestAppointmentTable = () => {
       title: "Sr.No",
       dataIndex: "srNo",
       key: "srNo",
+      align: "center",
       render: (_: any, __: any, index: number) => index + 1,
     },
     {
       title: "Doctor Name",
       dataIndex: "doctorName",
       key: "doctorName",
+      align: "center",
     },
     {
       title: "Date",
       dataIndex: "date",
       key: "date",
+      align: "center",
     },
     {
       title: "Time",
@@ -78,6 +81,7 @@ const LatestAppointmentTable = () => {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      align: "center",
       render: (status: string) => {
         const backgroundColor = status !== "CANCELED" ? "#f1b44c" : "#f46a6a";
         return (
@@ -103,7 +107,7 @@ const LatestAppointmentTable = () => {
   return (
     <div className="">
       {/* Table Section */}
-      <div className="p-5 bg-white ">
+      <div className="py-5 bg-white ">
         <Table
           dataSource={tableData}
           columns={columns}
@@ -111,7 +115,7 @@ const LatestAppointmentTable = () => {
           bordered
         />
       </div>
-      <div className="relative hidden md:block p-5">
+      <div className="relative hidden md:block py-5">
         {data?.meta?.page === 1 ? (
           <div className="absolute text-[#495072] text-sm bottom-20">
             {data?.meta?.total <= 10 ? (

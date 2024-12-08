@@ -48,10 +48,10 @@ const AdminDashboard = () => {
           </div>
         </Col>
         <Col span={24} md={16}>
-          <div className="flex flex-col gap-y-7">
+          <div className="flex flex-col ">
  
             {/* all cart starting here  */}
-            <div className="grid grid-cols-3 gap-7">
+            <div className="grid grid-cols-3 gap-0 ">
               <Card
                 title="Appointments"
                 number={AppointmentsData?.meta?.total || 0}
