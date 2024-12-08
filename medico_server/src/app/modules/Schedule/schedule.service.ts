@@ -134,6 +134,9 @@ const getAllFromDB = async (
   // console.log(doctorScheduleIds)
 
   const result = await prisma.schedule.findMany({
+    include: {
+      doctorSchedules: true
+    },
       where: {
           ...whereConditions,
           id: {
