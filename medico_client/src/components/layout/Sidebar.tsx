@@ -13,6 +13,7 @@ import AppointmentList from "../svg/AppointmentList";
 import Appointments from "../svg/Appointments";
 import Prescription from "../svg/Prescription";
 import { getUserInfo } from "@/services/auth.services";
+import { useGetMyProfileQuery } from "@/redux/api/userApi";
 
 const NavLink = ({
   href,
@@ -93,11 +94,17 @@ const CollapsibleMenu = ({
 export default function SideBar() {
   const [isSideNavOpen, setIsSideNavOpen] = useState(true);
   const [userRole, setUserRole] = useState("");
+  const {data} = useGetMyProfileQuery(undefined)
 
+  
   useEffect(() => {
     const { role } = getUserInfo() as any;
     setUserRole(role);
   }, []);
+
+  
+
+
 
   return (
     <>

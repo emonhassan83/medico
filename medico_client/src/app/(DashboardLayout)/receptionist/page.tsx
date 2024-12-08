@@ -8,6 +8,7 @@ const ReceptionistDashboard = () => {
 
 
 
+
         {/* show Latest Users table  */}
         <div className='mt-20'>
            <AllTableMange/>
