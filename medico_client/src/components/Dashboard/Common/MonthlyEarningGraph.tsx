@@ -29,15 +29,15 @@ const MonthlyEarningGraph = () => {
                 d="M18 2.0845a15.9155 15.9155 0 1 0 0 31.831 15.9155 15.9155 0 1 0 0-31.831"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="4"
+                strokeWidth="4"
               ></path>
               <path
                 className="text-blue-400"
                 d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="4"
-                stroke-dasharray="58.56, 100"
+                strokeWidth="4"
+                strokeDasharray="58.56, 100"
               ></path>
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
