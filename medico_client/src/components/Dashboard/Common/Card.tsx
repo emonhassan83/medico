@@ -12,7 +12,7 @@ const Card = ({ title, number, icon }: PropsType) => {
         <p className="text-lg text-[#495057] font-semibold ">{number}</p>
       </div>
       <div className="bg-blue-400 px-1 py-1 rounded-full" >
-        <p className="text-white p-1 " >{icon}</p>
+        <p className="text-white p-2" >{icon}</p>
       </div>
     </div>
   );

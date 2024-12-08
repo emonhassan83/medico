@@ -2,7 +2,7 @@ import { useGetMyProfileQuery } from "@/redux/api/userApi";
 import { logoutUser } from "@/services/actions/logoutUser";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 const Navbar = ({
   setOpen,
@@ -14,6 +14,11 @@ const Navbar = ({
   const { data } = useGetMyProfileQuery({});
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    router.refresh();
+  }, [data, router])
+  
 
   const handleLogout = () => {
     logoutUser(router);
@@ -61,7 +66,7 @@ const Navbar = ({
           <div className="relative">
             <Image
               src={
-                data
+                data && data?.profilePhoto
                   ? data?.profilePhoto
                   : "https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg?t=st=1724605498~exp=1724609098~hmac=7f6fc106bae2c17b0c93af1b2e5483d9d8368f3e51284aaec7c7d50590d2bae5&w=740"
               }
