@@ -12,14 +12,14 @@ router.get('/', PatientController.getAllFromDB);
 
 router.get(
   '/:id',
-  auth(UserRole.ADMIN, UserRole.DOCTOR),
+  auth(UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
   PatientController.getByIdFromDB,
 );
 
 router.patch(
   '/:id',
   auth(UserRole.ADMIN, UserRole.PATIENT),
-  validateRequest(patientValidation.PatientSchema),
+  // validateRequest(patientValidation.PatientSchema),
   PatientController.updateIntoDB,
 );
 
