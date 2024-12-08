@@ -9,11 +9,11 @@ const COLORS = ["#4CAF50", "#FF6384"];
 const MonthlyEarningGraph = () => {
   return (
     <div className="bg-white p-6 rounded">
-      <h2 className="text-lg font-semibold mb-3">Monthly Earning</h2>
+      <h2 className="text-lg font-semibold text-[16px] text-[#343A40] mb-3">Monthly Earning</h2>
       <div className="flex justify-between gap-5">
         <div>
           <p className="text-gray-600 mb-3">This month</p>
-          <p className="text-3xl font-bold text-gray-800 mb-2">$27,997</p>
+          <p className="text-3xl font-[500] text-[#495057] text-[22px] mt-5 mb-3">$27,997</p>
           <p className=" text-sm mt-1 text-light">
             <span className="text-red-500">
               -58.56% <GoArrowDown className="mx-1 inline" />
@@ -32,7 +32,7 @@ const MonthlyEarningGraph = () => {
                 strokeWidth="4"
               ></path>
               <path
-                className="text-red-500"
+                className="text-blue-400"
                 d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831"
                 fill="none"
                 stroke="currentColor"

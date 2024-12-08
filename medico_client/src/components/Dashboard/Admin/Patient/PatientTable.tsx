@@ -16,8 +16,6 @@ const PatientTable = () => {
   const { data, refetch } = useGetAllPatientQuery([]);
   const [deletePatient] = useDeletePatientMutation();
   const [searchText, setSearchText] = useState("");
-
-console.log(data)
   
   //   Filter data based on search text
   const filteredData = data?.patients?.filter((pt: any) =>
@@ -25,7 +23,7 @@ console.log(data)
   );
 
   ///delete operation---------------------------------
-  const handleDeletRow = async (id: string) => {
+  const handleDeleteRow = async (id: string) => {
     console.log(id);
     try {
       const res = await deletePatient(id).unwrap();
@@ -35,7 +33,7 @@ console.log(data)
         refetch();
       }
     } catch (err) {
-      toast.error("Somthing went wrong");
+      toast.error("Something went wrong");
     }
   };
   const columns = [
@@ -91,7 +89,7 @@ console.log(data)
           {/* delete button */}
           <button
             className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-            onClick={() => handleDeletRow(data?.id)}
+            onClick={() => handleDeleteRow(data?.id)}
           >
             <RiDeleteBin6Fill />
           </button>

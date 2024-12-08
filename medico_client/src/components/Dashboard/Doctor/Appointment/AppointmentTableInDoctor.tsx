@@ -1,7 +1,6 @@
 import React from "react";
 import { Table } from "antd";
-import type { TableColumnsType } from "antd";
-import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
+import { useGetAllAppointmentsQuery, useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
 import { ColumnsType } from "antd/es/table";
 
 interface DataType {
@@ -13,11 +12,8 @@ interface DataType {
 }
 
 const AppointmentTableInDoctor = () => {
-  // Get the current date
+  const { data, isLoading } = useGetAllAppointmentsQuery({});
   const currentDate = new Date();
-
-  const { data, isLoading } = useGetMyAppointmentsQuery({});
-  console.log(data);
 
   // Format the date
   const formattedDate = currentDate.toLocaleDateString("en-US", {

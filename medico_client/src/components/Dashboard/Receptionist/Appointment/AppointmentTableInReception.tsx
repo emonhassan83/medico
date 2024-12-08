@@ -1,6 +1,5 @@
 import React from "react";
 import { Table } from "antd";
-import type { TableColumnsType } from "antd";
 import {
   useGetAllAppointmentsQuery,
   useGetMyAppointmentsQuery,

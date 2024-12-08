@@ -27,7 +27,7 @@ const Navbar = ({
 
   return (
     <nav
-      className={`flex items-center justify-between w-full relative shadow-xl p-3 ps-0 lg:ps-80`}
+      className={`flex items-center justify-between w-full relative p-3 ps-0 lg:ps-80`}
     >
       <button
         title="Side navigation"

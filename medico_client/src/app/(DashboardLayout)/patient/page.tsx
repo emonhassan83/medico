@@ -9,6 +9,8 @@ import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 import { Row, Col } from "antd";
 import { TiUserOutline } from "react-icons/ti";
 import { AiFillFile } from "react-icons/ai";
+import MonthlyEarningGraph from "@/components/Dashboard/Common/MonthlyEarningGraph";
+import DisplayItemCard from "@/components/Dashboard/Common/DisplayItemCard";
 
 const PatientDashboard = () => {
   const { data: doctorsData } = useGetAllDoctorsQuery({});
@@ -17,7 +19,12 @@ const PatientDashboard = () => {
   const { data: AppointmentsData } = useGetAllAppointmentsQuery({});
 
 
-  return <div>
+  return <div className="mx-4">
+       <div className="mb-6 flex justify-between items-center">
+          <h2 className="text-[#343A40] font-semibold text-[16px]  uppercase">Dashboard</h2>
+          <p className="text-[13px] text-[#74788D] font-normal" >Welcome to dashboard</p>
+        </div>
+
      <Row gutter={[32, 32]}>
       <Col span={24} md={8}>
         <div className="flex flex-col gap-7">
@@ -73,10 +80,18 @@ const PatientDashboard = () => {
     </Row>
 
 
-     <div className="mt-16">
-       <p className="text-black font-medium text-lg">Latest Appointment</p>
-        <LatestAppointmentTable/>
-     </div>
+    <div className="flex justify-between items-center ">
+       <div className="w-1/3 px-4">
+       <MonthlyEarningGraph/>
+       <DisplayItemCard/>
+       </div>
+
+       <div className="w-2/3 mt-16 px-10">
+          <p className="text-[#343A40] font-semibold text-[16px] text-lg">Latest Appointment</p>
+          <LatestAppointmentTable/>
+       </div>
+
+       </div>
 
   </div>;
 };
