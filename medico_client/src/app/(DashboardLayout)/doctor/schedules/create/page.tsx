@@ -1,97 +1,49 @@
 "use client";
 
+import CreateAppointmentFormInDoctor from "@/components/Dashboard/Doctor/Appointment/CreateAppointmentFormInDoctor";
 import Link from "next/link";
-import { ArrowLeftOutlined } from "@ant-design/icons";
-import MedicoForm from "@/components/Forms/MedicoForm";
-import { toast } from "sonner";
-import { FieldValues } from "react-hook-form";
-import { Button } from "antd";
-import MedicoDatePiker from "@/components/Forms/MedicoDatePiker";
-import MedicoTimePicker from "@/components/Forms/MedicoTimePicker";
-import { useCreateScheduleMutation } from "@/redux/api/scheduleApi";
-import dayjs from "dayjs";
+import React from "react";
+import { BsSlash } from "react-icons/bs";
+import { TiArrowLeft } from "react-icons/ti";
 
-export const defaultValues = {
-  startDate: "",
-  endDate: "",
-  startTime: "",
-  endTime: "",
-};
-
-const CreateSchedules = () => {
-  const [createSchedule] = useCreateScheduleMutation();
-
-  const handleCreateSchedule = async (values: FieldValues) => {
-    try {
-      const formattedValues = {
-        startDate: dayjs(values.startDate).format("YYYY-MM-DD"),
-        endDate: dayjs(values.endDate).format("YYYY-MM-DD"),
-        startTime: dayjs(values.startTime).format("HH:mm"),
-        endTime: dayjs(values.endTime).format("HH:mm"),
-      };
-
-      const res = await createSchedule(formattedValues).unwrap();
-
-      if (res) {
-          toast.success("Schedule created successfully!");
-      }
-    } catch (err: any) {
-      toast.error(err.message);
-      console.error(err.message);
-    }
-  };
-
+const CreateAppointment = () => {
   return (
-    <>
-      {/* Header Section */}
-      <div className="mx-4 flex items-center justify-between mt-4">
-        <h2 className="text-lg text-[#495057] font-semibold">
-          Add New Schedules
-        </h2>
+    <div className="mx-5">
+      <div className="flex items-center justify-between mt-5">
+        <div>
+          <h2 className="text-lg text-[#495057] font-semibold">
+          Create Doctor Schedule
+          </h2>
+        </div>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
-          <Link href="/doctor">Dashboard</Link>/
-          <Link href="/doctor/schedules">Schedules</Link>/
-          <Link href="#">Add New Schedules</Link>
+          <Link href="#" className="">
+            Dashboard
+          </Link>
+          <BsSlash className="text-[#ccc]" />
+          <Link href="#">Create Doctor Schedule</Link>
         </div>
       </div>
-
-      <div className="mt-5 ml-4">
+      <div className="mt-5">
         <Link
-          href="/doctor/schedules"
-          className="text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
+          href="/doctor/appointments"
+          className="flex items-center gap-2 w-[250px] text-white text-sm bg-[#556ee6] hover:bg-blue-700 py-3 px-3 rounded-md"
         >
-          <ArrowLeftOutlined className="mr-1" /> Back to Schedules List
+          <TiArrowLeft className="text-lg" /> Back To Doctor Schedules
         </Link>
       </div>
 
-      {/* Doctor Form */}
-      <div className="px-4 sm:px-8 mt-8">
-        {/* Section Header */}
-        <div className="w-full border border-gray-200 rounded-md border-l-blue-500 px-4 py-4 mb-6">
-          Add Schedule
-        </div>
-
-        <MedicoForm
-          onSubmit={handleCreateSchedule}
-          defaultValues={defaultValues}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-            <MedicoDatePiker label="Start Date" name="startDate" />
-            <MedicoDatePiker label="End Date" name="endDate" />
-            <MedicoTimePicker label="Start Time" name="startTime" />
-            <MedicoTimePicker label="End Time" name="endTime" />
+      <div className="bg-white mt-5 ">
+        <div className=" p-5">
+          <div className="border border-l-4 border-l-[#556ee6]  py-2">
+            <h2 className="text-lg text-[#495057] font-normal ms-7">
+              Create Doctor Schedules
+            </h2>
           </div>
-          <Button
-            htmlType="submit"
-            size="large"
-            className="my-4 rounded-md bg-[#485EC4] px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full md:w-auto"
-          >
-            Add Schedule
-          </Button>
-        </MedicoForm>
+          <CreateAppointmentFormInDoctor />
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default CreateSchedules;
+export default CreateAppointment;
