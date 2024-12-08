@@ -188,19 +188,23 @@ const getByIdFromDB = async (id: string): Promise<Schedule | null> => {
   return result;
 };
 
-const deleteFromDB = async (id: string): Promise<Schedule> => {
+const deleteFromDB = async (id: string): Promise<any> => {
   await prisma.schedule.findUniqueOrThrow({
     where: {
       id,
     },
   });
 
-  const result = await prisma.schedule.delete({
-    where: {
-      id,
-    },
+  await prisma.$transaction(async tx => {
+    await tx.doctorSchedule.deleteMany({ where: { scheduleId: id } });
+    await tx.appointment.deleteMany({ where: { scheduleId: id } });
+
+    const result = await tx.schedule.delete({
+      where: { id },
+    });
+
+    return result;
   });
-  return result;
 };
 
 export const ScheduleService = {
