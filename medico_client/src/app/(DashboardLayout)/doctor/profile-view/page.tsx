@@ -11,6 +11,7 @@ import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 import { Row, Col } from "antd";
 import { TiUserOutline } from "react-icons/ti";
+
 import { FaCalendarCheck, FaDollarSign } from "react-icons/fa";
 import { HiCurrencyDollar } from "react-icons/hi2";
 import { MdEventNote } from "react-icons/md";
