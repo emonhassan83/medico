@@ -25,8 +25,6 @@ const CreatePrescription = () => {
   const [createPrescription] = useCreatePrescriptionMutation();
   const [value, setValue] = useState("");
 
-  console.log(value)
-
   const prescribePatient = data?.appointments?.filter(
     (appointment: any) => appointment?.status === "INPROGRESS"
   );
@@ -139,7 +137,7 @@ const CreatePrescription = () => {
             />
             <MedicoDatePiker label="Follow Up Date" name="followUpDate" />
           </div>
-
+          <p className="block text-sm font-medium text-gray-700" style={{ marginBottom: "5px" }}>Instructions</p>
           <ReactQuill
             theme="snow"
             value={value}

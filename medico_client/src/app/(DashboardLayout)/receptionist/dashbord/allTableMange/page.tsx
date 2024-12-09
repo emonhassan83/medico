@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react";
 import  DoctorsTableTab  from "../doctorTableTab/page";
+import PatientTableAdmin from "@/components/Dashboard/Admin/dashbord/PatientTableAdmin";
 
 
 
@@ -15,7 +16,7 @@ const AllTableMange = () => {
       case "tab1":
         return <DoctorsTableTab/>
       case "tab2":
-        return <TabTwo/>
+        return <PatientTableAdmin/>
       default:
         return <DoctorsTableTab/>
     }
@@ -52,7 +53,7 @@ const AllTableMange = () => {
 };
 
 // const TabOne = () => <div>Content for Tab 1</div>;
-const TabTwo = () => <div>Content for Patient not avaiable </div>;
+// const TabTwo = () => <div>Content for Patient not avaiable </div>;
 
 export default AllTableMange;
 

@@ -11,7 +11,7 @@ const DisplayItemCard = () => {
         <span className="bg-blue-400 px-1.5 py-1 rounded">100</span>
     </div>
   </div>
-  <div><GoBook className="w-10 h-10 text-blue-400" /></div>
+  <div><GoBook className="w-10 h-10 text-blue-400 mt-7" /></div>
 </div>
 };
 
