@@ -7,10 +7,12 @@ import { Button } from "antd";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import MedicoDatePiker from "@/components/Forms/MedicoDatePiker";
-import MedicoTextArea from "@/components/Forms/MedicoTextArea";
 import { useCreatePrescriptionMutation } from "@/redux/api/prescriptionApi";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
 import MedicoSelect from "@/components/Forms/MedicoSelect";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { useState } from "react";
 
 export const defaultValues = {
   appointmentId: "",
@@ -19,26 +21,31 @@ export const defaultValues = {
 };
 
 const CreatePrescription = () => {
-  const {data} = useGetAllAppointmentsQuery({});
+  const { data } = useGetAllAppointmentsQuery({});
   const [createPrescription] = useCreatePrescriptionMutation();
+  const [value, setValue] = useState("");
 
-  const prescribePatient = data?.appointments?.filter((appointment: any) => appointment?.status === 'INPROGRESS');
+  console.log(value)
 
-const patientOptions = prescribePatient?.map((item: any) => ({
-  value: item.id,
-  label: `${item.patient.firstName} ${item.patient.lastName}`,
-}));
+  const prescribePatient = data?.appointments?.filter(
+    (appointment: any) => appointment?.status === "INPROGRESS"
+  );
+
+  const patientOptions = prescribePatient?.map((item: any) => ({
+    value: item.id,
+    label: `${item.patient.firstName} ${item.patient.lastName}`,
+  }));
 
   const handleCreatePrescription = async (values: FieldValues) => {
     try {
       const prescriptionData = {
         appointmentId: values.appointmentId,
-        instructions: values.instructions,
+        instructions: value,
         followUpDate: values.followUpDate,
       };
 
       const res = await createPrescription(prescriptionData).unwrap();
-      
+
       if (res?.id) {
         toast.success("Prescription created successfully!");
       }
@@ -47,6 +54,48 @@ const patientOptions = prescribePatient?.map((item: any) => ({
       console.error(err.message);
     }
   };
+
+  const modules = {
+    toolbar: [
+      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ size: ["small", false, "large", "huge"] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ align: [] }],
+      ["blockquote", "code-block"],
+      ["link", "image", "video", "formula"],
+      [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+      [{ script: "sub" }, { script: "super" }],
+      [{ indent: "-1" }, { indent: "+1" }],
+      [{ color: [] }, { background: [] }],
+      ["clean"],
+    ],
+    clipboard: {
+      matchVisual: false,
+    },
+  };
+
+  const formats = [
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+    "video",
+    "align",
+    "code-block",
+    "background",
+    "color",
+    "code",
+    "script",
+  ];
 
   return (
     <>
@@ -82,7 +131,7 @@ const patientOptions = prescribePatient?.map((item: any) => ({
           onSubmit={handleCreatePrescription}
           defaultValues={defaultValues}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full items-start">
             <MedicoSelect
               label="Patient Appointment"
               name="appointmentId"
@@ -91,7 +140,13 @@ const patientOptions = prescribePatient?.map((item: any) => ({
             <MedicoDatePiker label="Follow Up Date" name="followUpDate" />
           </div>
 
-          <MedicoTextArea label="Instructions" rows={5} name="instructions" />
+          <ReactQuill
+            theme="snow"
+            value={value}
+            onChange={setValue}
+            modules={modules}
+            formats={formats}
+          />
 
           {/* Submit Button */}
           <Button

@@ -6,3 +6,85 @@
 /* @import "@fullcalendar/daygrid/main.css";
 @import "@fullcalendar/timegrid/main.css";
 @import "@fullcalendar/list/main.css"; */
+
+.ql-editor {
+  min-height: 200px !important;
+}
+
+.ql-toolbar {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  border: 1px solid #c7d2fe !important;
+}
+
+.ql-container {
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  border: 1px solid #c7d2fe !important;
+}
+
+.blog {
+  font-family: inherit;
+}
+
+.blog a {
+  color: blue !important;
+  text-decoration: underline !important;
+}
+
+.blog ul {
+  list-style-type: disc !important;
+  padding-left: 40px !important;
+}
+
+.blog ol {
+  list-style-type: decimal !important;
+  padding-left: 40px !important;
+}
+
+.blog span {
+  font-size: 18px;
+}
+
+.blog h1 {
+  font-size: 24px !important;
+}
+
+.blog h2 {
+  font-size: 20px !important;
+}
+
+.ql-size-small {
+  font-size: 14px !important;
+}
+
+.ql-size-normal {
+  font-size: 18px !important;
+}
+
+.ql-size-large {
+  font-size: 24px !important;
+}
+
+.ql-size-huge {
+  font-size: 32px !important;
+}
+
+.blog blockquote {
+  border-left: 4px solid #ccc !important;
+  margin-bottom: 5px !important;
+  margin-top: 5px !important;
+  padding-left: 16px !important;
+}
+
+.ql-align-center {
+  text-align: center !important;
+}
+
+.ql-align-right {
+  text-align: right !important;
+}
+
+.ql-align-justify {
+  text-align: justify !important;
+}

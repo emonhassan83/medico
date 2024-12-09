@@ -274,20 +274,32 @@ export default function SideBar() {
                     Appointments
                   </div>
                 </NavLink>
-                <NavLink href="/receptionist/appointment-list">
+
+                <CollapsibleMenu title="Schedules" icon={<Appointments />}>
+                  <NavLink href="/receptionist/schedules">
+                    List of Schedules
+                  </NavLink>
+                  <NavLink href="/receptionist/schedules/create">
+                    Add New Schedules
+                  </NavLink>
+                </CollapsibleMenu>
+
+                <NavLink href="/receptionist/appointment-list/scheduled">
                   <div className="flex items-center">
                     <AppointmentList />
                   </div>
                   <div className="flex w-full truncate text-sm">
-                    Appointment List
+                  Schedules List
                   </div>
                 </NavLink>
+
                 <NavLink href="/receptionist/doctors">
                   <div className="flex items-center">
                     <Doctor />
                   </div>
                   <div className="flex w-full truncate text-sm">Doctors</div>
                 </NavLink>
+
                 <CollapsibleMenu title="Patient" icon={<Patient />}>
                   <NavLink href="/receptionist/patients">
                     List of Patients
@@ -296,14 +308,15 @@ export default function SideBar() {
                     Add New Patient
                   </NavLink>
                 </CollapsibleMenu>
-                <NavLink href="/receptionist/prescription">
+                
+                {/* <NavLink href="/receptionist/prescription">
                   <div className="flex items-center">
                     <Prescription />
                   </div>
                   <div className="flex w-full truncate text-sm">
                     Prescription
                   </div>
-                </NavLink>
+                </NavLink> */}
               </>
             )}
           </ul>
