@@ -8,6 +8,7 @@ type TMedicoSelectProps = {
   disabled?: boolean;
   mode?: "multiple" | undefined;
   width?: string;
+  onChange?: any
 };
 
 const MedicoSelect = ({
@@ -16,6 +17,7 @@ const MedicoSelect = ({
   options,
   disabled,
   mode,
+  onChange,
   width = "100%",
 }: TMedicoSelectProps) => {
   return (
@@ -32,6 +34,7 @@ const MedicoSelect = ({
             options={options}
             size="large"
             disabled={disabled}
+            onChange={onChange}
           />
           {error && <small style={{ color: "red" }}>{error.message}</small>}
         </Form.Item>
