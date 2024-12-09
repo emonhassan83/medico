@@ -8,13 +8,14 @@ import dayjs from "dayjs";
 import { FieldValues } from "react-hook-form";
 
 export const defaultValues = {
+  date: "",
   scheduleIds: "",
 };
 
 const CreateAppointmentFormInDoctor = () => {
   const [createAppointment] = useCreateAppointmentMutation();
   const { data: schedules } = useGetAllSchedulesQuery([]);
-  console.log(schedules);
+  // console.log(schedules);
 
   const dateOptions = schedules?.data?.map((item: any) => ({
     value: item.id,
@@ -27,15 +28,15 @@ const CreateAppointmentFormInDoctor = () => {
     label: dayjs(item.startDate).format("h:mm A") +" - " + dayjs(item.endDate).format("h:mm A"),
   }));
 
-  const handleCreateDoctor = async (values: FieldValues) => {
+  const handleCreateSchedule = async (values: FieldValues) => {
     console.log(values);
   };
 
   return (
     <>
-      <MedicoForm onSubmit={handleCreateDoctor} defaultValues={defaultValues}>
+      <MedicoForm onSubmit={handleCreateSchedule} defaultValues={defaultValues}>
         <MedicoSelect
-          name="scheduleIds"
+          name="date"
           label="Select Date"
           options={dateOptions}
         />

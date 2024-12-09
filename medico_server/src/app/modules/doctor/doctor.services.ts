@@ -192,7 +192,11 @@ const getByIdFromDB = async (id: string): Promise<Doctor | null> => {
           specialties: true,
         },
       },
-      schedules: true,
+      schedules: {
+        include: {
+          schedule: true,
+        }
+      },
       review: true,
     },
   });
