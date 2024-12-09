@@ -27,7 +27,7 @@ const TabOne = () => {
 
   // Map data with proper keys and types
   const tableData: AppointmentData[] =
-    data?.appointments?.map((appointment: Appointment, index: number) => ({
+    data?.appointments.slice(0, 4)?.map((appointment: Appointment, index: number) => ({
       key: appointment.id || `${index}`, // Use _id or fallback
       srNo: index + 1,
       status: appointment.status || "N/A",
