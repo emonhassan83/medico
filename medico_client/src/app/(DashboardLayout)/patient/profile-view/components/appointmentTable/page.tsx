@@ -27,7 +27,7 @@ const AppointmentTable = () => {
 
   // Map data with proper keys and types
   const tableData: AppointmentData[] =
-    data?.appointments?.map((appointment: Appointment, index: number) => ({
+    data?.appointments.slice(0, 5)?.map((appointment: Appointment, index: number) => ({
       key: appointment.id || `${index}`, 
       srNo: index + 1,
       status: appointment.status || "N/A",
