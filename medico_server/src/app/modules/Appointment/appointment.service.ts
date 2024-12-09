@@ -221,7 +221,6 @@ const getAllFromDB = async (filters: any, options: IPaginationOptions) => {
     });
   }
 
-  // Handle `createdAt` filtering
   if (createdAt) {
     const startOfDay = new Date(createdAt);
     startOfDay.setHours(0, 0, 0, 0);
