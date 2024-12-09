@@ -81,8 +81,8 @@ const DoctorDashboard = () => {
     </Row>
 
     {/* secound row this line  */}
-    <div className="flex justify-between items-center ">
-       <div className="w-1/3 px-4">
+    <div className="flex justify-between ">
+       <div className="w-1/3 px-4 mt-14">
        <MonthlyEarningGraph/>
        <DisplayItemCard/>
        </div>

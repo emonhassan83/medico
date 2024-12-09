@@ -19,6 +19,7 @@ type AppointmentData = {
   time: string;
 };
 
+
 const LatestAppointmentTable = () => {
   const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
   const { data, refetch } = useGetAllAppointmentsQuery({});
