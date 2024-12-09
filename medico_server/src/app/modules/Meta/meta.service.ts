@@ -67,6 +67,43 @@ const getAdminMetaData = async () => {
     },
   });
 
+  // Get today's date
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Get tomorrow's date
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
+  // Get appointments for today
+  const todayAppointments = await prisma.appointment.count({
+    where: {
+      createdAt: {
+        gte: today,
+        lt: tomorrow,
+      },
+    },
+  });
+
+  // Get appointments for tomorrow
+  const tomorrowAppointments = await prisma.appointment.count({
+    where: {
+      createdAt: {
+        gte: tomorrow,
+        lt: new Date(tomorrow.getTime() + 24 * 60 * 60 * 1000),
+      },
+    },
+  });
+
+  // Get upcoming appointments (from tomorrow onward)
+  const upcomingAppointments = await prisma.appointment.count({
+    where: {
+      createdAt: {
+        gte: tomorrow,
+      },
+    },
+  });
+
   const barChartData = await getBarChartData();
   const pieCharData = await getPieChartData();
 
@@ -76,6 +113,9 @@ const getAdminMetaData = async () => {
     doctorCount,
     paymentCount,
     totalRevenue,
+    todayAppointments,
+    tomorrowAppointments,
+    upcomingAppointments,
     barChartData,
     pieCharData,
   };
@@ -118,6 +158,42 @@ const getDoctorMetaData = async (user: IAuthUser) => {
       status: PaymentStatus.PAID,
     },
   });
+  // Get today's date
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Get tomorrow's date
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
+  // Get appointments for today
+  const todayAppointments = await prisma.appointment.count({
+    where: {
+      createdAt: {
+        gte: today,
+        lt: tomorrow,
+      },
+    },
+  });
+
+  // Get appointments for tomorrow
+  const tomorrowAppointments = await prisma.appointment.count({
+    where: {
+      createdAt: {
+        gte: tomorrow,
+        lt: new Date(tomorrow.getTime() + 24 * 60 * 60 * 1000),
+      },
+    },
+  });
+
+  // Get upcoming appointments (from tomorrow onward)
+  const upcomingAppointments = await prisma.appointment.count({
+    where: {
+      createdAt: {
+        gte: tomorrow,
+      },
+    },
+  });
 
   const appointmentStatusDistribution = await prisma.appointment.groupBy({
     by: ['status'],
@@ -138,6 +214,9 @@ const getDoctorMetaData = async (user: IAuthUser) => {
     reviewCount,
     patientCount: patientCount.length,
     totalRevenue,
+    todayAppointments,
+    tomorrowAppointments,
+    upcomingAppointments,
     formattedAppointmentStatusDistribution,
   };
 };

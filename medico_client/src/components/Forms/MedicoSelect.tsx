@@ -8,6 +8,7 @@ type TMedicoSelectProps = {
   disabled?: boolean;
   mode?: "multiple" | undefined;
   width?: string;
+  onChange?: (value: any) => void;
 };
 
 const MedicoSelect = ({
@@ -16,15 +17,20 @@ const MedicoSelect = ({
   options,
   disabled,
   mode,
+  onChange,
   width = "100%",
 }: TMedicoSelectProps) => {
   return (
     <Controller
       name={name}
       render={({ field, fieldState: { error } }) => (
-        
         <Form.Item style={{ width: "100%" }}>
-          <p className="block text-sm font-medium text-gray-700" style={{ marginBottom: "5px"}}>{label ? label : null}</p>
+          <p
+            className="block text-sm font-medium text-gray-700"
+            style={{ marginBottom: "5px" }}
+          >
+            {label ? label : null}
+          </p>
           <Select
             mode={mode}
             style={{ width }}
@@ -32,6 +38,12 @@ const MedicoSelect = ({
             options={options}
             size="large"
             disabled={disabled}
+            onChange={(value) => {
+              field.onChange(value);
+              if (onChange) {
+                onChange(value);
+              }
+            }}
           />
           {error && <small style={{ color: "red" }}>{error.message}</small>}
         </Form.Item>
