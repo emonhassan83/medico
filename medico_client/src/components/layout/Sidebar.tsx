@@ -16,6 +16,7 @@ import Prescription from "../svg/Prescription";
 import { getUserInfo } from "@/services/auth.services";
 import { TbFileInvoice } from "react-icons/tb";
 import { PiInvoiceBold } from "react-icons/pi";
+import { useGetMyProfileQuery } from "@/redux/api/userApi";
 
 const NavLink = ({
   href,
@@ -96,11 +97,18 @@ const CollapsibleMenu = ({
 export default function SideBar() {
   const [isSideNavOpen, setIsSideNavOpen] = useState(true);
   const [userRole, setUserRole] = useState("");
+  const {data} = useGetMyProfileQuery(undefined)
+  console.log('user:', data)
 
+  
   useEffect(() => {
     const { role } = getUserInfo() as any;
     setUserRole(role);
   }, []);
+
+  
+
+
 
   return (
     <>

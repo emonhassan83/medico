@@ -12,6 +12,13 @@ import MonthlyEarningGraph from "@/components/Dashboard/Common/MonthlyEarningGra
 import DisplayItemCard from "@/components/Dashboard/Common/DisplayItemCard";
 import LatestAppointmentTable from "../patient/dashbord-components/latestAppointmentTable/page";
 
+import { FaCalendarCheck, FaDollarSign } from "react-icons/fa";
+import { HiCurrencyDollar } from "react-icons/hi2";
+import { MdEventNote } from "react-icons/md";
+import { GiNotebook } from "react-icons/gi";
+import { GrNotes } from "react-icons/gr";
+
+
 const DoctorDashboard = () => {
   const { data: doctorsData } = useGetAllDoctorsQuery({});
   const { data: patientsData } = useGetAllPatientQuery({});
@@ -47,7 +54,7 @@ const DoctorDashboard = () => {
             <Card
               title="Appointments"
               number={AppointmentsData?.meta?.total || 0}
-              icon={<TiUserOutline size={40} />}
+              icon={<FaCalendarCheck size={33} />}
             />
             {/* <Card
               title="Revenue"
@@ -57,22 +64,22 @@ const DoctorDashboard = () => {
             <Card
               title="Today' Earning"
               number={`$57`}
-              icon={<TiUserOutline size={40} />}
+              icon={<HiCurrencyDollar size={33} />}
             />
             <Card
               title="Today's Appointments"
               number={57}
-              icon={<TiUserOutline size={40} />}
+              icon={<MdEventNote size={33} />}
             />
             <Card
               title="Tomorrow's Appointments"
               number={57}
-              icon={<TiUserOutline size={40} />}
+              icon={<GiNotebook size={33} />}
             />
             <Card
               title="Upcoming Appointments"
               number={57}
-              icon={<TiUserOutline size={40} />}
+              icon={<GrNotes size={33} />}
             />
             
           </div>
@@ -81,8 +88,8 @@ const DoctorDashboard = () => {
     </Row>
 
     {/* secound row this line  */}
-    <div className="flex justify-between items-center ">
-       <div className="w-1/3 px-4">
+    <div className="flex justify-between ">
+       <div className="w-1/3 px-4 mt-14">
        <MonthlyEarningGraph/>
        <DisplayItemCard/>
        </div>
