@@ -60,7 +60,7 @@ import { ColumnsType } from "antd/es/table";
 
 const TransectionTableInAdmin = () => {
   const { data, isLoading } = useGetAllAppointmentsQuery({});
-  console.log(data);
+  // console.log(data);
   const appointments = data?.appointments;
 
   const columns: ColumnsType<any> = [

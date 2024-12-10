@@ -14,7 +14,7 @@ import { toast } from "sonner";
 const ReceptionistTable = () => {
   const { data, refetch } = useGetAllReceptionQuery({});
   const [deleteReceptionist] = useDeleteReceptionistMutation();
-  console.log(data);
+  // console.log(data);
   const [searchText, setSearchText] = useState("");
 
   //   Filter data based on search text
@@ -24,10 +24,10 @@ const ReceptionistTable = () => {
 
   ///delete operation---------------------------------
   const handleDeletRow = async (id: string) => {
-    console.log(id);
+    // console.log(id);
     try {
       const res = await deleteReceptionist(id).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res?.id) {
         toast.success("Delete reception successfully");
         refetch();

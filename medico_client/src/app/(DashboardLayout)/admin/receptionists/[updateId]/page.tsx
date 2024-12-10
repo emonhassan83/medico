@@ -31,7 +31,7 @@ const ReceptionDetailPage = ({ params }: any) => {
   //   profilePhoto: data?.profilePhoto,
   // };
 
-  console.log(data);
+  // console.log(data);
   const handleFileUpload = async (file: File) => {
     try {
       const image = await uploadImageToImgbb(file);

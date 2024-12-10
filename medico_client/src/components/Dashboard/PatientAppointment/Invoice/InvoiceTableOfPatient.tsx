@@ -9,7 +9,7 @@ import Link from "next/link";
 
 const InvoiceTableOfPatient = () => {
   const { data, isLoading } = useGetMyAppointmentsQuery({});
-  console.log(data);
+  // console.log(data);
   const appointments = data?.appointments;
 
   const columns: ColumnsType<any> = [

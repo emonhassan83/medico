@@ -107,7 +107,7 @@ const getMySchedule = async (
 ) => {
   const { limit, page, skip } = paginationHelpers.calculatePagination(options);
   const { startDate, endDate, ...filterData } = filters;
-  console.log(filterData);
+  // console.log(filterData);
 
   const andConditions = [];
 

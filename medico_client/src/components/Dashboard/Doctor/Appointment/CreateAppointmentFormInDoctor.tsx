@@ -29,7 +29,7 @@ const CreateAppointmentFormInDoctor = () => {
   }));
 
   const handleCreateSchedule = async (values: FieldValues) => {
-    console.log(values);
+    // console.log(values);
   };
 
   return (

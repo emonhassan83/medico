@@ -32,11 +32,11 @@ export const defaultValues = {
 
 const CreatePatients = () => {
   const handleFileUpload = async (file: File) => {
-    console.log(file);
+    // console.log(file);
   };
 
   const handleCreatePatient = async (values: FieldValues) => {
-    console.log(values);
+    // console.log(values);
   };
 
   return (
