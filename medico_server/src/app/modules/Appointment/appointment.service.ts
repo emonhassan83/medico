@@ -281,6 +281,20 @@ const getAllFromDB = async (filters: any, options: IPaginationOptions) => {
   };
 };
 
+const getByIdFromDB = async (id: string) => {
+  const result = await prisma.appointment.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      doctor: true,
+      patient: true,
+      schedule: true,
+    },
+  });
+  return result;
+};
+
 const cancelUnpaidAppointments = async () => {
   const thirtyMinAgo = new Date(Date.now() - 30 * 60 * 1000);
 
@@ -355,4 +369,5 @@ export const AppointmentService = {
   changeAppointmentStatus,
   cancelUnpaidAppointments,
   deleteAppointment,
+  getByIdFromDB,
 };

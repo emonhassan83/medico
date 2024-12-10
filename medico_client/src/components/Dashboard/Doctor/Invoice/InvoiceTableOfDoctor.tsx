@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { ColumnsType } from "antd/es/table";
 import Link from "next/link";
 
-const InvoiceTableOfPatient = () => {
+const InvoiceTableOfDoctor = () => {
   const { data, isLoading } = useGetMyAppointmentsQuery({});
   console.log(data);
   const appointments = data?.appointments;
@@ -51,7 +51,7 @@ const InvoiceTableOfPatient = () => {
       align: "center",
       render: (_: any, data: any) => (
         <div className="flex justify-center">
-          <Link href={`/patient/invoices/${data?.id}`}>
+          <Link href={`/doctor/invoice/${data?.id}`}>
             <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white py-1 px-2 rounded-full  ">
               View Details
             </button>
@@ -97,4 +97,4 @@ const InvoiceTableOfPatient = () => {
   );
 };
 
-export default InvoiceTableOfPatient;
+export default InvoiceTableOfDoctor;

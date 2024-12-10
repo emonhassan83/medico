@@ -16,7 +16,12 @@ router.post(
 
 router.get(
   '/',
-  auth(UserRole.RECEPTIONIST, UserRole.PATIENT, UserRole.ADMIN, UserRole.DOCTOR),
+  auth(
+    UserRole.RECEPTIONIST,
+    UserRole.PATIENT,
+    UserRole.ADMIN,
+    UserRole.DOCTOR,
+  ),
   AppointmentController.getAllFromDB,
 );
 
@@ -24,6 +29,17 @@ router.get(
   '/my-appointment',
   auth(UserRole.DOCTOR, UserRole.PATIENT),
   AppointmentController.getMyAppointment,
+);
+
+router.get(
+  '/:id',
+  auth(
+    UserRole.RECEPTIONIST,
+    UserRole.PATIENT,
+    UserRole.ADMIN,
+    UserRole.DOCTOR,
+  ),
+  AppointmentController.getByIdFromDB,
 );
 
 router.patch(
