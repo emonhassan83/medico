@@ -1,15 +1,24 @@
 'use client'
-import ManageAllTableTab from "./components/manageAllTableTab/page";
 
 import Card from "@/components/Dashboard/Common/Card";
 import ParsonalInfoProfile from "@/components/Dashboard/Common/parsonalInfoProfile";
+import WelcomeCard from "@/components/Dashboard/Common/WelcomeCard";
 import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile";
+import ProfileViewTableDoctor from "@/components/Dashboard/Doctor/profileViewTable/profileViewTable";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
 import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 import { Row, Col } from "antd";
 import { TiUserOutline } from "react-icons/ti";
+
+import { FaCalendarCheck, FaDollarSign } from "react-icons/fa";
+import { HiCurrencyDollar } from "react-icons/hi2";
+import { MdEventNote } from "react-icons/md";
+import { GiNotebook } from "react-icons/gi";
+import { GrNotes } from "react-icons/gr";
+
+
 
 const ProfileView = () => {
   const { data: doctorsData } = useGetAllDoctorsQuery({});
@@ -18,11 +27,8 @@ const ProfileView = () => {
   const { data: AppointmentsData } = useGetAllAppointmentsQuery({});
 
 
-
-
   return (
-    <div>
-        <div className="mx-5">
+    <div className="mx-5">
        <div className="mb-6 flex justify-between items-center">
         <h2 className="text-[#343A40] font-semibold text-[16px]  uppercase">Profile</h2>
         <p className="text-[16px] text-[#74788D] font-normal" >Dashboard / Profile</p>
@@ -41,32 +47,32 @@ const ProfileView = () => {
               <Card
                 title="Appointments"
                 number={AppointmentsData?.meta?.total || 0}
-                icon={<TiUserOutline size={40} />}
+                icon={<FaCalendarCheck size={33} />}
               />
               <Card
                 title="Revenue"
                 number={`$57`}
-                icon={<TiUserOutline size={40} />}
+                icon={<FaDollarSign size={33} />}
               />
               <Card
                 title="Today' Earning"
                 number={`$57`}
-                icon={<TiUserOutline size={40} />}
+                icon={<HiCurrencyDollar size={33} />}
               />
               <Card
                 title="Today's Appointments"
                 number={57}
-                icon={<TiUserOutline size={40} />}
+                icon={<MdEventNote size={33} />}
               />
               <Card
                 title="Tomorrow's Appointments"
                 number={57}
-                icon={<TiUserOutline size={40} />}
+                icon={<GiNotebook size={33} />}
               />
               <Card
                 title="Upcoming Appointments"
                 number={57}
-                icon={<TiUserOutline size={40} />}
+                icon={<GrNotes size={33} />}
               />
             </div>
            
@@ -83,7 +89,7 @@ const ProfileView = () => {
         </div>
 
         <div className="w-2/3">
-        <ManageAllTableTab/>
+        <ProfileViewTableDoctor/>
         </div>
 
       </div>
@@ -93,13 +99,7 @@ const ProfileView = () => {
 
         
     </div>
-
-       
-       {/* <div className="mt-16">
-          <ManageAllTableTab/>
-       </div> */}
-    </div>
   )
 }
 
-export default ProfileView;
+export default ProfileView

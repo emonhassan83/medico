@@ -11,12 +11,12 @@ import PrescriptionTableInDoctor from "@/components/Dashboard/Doctor/Prescriptio
 
 
 const ManageAllTableTab = () => {
-  const [activeTab, setActiveTab] = useState("tab1");
+  const [activeTab, setActiveTab] = useState("tab2");
 
   const renderContent = () => {
     switch (activeTab) {
-      case "tab1":
-        return <TabOne/>
+      // case "tab1":
+      //   return <TabOne/>
       case "tab2":
         return <AppointmentTable/>
       case "tab3":
@@ -24,7 +24,7 @@ const ManageAllTableTab = () => {
       case "tab4":
         return <TabFour/>
       default:
-        return <TabOne/>
+        return <AppointmentTable/>
     }
   };
 
@@ -33,14 +33,14 @@ const ManageAllTableTab = () => {
       {/* Tab Navigation */}
       <div className="tab-buttons flex  justify-evenly space-x-4">
 
-         <div className="w-1/4 flex justify-center  "> 
+         {/* <div className="w-1/4 flex justify-center  "> 
         <button
           className={`tab-btn ${activeTab === "tab1" ? "active" : ""} focus:text-blue-500 focus:border-b-[2px] w-full focus:pb-3 focus:border-blue-500`}
           onClick={() => setActiveTab("tab1")}
         >
           Medical Information
         </button>
-        </div>
+        </div> */}
         
         <div className="w-1/4 flex justify-center "> 
         <button
