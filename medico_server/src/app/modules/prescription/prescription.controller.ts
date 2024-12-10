@@ -18,15 +18,17 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const patientPrescriptions = catchAsync(async (req: Request, res: Response) => {
+const patientPrescription = catchAsync(async (req: Request, res: Response) => {
   const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
   const filters = pick(req.query, prescriptionFilterableFields);
   const user = req.user;
+  
   const result = await PrescriptionService.patientPrescriptions(
     user,
     filters,
     options,
   );
+
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -74,7 +76,7 @@ const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
 
 export const PrescriptionController = {
   insertIntoDB,
-  patientPrescriptions,
+  patientPrescription,
   getAllFromDB,
   getByIdFromDB,
   deleteFromDB

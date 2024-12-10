@@ -72,7 +72,7 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
       const headers: HeadersInit = token ? { Authorization: `${token}` } : {};
 
       const res = await fetch(
-        `http://localhost:5000/api/v1/appointment?status=${paramsValue}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/appointment?status=${paramsValue}`,
         { headers }
       );
       const data = await res.json();

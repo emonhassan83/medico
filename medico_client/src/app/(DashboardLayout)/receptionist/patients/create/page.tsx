@@ -10,7 +10,16 @@ import { Button, Image, Card, Upload } from "antd";
 import { FieldValues } from "react-hook-form";
 import MedicoSelect from "@/components/Forms/MedicoSelect";
 
-export const defaultValues = {
+const CreatePatients = () => {
+  const handleFileUpload = async (file: File) => {
+    // console.log(file);
+  };
+
+  const handleCreatePatient = async (values: FieldValues) => {
+    // console.log(values);
+  };
+
+  const defaultValues = {
   password: "",
   gender: "",
   bloodGroup: "",
@@ -29,15 +38,6 @@ export const defaultValues = {
     profilePhoto: "",
   },
 };
-
-const CreatePatients = () => {
-  const handleFileUpload = async (file: File) => {
-    // console.log(file);
-  };
-
-  const handleCreatePatient = async (values: FieldValues) => {
-    // console.log(values);
-  };
 
   return (
     <>
@@ -69,7 +69,9 @@ const CreatePatients = () => {
           Basic Information
         </div>
 
-        <MedicoForm onSubmit={handleCreatePatient} defaultValues={defaultValues}>
+        <MedicoForm onSubmit={handleCreatePatient} 
+        defaultValues={defaultValues}
+        >
           {/* Rows of Input Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
             <MedicoInput

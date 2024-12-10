@@ -12,18 +12,6 @@ import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
 import { toast } from "sonner";
 import { useCreateReceptionistMutation } from "@/redux/api/receptionistApi";
 
-export const defaultValues = {
-  password: "",
-  receptionist: {
-    firstName: "",
-    lastName: "",
-    email: "",
-    contactNumber: "",
-    address: "",
-    profilePhoto: "",
-  },
-};
-
 const CreateReceptionist = () => {
   const [photo, setPhoto] = useState("");
   const [createReceptionist] = useCreateReceptionistMutation();
@@ -66,6 +54,18 @@ const CreateReceptionist = () => {
       console.error(err.message);
     }
   };
+
+ const defaultValues = {
+  password: "",
+  receptionist: {
+    firstName: "",
+    lastName: "",
+    email: "",
+    contactNumber: "",
+    address: "",
+    profilePhoto: "",
+  },
+};
 
   return (
     <>

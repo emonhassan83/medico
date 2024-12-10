@@ -15,25 +15,27 @@ import {
   useCreateDoctorMutation,
   useUpdateDoctorMutation,
 } from "@/redux/api/doctorApi";
+import { DoctorFormValues } from "@/types/doctor";
 
-export const defaultValues = {
-  password: "",
-  doctor: {
-    firstName: "",
-    lastName: "",
-    email: "",
-    contactNumber: "",
-    address: "",
-    gender: "",
-    designation: "",
-    registrationNumber: "",
-    qualification: "",
-    experience: "",
-    appointmentFee: "",
-    currentWorkingPlace: "",
-    profilePhoto: "",
-  },
-};
+// // Default Values
+// export const defaultValues: DoctorFormValues = {
+//   password: "",
+//   doctor: {
+//     firstName: "",
+//     lastName: "",
+//     email: "",
+//     contactNumber: "",
+//     address: "",
+//     gender: "",
+//     designation: "",
+//     registrationNumber: "",
+//     qualification: "",
+//     experience: "",
+//     appointmentFee: "",
+//     currentWorkingPlace: "",
+//     profilePhoto: "",
+//   },
+// };
 
 const Doctor = () => {
   const [photo, setPhoto] = useState("");
@@ -134,7 +136,7 @@ const Doctor = () => {
           Basic Information
         </div>
 
-        <MedicoForm onSubmit={handleCreateDoctor} defaultValues={defaultValues}>
+        <MedicoForm onSubmit={handleCreateDoctor} >
           {/* Rows of Input Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
             <MedicoInput label="First Name" type="text" name="firstName" />

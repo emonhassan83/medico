@@ -13,11 +13,11 @@ import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
 import { toast } from "sonner";
 import { useCreateSpecialtyMutation } from "@/redux/api/specialitiesApi";
 
-export const defaultValues = {
-  title: "",
-  icon: "",
-  description: "",
-};
+// export const defaultValues = {
+//   title: "",
+//   icon: "",
+//   description: "",
+// };
 
 const CreateSpecialties = () => {
   const [icon, setIcon] = useState("");
@@ -88,7 +88,7 @@ const CreateSpecialties = () => {
 
         <MedicoForm
           onSubmit={handleCreateSpecialties}
-          defaultValues={defaultValues}
+          // defaultValues={defaultValues}
         >
           {/* Rows of Input Fields */}
           <div className="flex flex-wrap gap-4 w-full">

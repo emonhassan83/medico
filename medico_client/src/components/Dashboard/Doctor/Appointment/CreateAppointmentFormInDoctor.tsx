@@ -12,11 +12,6 @@ import dayjs from "dayjs";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
-export const defaultValues = {
-  date: "",
-  scheduleIds: "",
-};
-
 const CreateAppointmentFormInDoctor = () => {
   const [createAppointment] = useCreateAppointmentMutation();
   const [createSchedule] = useCreateScheduleMutation();
@@ -58,9 +53,16 @@ const CreateAppointmentFormInDoctor = () => {
     }
   };
 
+ const defaultValues = {
+  date: "",
+  scheduleIds: "",
+};
+
   return (
     <>
-      <MedicoForm onSubmit={handleCreateSchedule} defaultValues={defaultValues}>
+      <MedicoForm onSubmit={handleCreateSchedule} 
+      defaultValues={defaultValues}
+      >
         <MedicoSelect name="date" label="Select Date" options={dateOptions} />
         <MedicoSelect
           name="scheduleIds"

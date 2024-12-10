@@ -15,26 +15,27 @@ import {
   useCreatePatientMutation,
   useUpdatePatientMutation,
 } from "@/redux/api/patientApi";
+import { bloodGroupOptions, dietOptions, genderOptions, maritalOptions } from "@/components/SelectOptions/SelectOptions";
 
-export const defaultValues = {
-  password: "",
-  gender: "",
-  bloodGroup: "",
-  height: "",
-  weight: "",
-  diet: "",
-  pulse: "",
-  dietaryPreferences: "",
-  maritalStatus: "",
-  patient: {
-    firstName: "",
-    lastName: "",
-    email: "",
-    contactNumber: "",
-    address: "",
-    profilePhoto: "",
-  },
-};
+// export const defaultValues = {
+//   password: "",
+//   gender: "",
+//   bloodGroup: "",
+//   height: "",
+//   weight: "",
+//   diet: "",
+//   pulse: "",
+//   dietaryPreferences: "",
+//   maritalStatus: "",
+//   patient: {
+//     firstName: "",
+//     lastName: "",
+//     email: "",
+//     contactNumber: "",
+//     address: "",
+//     profilePhoto: "",
+//   },
+// };
 
 const CreatePatients = () => {
   const [photo, setPhoto] = useState("");
@@ -130,7 +131,7 @@ const CreatePatients = () => {
 
         <MedicoForm
           onSubmit={handleCreatePatient}
-          defaultValues={defaultValues}
+          // defaultValues={defaultValues}
         >
           {/* Rows of Input Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
@@ -204,25 +205,12 @@ const CreatePatients = () => {
             <MedicoSelect
               name="gender"
               label="Gender"
-              options={[
-                { value: "MALE", label: "Male" },
-                { value: "FEMALE", label: "Female" },
-                { value: "UNKNOWN", label: "Unknown" },
-              ]}
+              options={genderOptions}
             />
             <MedicoSelect
               name="bloodGroup"
               label="Blood Group"
-              options={[
-                { value: "A_POSITIVE", label: "A_POSITIVE" },
-                { value: "A_NEGATIVE", label: "A_NEGATIVE" },
-                { value: "B_POSITIVE", label: "B_POSITIVE" },
-                { value: "B_NEGATIVE", label: "B_NEGATIVE" },
-                { value: "O_POSITIVE", label: "O_POSITIVE" },
-                { value: "O_NEGATIVE", label: "O_NEGATIVE" },
-                { value: "AB_POSITIVE", label: "AB_POSITIVE" },
-                { value: "AB_NEGATIVE", label: "AB_NEGATIVE" },
-              ]}
+              options={bloodGroupOptions}
             />
             <MedicoInput label="Height" type="text" name="height" />
             <MedicoInput label="Weight" type="text" name="weight" />
@@ -230,11 +218,7 @@ const CreatePatients = () => {
             <MedicoSelect
               name="diet"
               label="Diet"
-              options={[
-                { value: "Vegetarian", label: "Vegetarian" },
-                { value: "Non-Vegetarian", label: "Non-Vegetarian" },
-                { value: "Vegan", label: "Vegan" },
-              ]}
+              options={dietOptions}
             />
             <MedicoInput label="Pulse" type="text" name="pulse" />
             <MedicoInput
@@ -245,10 +229,7 @@ const CreatePatients = () => {
             <MedicoSelect
               name="maritalStatus"
               label="Marital Status"
-              options={[
-                { value: "MARRIED", label: "MARRIED" },
-                { value: "UNMARRIED", label: "UNMARRIED" },
-              ]}
+              options={maritalOptions}
             />
           </div>
 

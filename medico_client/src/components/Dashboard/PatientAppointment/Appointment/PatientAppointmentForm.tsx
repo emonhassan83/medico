@@ -12,10 +12,6 @@ import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
-export const defaultValues = {
-  doctorId: "",
-  scheduleId: "",
-};
 
 const PatientAppointmentForm = () => {
   const [selectedDoctorId, setSelectedDoctorId] = useState<string | null>(null);
@@ -57,9 +53,17 @@ const PatientAppointmentForm = () => {
     setSelectedDoctorId(doctorId);
   };
 
+  
+const defaultValues = {
+  doctorId: "",
+  scheduleId: "",
+};
+
   return (
     <>
-      <MedicoForm onSubmit={handleCreateDoctor} defaultValues={defaultValues}>
+      <MedicoForm onSubmit={handleCreateDoctor} 
+      defaultValues={defaultValues}
+      >
         <MedicoSelect
           name="doctorId"
           label="Select Doctors"
