@@ -38,7 +38,7 @@ const CreateAppointmentFormInDoctor = () => {
     // console.log(values);
     try {
       const payload = {
-        scheduleIds: values.scheduleIds, // Match the backend schema
+        scheduleIds: values.scheduleIds,
       };
 
       console.log("Sending payload:", payload);

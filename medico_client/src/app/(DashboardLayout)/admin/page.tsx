@@ -18,6 +18,8 @@ import { HiCurrencyDollar } from "react-icons/hi2";
 import { MdEventNote } from "react-icons/md";
 import { GiNotebook } from "react-icons/gi";
 import { GrNotes } from "react-icons/gr";
+import { useGetAllMetaDataQuery } from "@/redux/api/metaApi";
+import { useGetMyProfileQuery } from "@/redux/api/userApi";
 
 
 const AdminDashboard = () => {
@@ -25,6 +27,15 @@ const AdminDashboard = () => {
   const { data: patientsData } = useGetAllPatientQuery({});
   const { data: receptionistsData } = useGetAllReceptionQuery({});
   const { data: AppointmentsData } = useGetAllAppointmentsQuery({});
+
+  const {data:getAllMetaData} = useGetAllMetaDataQuery(undefined)
+  const {data:getMyProfileData} = useGetMyProfileQuery(undefined)
+  
+
+
+
+  console.log('getAllMetaData', getAllMetaData)
+  // console.log('total revenue', getAllMetaData?.totalRevenue?._sum.amount)
 
   return (
     <div className="pt-2 px-[18px] mb-16">
@@ -44,10 +55,10 @@ const AdminDashboard = () => {
             <WelcomeCard
               admin={2}
               doctor={doctorsData?.meta?.total || 0}
-              patient={patientsData?.meta?.total || 0}
+              patient={getAllMetaData?.patientCount}
               receptionist={receptionistsData?.meta?.total || 0}
-              username="Alice"
-              role="Super Admin"
+              username={`${getMyProfileData?.firstName} ${getMyProfileData?.lastName}`}
+              role={getMyProfileData?.role}
             />
             <MonthlyEarningGraph />
             <DisplayItemCard />
@@ -65,7 +76,7 @@ const AdminDashboard = () => {
               />
               <Card
                 title="Revenue"
-                number={`$57`}
+                number={`$${getAllMetaData?.totalRevenue?._sum.amount}`}
                 icon={<FaDollarSign size={33} />}
               />
               <Card
@@ -75,17 +86,17 @@ const AdminDashboard = () => {
               />
               <Card
                 title="Today's Appointments"
-                number={57}
+                number={getAllMetaData?.todayAppointments}
                 icon={<MdEventNote size={33} />}
               />
               <Card
                 title="Tomorrow's Appointments"
-                number={57}
+                number={getAllMetaData?.tomorrowAppointments}
                 icon={<GiNotebook size={33} />}
               />
               <Card
                 title="Upcoming Appointments"
-                number={57}
+                number={getAllMetaData?.upcomingAppointments}
                 icon={<GrNotes size={33} />}
               />
             </div>

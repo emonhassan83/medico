@@ -1,19 +1,40 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 
-import { useGetMyPrescriptionQuery } from "@/redux/api/prescriptionApi";
+import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
+import { useGetMyProfileQuery } from "@/redux/api/userApi";
+import Link from "next/link";
+import { FaEye } from "react-icons/fa";
 
 const PrescriptionTableListInPatient = () => {
-  const { data } = useGetMyPrescriptionQuery({});
-  // console.log(data);
+  const { data } = useGetAllPrescriptionQuery({});
+  const { data: profile } = useGetMyProfileQuery(undefined);
+  const [dataSource, setDataSource] = useState<any>([]);
 
-  const dataSource = data?.prescription?.map((singlePresecription: any) => ({
-    instructions: singlePresecription?.instructions,
-    doctorName: singlePresecription?.doctor?.firstName,
-    appointmentDate: singlePresecription?.appointment?.createdAt?.slice(0, 10),
-    appointmentTime: singlePresecription?.appointment?.createdAt?.slice(11, 19),
-  }));
+  useEffect(() => {
+    if (data) {
+      const fData = data?.prescription.filter(
+        (d: any) => d?.patient?.id === profile?.id
+      );
+
+      const dataSource = fData?.map((singlePresecription: any) => ({
+        instructions: singlePresecription?.instructions,
+        doctorName: singlePresecription?.doctor?.firstName,
+        appointmentDate: singlePresecription?.appointment?.createdAt?.slice(
+          0,
+          10
+        ),
+        appointmentTime: singlePresecription?.appointment?.createdAt?.slice(
+          11,
+          19
+        ),
+        id: singlePresecription?.id,
+      }));
+
+      setDataSource(dataSource);
+    }
+  }, [data, profile?.id]);
 
   const columns = [
     {
@@ -40,9 +61,17 @@ const PrescriptionTableListInPatient = () => {
       key: "appointmentTime",
     },
     {
-      title: "Instructions",
-      dataIndex: "instructions",
-      key: "instructions",
+      title: "Options",
+      key: "action",
+      render: (data: any) => (
+        <div className="flex gap-1">
+          <Link href={`/patient/prescription/${data?.id}`}>
+            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
+              <FaEye />
+            </button>
+          </Link>
+        </div>
+      ),
     },
   ];
 

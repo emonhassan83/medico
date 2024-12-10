@@ -111,31 +111,11 @@ const PatientTableAdmin = () => {
         <Table
           dataSource={filteredData}
           columns={columns}
-          pagination={{ pageSize: data?.meta?.limit }}
           bordered
           rowKey="id"
         />
       </div>
-      <div className="relative hidden md:block">
-        {data?.meta?.page === 1 ? (
-          <div className="absolute text-[#495072] text-sm bottom-6">
-            {data?.meta?.total <= 10 ? (
-              <div>
-                showing 1 to {data?.meta?.total} of {data?.meta?.total} entries
-              </div>
-            ) : (
-              <div>
-                showing 1 to {data?.meta?.limit} of {data?.meta?.total} entries
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="absolute text-[#495072]  text-sm bottom-6">
-            showing 1 to (({data?.meta?.page} - 1)* {data?.meta?.limit} ) of{" "}
-            {data?.meta?.total} entries
-          </div>
-        )}
-      </div>
+      
     </div>
   );
 };
