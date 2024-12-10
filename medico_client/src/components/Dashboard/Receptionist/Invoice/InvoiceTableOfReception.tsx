@@ -2,14 +2,16 @@
 
 import React from "react";
 import { Table } from "antd";
-import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
+import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
 import { toast } from "sonner";
 import { ColumnsType } from "antd/es/table";
 import Link from "next/link";
+import { FaEye } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
 
-const InvoiceTableOfPatient = () => {
-  const { data, isLoading } = useGetMyAppointmentsQuery({});
-  // console.log(data);
+const InvoiceTableOfReception = () => {
+  const { data, isLoading } = useGetAllAppointmentsQuery({});
+  console.log(data);
   const appointments = data?.appointments;
 
   const columns: ColumnsType<any> = [
@@ -19,6 +21,12 @@ const InvoiceTableOfPatient = () => {
       key: "key",
       sorter: (a: any, b: any) => a.key - b.key,
       render: (_: any, __: any, index: number) => index + 1,
+    },
+    {
+      title: "Patient Name",
+      dataIndex: "patient",
+      key: "patient",
+      render: (patient: any) => `${patient?.firstName} ${patient?.lastName}`,
     },
     {
       title: "Appointment Date",
@@ -50,12 +58,21 @@ const InvoiceTableOfPatient = () => {
       key: "option",
       align: "center",
       render: (_: any, data: any) => (
-        <div className="flex justify-center">
-          <Link href={`/patient/invoices/${data?.id}`}>
-            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white py-1 px-2 rounded-full  ">
-              View Details
+        <div className="flex justify-center items-center gap-1">
+          <Link href={`/receptionist/invoices/${data?.id}`}>
+            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
+              <FaEye />
             </button>
           </Link>
+
+          {/* edit button */}
+
+          <button
+            className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
+            //   onClick={() => handleEdit(items)}
+          >
+            <MdEdit />
+          </button>
         </div>
       ),
     },
@@ -97,4 +114,4 @@ const InvoiceTableOfPatient = () => {
   );
 };
 
-export default InvoiceTableOfPatient;
+export default InvoiceTableOfReception;

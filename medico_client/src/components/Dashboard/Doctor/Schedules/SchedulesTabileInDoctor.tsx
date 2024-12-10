@@ -2,15 +2,16 @@
 
 import React from "react";
 import { Table } from "antd";
-import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
 import { toast } from "sonner";
 import { ColumnsType } from "antd/es/table";
 import Link from "next/link";
+import { FaEye } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { useGetAllSchedulesQuery } from "@/redux/api/scheduleApi";
 
-const InvoiceTableOfPatient = () => {
-  const { data, isLoading } = useGetMyAppointmentsQuery({});
-  // console.log(data);
-  const appointments = data?.appointments;
+const SchedulesTabileInDoctor = () => {
+  const { data, isLoading } = useGetAllSchedulesQuery({});
+  console.log(data);
 
   const columns: ColumnsType<any> = [
     {
@@ -21,41 +22,43 @@ const InvoiceTableOfPatient = () => {
       render: (_: any, __: any, index: number) => index + 1,
     },
     {
-      title: "Appointment Date",
+      title: "Date",
       dataIndex: "createdAt",
-      key: "appointmentDate",
-      render: (date: string) => new Date(date).toLocaleDateString(),
+      key: "createdAt",
+      render: (createdAt: any) => `${createdAt?.slice(0, 10)}`,
     },
 
     {
-      title: "Appointment Time",
-      dataIndex: "schedule",
-      key: "schedule",
-      render: (schedule: any) =>
-        `${schedule?.startDate?.slice(11, 19)} to ${schedule?.startDate?.slice(
+      title: "Time",
+      dataIndex: "time",
+      key: "time",
+      render: (_: any, data: any) =>
+        `${data?.startDate?.slice(11, 19)} to ${data?.startDate?.slice(
           11,
           19
         )}`,
     },
-
-    {
-      title: " Status",
-      dataIndex: "paymentStatus",
-      key: "paymentStatus",
-    },
-
     {
       title: "Option",
       dataIndex: "option",
       key: "option",
       align: "center",
       render: (_: any, data: any) => (
-        <div className="flex justify-center">
-          <Link href={`/patient/invoices/${data?.id}`}>
-            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white py-1 px-2 rounded-full  ">
-              View Details
+        <div className="flex justify-center items-center gap-1">
+          <Link href={`/doctor/schedules/${data?.id}`}>
+            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
+              <FaEye />
             </button>
           </Link>
+
+          {/* edit button */}
+
+          <button
+            className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
+            //   onClick={() => handleEdit(items)}
+          >
+            <MdEdit />
+          </button>
         </div>
       ),
     },
@@ -65,7 +68,7 @@ const InvoiceTableOfPatient = () => {
     <div className="bg-white p-5">
       <div>
         <Table
-          dataSource={appointments}
+          dataSource={data?.data}
           columns={columns}
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
@@ -97,4 +100,4 @@ const InvoiceTableOfPatient = () => {
   );
 };
 
-export default InvoiceTableOfPatient;
+export default SchedulesTabileInDoctor;

@@ -59,6 +59,21 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getByIdFromDB = catchAsync(
+  async (req: Request & { user?: any }, res: Response) => {
+    const { id } = req.params;
+    const user = req.user;
+
+    const result = await AppointmentService.getByIdFromDB(id);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Appointment get successfully',
+      data: result,
+    });
+  },
+);
+
 const changeAppointmentStatus = catchAsync(
   async (req: Request & { user?: any }, res: Response) => {
     const { id } = req.params;
@@ -102,5 +117,6 @@ export const AppointmentController = {
   getMyAppointment,
   getAllFromDB,
   changeAppointmentStatus,
-  deleteAppointment
+  deleteAppointment,
+  getByIdFromDB,
 };

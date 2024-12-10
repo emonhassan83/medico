@@ -1,5 +1,6 @@
 "use client";
 
+import SchedulesTabileInDoctor from "@/components/Dashboard/Doctor/Schedules/SchedulesTabileInDoctor";
 import ScheduleTable from "@/components/Dashboard/Receptionist/Schedule/ScheduleTable";
 import Link from "next/link";
 import React from "react";
@@ -24,13 +25,15 @@ const DoctorSchedulesPage = () => {
       </div>
       <div className="mt-5">
         <Link
-          href="/receptionist/schedules/create"
+          href="/doctor/schedules/create"
           className="text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
         >
-          Add Doctor Schedules
+          + Add Doctor Schedules
         </Link>
       </div>
-      Add here Doctor Schedule 
+      <div className="mt-5">
+        <SchedulesTabileInDoctor />
+      </div>
     </div>
   );
 };
