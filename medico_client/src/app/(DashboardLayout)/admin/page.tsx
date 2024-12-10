@@ -12,7 +12,13 @@ import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 import { Row, Col } from "antd";
 import { TiUserOutline } from "react-icons/ti";
-import { AiFillFile } from "react-icons/ai";
+
+import { FaCalendarCheck, FaDollarSign } from "react-icons/fa";
+import { HiCurrencyDollar } from "react-icons/hi2";
+import { MdEventNote } from "react-icons/md";
+import { GiNotebook } from "react-icons/gi";
+import { GrNotes } from "react-icons/gr";
+
 
 const AdminDashboard = () => {
   const { data: doctorsData } = useGetAllDoctorsQuery({});
@@ -55,32 +61,32 @@ const AdminDashboard = () => {
               <Card
                 title="Appointments"
                 number={AppointmentsData?.meta?.total || 0}
-                icon={<TiUserOutline size={40} />}
+                icon={<FaCalendarCheck size={33} />}
               />
               <Card
                 title="Revenue"
                 number={`$57`}
-                icon={<TiUserOutline size={40} />}
+                icon={<FaDollarSign size={33} />}
               />
               <Card
                 title="Today' Earning"
                 number={`$57`}
-                icon={<TiUserOutline size={40} />}
+                icon={<HiCurrencyDollar size={33} />}
               />
               <Card
                 title="Today's Appointments"
                 number={57}
-                icon={<TiUserOutline size={40} />}
+                icon={<MdEventNote size={33} />}
               />
               <Card
                 title="Tomorrow's Appointments"
                 number={57}
-                icon={<TiUserOutline size={40} />}
+                icon={<GiNotebook size={33} />}
               />
               <Card
                 title="Upcoming Appointments"
                 number={57}
-                icon={<TiUserOutline size={40} />}
+                icon={<GrNotes size={33} />}
               />
             </div>
             <MonthlyRegisteredUsersGraph />
