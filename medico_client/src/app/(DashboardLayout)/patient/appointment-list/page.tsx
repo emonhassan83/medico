@@ -9,6 +9,7 @@ import {
 } from "@/redux/api/appointmentApi";
 import { Appointment } from "@/types/appointmentType";
 import { ColumnsType } from "antd/es/table";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 type AppointmentData = {
   key: string;
@@ -22,9 +23,8 @@ type AppointmentData = {
 const PatientAppointment = () => {
   // const [appointments, setAppointments] = useState(dataSource);
   const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
-  const { data, refetch } = useGetAllAppointmentsQuery({});
-  console.log(data?.appointments);
-
+  const { data, refetch, isLoading } = useGetAllAppointmentsQuery({});
+  
   // Map data with proper keys and types
   const tableData: AppointmentData[] =
     data?.appointments?.map((appointment: Appointment, index: number) => ({
@@ -116,6 +116,10 @@ const PatientAppointment = () => {
       ),
     },
   ];
+
+  if (isLoading) {
+    return <FullPageLoading/>;
+  }
 
   return (
     <div className="mx-5">
