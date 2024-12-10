@@ -1,81 +1,101 @@
 "use client";
 
+import Link from "next/link";
 import React, { useState } from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import MedicoForm from "@/components/Forms/MedicoForm";
 import MedicoInput from "@/components/Forms/MedicoInput";
 import { Button, Image, Card, Upload } from "antd";
 import { FieldValues } from "react-hook-form";
+import MedicoSelect from "@/components/Forms/MedicoSelect";
 import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
 import { toast } from "sonner";
 import {
-  useGetReceptionistQuery,
-  useUpdateReceptionistMutation,
-} from "@/redux/api/receptionistApi";
-import Link from "next/link";
+  useCreateDoctorMutation,
+  useGetDoctorQuery,
+  useUpdateDoctorMutation,
+} from "@/redux/api/doctorApi";
+import { useGetAllSpecialtiesQuery } from "@/redux/api/specialitiesApi";
 import { useRouter } from "next/navigation";
 
-const ReceptionDetailPage = ({ params }: any) => {
+const UpdateDoctor = ({ params }: any) => {
   const router = useRouter();
+  console.log(params);
   const [photo, setPhoto] = useState("");
-  // console.log(params.updateId);
-  const { data, isLoading } = useGetReceptionistQuery(params?.updateId);
-  const [updateReceptionist] = useUpdateReceptionistMutation();
 
+  //   const { data: specialties } = useGetAllSpecialtiesQuery([]);
+  const { data, isLoading } = useGetDoctorQuery(params?.doctorId);
+  const [updateDoctor] = useUpdateDoctorMutation();
   console.log(data);
+  //   const specialtiesOptions = specialties?.data?.map((item: any) => ({
+  //     value: item.id,
+  //     label: `${item.title}`,
+  //   }));
+
   const handleFileUpload = async (file: File) => {
     try {
       const image = await uploadImageToImgbb(file);
 
       if (image) {
-        toast.success("Receptionist Photo Upload successfully");
+        toast.success("Doctor Photo Upload successfully");
       }
       setPhoto(image);
     } catch (error) {
       console.error("Failed to upload image:", error);
     }
   };
-  const handleUpdateReceptionist = async (formData: FieldValues) => {
+  const handleUpdateDoctor = async (formData: FieldValues) => {
+    // console.log(formData);
     try {
-      const updatedData = {
-        ...formData,
-        profilePhoto: photo || data?.profilePhoto,
+      const payload = {
+        id: params.doctorId, // Patient's unique ID
+        body: {
+          firstName: formData?.firstName,
+          lastName: formData?.lastName,
+          address: formData?.address,
+          contactNumber: formData?.contactNumber,
+          profilePhoto: photo || data?.profilePhoto,
+          registrationNumber: formData?.registrationNumber,
+          experience: Number(formData?.experience),
+          gender: formData?.gender,
+          apointmentFee:
+            Number(formData?.apointmentFee) || data?.appointmentFee,
+          qualification: formData?.qualification,
+          currentWorkingPlace: formData?.currentWorkingPlace,
+          designation: formData?.designation,
+        },
       };
-
-      const result = await updateReceptionist({
-        id: params.updateId,
-        body: formData,
-      }).unwrap();
+      console.log(payload);
+      const result = await updateDoctor(payload).unwrap();
+      console.log(result);
 
       if (result) {
-        toast.success("Receptionist updated successfully!");
-        router.push("/admin/receptionists");
+        toast.success("Doctor updated successfully!");
+        router.push("/admin/doctors");
       }
     } catch (error) {
-      console.error("Failed to update receptionist:", error);
-      toast.error("Failed to update receptionist. Please try again.");
+      console.error("Failed to update doctor:", error);
+      toast.error("Failed to update doctor. Please try again.");
     }
   };
   return (
     <>
       {/* Header Section */}
       <div className="mx-4 flex items-center justify-between mt-4">
-        <h2 className="text-lg text-[#495057] font-semibold">
-          Update Receptionist
-        </h2>
+        <h2 className="text-lg text-[#495057] font-semibold">UPDATE DOCTOR</h2>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
           <Link href="/admin">Dashboard</Link>/
-          <Link href="/admin/receptionists">Receptionist</Link>/
-          <Link href="#">Update Receptionist</Link>
+          <Link href="/admin/doctors">Doctors</Link>/
+          <Link href="#">Update Doctor</Link>
         </div>
       </div>
 
       <div className="mt-5 ml-4">
         <Link
-          href="/admin/receptionists"
+          href="/admin/doctors"
           className="text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
         >
-          <ArrowLeftOutlined className="mr-1" /> Back to Receptionist List
+          <ArrowLeftOutlined className="mr-1" /> Back to Doctor List
         </Link>
       </div>
 
@@ -86,21 +106,59 @@ const ReceptionDetailPage = ({ params }: any) => {
           Basic Information
         </div>
 
-        {!isLoading && data ? (
-          <MedicoForm onSubmit={handleUpdateReceptionist} defaultValues={data}>
+        {!isLoading ? (
+          <MedicoForm onSubmit={handleUpdateDoctor} defaultValues={data}>
             {/* Rows of Input Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
               <MedicoInput label="First Name" type="text" name="firstName" />
               <MedicoInput label="Last Name" type="text" name="lastName" />
-              {/* <MedicoInput label="Email" type="text" name="email" /> */}
+
               <MedicoInput
                 label="Contact No"
                 type="text"
                 name="contactNumber"
               />
+              {/* <MedicoInput label="Email" type="text" name="email" /> */}
 
               <MedicoInput label="Address" type="text" name="address" />
-              <div className="w-full">
+              <MedicoSelect
+                name="gender"
+                label="Gender"
+                options={[
+                  { value: "MALE", label: "Male" },
+                  { value: "FEMALE", label: "Female" },
+                  { value: "UNKNOWN", label: "Unknown" },
+                ]}
+              />
+
+              <MedicoInput label="Designation" type="text" name="designation" />
+              <MedicoInput
+                label="Registration Number"
+                type="text"
+                name="registrationNumber"
+              />
+
+              {/* <MedicoSelect
+                name="specialties"
+                label="Specialties"
+                mode="multiple"
+                options={specialtiesOptions}
+              /> */}
+              <MedicoInput
+                label="Qualification"
+                type="text"
+                name="qualification"
+              />
+
+              <MedicoInput label="Experience" type="text" name="experience" />
+              <MedicoInput label="Fee" type="text" name="appointmentFee" />
+
+              <MedicoInput
+                label="Current Working Place"
+                type="text"
+                name="currentWorkingPlace"
+              />
+              <div className="h-10 w-full">
                 <p
                   className="block text-sm font-medium text-gray-700"
                   style={{ marginBottom: "5px" }}
@@ -121,8 +179,8 @@ const ReceptionDetailPage = ({ params }: any) => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        height: "160px",
-                        width: "160px",
+                        height: "180px",
+                        width: "180px",
                         margin: "auto",
                         borderRadius: "8px",
                       }}
@@ -159,17 +217,17 @@ const ReceptionDetailPage = ({ params }: any) => {
             <Button
               htmlType="submit"
               size="large"
-              className="my-4 rounded-md bg-[#485EC4] px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full md:w-auto"
+              className="mt-10 rounded-md bg-[#485EC4] px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full md:w-auto"
             >
-              Update Receptionist
+              Update Doctor
             </Button>
           </MedicoForm>
         ) : (
-          <p>Loading...</p>
+          <p>Loading....</p>
         )}
       </div>
     </>
   );
 };
 
-export default ReceptionDetailPage;
+export default UpdateDoctor;

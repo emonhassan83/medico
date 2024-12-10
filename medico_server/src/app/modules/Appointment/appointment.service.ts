@@ -204,7 +204,7 @@ const changeAppointmentStatus = async (
 
 const getAllFromDB = async (filters: any, options: IPaginationOptions) => {
   const { limit, page, skip } = paginationHelpers.calculatePagination(options);
-  const { patientEmail, doctorEmail, ...filterData } = filters;
+  const { patientEmail, doctorEmail, createdAt, ...filterData } = filters;
   const andConditions = [];
 
   if (patientEmail) {
@@ -217,6 +217,20 @@ const getAllFromDB = async (filters: any, options: IPaginationOptions) => {
     andConditions.push({
       doctor: {
         email: doctorEmail,
+      },
+    });
+  }
+
+  if (createdAt) {
+    const startOfDay = new Date(createdAt);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(createdAt);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    andConditions.push({
+      createdAt: {
+        gte: startOfDay,
+        lte: endOfDay,
       },
     });
   }
@@ -265,6 +279,20 @@ const getAllFromDB = async (filters: any, options: IPaginationOptions) => {
     },
     data: result,
   };
+};
+
+const getByIdFromDB = async (id: string) => {
+  const result = await prisma.appointment.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      doctor: true,
+      patient: true,
+      schedule: true,
+    },
+  });
+  return result;
 };
 
 const cancelUnpaidAppointments = async () => {
@@ -341,4 +369,5 @@ export const AppointmentService = {
   changeAppointmentStatus,
   cancelUnpaidAppointments,
   deleteAppointment,
+  getByIdFromDB,
 };

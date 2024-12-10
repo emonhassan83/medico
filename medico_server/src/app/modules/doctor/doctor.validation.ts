@@ -40,7 +40,9 @@ const create = z.object({
 
 const update = z.object({
   body: z.object({
-    name: z.string().optional(),
+    firstName: z.string().optional(),
+    lasttName: z.string().optional(),
+    address: z.string().optional(),
     profilePhoto: z.string().optional(),
     contactNumber: z.string().optional(),
     registrationNumber: z.string().optional(),

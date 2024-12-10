@@ -12,7 +12,7 @@ const CreateAppointment = () => {
       <div className="flex items-center justify-between mt-5">
         <div>
           <h2 className="text-lg text-[#495057] font-semibold">
-          Create Doctor Schedule
+            Create Doctor Schedule
           </h2>
         </div>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
@@ -25,7 +25,7 @@ const CreateAppointment = () => {
       </div>
       <div className="mt-5">
         <Link
-          href="/doctor/appointments"
+          href="/doctor/schedules"
           className="flex items-center gap-2 w-[250px] text-white text-sm bg-[#556ee6] hover:bg-blue-700 py-3 px-3 rounded-md"
         >
           <TiArrowLeft className="text-lg" /> Back To Doctor Schedules

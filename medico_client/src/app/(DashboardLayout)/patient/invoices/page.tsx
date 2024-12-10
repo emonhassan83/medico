@@ -4,12 +4,12 @@ import { BsSlash } from "react-icons/bs";
 
 const PatientInvoicesPage = () => {
   return (
-    <div>
+    <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
         <div>
-          <h2 className="text-lg text-[#495057] font-semibold">INVOICE LIST</h2>
+          <h2 className="text-xl text-[#495057] font-semibold">INVOICE LIST</h2>
         </div>
-        <div className="flex items-center gap-1 text-[#495057] text-sm">
+        <div className="flex items-center gap-1 text-[#495057] text-lg">
           <Link href="#" className="">
             Dashboard
           </Link>
@@ -17,7 +17,7 @@ const PatientInvoicesPage = () => {
           <Link href="#">Invoice</Link>
         </div>
       </div>
-      <div>
+      <div className="mt-5">
         <InvoiceTableOfPatient />
       </div>
     </div>
