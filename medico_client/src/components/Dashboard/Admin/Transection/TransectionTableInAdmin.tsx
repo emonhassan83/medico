@@ -3,64 +3,10 @@
 import React from "react";
 import { Table, Button } from "antd";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
-import { toast } from "sonner";
 import { ColumnsType } from "antd/es/table";
-
-// type AppointmentStatus = "SCHEDULED" | "COMPLETED" | "CANCELED" | "INPROGRESS";
-// type PaymentStatus = "PAID" | "UNPAID";
-
-// interface Doctor {
-//   id: string;
-//   email: string;
-//   firstName: string;
-//   lastName: string;
-//   profilePhoto: string;
-//   contactNumber: string;
-//   address: string;
-//   registrationNumber: string;
-//   experience: number;
-//   gender: "MALE" | "FEMALE" | "OTHER";
-//   appointmentFee: number;
-//   qualification: string;
-//   currentWorkingPlace: string;
-//   designation: string;
-//   isDeleted: boolean;
-//   createdAt: string;
-//   updatedAt: string;
-//   averageRating: number;
-// }
-
-// interface Patient {
-//   id: string;
-//   email: string;
-//   firstName: string;
-//   lastName: string;
-//   profilePhoto: string;
-//   contactNumber: string;
-//   address: string;
-//   isDeleted: boolean;
-//   createdAt: string;
-//   updatedAt: string;
-// }
-
-// interface Appointment {
-//   id: string;
-//   patientId: string;
-//   // doctorId: string;
-//   // scheduleId: string;
-//   // videoCallingId: string;
-//   status: AppointmentStatus;
-//   paymentStatus: PaymentStatus;
-//   // notes: string | null;
-//   createdAt: string;
-//   updatedAt: string;
-//   // doctor: Doctor;
-//   // patient: Patient;
-// }
 
 const TransectionTableInAdmin = () => {
   const { data, isLoading } = useGetAllAppointmentsQuery({});
-  // console.log(data);
   const appointments = data?.appointments;
 
   const columns: ColumnsType<any> = [
@@ -78,25 +24,19 @@ const TransectionTableInAdmin = () => {
       render: (patient: any) => `${patient.firstName} ${patient.lastName}`,
     },
     {
-      title: "Transection No",
-      dataIndex: "###",
-      key: "###",
+      title: "Transaction No",
+      dataIndex: "payment",
+      key: "payment",
+      render: (payment: any) =>
+        <div>{payment?.transactionId}</div>
     },
     {
-      title: "Ammount($)",
-      dataIndex: "###",
-      key: "###",
+      title: "Amount($)",
+      dataIndex: "payment",
+      key: "payment",
+      render: (payment: any) =>
+        <div>{payment?.amount}</div>
     },
-    // {
-    //   title: "Appointment Status",
-    //   dataIndex: "status",
-    //   key: "status",
-    // },
-    // {
-    //   title: "Payment Status",
-    //   dataIndex: "paymentStatus",
-    //   key: "paymentStatus",
-    // },
     {
       title: "Date",
       dataIndex: "createdAt",

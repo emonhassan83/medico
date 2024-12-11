@@ -1,6 +1,9 @@
 "use client";
 
-import { useGetAppointmentQuery } from "@/redux/api/appointmentApi";
+import {
+  useAppointmentStatusChangeMutation,
+  useGetAppointmentQuery,
+} from "@/redux/api/appointmentApi";
 import { Table } from "antd";
 import Link from "next/link";
 import React from "react";
@@ -37,8 +40,8 @@ const columns = [
 const AppointmentDetails = ({ params }: any) => {
   const { data } = useGetAppointmentQuery(params?.detailId);
   const [initialPayment] = useInitialPaymentMutation();
+  const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
   const router = useRouter();
-  console.log(data);
 
   const tableData = [
     {
@@ -56,12 +59,20 @@ const AppointmentDetails = ({ params }: any) => {
   const handlePayment = async (id: string) => {
     try {
       const response = await initialPayment(id).unwrap();
-      
+
       if (response.paymentUrl) {
-        router.push(response.paymentUrl);
-     }
-      
-      
+        const res = await appointmentStatusChange({
+          id: data?.id,
+          status: "INPROGRESS",
+        }).unwrap();
+
+        if (res?.id) {
+          router.push("/payment?status=success");
+          toast.success("Payment successfully!");
+        }
+      } else {
+        router.push("/payment?status=cancel");
+      }
     } catch (err: any) {
       toast.error(err.message);
       console.error(err.message);
@@ -128,7 +139,12 @@ const AppointmentDetails = ({ params }: any) => {
             <div>
               <h4 className="text-sm font-bold">Payment Details</h4>
               <p className="text-sm">Payment Mode: Online Payment</p>
-              <p className="text-sm">Payment Status: {data?.paymentStatus}</p>
+              <p className="text-sm">
+                Payment Status:{" "}
+                {data?.paymentStatus || data?.status === "SCHEDULED"
+                  ? "UNPAID"
+                  : "PAID"}
+              </p>
             </div>
             <div>
               {/* <div className="flex items-center gap-1">
@@ -178,8 +194,15 @@ const AppointmentDetails = ({ params }: any) => {
           {/* Payment Button */}
           <div className="mt-5">
             <button
+              disabled={
+                data?.paymentStatus === "PAID" || data?.status === "INPROGRESS"
+              }
               onClick={() => handlePayment(data?.id)}
-              className=" w-1/2 text-white  bg-[#556ee6] hover:bg-blue-700 py-3 rounded-md text-sm font-medium"
+              className={`w-1/2 text-white py-3 rounded-md text-sm font-medium ${
+                data?.paymentStatus === "PAID" || data?.status === "INPROGRESS"
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-[#556ee6] hover:bg-blue-700"
+              }`}
             >
               Payment
             </button>

@@ -22,15 +22,25 @@ const roleBasedPrivateRoutes = {
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;  
-
   const accessToken = cookies().get("accessToken")?.value;
+
+  //* redirect on role based private routes
+  let decodedData = null;
+
+  if (accessToken) {
+    decodedData = jwtDecode(accessToken) as any;
+  }
+
+  const role = decodedData?.role;
+  const redirectUrl = role && role?.toLowerCase();
+
   //* if access token is found then redirect login page
   if (!accessToken) {
     //* access auth-route for unauthorized users
     if (AuthRoutes.includes(pathname)) {
       return NextResponse.next();
     } else {
-      return NextResponse.redirect(new URL("/login", request.url));
+      return NextResponse.redirect(new URL(`/login`, request.url));
     }
   }
 
@@ -43,18 +53,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
  }
 
-  //* redirect on role based private routes
-  let decodedData = null;
-
-  if (accessToken) {
-    decodedData = jwtDecode(accessToken) as any;
-  }
-
-  const role = decodedData?.role;
-
-  // if (role === 'ADMIN' && pathname.startsWith('/dashboard/admin')) {
-  //    return NextResponse.next();
-  // }
 
   if (role && roleBasedPrivateRoutes[role as Role]) {
     const routes = roleBasedPrivateRoutes[role as Role]; //* get specific role based route
@@ -63,10 +61,10 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.redirect(new URL("/login", request.url));
+  return NextResponse.redirect(new URL(`/${redirectUrl}`, request.url));
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/login", "/register", "/dashboard/:page*"],
+  matcher: ["/login", "/register", "/admin/:page*", "/receptionist/:page*", "/doctor/:page*", "/patient/:page*"],
 };

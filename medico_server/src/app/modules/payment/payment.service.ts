@@ -26,6 +26,7 @@ const initPayment = async (appointmentId: string) => {
   };
 
   const result = await SSLService.initPayment(initPaymentData);
+  
   return {
     paymentUrl: result.GatewayPageURL,
   };

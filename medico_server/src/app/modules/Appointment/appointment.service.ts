@@ -46,7 +46,7 @@ const createAppointment = async (user: IAuthUser, payload: any) => {
       include: {
         patient: true,
         doctor: true,
-        schedule: true,
+        schedule: true
       },
     });
 
@@ -265,7 +265,8 @@ const getAllFromDB = async (filters: any, options: IPaginationOptions) => {
     include: {
       doctor: true,
       patient: true,
-      schedule: true
+      schedule: true,
+      payment: true,
     },
   });
   const total = await prisma.appointment.count({
