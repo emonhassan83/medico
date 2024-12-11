@@ -7,7 +7,7 @@ const ParsonalInfoProfile = () => {
 
     return (
         <div className="">
-            <h1 className="text-xl">Personal Information</h1>
+            <h1 className="text-xl text-[#343A40]">Personal Information</h1>
 
             <div className="flex gap-8 mt-7">
                 <h1 className="text-[14px] font-[600] text-[#495057] ">Full Name : </h1>
