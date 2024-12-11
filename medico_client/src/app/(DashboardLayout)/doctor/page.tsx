@@ -6,8 +6,6 @@ import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 import { Row, Col } from "antd";
-import { TiUserOutline } from "react-icons/ti";
-import { AiFillFile } from "react-icons/ai";
 import MonthlyEarningGraph from "@/components/Dashboard/Common/MonthlyEarningGraph";
 import DisplayItemCard from "@/components/Dashboard/Common/DisplayItemCard";
 import LatestAppointmentTable from "../patient/dashbord-components/latestAppointmentTable/page";
@@ -17,6 +15,8 @@ import { HiCurrencyDollar } from "react-icons/hi2";
 import { MdEventNote } from "react-icons/md";
 import { GiNotebook } from "react-icons/gi";
 import { GrNotes } from "react-icons/gr";
+import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile";
+import { useGetAllMetaDataQuery } from "@/redux/api/metaApi";
 
 
 const DoctorDashboard = () => {
@@ -24,6 +24,7 @@ const DoctorDashboard = () => {
   const { data: patientsData } = useGetAllPatientQuery({});
   const { data: receptionistsData } = useGetAllReceptionQuery({});
   const { data: AppointmentsData } = useGetAllAppointmentsQuery({});
+  const {data:getAllMetaData} = useGetAllMetaDataQuery(undefined)
 
 
   return <div className="mx-4" >
@@ -35,14 +36,7 @@ const DoctorDashboard = () => {
     <Row gutter={[32, 32]}>
       <Col span={24} md={8}>
         <div className="flex flex-col gap-7">
-          <WelcomeCard
-            admin={2}
-            doctor={doctorsData?.meta?.total || 0}
-            patient={patientsData?.meta?.total || 0}
-            receptionist={receptionistsData?.meta?.total || 0}
-            username="Alice"
-            role="Super Admin"
-          />
+          <WelcomeCardProfile/>
 
         </div>
       </Col>
@@ -56,29 +50,20 @@ const DoctorDashboard = () => {
               number={AppointmentsData?.meta?.total || 0}
               icon={<FaCalendarCheck size={33} />}
             />
-            {/* <Card
-              title="Revenue"
-              number={`$57`}
-              icon={<TiUserOutline size={40} />}
-            /> */}
-            <Card
-              title="Today' Earning"
-              number={`$57`}
-              icon={<HiCurrencyDollar size={33} />}
-            />
+            
             <Card
               title="Today's Appointments"
-              number={57}
+              number={getAllMetaData?.todayAppointments || 1}
               icon={<MdEventNote size={33} />}
             />
             <Card
               title="Tomorrow's Appointments"
-              number={57}
+              number={getAllMetaData?.tomorrowAppointments}
               icon={<GiNotebook size={33} />}
             />
             <Card
               title="Upcoming Appointments"
-              number={57}
+              number={getAllMetaData?.upcomingAppointments || 2}
               icon={<GrNotes size={33} />}
             />
             
