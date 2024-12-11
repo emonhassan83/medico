@@ -23,11 +23,10 @@ type AppointmentData = {
 const LatestAppointmentTable = () => {
   const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
   const { data, refetch } = useGetAllAppointmentsQuery({});
-  console.log(data?.appointments);
 
   // Map data with proper keys and types
   const tableData: AppointmentData[] =
-    data?.appointments.slice(0, 5) ?.map((appointment: Appointment, index: number) => ({
+    data?.appointments.slice(0, 4) ?.map((appointment: Appointment, index: number) => ({
       key: appointment.id || `${index}`, // Use _id or fallback
       srNo: index + 1,
       status: appointment.status || "N/A",
@@ -41,7 +40,7 @@ const LatestAppointmentTable = () => {
 
   //update status function in here
   const handleCancel = async (appointmentId: string) => {
-    console.log(appointmentId);
+    // console.log(appointmentId);
     try {
       await appointmentStatusChange({
         id: appointmentId,
@@ -112,30 +111,10 @@ const LatestAppointmentTable = () => {
         <Table
           dataSource={tableData}
           columns={columns}
-          pagination={{ pageSize: 10 }}
           bordered
         />
       </div>
-      <div className="relative hidden md:block py-5">
-        {data?.meta?.page === 1 ? (
-          <div className="absolute text-[#495072] text-sm bottom-20">
-            {data?.meta?.total <= 10 ? (
-              <div>
-                showing 1 to {data?.meta?.total} of {data?.meta?.total} entries
-              </div>
-            ) : (
-              <div>
-                showing 1 to {data?.meta?.limit} of {data?.meta?.total} entries
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="absolute text-[#495072]  text-sm bottom-20">
-            showing 1 to (({data?.meta?.page} - 1)* {data?.meta?.limit} ) of{" "}
-            {data?.meta?.total} entries
-          </div>
-        )}
-      </div>
+     
     </div>
   );
 };

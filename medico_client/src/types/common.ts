@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { USER_ROLE } from "@/constant/role";
 
 export type IMeta = {

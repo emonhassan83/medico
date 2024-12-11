@@ -8,6 +8,8 @@ import { TiUserOutline } from "react-icons/ti";
 
 const WelcomeCardProfile = () => {
   const {data} = useGetMyProfileQuery(undefined)
+
+ 
  
 
   return (
@@ -30,10 +32,7 @@ const WelcomeCardProfile = () => {
             icon={<TiUserOutline />}
             className="absolute -top-14 z-10 bg-gray-300"
           />
-          {/* <div className="mt-6">
-            <p className="font-semibold text-[#495057] ">{username}</p>
-            <p className="font-[400] text-md text-[#74788D]">{role}</p>
-          </div> */}
+         
         </div>
 
 
@@ -41,10 +40,13 @@ const WelcomeCardProfile = () => {
       </div>
 
       <div className="flex justify-between px-5">
-           <p>{`${data?.firstName} ${data?.lastName}...`}</p>
+           <div>
+           <p className="text-[#495057] text-md mb-2" >{`${data?.firstName} ${data?.lastName}...`}</p>
+           <p className="text-[#74788D]" >{data?.role}</p>
+           </div>
         
            <div>
-             <p>Last login:</p>
+             <p className="text-[#495057] text-md mb-2" >Last login:</p>
              <h1 className="text-[#74788D]">{data?.createdAt}</h1>
              <button className="bg-blue-700 text-white px-4 py-1 rounded mt-4 ">Edit Profile</button>
            </div>

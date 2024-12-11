@@ -11,13 +11,6 @@ import MedicoTimePicker from "@/components/Forms/MedicoTimePicker";
 import { useCreateScheduleMutation } from "@/redux/api/scheduleApi";
 import dayjs from "dayjs";
 
-export const defaultValues = {
-  startDate: "",
-  endDate: "",
-  startTime: "",
-  endTime: "",
-};
-
 const CreateSchedules = () => {
   const [createSchedule] = useCreateScheduleMutation();
 
@@ -40,6 +33,13 @@ const CreateSchedules = () => {
       console.error(err.message);
     }
   };
+
+ const defaultValues = {
+  startDate: "",
+  endDate: "",
+  startTime: "",
+  endTime: "",
+};
 
   return (
     <>

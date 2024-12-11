@@ -22,7 +22,7 @@ const ReceptionDetailPage = ({ params }: any) => {
   const { data, isLoading } = useGetReceptionistQuery(params?.updateId);
   const [updateReceptionist] = useUpdateReceptionistMutation();
 
-  console.log(data);
+  // console.log(data);
   const handleFileUpload = async (file: File) => {
     try {
       const image = await uploadImageToImgbb(file);

@@ -1,10 +1,10 @@
+'use client';
+
 import { Result, Button } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
 interface PaymentPageProps {
-  searchParams: {
-    status?: string;
-  };
+  searchParams: { status: string };
 }
 
 const PaymentPage = ({ searchParams }: PaymentPageProps) => {
@@ -39,12 +39,13 @@ const PaymentPage = ({ searchParams }: PaymentPageProps) => {
               <Button type="primary" href="/patient" key="dashboard">
                 Go to Dashboard
               </Button>,
-              <Button type="default" href="/appointments" key="home">
+              <Button type="default" href="/patient/appointments" key="home">
                 Back to Appointment
               </Button>,
             ]}
           />
         )}
+        
         {status === "fail" && (
           <Result
             icon={<CloseCircleOutlined style={{ color: "#ff4d4f", fontSize: "50px" }} />}

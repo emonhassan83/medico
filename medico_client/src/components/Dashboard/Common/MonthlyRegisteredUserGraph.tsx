@@ -19,7 +19,7 @@ const data = [
 const MonthlyRegisteredUsersGraph = () => {
   return (
     <div className="bg-white p-6 rounded">
-      <h2 className="text-lg font-semibold mb-2">Monthly Registered Users</h2>
+      <h2 className="text-lg font-semibold mb-2 text-[#343A40]">Monthly Registered Users</h2>
       <div className="relative pt-4">
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>

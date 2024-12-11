@@ -65,6 +65,7 @@ const patientPrescriptions = async (
   const { limit, page, skip } = paginationHelpers.calculatePagination(options);
   const { ...filterData } = filters;
   const andConditions = [];
+  
   if (user.email) {
     andConditions.push({
       patient: {

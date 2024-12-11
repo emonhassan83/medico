@@ -12,11 +12,6 @@ import dayjs from "dayjs";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
-export const defaultValues = {
-  date: "",
-  scheduleIds: "",
-};
-
 const CreateAppointmentFormInDoctor = () => {
   const [createDoctorSchedule] = useCreateDoctorScheduleMutation();
   const { data: schedules } = useGetAllSchedulesQuery([]);
@@ -38,10 +33,10 @@ const CreateAppointmentFormInDoctor = () => {
   }));
 
   const handleCreateSchedule = async (values: FieldValues) => {
-    console.log(values);
+    // console.log(values);
     try {
       const payload = {
-        scheduleIds: values.scheduleIds, // Match the backend schema
+        scheduleIds: values.scheduleIds,
       };
 
       console.log("Sending payload:", payload);
@@ -58,9 +53,16 @@ const CreateAppointmentFormInDoctor = () => {
     }
   };
 
+ const defaultValues = {
+  date: "",
+  scheduleIds: "",
+};
+
   return (
     <>
-      <MedicoForm onSubmit={handleCreateSchedule} defaultValues={defaultValues}>
+      <MedicoForm onSubmit={handleCreateSchedule} 
+      defaultValues={defaultValues}
+      >
         <MedicoSelect name="date" label="Select Date" options={dateOptions} />
         <MedicoSelect
           name="scheduleIds"

@@ -98,7 +98,7 @@ export default function SideBar() {
   const [isSideNavOpen, setIsSideNavOpen] = useState(true);
   const [userRole, setUserRole] = useState("");
   const {data} = useGetMyProfileQuery(undefined)
-  console.log('user:', data)
+  // console.log('user:', data)
 
   
   useEffect(() => {

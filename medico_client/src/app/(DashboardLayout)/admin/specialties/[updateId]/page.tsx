@@ -23,7 +23,7 @@ const UpdateSpecialties = ({ params }: any) => {
     params.updateId
   );
   const [updateSpecialties] = useUpdateSpecialtiesMutation();
-  console.log(data);
+  // console.log(data);
   const handleFileUpload = async (file: File) => {
     try {
       const image = await uploadImageToImgbb(file);

@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { Table } from "antd";
 import Link from "next/link";
@@ -9,13 +10,14 @@ import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
 const PrescriptionListTable = () => {
   const { data } = useGetAllPrescriptionQuery({});
   // console.log(data);
-  console.log(data);
+  // console.log(data);
 
   const dataSource = data?.prescription?.map((presecription: any) => ({
     patientName: presecription?.patient?.firstName,
     doctorName: presecription?.doctor?.firstName,
     appointmentDate: presecription?.appointment?.createdAt?.slice(0, 10),
     appointmentTime: presecription?.appointment?.createdAt?.slice(11, 19),
+    id: presecription?.id
   }));
 
   const columns = [
@@ -50,20 +52,11 @@ const PrescriptionListTable = () => {
     {
       title: "Options",
       key: "action",
-      render: () => (
+      render: (data: any) => (
         <div className="flex gap-1">
-          <Link href="#">
+          <Link href={`/receptionist/prescription/${data?.id}`}>
             <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
               <FaEye />
-            </button>
-          </Link>
-
-          <Link href="#">
-            <button
-              className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-              //   onClick={() => handleEdit(items)}
-            >
-              <MdEmail />
             </button>
           </Link>
         </div>

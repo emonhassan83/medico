@@ -29,7 +29,7 @@ const specialtiesApi = baseApi.injectEndpoints({
     }),
     updateSpecialties: build.mutation({
       query: (data) => {
-        console.log(data);
+        // console.log(data);
         return {
           url: `/specialties/${data.id}`,
           method: "PATCH",

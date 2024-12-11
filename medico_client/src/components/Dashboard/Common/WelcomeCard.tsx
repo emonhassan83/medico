@@ -12,6 +12,7 @@ type PropsType = {
   receptionist: number;
 };
 
+
 const WelcomeCard = ({
   username,
   role,

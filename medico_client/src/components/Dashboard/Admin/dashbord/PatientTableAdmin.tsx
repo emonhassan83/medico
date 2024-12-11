@@ -17,7 +17,7 @@ const PatientTableAdmin = () => {
   const [deletePatient] = useDeletePatientMutation();
   const [searchText, setSearchText] = useState("");
 
-console.log(data)
+// console.log(data)
   
   //   Filter data based on search text
   const filteredData = data?.patients?.filter((pt: any) =>
@@ -26,10 +26,10 @@ console.log(data)
 
   ///delete operation---------------------------------
   const handleDeletRow = async (id: string) => {
-    console.log(id);
+    // console.log(id);
     try {
       const res = await deletePatient(id).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res?.id) {
         toast.success("Delete patient successfully");
         refetch();
@@ -111,31 +111,11 @@ console.log(data)
         <Table
           dataSource={filteredData}
           columns={columns}
-          pagination={{ pageSize: data?.meta?.limit }}
           bordered
           rowKey="id"
         />
       </div>
-      <div className="relative hidden md:block">
-        {data?.meta?.page === 1 ? (
-          <div className="absolute text-[#495072] text-sm bottom-6">
-            {data?.meta?.total <= 10 ? (
-              <div>
-                showing 1 to {data?.meta?.total} of {data?.meta?.total} entries
-              </div>
-            ) : (
-              <div>
-                showing 1 to {data?.meta?.limit} of {data?.meta?.total} entries
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="absolute text-[#495072]  text-sm bottom-6">
-            showing 1 to (({data?.meta?.page} - 1)* {data?.meta?.limit} ) of{" "}
-            {data?.meta?.total} entries
-          </div>
-        )}
-      </div>
+      
     </div>
   );
 };

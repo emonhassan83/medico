@@ -53,3 +53,22 @@ export interface IDoctorFormData {
   doctor: IDoctor;
   password: string;
 }
+
+export interface DoctorFormValues {
+  password: string;
+  doctor: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    contactNumber: string;
+    address: string;
+    gender: string;
+    designation: string;
+    registrationNumber: string;
+    qualification: string;
+    experience: string;
+    appointmentFee: string;
+    currentWorkingPlace: string;
+    profilePhoto: string;
+  };
+}
