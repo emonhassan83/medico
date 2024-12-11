@@ -28,6 +28,7 @@ interface Appointment {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const CreateCalenderInDoctor = ({data}: any) => {
   // Sample events
   const [events, setEvents] = useState([
@@ -38,6 +39,8 @@ const CreateCalenderInDoctor = ({data}: any) => {
     { title: "5 Appoint", date: "2024-11-27" },
   ]);
 =======
+=======
+>>>>>>> c8fd4a23e1cc9f7b3915b60236c8c21613dd3d32
 const CreateCalenderInDoctor = () => {
   const { data } = useGetMyAppointmentsQuery({});
   const [events, setEvents] = useState<any[]>([]);
@@ -95,7 +98,10 @@ const CreateCalenderInDoctor = () => {
 
     setDate(todaysAppointment);
   };
+<<<<<<< HEAD
 >>>>>>> cc229d2b932c38bada57f659c9ab8be5a9986f08
+=======
+>>>>>>> c8fd4a23e1cc9f7b3915b60236c8c21613dd3d32
 
   return (
     <div className="mt-5 flex flex-col md:flex-row  justify-between gap-10">
@@ -125,10 +131,14 @@ const CreateCalenderInDoctor = () => {
         </div>
       </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <AppointmentTableInDoctor data={data}/>
 =======
       <AppointmentTableInDoctor date={date} />
 >>>>>>> cc229d2b932c38bada57f659c9ab8be5a9986f08
+=======
+      <AppointmentTableInDoctor date={date} />
+>>>>>>> c8fd4a23e1cc9f7b3915b60236c8c21613dd3d32
     </div>
   );
 };
