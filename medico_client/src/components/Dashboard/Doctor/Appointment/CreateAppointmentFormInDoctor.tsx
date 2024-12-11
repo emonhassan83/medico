@@ -18,8 +18,6 @@ export const defaultValues = {
 };
 
 const CreateAppointmentFormInDoctor = () => {
-  const [createAppointment] = useCreateAppointmentMutation();
-  const [createSchedule] = useCreateScheduleMutation();
   const [createDoctorSchedule] = useCreateDoctorScheduleMutation();
   const { data: schedules } = useGetAllSchedulesQuery([]);
 
@@ -47,8 +45,10 @@ const CreateAppointmentFormInDoctor = () => {
       };
 
       console.log("Sending payload:", payload);
+      // const [id, ...restId] = payload?.scheduleIds;
 
       const response = await createDoctorSchedule(payload).unwrap();
+      console.log(response);
       if (response) {
         toast.success("Appointment created successfully!");
       }
