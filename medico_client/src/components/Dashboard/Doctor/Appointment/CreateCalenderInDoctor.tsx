@@ -7,7 +7,6 @@ import timeGridPlugin from "@fullcalendar/timegrid"; // For week/day views
 import listPlugin from "@fullcalendar/list"; // For list view
 import interactionPlugin from "@fullcalendar/interaction";
 import "./AppointmentCalender.css";
-import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
 import AppointmentTableInDoctor from "./AppointmentTableInDoctor";
 
 const formatDate = (dateString: any) => {
@@ -26,8 +25,7 @@ interface Appointment {
   };
 }
 
-const CreateCalenderInDoctor = () => {
-  const { data } = useGetMyAppointmentsQuery({});
+const CreateCalenderInDoctor = ({data}: any) => {
   const [events, setEvents] = useState<any[]>([]);
   const [date, setDate] = useState<any[]>([]);
 

@@ -1,4 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+"use client";
+
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 import Link from "next/link";
+import { createContext, useState } from "react";
+
 const statusList = [
   { id: 1, status: 'scheduled', title: 'Scheduled Appointment List' },
   { id: 2, status: 'inprogress', title: 'Inprogress Appointment List'},
@@ -6,22 +12,30 @@ const statusList = [
   { id: 4, status: 'canceled', title: 'Canceled Appointment List'},
 ];
 
+export const LoadingContext = createContext<{
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+} | null>(null);
+
 const layout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  const [loading, setLoading] = useState(false);
+  
   return (
-    <div>
-      <div className="flex justify-between px-3 mt-8 mb-10">
-        <div>
-          <p className="uppercase ">Appointment List</p>
-        </div>
+    <LoadingContext.Provider value={{ setLoading }}>
+      <div className="relative">
+      {loading && <FullPageLoading />}
 
-        <div className="flex text-sm">
-          <p>Dashboard</p>{" "}/ {" "}<p>Appointment</p>
+        <div className="flex justify-between px-3 mt-8 mb-10">
+          <div>
+            <p className="uppercase">Appointment List</p>
+          </div>
+          <div className="flex text-sm">
+            <p>Dashboard</p>/<p>Appointment</p>
+          </div>
         </div>
-      </div>
 
       <div className="flex justify-between gap-8 px-3 my-6">
         {statusList?.map((value, i: number) => (
@@ -38,6 +52,7 @@ const layout = ({
 
       {children}
     </div>
+    </LoadingContext.Provider>
   );
 };
 

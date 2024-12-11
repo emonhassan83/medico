@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Table } from "antd";
 import {
   useAppointmentStatusChangeMutation,
@@ -8,6 +8,7 @@ import {
 } from "@/redux/api/appointmentApi";
 import { ColumnsType } from "antd/es/table";
 import { toast } from "sonner";
+import { LoadingContext } from "../layout";
 
 type AppointmentStatus = "SCHEDULED" | "COMPLETED" | "CANCELED" | "INPROGRESS";
 type PaymentStatus = "PAID" | "UNPAID";
@@ -62,25 +63,40 @@ interface Appointment {
 }
 
 const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
+  const { setLoading } = useContext(LoadingContext)!;
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const paramsValue = params.id.toUpperCase();
   const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
   const [deleteAppointment] = useDeleteAppointmentMutation();
 
   useEffect(() => {
-    const handle = async () => {
-      const token = localStorage.getItem("accessToken");
-      const headers: HeadersInit = token ? { Authorization: `${token}` } : {};
+    const fetchAppointments = async () => {
+      setLoading(true);
+      try {
+        const token = localStorage.getItem("accessToken");
+        const headers: HeadersInit = token ? { Authorization: `${token}` } : {};
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/appointment?status=${paramsValue}`,
-        { headers }
-      );
-      const data = await res.json();
-      setAppointments(data.data);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/appointment?status=${paramsValue}`,
+          { headers }
+        );
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch appointments");
+        }
+
+        const data = await res.json();
+        setAppointments(data.data);
+      } catch (err: any) {
+        toast.error(err.message || "An error occurred while fetching data.");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     };
-    handle();
-  }, [paramsValue]);
+
+    fetchAppointments();
+  }, [paramsValue, setLoading]);
 
   const handleChangeStatus = async (id: string, status: string) => {
     try {

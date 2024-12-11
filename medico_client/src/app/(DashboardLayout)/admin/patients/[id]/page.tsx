@@ -1,5 +1,7 @@
 "use client";
+
 import Card from "@/components/Dashboard/Common/Card";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetSinglePatientQuery } from "@/redux/api/patientApi";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,7 +14,11 @@ import {
 } from "react-icons/fa";
 
 const PatientDetail = ({ params }: any) => {
-  const { data } = useGetSinglePatientQuery(params.id);
+  const { data, isLoading } = useGetSinglePatientQuery(params.id);
+
+  if (isLoading) {
+    return <FullPageLoading/>;
+  }
   return (
     <div className="mx-8">
       <div className="flex items-center justify-between mt-2">
@@ -58,7 +64,7 @@ const PatientDetail = ({ params }: any) => {
             </div>
             <div className="w-full mt-5 lg:mt-8 mx-auto bg-white rounded-lg p-5">
               <p className="text-gray-600 font-semibold text-center">
-                Personal Informantion
+                Personal Information
               </p>
               <div className="mt-5 divide-y-2">
                 <div className="flex py-2">

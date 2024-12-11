@@ -1,10 +1,7 @@
 import { useGetMyProfileQuery } from "@/redux/api/userApi";
 
 
-const ParsonalInfoProfile = () => {
-    const { data } = useGetMyProfileQuery(undefined)
-
-
+const PersonalInfoProfile = ({data}: any) => {
     return (
         <div className="">
             <h1 className="text-xl text-[#343A40]">Personal Information</h1>
@@ -39,4 +36,4 @@ const ParsonalInfoProfile = () => {
     )
 }
 
-export default ParsonalInfoProfile;
+export default PersonalInfoProfile;

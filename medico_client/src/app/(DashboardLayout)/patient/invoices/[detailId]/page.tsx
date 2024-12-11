@@ -17,6 +17,7 @@ import { FaPhoneVolume } from "react-icons/fa6";
 import { IoMail } from "react-icons/io5";
 import logo from "@/assets/logo/Logo.png";
 import Image from "next/image";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const columns = [
   {
@@ -42,9 +43,9 @@ const columns = [
 ];
 
 const AppointmentDetails = ({ params }: any) => {
-  const { data } = useGetAppointmentQuery(params?.detailId);
-  const [initialPayment] = useInitialPaymentMutation();
-  const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
+  const { data, isLoading } = useGetAppointmentQuery(params?.detailId);
+  const [initialPayment, {isLoading: isPayment}] = useInitialPaymentMutation();
+  const [appointmentStatusChange, {isLoading: isUpdating}] = useAppointmentStatusChangeMutation();
   const router = useRouter();
 
   const tableData = [
@@ -83,6 +84,9 @@ const AppointmentDetails = ({ params }: any) => {
     }
   };
 
+  if (isLoading || isPayment || isUpdating) {
+    return <FullPageLoading/>;
+  }
   return (
     <div className="mx-5">
       <div>

@@ -1,13 +1,12 @@
 "use client";
+
 import {
   useCreateAppointmentMutation,
-  useGetAllAppointmentsQuery,
 } from "@/redux/api/appointmentApi";
 import React, { useState } from "react";
 
 const CreateAppointmentForm = () => {
   const [createAppointment] = useCreateAppointmentMutation();
-  const { data } = useGetAllAppointmentsQuery({});
 
   const [formData, setFormData] = useState({
     doctor: "",

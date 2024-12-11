@@ -2,12 +2,10 @@
 
 import React from "react";
 import { Table } from "antd";
-import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
 import { ColumnsType } from "antd/es/table";
 import Link from "next/link";
 
-const InvoiceTableOfPatient = () => {
-  const { data, isLoading } = useGetMyAppointmentsQuery({});
+const InvoiceTableOfPatient = ({data}: any) => {
   const appointments = data?.appointments;
 
   const columns: ColumnsType<any> = [

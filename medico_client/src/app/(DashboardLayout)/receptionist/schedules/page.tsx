@@ -1,11 +1,18 @@
 "use client";
 
 import ScheduleTable from "@/components/Dashboard/Receptionist/Schedule/ScheduleTable";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
+import { useGetAllSchedulesQuery } from "@/redux/api/scheduleApi";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
 
 const SchedulesPage = () => {
+  const { data, isLoading } = useGetAllSchedulesQuery([]);
+
+  if (isLoading) {
+    return <FullPageLoading />;
+  }
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
@@ -30,7 +37,7 @@ const SchedulesPage = () => {
           Add Schedules
         </Link>
       </div>
-      <ScheduleTable />
+      <ScheduleTable data={data} />
     </div>
   );
 };

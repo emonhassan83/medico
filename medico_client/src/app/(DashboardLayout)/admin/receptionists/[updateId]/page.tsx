@@ -14,15 +14,14 @@ import {
 } from "@/redux/api/receptionistApi";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const ReceptionDetailPage = ({ params }: any) => {
   const router = useRouter();
   const [photo, setPhoto] = useState("");
-  // console.log(params.updateId);
   const { data, isLoading } = useGetReceptionistQuery(params?.updateId);
-  const [updateReceptionist] = useUpdateReceptionistMutation();
+  const [updateReceptionist, {isLoading: isUpdating}] = useUpdateReceptionistMutation();
 
-  // console.log(data);
   const handleFileUpload = async (file: File) => {
     try {
       const image = await uploadImageToImgbb(file);
@@ -37,11 +36,6 @@ const ReceptionDetailPage = ({ params }: any) => {
   };
   const handleUpdateReceptionist = async (formData: FieldValues) => {
     try {
-      const updatedData = {
-        ...formData,
-        profilePhoto: photo || data?.profilePhoto,
-      };
-
       const result = await updateReceptionist({
         id: params.updateId,
         body: formData,
@@ -56,6 +50,11 @@ const ReceptionDetailPage = ({ params }: any) => {
       toast.error("Failed to update receptionist. Please try again.");
     }
   };
+
+  if(isLoading || isUpdating){
+    return <FullPageLoading/>;
+  }
+
   return (
     <>
       {/* Header Section */}
@@ -86,7 +85,6 @@ const ReceptionDetailPage = ({ params }: any) => {
           Basic Information
         </div>
 
-        {!isLoading && data ? (
           <MedicoForm onSubmit={handleUpdateReceptionist} defaultValues={data}>
             {/* Rows of Input Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
@@ -164,9 +162,6 @@ const ReceptionDetailPage = ({ params }: any) => {
               Update Receptionist
             </Button>
           </MedicoForm>
-        ) : (
-          <p>Loading...</p>
-        )}
       </div>
     </>
   );

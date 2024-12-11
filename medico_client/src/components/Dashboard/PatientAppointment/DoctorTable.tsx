@@ -1,18 +1,14 @@
 "use client";
+
 import React, { useState } from "react";
 import { Table, Button, Input, Divider } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 
-const DoctorTable = () => {
-  const { data } = useGetAllDoctorsQuery({});
-  // console.log(data?.doctors);
-  // console.log(data?.meta);
-
+const DoctorTable = ({data}: any) => {
   const [searchText, setSearchText] = useState("");
 
   // Filter data based on search text
-  const filteredData = data?.doctors?.filter((doctor) =>
+  const filteredData = data?.doctors?.filter((doctor: any) =>
     doctor.firstName.toLowerCase().includes(searchText.toLowerCase())
   );
 

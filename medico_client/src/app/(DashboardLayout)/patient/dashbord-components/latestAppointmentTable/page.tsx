@@ -1,8 +1,6 @@
 "use client";
-import Link from "next/link";
-import React, { useState } from "react";
+
 import { Button, Table, Tag, Space, TableColumnsType } from "antd";
-import { BsSlash } from "react-icons/bs";
 import {
   useAppointmentStatusChangeMutation,
   useGetAllAppointmentsQuery,
@@ -18,7 +16,6 @@ type AppointmentData = {
   date: string;
   time: string;
 };
-
 
 const LatestAppointmentTable = () => {
   const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
@@ -36,7 +33,6 @@ const LatestAppointmentTable = () => {
       date: appointment.createdAt?.slice(0, 10) || "N/A",
       time: appointment.createdAt?.slice(11, 19) || "N/A",
     })) || [];
-  // console.log(tableData);
 
   //update status function in here
   const handleCancel = async (appointmentId: string) => {

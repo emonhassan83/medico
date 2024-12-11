@@ -2,8 +2,7 @@ import React from "react";
 import { Table, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import {
-  useDeleteScheduleMutation,
-  useGetAllSchedulesQuery,
+  useDeleteScheduleMutation
 } from "@/redux/api/scheduleApi";
 import { MdDelete } from "react-icons/md";
 import dayjs from "dayjs";
@@ -20,8 +19,7 @@ interface DataType {
   isBooked: boolean;
 }
 
-const ScheduleTable = () => {
-  const { data, isLoading } = useGetAllSchedulesQuery([]);
+const ScheduleTable = ({data}: any) => {
   const [deleteSchedule] = useDeleteScheduleMutation();
   // console.log(data);
 
