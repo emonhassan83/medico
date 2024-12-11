@@ -36,16 +36,14 @@ const InvoiceTableOfReception = () => {
       title: "Transition Id",
       dataIndex: "payment",
       key: "payment",
-      render: (payment: any) =>
-        <div>{payment?.transactionId}</div>
+      render: (payment: any) => <div>{payment?.transactionId}</div>,
     },
-    
+
     {
       title: "Amount",
       dataIndex: "payment",
       key: "payment",
-      render: (payment: any) =>
-        <div>{payment?.amount}</div>
+      render: (payment: any) => <div>{payment?.amount}</div>,
     },
     {
       title: "Status",
@@ -72,12 +70,12 @@ const InvoiceTableOfReception = () => {
 
           {/* edit button */}
 
-          <button
+          {/* <button
             className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
             //   onClick={() => handleEdit(items)}
           >
             <MdEdit />
-          </button>
+          </button> */}
         </div>
       ),
     },
