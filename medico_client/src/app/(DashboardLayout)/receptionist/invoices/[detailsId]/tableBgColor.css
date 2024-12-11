@@ -1,0 +1,17 @@
+.ant-table-thead > tr > th {
+  background-color: white !important; /* White background for header */
+}
+
+.ant-table-tbody > tr > td {
+  background-color: white !important; /* White background for rows */
+}
+
+.ant-table-thead > tr > th,
+.ant-table-tbody > tr > td {
+  border-color: #f3f0f0 !important; /* Add light border color */
+}
+
+.ant-table-thead > tr > th,
+.ant-table-tbody > tr > td {
+  border-color: #f3f0f0 !important; /* Inner borders */
+}
