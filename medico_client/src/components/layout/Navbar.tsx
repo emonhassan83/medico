@@ -14,8 +14,8 @@ const Navbar = ({
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const { data } = useGetMyProfileQuery({});
   const router = useRouter();
-  
-  const navigateRole = data && (data?.role)?.toLowerCase();
+
+  const navigateRole = data && data?.role?.toLowerCase();
 
   useEffect(() => {
     router.refresh();
