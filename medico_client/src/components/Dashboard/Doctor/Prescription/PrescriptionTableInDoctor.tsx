@@ -70,20 +70,20 @@ const PrescriptionTableInDoctor = () => {
       key: "action",
       render: (items: any) => (
         <div className="flex gap-1">
-          <Link href="#">
+          <Link href={`/doctor/prescription/${items?.id}`}>
             <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
               <FaEye />
             </button>
           </Link>
 
-          <Link href="#">
+          {/* <Link href="#">
             <button
               className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
               // onClick={() => handleEdit(items)}
             >
               <MdEmail />
             </button>
-          </Link>
+          </Link> */}
           {/* delete button */}
           <button
             className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
@@ -107,7 +107,6 @@ const PrescriptionTableInDoctor = () => {
           rowKey="id"
         />
       </div>
-     
     </div>
   );
 };

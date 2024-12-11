@@ -213,13 +213,6 @@ export default function SideBar() {
                   </div>
                 </NavLink>
 
-                <CollapsibleMenu title="Schedules" icon={<Appointments />}>
-                  <NavLink href="/doctor/schedules">List of Schedules</NavLink>
-                  <NavLink href="/doctor/schedules/create">
-                    Add New Schedules
-                  </NavLink>
-                </CollapsibleMenu>
-
                 <NavLink href="/doctor/appointment-list">
                   <div className="flex items-center">
                     <AppointmentList />
@@ -228,6 +221,13 @@ export default function SideBar() {
                     Appointment List
                   </div>
                 </NavLink>
+
+                <CollapsibleMenu title="Schedules" icon={<Appointments />}>
+                  <NavLink href="/doctor/schedules">List of Schedules</NavLink>
+                  <NavLink href="/doctor/schedules/create">
+                    Add New Schedules
+                  </NavLink>
+                </CollapsibleMenu>
 
                 <NavLink href="/doctor/patients">
                   <div className="flex items-center">

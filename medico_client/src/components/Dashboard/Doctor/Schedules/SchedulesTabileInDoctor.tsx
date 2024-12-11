@@ -53,12 +53,12 @@ const SchedulesTabileInDoctor = () => {
 
           {/* edit button */}
 
-          <button
+          {/* <button
             className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
             //   onClick={() => handleEdit(items)}
           >
             <MdEdit />
-          </button>
+          </button> */}
         </div>
       ),
     },
