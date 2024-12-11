@@ -54,7 +54,6 @@ const ProfileView = () => {
                 icon={<FaChartColumn size={33} />}
               />
 
-
               <Card
                 title="Total Bill"
                 number={`$54,959,05`}
