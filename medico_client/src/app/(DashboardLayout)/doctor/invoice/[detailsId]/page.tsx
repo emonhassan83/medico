@@ -1,17 +1,12 @@
 "use client";
 
-import {
-  useAppointmentStatusChangeMutation,
-  useGetAppointmentQuery,
-} from "@/redux/api/appointmentApi";
+import { useGetAppointmentQuery } from "@/redux/api/appointmentApi";
 import { Table } from "antd";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
 import { TiArrowLeft } from "react-icons/ti";
 import "./tableBgColor.css";
-import { useInitialPaymentMutation } from "@/redux/api/paymentApi";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { FaPhoneVolume } from "react-icons/fa6";
 import { IoMail } from "react-icons/io5";
@@ -42,9 +37,7 @@ const columns = [
 ];
 
 const AppointmentDetails = ({ params }: any) => {
-  const { data } = useGetAppointmentQuery(params?.detailId);
-  const [initialPayment] = useInitialPaymentMutation();
-  const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
+  const { data } = useGetAppointmentQuery(params?.detailsId);
   const router = useRouter();
 
   const tableData = [
@@ -59,29 +52,6 @@ const AppointmentDetails = ({ params }: any) => {
   const totalAmount = data?.doctor?.appointmentFee;
   const tax = Math.round(totalAmount * 0.05);
   const totalWithTax = totalAmount + tax;
-
-  const handlePayment = async (id: string) => {
-    try {
-      const response = await initialPayment(id).unwrap();
-
-      if (response.paymentUrl) {
-        const res = await appointmentStatusChange({
-          id: data?.id,
-          status: "INPROGRESS",
-        }).unwrap();
-
-        if (res?.id) {
-          router.push("/payment?status=success");
-          toast.success("Payment successfully!");
-        }
-      } else {
-        router.push("/payment?status=cancel");
-      }
-    } catch (err: any) {
-      toast.error(err.message);
-      console.error(err.message);
-    }
-  };
 
   return (
     <div className="mx-5">
@@ -104,7 +74,7 @@ const AppointmentDetails = ({ params }: any) => {
         </div>
         <div className="mt-5">
           <Link
-            href="/patient/invoices"
+            href="/doctor/invoice"
             className="flex items-center gap-2 w-[200px] text-white text-sm bg-[#556ee6] hover:bg-blue-700 py-3 px-3 rounded-md"
           >
             <TiArrowLeft className="text-lg" /> Back to invoice list
@@ -166,10 +136,6 @@ const AppointmentDetails = ({ params }: any) => {
               </p>
             </div>
             <div>
-              {/* <div className="flex items-center gap-1">
-              <h4 className="text-sm font-bold">Invoice date:</h4>
-              <p className="text-sm text-[#495057]"> 2024-11-28</p>
-            </div> */}
               <div className="flex items-center gap-1">
                 <h4 className="text-sm font-bold">Appointment date:</h4>
                 <p className="text-sm text-[#495057]">
@@ -208,23 +174,6 @@ const AppointmentDetails = ({ params }: any) => {
                 <p className="text-lg  text-[#495057]">${totalWithTax}</p>
               </div>
             </div>
-          </div>
-
-          {/* Payment Button */}
-          <div className="mt-5">
-            <button
-              disabled={
-                data?.paymentStatus === "PAID" || data?.status === "INPROGRESS"
-              }
-              onClick={() => handlePayment(data?.id)}
-              className={`w-1/2 text-white py-3 rounded-md text-sm font-medium ${
-                data?.paymentStatus === "PAID" || data?.status === "INPROGRESS"
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-[#556ee6] hover:bg-blue-700"
-              }`}
-            >
-              Payment
-            </button>
           </div>
         </div>
       </div>
