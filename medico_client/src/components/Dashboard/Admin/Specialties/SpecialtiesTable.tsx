@@ -1,20 +1,11 @@
 "use client";
+
 import React from "react";
 import { Table } from "antd";
 import Link from "next/link";
 import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-// import { useGetAllSpecialtiesQuery } from "@/redux/api/specialitiesApi";
-import {
-  useDeleteSpecialtyMutation,
-  useGetAllSpecialtiesQuery,
-} from "@/redux/api/specialtiesApi";
-import { toast } from "sonner";
 
-const SpecialtiesTable = () => {
-  const { data, refetch, isLoading, error } = useGetAllSpecialtiesQuery({});
-  // console.log(data);
-
+const SpecialtiesTable = ({data}: any) => {
   const columns = [
     {
       title: "Sr. No",

@@ -10,14 +10,12 @@ import MedicoDatePiker from "@/components/Forms/MedicoDatePiker";
 import { useCreatePrescriptionMutation } from "@/redux/api/prescriptionApi";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
 import MedicoSelect from "@/components/Forms/MedicoSelect";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import { useState } from "react";
+import MedicoTextArea from "@/components/Forms/MedicoTextArea";
 
 const CreatePrescription = () => {
   const { data } = useGetAllAppointmentsQuery({});
   const [createPrescription] = useCreatePrescriptionMutation();
-  const [value, setValue] = useState("");
+  // const [value, setValue] = useState("");
 
   const prescribePatient = data?.appointments?.filter(
     (appointment: any) => appointment?.status === "INPROGRESS"
@@ -32,7 +30,7 @@ const CreatePrescription = () => {
     try {
       const prescriptionData = {
         appointmentId: values.appointmentId,
-        instructions: value,
+        instructions: values?.instructions,
         followUpDate: values.followUpDate,
       };
 
@@ -47,47 +45,47 @@ const CreatePrescription = () => {
     }
   };
 
-  const modules = {
-    toolbar: [
-      [{ header: "1" }, { header: "2" }, { font: [] }],
-      [{ size: ["small", false, "large", "huge"] }],
-      ["bold", "italic", "underline", "strike"],
-      [{ align: [] }],
-      ["blockquote", "code-block"],
-      ["link", "image", "video", "formula"],
-      [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-      [{ script: "sub" }, { script: "super" }],
-      [{ indent: "-1" }, { indent: "+1" }],
-      [{ color: [] }, { background: [] }],
-      ["clean"],
-    ],
-    clipboard: {
-      matchVisual: false,
-    },
-  };
+  // const modules = {
+  //   toolbar: [
+  //     [{ header: "1" }, { header: "2" }, { font: [] }],
+  //     [{ size: ["small", false, "large", "huge"] }],
+  //     ["bold", "italic", "underline", "strike"],
+  //     [{ align: [] }],
+  //     ["blockquote", "code-block"],
+  //     ["link", "image", "video", "formula"],
+  //     [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+  //     [{ script: "sub" }, { script: "super" }],
+  //     [{ indent: "-1" }, { indent: "+1" }],
+  //     [{ color: [] }, { background: [] }],
+  //     ["clean"],
+  //   ],
+  //   clipboard: {
+  //     matchVisual: false,
+  //   },
+  // };
 
-  const formats = [
-    "header",
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "video",
-    "align",
-    "code-block",
-    "background",
-    "color",
-    "code",
-    "script",
-  ];
+  // const formats = [
+  //   "header",
+  //   "font",
+  //   "size",
+  //   "bold",
+  //   "italic",
+  //   "underline",
+  //   "strike",
+  //   "blockquote",
+  //   "list",
+  //   "bullet",
+  //   "indent",
+  //   "link",
+  //   "image",
+  //   "video",
+  //   "align",
+  //   "code-block",
+  //   "background",
+  //   "color",
+  //   "code",
+  //   "script",
+  // ];
 
 const defaultValues = {
   appointmentId: "",
@@ -137,14 +135,15 @@ const defaultValues = {
             />
             <MedicoDatePiker label="Follow Up Date" name="followUpDate" />
           </div>
-          <p className="block text-sm font-medium text-gray-700" style={{ marginBottom: "5px" }}>Instructions</p>
+          {/* <p className="block text-sm font-medium text-gray-700" style={{ marginBottom: "5px" }}>Instructions</p>
           <ReactQuill
             theme="snow"
             value={value}
             onChange={setValue}
             modules={modules}
             formats={formats}
-          />
+          /> */}
+          <MedicoTextArea label="Instructions" name="instructions" rows={5}/>
 
           {/* Submit Button */}
           <Button

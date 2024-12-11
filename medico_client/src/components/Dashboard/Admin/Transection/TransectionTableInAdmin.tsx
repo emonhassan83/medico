@@ -1,12 +1,10 @@
 "use client";
 
 import React from "react";
-import { Table, Button } from "antd";
-import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
+import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 
-const TransectionTableInAdmin = () => {
-  const { data, isLoading } = useGetAllAppointmentsQuery({});
+const TransectionTableInAdmin = ({data}: any) => {
   const appointments = data?.appointments;
 
   const columns: ColumnsType<any> = [

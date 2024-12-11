@@ -97,18 +97,13 @@ const CollapsibleMenu = ({
 export default function SideBar() {
   const [isSideNavOpen, setIsSideNavOpen] = useState(true);
   const [userRole, setUserRole] = useState("");
-  const {data} = useGetMyProfileQuery(undefined)
+  const { data } = useGetMyProfileQuery(undefined);
   // console.log('user:', data)
 
-  
   useEffect(() => {
     const { role } = getUserInfo() as any;
     setUserRole(role);
   }, []);
-
-  
-
-
 
   return (
     <>
@@ -198,10 +193,10 @@ export default function SideBar() {
 
                 <NavLink href="/admin/transaction">
                   <div className="flex items-center ml-1">
-                  <TbFileInvoice  size={20}/>
+                    <TbFileInvoice size={20} />
                   </div>
                   <div className="flex w-full truncate text-sm">
-                  Transaction
+                    Transaction
                   </div>
                 </NavLink>
               </>
@@ -218,15 +213,6 @@ export default function SideBar() {
                   </div>
                 </NavLink>
 
-                <CollapsibleMenu title="Schedules" icon={<Appointments />}>
-                  <NavLink href="/doctor/schedules">
-                    List of Schedules
-                  </NavLink>
-                  <NavLink href="/doctor/schedules/create">
-                    Add New Schedules
-                  </NavLink>
-                </CollapsibleMenu>
-
                 <NavLink href="/doctor/appointment-list">
                   <div className="flex items-center">
                     <AppointmentList />
@@ -235,6 +221,13 @@ export default function SideBar() {
                     Appointment List
                   </div>
                 </NavLink>
+
+                <CollapsibleMenu title="Schedules" icon={<Appointments />}>
+                  <NavLink href="/doctor/schedules">List of Schedules</NavLink>
+                  <NavLink href="/doctor/schedules/create">
+                    Add New Schedules
+                  </NavLink>
+                </CollapsibleMenu>
 
                 <NavLink href="/doctor/patients">
                   <div className="flex items-center">
@@ -254,18 +247,16 @@ export default function SideBar() {
 
                 <NavLink href="/doctor/invoice">
                   <div className="flex items-center ml-1">
-                  <PiInvoiceBold  size={20}/>
+                    <PiInvoiceBold size={20} />
                   </div>
-                  <div className="flex w-full truncate text-sm">
-                  Invoice
-                  </div>
+                  <div className="flex w-full truncate text-sm">Invoice</div>
                 </NavLink>
               </>
             )}
 
             {userRole === "patient" && (
               <>
-              <CollapsibleMenu title="Appointments" icon={<Appointments />}>
+                <CollapsibleMenu title="Appointments" icon={<Appointments />}>
                   <NavLink href="/patient/appointments">
                     List of Appointments
                   </NavLink>
@@ -273,7 +264,7 @@ export default function SideBar() {
                     Add New Appointments
                   </NavLink>
                 </CollapsibleMenu>
-                
+
                 <NavLink href="/patient/appointment-list">
                   <div className="flex items-center">
                     <AppointmentList />
@@ -300,11 +291,9 @@ export default function SideBar() {
 
                 <NavLink href="/patient/invoices">
                   <div className="flex items-center ml-1">
-                  <PiInvoiceBold  size={20}/>
+                    <PiInvoiceBold size={20} />
                   </div>
-                  <div className="flex w-full truncate text-sm">
-                  Invoices
-                  </div>
+                  <div className="flex w-full truncate text-sm">Invoices</div>
                 </NavLink>
               </>
             )}
@@ -320,7 +309,14 @@ export default function SideBar() {
                     Appointments
                   </div>
                 </NavLink>
-
+                <NavLink href="/receptionist/appointment-list/scheduled">
+                  <div className="flex items-center">
+                    <AppointmentList />
+                  </div>
+                  <div className="flex w-full truncate text-sm">
+                    Appointment List
+                  </div>
+                </NavLink>
                 <CollapsibleMenu title="Schedules" icon={<Appointments />}>
                   <NavLink href="/receptionist/schedules">
                     List of Schedules
@@ -329,15 +325,6 @@ export default function SideBar() {
                     Add New Schedules
                   </NavLink>
                 </CollapsibleMenu>
-
-                <NavLink href="/receptionist/appointment-list/scheduled">
-                  <div className="flex items-center">
-                    <AppointmentList />
-                  </div>
-                  <div className="flex w-full truncate text-sm">
-                  Schedules List
-                  </div>
-                </NavLink>
 
                 <NavLink href="/receptionist/doctors">
                   <div className="flex items-center">
@@ -354,7 +341,7 @@ export default function SideBar() {
                     Add New Patient
                   </NavLink>
                 </CollapsibleMenu>
-                
+
                 <NavLink href="/receptionist/prescription">
                   <div className="flex items-center">
                     <Prescription />
@@ -364,13 +351,11 @@ export default function SideBar() {
                   </div>
                 </NavLink>
 
-                 <NavLink href="/receptionist/invoices">
+                <NavLink href="/receptionist/invoices">
                   <div className="flex items-center ml-1">
-                  <PiInvoiceBold  size={20}/>
+                    <PiInvoiceBold size={20} />
                   </div>
-                  <div className="flex w-full truncate text-sm">
-                  Invoices
-                  </div>
+                  <div className="flex w-full truncate text-sm">Invoices</div>
                 </NavLink>
               </>
             )}
