@@ -11,26 +11,17 @@ import MedicoSelect from "@/components/Forms/MedicoSelect";
 import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
 import { toast } from "sonner";
 import {
-  useCreateDoctorMutation,
   useGetDoctorQuery,
   useUpdateDoctorMutation,
 } from "@/redux/api/doctorApi";
-import { useGetAllSpecialtiesQuery } from "@/redux/api/specialitiesApi";
 import { useRouter } from "next/navigation";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const UpdateDoctor = ({ params }: any) => {
-  const router = useRouter();
-  console.log(params);
-  const [photo, setPhoto] = useState("");
-
-  //   const { data: specialties } = useGetAllSpecialtiesQuery([]);
   const { data, isLoading } = useGetDoctorQuery(params?.doctorId);
-  const [updateDoctor] = useUpdateDoctorMutation();
-  console.log(data);
-  //   const specialtiesOptions = specialties?.data?.map((item: any) => ({
-  //     value: item.id,
-  //     label: `${item.title}`,
-  //   }));
+  const [updateDoctor, {isLoading: isUpdateLoading}] = useUpdateDoctorMutation();
+  const [photo, setPhoto] = useState("");
+  const router = useRouter();
 
   const handleFileUpload = async (file: File) => {
     try {
@@ -44,8 +35,8 @@ const UpdateDoctor = ({ params }: any) => {
       console.error("Failed to upload image:", error);
     }
   };
+
   const handleUpdateDoctor = async (formData: FieldValues) => {
-    // console.log(formData);
     try {
       const payload = {
         id: params.doctorId, // Patient's unique ID
@@ -65,10 +56,8 @@ const UpdateDoctor = ({ params }: any) => {
           designation: formData?.designation,
         },
       };
-      console.log(payload);
-      const result = await updateDoctor(payload).unwrap();
-      console.log(result);
 
+      const result = await updateDoctor(payload).unwrap();
       if (result) {
         toast.success("Doctor updated successfully!");
         router.push("/admin/doctors");
@@ -78,6 +67,11 @@ const UpdateDoctor = ({ params }: any) => {
       toast.error("Failed to update doctor. Please try again.");
     }
   };
+
+  if (isLoading || isUpdateLoading) {
+    return <FullPageLoading/>;
+  }
+
   return (
     <>
       {/* Header Section */}
@@ -106,7 +100,6 @@ const UpdateDoctor = ({ params }: any) => {
           Basic Information
         </div>
 
-        {!isLoading ? (
           <MedicoForm onSubmit={handleUpdateDoctor} defaultValues={data}>
             {/* Rows of Input Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
@@ -222,9 +215,6 @@ const UpdateDoctor = ({ params }: any) => {
               Update Doctor
             </Button>
           </MedicoForm>
-        ) : (
-          <p>Loading....</p>
-        )}
       </div>
     </>
   );

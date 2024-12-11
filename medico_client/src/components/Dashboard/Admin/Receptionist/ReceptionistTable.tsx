@@ -1,20 +1,18 @@
 "use client";
 import React, { useState } from "react";
-import { Table, Button, Input, Divider, Space } from "antd";
+import { Table, Button, Input} from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import {
   useDeleteReceptionistMutation,
-  useGetAllReceptionQuery,
 } from "@/redux/api/receptionistApi";
 import { toast } from "sonner";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
-const ReceptionistTable = () => {
-  const { data, refetch } = useGetAllReceptionQuery({});
-  const [deleteReceptionist] = useDeleteReceptionistMutation();
-  // console.log(data);
+const ReceptionistTable = ({data, refetch}: any) => {
+  const [deleteReceptionist, {isLoading}] = useDeleteReceptionistMutation();
   const [searchText, setSearchText] = useState("");
 
   //   Filter data based on search text
@@ -22,9 +20,7 @@ const ReceptionistTable = () => {
     pt.firstName.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  ///delete operation---------------------------------
   const handleDeletRow = async (id: string) => {
-    // console.log(id);
     try {
       const res = await deleteReceptionist(id).unwrap();
       // console.log(res);
@@ -94,6 +90,11 @@ const ReceptionistTable = () => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
+
+  if (isLoading) {
+    return <FullPageLoading/>;
+  }
+
   return (
     <div className="bg-white p-5">
       <div

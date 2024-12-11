@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 "use client";
 
 import Link from "next/link";
@@ -11,15 +10,16 @@ import { FieldValues } from "react-hook-form";
 import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
 import { toast } from "sonner";
 import { useCreateReceptionistMutation } from "@/redux/api/receptionistApi";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const CreateReceptionist = () => {
   const [photo, setPhoto] = useState("");
-  const [createReceptionist] = useCreateReceptionistMutation();
+  const [createReceptionist, { isLoading }] = useCreateReceptionistMutation();
 
   const handleFileUpload = async (file: File) => {
     try {
       const image = await uploadImageToImgbb(file);
-      
+
       if (image) {
         toast.success("Receptionist Photo Upload successfully");
       }
@@ -29,7 +29,7 @@ const CreateReceptionist = () => {
     }
   };
 
-  const handleCreateReceptionist = async (values: FieldValues) => {    
+  const handleCreateReceptionist = async (values: FieldValues) => {
     try {
       const receptionistData = {
         password: "receptionist123",
@@ -41,31 +41,34 @@ const CreateReceptionist = () => {
           address: values.receptionist.address,
           profilePhoto: photo,
         },
-      }
+      };
 
       const res = await createReceptionist(receptionistData).unwrap();
-      
-      if(res?.id){
+
+      if (res?.id) {
         toast.success("Receptionist created successfully!");
       }
-      
     } catch (err: any) {
       toast.error(err.message);
       console.error(err.message);
     }
   };
 
- const defaultValues = {
-  password: "",
-  receptionist: {
-    firstName: "",
-    lastName: "",
-    email: "",
-    contactNumber: "",
-    address: "",
-    profilePhoto: "",
-  },
-};
+  const defaultValues = {
+    password: "",
+    receptionist: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      contactNumber: "",
+      address: "",
+      profilePhoto: "",
+    },
+  };
+
+  if (isLoading) {
+    return <FullPageLoading />;
+  }
 
   return (
     <>
@@ -97,7 +100,10 @@ const CreateReceptionist = () => {
           Basic Information
         </div>
 
-        <MedicoForm onSubmit={handleCreateReceptionist} defaultValues={defaultValues}>
+        <MedicoForm
+          onSubmit={handleCreateReceptionist}
+          defaultValues={defaultValues}
+        >
           {/* Rows of Input Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
             <MedicoInput
@@ -117,7 +123,11 @@ const CreateReceptionist = () => {
               name="receptionist.contactNumber"
             />
 
-            <MedicoInput label="Address" type="text" name="receptionist.address" />
+            <MedicoInput
+              label="Address"
+              type="text"
+              name="receptionist.address"
+            />
             <div className="w-full">
               <p
                 className="block text-sm font-medium text-gray-700"
@@ -126,13 +136,13 @@ const CreateReceptionist = () => {
                 Profile URL
               </p>
               <Card
-              style={{
-                height: "180px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+                style={{
+                  height: "180px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
                 cover={
                   <div
                     style={{

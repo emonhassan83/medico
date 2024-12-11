@@ -12,21 +12,16 @@ import MedicoTextArea from "@/components/Forms/MedicoTextArea";
 import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
 import { toast } from "sonner";
 import { useCreateSpecialtyMutation } from "@/redux/api/specialitiesApi";
-
-// export const defaultValues = {
-//   title: "",
-//   icon: "",
-//   description: "",
-// };
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const CreateSpecialties = () => {
   const [icon, setIcon] = useState("");
-  const [createSpecialty] = useCreateSpecialtyMutation();
+  const [createSpecialty, { isLoading }] = useCreateSpecialtyMutation();
 
   const handleFileUpload = async (file: File) => {
     try {
       const image = await uploadImageToImgbb(file);
-      
+
       if (image) {
         toast.success("Specialties Icon Upload successfully");
       }
@@ -41,20 +36,29 @@ const CreateSpecialties = () => {
       const specialtiesData = {
         title: values.title,
         icon,
-        description: values.description
-      }
-      
+        description: values.description,
+      };
+
       const res = await createSpecialty(specialtiesData).unwrap();
-      
-      if(res?.id){
+
+      if (res?.id) {
         toast.success("Specialties created successfully!");
       }
-      
     } catch (err: any) {
       toast.error(err.message);
       console.error(err.message);
     }
   };
+
+  const defaultValues = {
+    title: "",
+    icon: "",
+    description: "",
+  };
+
+  if (isLoading) {
+    return <FullPageLoading />;
+  }
 
   return (
     <>
@@ -88,7 +92,7 @@ const CreateSpecialties = () => {
 
         <MedicoForm
           onSubmit={handleCreateSpecialties}
-          // defaultValues={defaultValues}
+          defaultValues={defaultValues}
         >
           {/* Rows of Input Fields */}
           <div className="flex flex-wrap gap-4 w-full">
@@ -133,7 +137,7 @@ const CreateSpecialties = () => {
                           preview={false}
                           style={{
                             marginTop: "60px",
-                            height: "100%", 
+                            height: "100%",
                             width: "100%",
                             objectFit: "cover",
                             cursor: "pointer",

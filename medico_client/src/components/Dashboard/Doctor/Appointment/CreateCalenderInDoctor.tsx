@@ -10,7 +10,7 @@ import interactionPlugin from "@fullcalendar/interaction"; // For click and drag
 import "./AppointmentCalender.css";
 import AppointmentTableInDoctor from "./AppointmentTableInDoctor";
 
-const CreateCalenderInDoctor = () => {
+const CreateCalenderInDoctor = ({data}: any) => {
   // Sample events
   const [events, setEvents] = useState([
     { title: "3 Appoint", date: "2024-11-28" },
@@ -46,7 +46,7 @@ const CreateCalenderInDoctor = () => {
           />
         </div>
       </div>
-      <AppointmentTableInDoctor />
+      <AppointmentTableInDoctor data={data}/>
     </div>
   );
 };
