@@ -85,12 +85,12 @@
   - Viewing patient appointment all invoices from the appointments and viewing details all Invoices
   - Viewing patient details invoice here patient can payment their pending payments
 
-- **User common features:**
+### Project common features
   - [x] User Registration or Create a User & Login a User
   - [x] Get User Information & Update their Information
   - [x] Viewing metadata information based on role
 
-- **Project Backend Structure:**
+### Project Backend Structure
   - [x] Create a Node.js Express project.
   - [x] Use TypeScript for development.
 - [x] Database Integration:
@@ -106,13 +106,11 @@
   - [x] Handle better way to error for using AppError.
   - [x] Handling mongoose error and duplicate error.
 
-#### Project Contributors: 
+### Project Contributors: 
 1. **Arafat Dayan**: Team Leader & Frontend Developer
 2. **Emon Hassan Mirdha**: Team-Co Leader & Full Stack Developer & GitHub Manager
 3. **Mohammad Shahansha**: Full Stack Developer
 4. **Milon Ahamed Shuvo**: Frontend Developer
-
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 
 ### Project Setup Instruction
