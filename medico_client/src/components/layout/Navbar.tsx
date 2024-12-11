@@ -1,7 +1,8 @@
 import { useGetMyProfileQuery } from "@/redux/api/userApi";
 import { logoutUser } from "@/services/actions/logoutUser";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 const Navbar = ({
@@ -14,11 +15,12 @@ const Navbar = ({
   const { data } = useGetMyProfileQuery({});
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const router = useRouter();
+  const pathName = usePathname();
+  console.log(pathName);
 
   useEffect(() => {
     router.refresh();
-  }, [data, router])
-  
+  }, [data, router]);
 
   const handleLogout = () => {
     logoutUser(router);
@@ -106,24 +108,26 @@ const Navbar = ({
               : "translate-y-[50%] scale-0 opacity-0 !-z-50 cursor-default"
           } bg-white w-max rounded-md shadow-lg absolute top-8 lg:top-12 right-0 p-[10px] flex flex-col transition-all duration-300 gap-2`}
         >
-          <p className="flex items-center gap-2 rounded-md p-2 pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50 hover:cursor-default">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-user-round"
-            >
-              <circle cx="12" cy="8" r="5" />
-              <path d="M20 21a8 8 0 0 0-16 0" />
-            </svg>
-            View Profile
-          </p>
+          <Link href={`${pathName}/profile-view`}>
+            <p className="flex items-center gap-2 rounded-md p-2 pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50 hover:cursor-default">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-user-round"
+              >
+                <circle cx="12" cy="8" r="5" />
+                <path d="M20 21a8 8 0 0 0-16 0" />
+              </svg>
+              View Profile
+            </p>
+          </Link>
           <p className="flex items-center gap-2 rounded-md p-2 pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50 hover:cursor-default">
             <svg
               xmlns="http://www.w3.org/2000/svg"
