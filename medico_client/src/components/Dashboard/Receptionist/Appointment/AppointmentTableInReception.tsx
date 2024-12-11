@@ -1,9 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "antd";
-import {
-  useGetAllAppointmentsQuery,
-  useGetMyAppointmentsQuery,
-} from "@/redux/api/appointmentApi";
 import { ColumnsType } from "antd/es/table";
 
 interface DataType {
@@ -14,15 +10,39 @@ interface DataType {
   SrNo: number;
 }
 
-const AppointmentTableInReception = () => {
-  // Get the current date
-  const currentDate = new Date();
+const AppointmentTableInReception = ({date}: any) => {
+  const [selectedDate, setSelectedDate] = useState<string>(
+    new Date().toISOString().slice(0, 10)
+  ); // Defaults to today
 
-  const { data, isLoading } = useGetAllAppointmentsQuery({});
-  // console.log(data);
+  useEffect(() => {
+    if (date?.length > 0) {
+      const fDate = new Date(date[0]?.schedule?.startDate?.slice(0, 10));
+      const formattedDate = fDate?.toISOString().slice(0, 10);
+      setSelectedDate(formattedDate);
+    }
+  }, [date]);
 
-  // Format the date
-  const formattedDate = currentDate.toLocaleDateString("en-US", {
+  const tableData: any =
+    date
+      ?.filter(
+        (d: any) => d?.schedule?.startDate?.slice(0, 10) === selectedDate
+      )
+      .map((d: any, index: number) => ({
+        key: d.id || `${index}`,
+        srNo: index + 1,
+        doctor: `${d?.doctor?.firstName || "N/A"} ${
+          d?.doctor?.lastName || ""
+        }`,
+        patient: `${d?.patient?.firstName || "N/A"} ${
+          d?.patient?.lastName || ""
+        }`,
+        paymentStatus: `${d?.payment?.status || "N/A"}`,
+        time: d.schedule?.startDate?.slice(11, 19) || "N/A",
+      })) || [];
+
+  const fDate = new Date(selectedDate);
+  const formattedDate = fDate?.toLocaleDateString("en-US", {
     day: "numeric",
     month: "short",
     year: "numeric",
@@ -33,29 +53,29 @@ const AppointmentTableInReception = () => {
       title: "SL No",
       dataIndex: "key",
       key: "key",
-      sorter: (a: any, b: any) => a.key - b.key,
       render: (_: any, __: any, index: number) => index + 1,
+    },
+    {
+      title: "Doctor Name",
+      dataIndex: "doctor",
+      key: "doctor",
     },
     {
       title: "Patient Name",
       dataIndex: "patient",
       key: "patient",
-      render: (patient: any) => `${patient.firstName} ${patient.lastName}`,
     },
-
     {
       title: "Payment Status",
       dataIndex: "paymentStatus",
       key: "paymentStatus",
     },
-
     {
       title: "Time",
-      dataIndex: "createdAt",
-      key: "createdAtTime",
-      render: (time: string) => new Date(time).toLocaleTimeString(),
+      dataIndex: "time",
     },
   ];
+
   return (
     <div className="w-full">
       <div className="flex items-center gap-2 bg-white pt-5 ps-5">
@@ -65,7 +85,7 @@ const AppointmentTableInReception = () => {
       <div className=" bg-white p-5">
         <Table<DataType>
           columns={columns}
-          dataSource={data?.appointments}
+          dataSource={tableData}
           size="middle"
           bordered
           pagination={false}

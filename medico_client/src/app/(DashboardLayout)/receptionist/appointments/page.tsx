@@ -1,4 +1,4 @@
-import CreateCalenderInDoctor from "@/components/Dashboard/Doctor/Appointment/CreateCalenderInDoctor";
+import CreateCalenderInReception from "@/components/Dashboard/Receptionist/Appointment/CreateCalenderInReception";
 import Link from "next/link";
 import { BsSlash } from "react-icons/bs";
 
@@ -21,7 +21,7 @@ const AppointmentPageOfDoctor = () => {
       </div>
       
       <div>
-        <CreateCalenderInDoctor />
+        <CreateCalenderInReception />
       </div>
     </div>
   );
