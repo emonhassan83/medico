@@ -7,11 +7,11 @@ import React from "react";
 import { BsSlash } from "react-icons/bs";
 import { TiArrowLeft } from "react-icons/ti";
 import "./tableBgColor.css";
-import { useRouter } from "next/navigation";
 import { FaPhoneVolume } from "react-icons/fa6";
 import { IoMail } from "react-icons/io5";
 import logo from "@/assets/logo/Logo.png";
 import Image from "next/image";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const columns = [
   {
@@ -37,8 +37,7 @@ const columns = [
 ];
 
 const AppointmentDetails = ({ params }: any) => {
-  const { data } = useGetAppointmentQuery(params?.detailsId);
-  const router = useRouter();
+  const { data, isLoading } = useGetAppointmentQuery(params?.detailsId);
 
   const tableData = [
     {
@@ -53,6 +52,9 @@ const AppointmentDetails = ({ params }: any) => {
   const tax = Math.round(totalAmount * 0.05);
   const totalWithTax = totalAmount + tax;
 
+  if (isLoading) {
+    return <FullPageLoading />;
+  }
   return (
     <div className="mx-5">
       <div>

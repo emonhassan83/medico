@@ -1,15 +1,13 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react"; // Main package
 import dayGridPlugin from "@fullcalendar/daygrid"; // For month view
 import timeGridPlugin from "@fullcalendar/timegrid"; // For week/day views
 import listPlugin from "@fullcalendar/list"; // For list view
 import interactionPlugin from "@fullcalendar/interaction"; // For click and drag
-
-// import "./AppointmentCalender.css";
 import "../../Doctor/Appointment/AppointmentCalender.css";
 import AppointmentTableInReception from "./AppointmentTableInReception";
-import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
 
 const formatDate = (dateString: any) => {
   const date = new Date(dateString);
@@ -27,8 +25,7 @@ interface Appointment {
   };
 }
 
-const CreateCalenderInReception = () => {
-  const { data } = useGetAllAppointmentsQuery({});
+const CreateCalenderInReception = ({data}: any) => {
   const [events, setEvents] = useState<any[]>([]);
   const [date, setDate] = useState<any[]>([]);
 

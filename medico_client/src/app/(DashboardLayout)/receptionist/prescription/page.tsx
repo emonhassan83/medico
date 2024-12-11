@@ -1,11 +1,18 @@
-// import PrescriptionListTable from "@/components/Dashboard/Receptionist/Prescription/PrescriptionListTable";
-import PatientTable from "@/components/Dashboard/Admin/Patient/PatientTable";
+"use client";
+
 import PrescriptionListTable from "@/components/Dashboard/Receptionist/Prescription/PrescriptionListTable";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
+import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
 
 const PrescriptionList = () => {
+  const { data, isLoading } = useGetAllPrescriptionQuery({});
+
+  if (isLoading) {
+    return <FullPageLoading />;
+  }
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
@@ -22,16 +29,9 @@ const PrescriptionList = () => {
           <Link href="#">Prescription</Link>
         </div>
       </div>
-      {/* <div className="mt-5">
-        <Link
-          href="/receptionist/patients/create"
-          className="text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
-        >
-          + New Patient
-        </Link>
-      </div> */}
+
       <div className="pt-5">
-        <PrescriptionListTable />
+        <PrescriptionListTable data={data} />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Card from "@/components/Dashboard/Common/Card";
 import ParsonalInfoProfile from "@/components/Dashboard/Common/parsonalInfoProfile";
@@ -10,22 +10,17 @@ import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 import { Row, Col } from "antd";
-import { TiUserOutline } from "react-icons/ti";
-
 import { FaCalendarCheck, FaDollarSign } from "react-icons/fa";
 import { HiCurrencyDollar } from "react-icons/hi2";
 import { MdEventNote } from "react-icons/md";
 import { GiNotebook } from "react-icons/gi";
 import { GrNotes } from "react-icons/gr";
 
-
-
 const ProfileView = () => {
   const { data: doctorsData } = useGetAllDoctorsQuery({});
   const { data: patientsData } = useGetAllPatientQuery({});
   const { data: receptionistsData } = useGetAllReceptionQuery({});
   const { data: AppointmentsData } = useGetAllAppointmentsQuery({});
-
 
   return (
     <div className="mx-5">

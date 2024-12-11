@@ -1,9 +1,18 @@
+"use client";
+
 import PrescriptionTableInDoctor from "@/components/Dashboard/Doctor/Prescription/PrescriptionTableInDoctor";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
+import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
 
 const PrescriptionListInDoctor = () => {
+  const { data, isLoading } = useGetAllPrescriptionQuery({});
+
+  if (isLoading) {
+    return <FullPageLoading/>;
+  }
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
@@ -29,7 +38,7 @@ const PrescriptionListInDoctor = () => {
         </Link>
       </div>
       <div className="pt-5">
-        <PrescriptionTableInDoctor />
+        <PrescriptionTableInDoctor data={data} />
       </div>
     </div>
   );

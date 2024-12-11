@@ -6,8 +6,7 @@ import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
 import { ColumnsType } from "antd/es/table";
 import Link from "next/link";
 
-const InvoiceTableOfDoctor = () => {
-  const { data, isLoading } = useGetMyAppointmentsQuery({});
+const InvoiceTableOfDoctor = ({data}: any) => {
   const appointments = data?.appointments;
   console.log(appointments);
 

@@ -1,9 +1,18 @@
+"use client";
+
 import PatientTable from "@/components/Dashboard/Admin/Patient/PatientTable";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
+import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
 
 const ReceptionistPatientPage = () => {
+  const { data, refetch, isLoading } = useGetAllPatientQuery([]);
+
+  if (isLoading) {
+    return <FullPageLoading />;
+  }
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
@@ -27,7 +36,7 @@ const ReceptionistPatientPage = () => {
         </Link>
       </div>
       <div className="pt-5">
-        <PatientTable />
+        <PatientTable data={data} refetch={refetch} />
       </div>
     </div>
   );

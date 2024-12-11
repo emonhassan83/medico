@@ -1,5 +1,6 @@
 "use client";
 import Card from "@/components/Dashboard/Common/Card";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetDoctorQuery } from "@/redux/api/doctorApi";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,7 +13,11 @@ import {
 } from "react-icons/fa";
 
 const DoctorDetail = ({ params }: any) => {
-  const { data } = useGetDoctorQuery(params.id);
+  const { data, isLoading } = useGetDoctorQuery(params.id);
+
+  if (isLoading){
+    return <FullPageLoading/>;
+  }
   return (
     <div className="mx-8">
       <div className="flex items-center justify-between mt-2">
@@ -57,7 +62,7 @@ const DoctorDetail = ({ params }: any) => {
             </div>
             <div className="w-full mt-5 lg:mt-8 mx-auto bg-white rounded-lg p-5">
               <p className="text-gray-600 font-semibold text-center">
-                Personal Informantion
+                Personal Information
               </p>
               <div className="mt-5 divide-y-2">
                 <div className="flex py-2">
@@ -150,7 +155,7 @@ const DoctorDetail = ({ params }: any) => {
           </div>
           <div className="w-full mt-5 lg:mt-8 mx-auto bg-white rounded-lg p-5">
             <p className="text-gray-600 font-semibold text-center">
-              Professional Informantion
+              Professional Information
             </p>
             <div className="mt-[18px]">
               <div className="flex p-[18px] bg-slate-50">

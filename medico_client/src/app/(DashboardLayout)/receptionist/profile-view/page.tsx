@@ -1,10 +1,11 @@
-'use client'
-import TabComponent from "./components/TabComponent/page"
+"use client";
+import TabComponent from "./components/TabComponent/page";
 
 import Card from "@/components/Dashboard/Common/Card";
 import ParsonalInfoProfile from "@/components/Dashboard/Common/parsonalInfoProfile";
 import WelcomeCard from "@/components/Dashboard/Common/WelcomeCard";
 import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
 import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 import { useGetAllPatientQuery } from "@/redux/api/patientApi";
@@ -14,19 +15,33 @@ import { FaCalendarCheck } from "react-icons/fa";
 import { FaChartColumn, FaChartSimple } from "react-icons/fa6";
 import { TiUserOutline } from "react-icons/ti";
 
-
 const ProfileView = () => {
-  const { data: doctorsData } = useGetAllDoctorsQuery({});
-  const { data: patientsData } = useGetAllPatientQuery({});
-  const { data: receptionistsData } = useGetAllReceptionQuery({});
-  const { data: AppointmentsData } = useGetAllAppointmentsQuery({});
+  const { data: doctorsData, isLoading: isDoctorLoading } =
+    useGetAllDoctorsQuery({});
+  const { data: patientsData, isLoading: isPatientLoading } =
+    useGetAllPatientQuery({});
+  const { data: receptionistsData, isLoading: isReceptionistLoading } =
+    useGetAllReceptionQuery({});
+  const { data: AppointmentsData, isLoading: isAppointmentLoading } =
+    useGetAllAppointmentsQuery({});
 
-
+  if (
+    isDoctorLoading ||
+    isPatientLoading ||
+    isReceptionistLoading ||
+    isAppointmentLoading
+  ) {
+    return <FullPageLoading />;
+  }
   return (
-<div className="mx-4">
+    <div className="mx-4">
       <div className="mb-6 flex justify-between items-center">
-        <h2 className="text-[#343A40] font-semibold text-[16px]  uppercase">Dashboard</h2>
-        <p className="text-[13px] text-[#74788D] font-normal" >Welcome to dashboard</p>
+        <h2 className="text-[#343A40] font-semibold text-[16px]  uppercase">
+          Dashboard
+        </h2>
+        <p className="text-[13px] text-[#74788D] font-normal">
+          Welcome to dashboard
+        </p>
       </div>
 
       <Row gutter={[32, 32]}>
@@ -37,12 +52,9 @@ const ProfileView = () => {
           </div>
         </Col>
 
-
-        <Col span={24} md={16} >
-
-          <div className="flex flex-col" >
-
-            <div className="flex gap-8" >
+        <Col span={24} md={16}>
+          <div className="flex flex-col">
+            <div className="flex gap-8">
               <Card
                 title="Appointments"
                 number={AppointmentsData?.meta?.total || 0}
@@ -60,20 +72,17 @@ const ProfileView = () => {
                 number={`$54,959,05`}
                 icon={<FaChartSimple size={33} />}
               />
-
             </div>
             <div className="mt-10">
-              <p className="text-[#343A40] font-semibold text-[16px] text-lg mb-2">Latest Appointment</p>
-              <TabComponent/>
+              <p className="text-[#343A40] font-semibold text-[16px] text-lg mb-2">
+                Latest Appointment
+              </p>
+              <TabComponent />
             </div>
           </div>
         </Col>
       </Row>
     </div>
-
-
-
-
 
     // <div className="mx-5">
     //    <div className="mb-6 flex justify-between items-center">
@@ -122,13 +131,11 @@ const ProfileView = () => {
     //             icon={<TiUserOutline size={40} />}
     //           />
     //         </div>
-           
+
     //       </div>
-          
+
     //     </Col>
     //   </Row>
-
-
 
     //   <div className="flex justify-between  mt-28 mx-8">
     //     <div className="w-1/3">
@@ -141,12 +148,8 @@ const ProfileView = () => {
 
     //   </div>
 
-       
-    
-
-        
     // </div>
-  )
-}
+  );
+};
 
-export default ProfileView
+export default ProfileView;

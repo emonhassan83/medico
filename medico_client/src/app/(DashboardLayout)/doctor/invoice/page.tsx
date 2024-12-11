@@ -1,8 +1,17 @@
+"use client";
+
 import InvoiceTableOfDoctor from "@/components/Dashboard/Doctor/Invoice/InvoiceTableOfDoctor";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
+import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
 import Link from "next/link";
 import { BsSlash } from "react-icons/bs";
 
 const DoctorInvoicePage = () => {
+  const { data, isLoading } = useGetMyAppointmentsQuery({});
+
+  if (isLoading) {
+    return <FullPageLoading />;
+  }
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
@@ -18,7 +27,7 @@ const DoctorInvoicePage = () => {
         </div>
       </div>
       <div className="mt-5">
-        <InvoiceTableOfDoctor />
+        <InvoiceTableOfDoctor data={data} />
       </div>
     </div>
   );

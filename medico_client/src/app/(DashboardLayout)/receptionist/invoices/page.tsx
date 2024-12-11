@@ -1,9 +1,17 @@
-import InvoiceTableOfDoctor from "@/components/Dashboard/Doctor/Invoice/InvoiceTableOfDoctor";
+"use client";
+
 import InvoiceTableOfReception from "@/components/Dashboard/Receptionist/Invoice/InvoiceTableOfReception";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
+import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
 import Link from "next/link";
 import { BsSlash } from "react-icons/bs";
 
 const ReceptionistInvoicesPage = () => {
+  const { data, isLoading } = useGetAllAppointmentsQuery({});
+
+  if (isLoading){
+    return <FullPageLoading/>;
+  }
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
@@ -19,7 +27,7 @@ const ReceptionistInvoicesPage = () => {
         </div>
       </div>
       <div className="mt-5">
-        <InvoiceTableOfReception />
+        <InvoiceTableOfReception data={data} />
       </div>
     </div>
   );
