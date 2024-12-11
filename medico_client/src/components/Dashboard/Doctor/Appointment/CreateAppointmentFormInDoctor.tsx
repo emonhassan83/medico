@@ -4,14 +4,15 @@ import MedicoForm from "@/components/Forms/MedicoForm";
 import MedicoSelect from "@/components/Forms/MedicoSelect";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useCreateDoctorScheduleMutation } from "@/redux/api/doctorScheduleApi";
-import { useGetAllSchedulesQuery } from "@/redux/api/scheduleApi";
+import {
+  useGetAllSchedulesQuery,
+} from "@/redux/api/scheduleApi";
 import dayjs from "dayjs";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
 const CreateAppointmentFormInDoctor = () => {
-  const [createDoctorSchedule, { isLoading: isCreating }] =
-    useCreateDoctorScheduleMutation();
+  const [createDoctorSchedule, {isLoading: isCreating}] = useCreateDoctorScheduleMutation();
   const { data: schedules, isLoading } = useGetAllSchedulesQuery([]);
 
   const dateOptions = schedules?.data?.map((item: any) => ({
@@ -49,18 +50,20 @@ const CreateAppointmentFormInDoctor = () => {
     }
   };
 
-  const defaultValues = {
-    date: "",
-    scheduleIds: "",
-  };
+ const defaultValues = {
+  date: "",
+  scheduleIds: "",
+};
 
-  if (isCreating || isLoading) {
-    return <FullPageLoading />;
-  }
+if(isCreating || isLoading){
+  return <FullPageLoading/>
+}
 
   return (
     <>
-      <MedicoForm onSubmit={handleCreateSchedule} defaultValues={defaultValues}>
+      <MedicoForm onSubmit={handleCreateSchedule} 
+      defaultValues={defaultValues}
+      >
         <MedicoSelect name="date" label="Select Date" options={dateOptions} />
         <MedicoSelect
           name="scheduleIds"

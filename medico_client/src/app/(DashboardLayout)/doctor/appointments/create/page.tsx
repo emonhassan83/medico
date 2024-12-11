@@ -6,7 +6,7 @@ import React from "react";
 import { BsSlash } from "react-icons/bs";
 import { TiArrowLeft } from "react-icons/ti";
 
-const CreateAppointment = ({data}: any) => {
+const CreateAppointment = () => {
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-5">
