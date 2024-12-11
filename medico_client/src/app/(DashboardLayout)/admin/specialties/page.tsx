@@ -1,9 +1,16 @@
 import SpecialtiesTable from "@/components/Dashboard/Admin/Specialties/SpecialtiesTable";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
+import { useGetAllSpecialtiesQuery } from "@/redux/api/specialitiesApi";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
 
 const Specialties = () => {
+  const { data, isLoading } = useGetAllSpecialtiesQuery({});
+
+  if (isLoading) {
+    return <FullPageLoading/>;
+  }
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
@@ -29,7 +36,7 @@ const Specialties = () => {
         </Link>
       </div>
       <div className="pt-5">
-        <SpecialtiesTable />
+        <SpecialtiesTable data={data} />
       </div>
     </div>
   );

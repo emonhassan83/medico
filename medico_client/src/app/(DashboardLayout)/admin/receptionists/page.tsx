@@ -1,10 +1,18 @@
-// import ReceptionistTable from "@/components/Dashboard/Admin/Receptionist/ReceptionistTable";
+"use client";
+
 import ReceptionistTable from "@/components/Dashboard/Admin/Receptionist/ReceptionistTable";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
+import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
 
 const Receptionist = () => {
+  const { data, refetch, isLoading } = useGetAllReceptionQuery({});
+
+  if (isLoading) {
+    return <FullPageLoading/>;
+  }
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
@@ -30,7 +38,7 @@ const Receptionist = () => {
         </Link>
       </div>
       <div className="pt-5">
-        <ReceptionistTable />
+        <ReceptionistTable  data={data} refetch={refetch} />
       </div>
     </div>
   );

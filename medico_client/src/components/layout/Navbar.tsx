@@ -1,8 +1,7 @@
 import { useGetMyProfileQuery } from "@/redux/api/userApi";
 import { logoutUser } from "@/services/actions/logoutUser";
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 const Navbar = ({
@@ -12,15 +11,19 @@ const Navbar = ({
   setOpen: Dispatch<SetStateAction<boolean>>;
   open: boolean;
 }) => {
-  const { data } = useGetMyProfileQuery({});
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const { data } = useGetMyProfileQuery({});
   const router = useRouter();
-  const pathName = usePathname();
-  console.log(pathName);
+
+  const navigateRole = data && data?.role?.toLowerCase();
 
   useEffect(() => {
     router.refresh();
   }, [data, router]);
+
+  const handleNavigate = () => {
+    router.push(`/${navigateRole}/profile-view`);
+  };
 
   const handleLogout = () => {
     logoutUser(router);
@@ -102,32 +105,31 @@ const Navbar = ({
           </svg>
         </div>
         <div
+          onClick={handleNavigate}
           className={`${
             accountMenuOpen
               ? "translate-y-0 scale-100 opacity-100 !z-[99999] block"
-              : "translate-y-[50%] scale-0 opacity-0 !-z-50 cursor-default"
+              : "translate-y-[50%] scale-0 opacity-0 !-z-50 cursor-pointer"
           } bg-white w-max rounded-md shadow-lg absolute top-8 lg:top-12 right-0 p-[10px] flex flex-col transition-all duration-300 gap-2`}
         >
-          <Link href={`${pathName}/profile-view`}>
-            <p className="flex items-center gap-2 rounded-md p-2 pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50 hover:cursor-default">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-user-round"
-              >
-                <circle cx="12" cy="8" r="5" />
-                <path d="M20 21a8 8 0 0 0-16 0" />
-              </svg>
-              View Profile
-            </p>
-          </Link>
+          <p className="flex items-center gap-2 rounded-md p-2 pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50 hover:cursor-pointer">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-user-round"
+            >
+              <circle cx="12" cy="8" r="5" />
+              <path d="M20 21a8 8 0 0 0-16 0" />
+            </svg>
+            View Profile
+          </p>
           <p className="flex items-center gap-2 rounded-md p-2 pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50 hover:cursor-default">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -149,9 +151,9 @@ const Navbar = ({
 
           <div
             onClick={handleLogout}
-            className="mt-3 border-t border-gray-200 pt-[5px]"
+            className="mt-3 border-t border-gray-200 pt-[5px] cursor-pointer"
           >
-            <p className="flex items-center gap-2 rounded-md p-2 pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50 hover:cursor-default">
+            <p className="flex items-center gap-2 rounded-md p-2 pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50 hover:cursor-pointer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

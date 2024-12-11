@@ -2,10 +2,9 @@
 
 import MedicoForm from "@/components/Forms/MedicoForm";
 import MedicoSelect from "@/components/Forms/MedicoSelect";
-import { useCreateAppointmentMutation } from "@/redux/api/appointmentApi";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useCreateDoctorScheduleMutation } from "@/redux/api/doctorScheduleApi";
 import {
-  useCreateScheduleMutation,
   useGetAllSchedulesQuery,
 } from "@/redux/api/scheduleApi";
 import dayjs from "dayjs";
@@ -13,10 +12,8 @@ import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
 const CreateAppointmentFormInDoctor = () => {
-  const [createDoctorSchedule] = useCreateDoctorScheduleMutation();
-  const { data: schedules } = useGetAllSchedulesQuery([]);
-
-  // console.log(schedules);
+  const [createDoctorSchedule, {isLoading: isCreating}] = useCreateDoctorScheduleMutation();
+  const { data: schedules, isLoading } = useGetAllSchedulesQuery([]);
 
   const dateOptions = schedules?.data?.map((item: any) => ({
     value: item.id,
@@ -57,6 +54,10 @@ const CreateAppointmentFormInDoctor = () => {
   date: "",
   scheduleIds: "",
 };
+
+if(isCreating || isLoading){
+  return <FullPageLoading/>
+}
 
   return (
     <>

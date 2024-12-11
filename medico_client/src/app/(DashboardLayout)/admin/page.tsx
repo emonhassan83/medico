@@ -20,22 +20,32 @@ import { GiNotebook } from "react-icons/gi";
 import { GrNotes } from "react-icons/gr";
 import { useGetAllMetaDataQuery } from "@/redux/api/metaApi";
 import { useGetMyProfileQuery } from "@/redux/api/userApi";
-
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const AdminDashboard = () => {
-  const { data: doctorsData } = useGetAllDoctorsQuery({});
-  const { data: patientsData } = useGetAllPatientQuery({});
-  const { data: receptionistsData } = useGetAllReceptionQuery({});
-  const { data: AppointmentsData } = useGetAllAppointmentsQuery({});
+  const { data: doctorsData, isLoading: isDoctorLoading } =
+    useGetAllDoctorsQuery({});
+  const { data: patientsData, isLoading: isPatientLoading } =
+    useGetAllPatientQuery({});
+  const { data: receptionistsData, isLoading: isReceptionLoading } =
+    useGetAllReceptionQuery({});
+  const { data: AppointmentsData, isLoading: isAppointmentLoading } =
+    useGetAllAppointmentsQuery({});
+  const { data: getAllMetaData, isLoading: isMetaLoading } =
+    useGetAllMetaDataQuery(undefined);
+  const { data: getMyProfileData, isLoading: isProfileLoading } =
+    useGetMyProfileQuery(undefined);
 
-  const {data:getAllMetaData} = useGetAllMetaDataQuery(undefined)
-  const {data:getMyProfileData} = useGetMyProfileQuery(undefined)
-  
-
-
-
-  console.log('getAllMetaData', getAllMetaData)
-  // console.log('total revenue', getAllMetaData?.totalRevenue?._sum.amount)
+  if (
+    isDoctorLoading ||
+    isPatientLoading ||
+    isReceptionLoading ||
+    isAppointmentLoading ||
+    isMetaLoading ||
+    isProfileLoading
+  ) {
+   return  <FullPageLoading />;
+  }
 
   return (
     <div className="pt-2 px-[18px] mb-16">
@@ -47,7 +57,6 @@ const AdminDashboard = () => {
           Welcome to Dashboard
         </p>
       </div>
-
 
       <Row gutter={[32, 32]}>
         <Col span={24} md={8}>
@@ -66,7 +75,6 @@ const AdminDashboard = () => {
         </Col>
         <Col span={24} md={16}>
           <div className="flex flex-col ">
- 
             {/* all cart starting here  */}
             <div className="grid grid-cols-3 gap-0 ">
               <Card
@@ -105,13 +113,11 @@ const AdminDashboard = () => {
         </Col>
       </Row>
 
-
-      
-
-
       <div>
-        <p className="text-[#343A40] font-[600] text-[18px] mb-7 mt-5 ">Latest Users</p>
-      <DashbordTableTab/>
+        <p className="text-[#343A40] font-[600] text-[18px] mb-7 mt-5 ">
+          Latest Users
+        </p>
+        <DashbordTableTab />
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 "use client";
 
 import Link from "next/link";
@@ -15,32 +14,18 @@ import {
   useCreatePatientMutation,
   useUpdatePatientMutation,
 } from "@/redux/api/patientApi";
-import { bloodGroupOptions, dietOptions, genderOptions, maritalOptions } from "@/components/SelectOptions/SelectOptions";
-
-// export const defaultValues = {
-//   password: "",
-//   gender: "",
-//   bloodGroup: "",
-//   height: "",
-//   weight: "",
-//   diet: "",
-//   pulse: "",
-//   dietaryPreferences: "",
-//   maritalStatus: "",
-//   patient: {
-//     firstName: "",
-//     lastName: "",
-//     email: "",
-//     contactNumber: "",
-//     address: "",
-//     profilePhoto: "",
-//   },
-// };
+import {
+  bloodGroupOptions,
+  dietOptions,
+  genderOptions,
+  maritalOptions,
+} from "@/components/SelectOptions/SelectOptions";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const CreatePatients = () => {
   const [photo, setPhoto] = useState("");
-  const [createPatient] = useCreatePatientMutation();
-  const [updatePatient] = useUpdatePatientMutation();
+  const [createPatient, { isLoading: isCreating }] = useCreatePatientMutation();
+  const [updatePatient, { isLoading: isUpdating }] = useUpdatePatientMutation();
 
   const handleFileUpload = async (file: File) => {
     try {
@@ -68,7 +53,7 @@ const CreatePatients = () => {
           address: values?.address,
         },
       };
-  
+
       const patientUpdateData = {
         patientHealthData: {
           gender: values?.gender,
@@ -77,18 +62,18 @@ const CreatePatients = () => {
           weight: values?.weight,
           diet: values?.diet,
           pulse: values?.pulse,
-          dietaryPreferences:values?.dietaryPreferences,
-          maritalStatus: values?.maritalStatus
+          dietaryPreferences: values?.dietaryPreferences,
+          maritalStatus: values?.maritalStatus,
         },
       };
       const res = await createPatient(patientData).unwrap();
-      
+
       if (res?.id) {
         const response = await updatePatient({
           id: res.id,
           data: patientUpdateData,
         }).unwrap();
-        
+
         if (response.id) {
           toast.success("Patient created successfully!");
         }
@@ -96,8 +81,32 @@ const CreatePatients = () => {
     } catch (err: any) {
       toast.error(err.message);
       console.error(err.message);
-    } 
+    }
   };
+
+  const defaultValues = {
+    password: "",
+    gender: "",
+    bloodGroup: "",
+    height: "",
+    weight: "",
+    diet: "",
+    pulse: "",
+    dietaryPreferences: "",
+    maritalStatus: "",
+    patient: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      contactNumber: "",
+      address: "",
+      profilePhoto: "",
+    },
+  };
+
+  if (isCreating || isUpdating) {
+    return <FullPageLoading />;
+  }
 
   return (
     <>
@@ -131,7 +140,7 @@ const CreatePatients = () => {
 
         <MedicoForm
           onSubmit={handleCreatePatient}
-          // defaultValues={defaultValues}
+          defaultValues={defaultValues}
         >
           {/* Rows of Input Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
@@ -215,11 +224,7 @@ const CreatePatients = () => {
             <MedicoInput label="Height" type="text" name="height" />
             <MedicoInput label="Weight" type="text" name="weight" />
 
-            <MedicoSelect
-              name="diet"
-              label="Diet"
-              options={dietOptions}
-            />
+            <MedicoSelect name="diet" label="Diet" options={dietOptions} />
             <MedicoInput label="Pulse" type="text" name="pulse" />
             <MedicoInput
               label="Dietary Preferences"

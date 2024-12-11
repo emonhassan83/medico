@@ -5,7 +5,6 @@ import { Table, Button } from "antd";
 import {
   useAppointmentStatusChangeMutation,
   useDeleteAppointmentMutation,
-  useGetMyAppointmentsQuery,
 } from "@/redux/api/appointmentApi";
 import { toast } from "sonner";
 import { ColumnsType } from "antd/es/table";
@@ -62,8 +61,7 @@ interface Appointment {
   // patient: Patient;
 }
 
-const MyAppointmentTable = () => {
-  const { data, isLoading } = useGetMyAppointmentsQuery({});
+const MyAppointmentTable = ({data}: any) => {
   const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
   const [deleteAppointment] = useDeleteAppointmentMutation();
 
