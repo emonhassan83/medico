@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { Table } from "antd";
 import type { TableColumnsType } from "antd";
 
@@ -14,6 +15,7 @@ const columns: TableColumnsType<DataType> = [
   {
     title: "SrNo",
     dataIndex: "SrNo",
+    render: (_: any, __: any, index: number) => index + 1,
   },
   {
     title: "Doctor Name",
@@ -29,50 +31,44 @@ const columns: TableColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    SrNo: 1,
-    doctorName: "John Brown",
-    number: "32",
-    time: "New York No. 1 Lake Park",
-  },
-  {
-    key: "2",
-    SrNo: 2,
-    doctorName: "Jim Green",
-    number: "42",
-    time: "London No. 1 Lake Park",
-  },
-  {
-    key: "3",
-    SrNo: 3,
-    doctorName: "Joe Black",
-    number: "32",
-    time: "Sydney No. 1 Lake Park",
-  },
-];
+const AppointmentTable = ({ date }: { date: any }) => {
+  // State to store the selected date
+  const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().slice(0, 10)); // Defaults to today
+  
+  useEffect(() => {
+    if (date?.length > 0) {
+      const fDate = new Date(date[0]?.schedule?.startDate?.slice(0, 10));
+      const formattedDate = fDate?.toISOString().slice(0, 10);
+      setSelectedDate(formattedDate);
+    }
+  }, [date]);
 
-const AppointmentTable = () => {
-  // Get the current date
-  const date = new Date();
+  const tableData: any =
+    date?.filter((d: any) => d?.schedule?.startDate?.slice(0, 10) === selectedDate).map((d: any, index: number) => ({
+      key: d.id || `${index}`,
+      srNo: index + 1,
+      doctorName: `${d?.doctor?.firstName || "N/A"} ${d?.doctor?.lastName || ""}`,
+      number: `${d?.doctor?.contactNumber || "N/A"}`,
+      time: d.schedule?.startDate?.slice(11, 19) || "N/A",
+    })) || [];
 
-  // Format the date
-  const formattedDate = date.toLocaleDateString("en-US", {
+  const fDate = new Date(selectedDate);
+  const formattedDate = fDate?.toLocaleDateString("en-US", {
     day: "numeric",
     month: "short",
     year: "numeric",
   });
+
   return (
-    <div className="w-full  p-5 ">
-      <div className="flex items-center gap-2 bg-white">
+    <div className="w-full p-5 bg-white">
+      <div className="flex items-center gap-2">
         <h2 className="text-lg font-semibold">Appointment List |</h2>
-        <p>{formattedDate}</p>
+        <p>{formattedDate}</p> {/* Display the formatted date */}
       </div>
-      <div className="bg-white">
+      <div>
         <Table<DataType>
           columns={columns}
-          dataSource={data}
+          dataSource={tableData}
           size="middle"
           pagination={false}
         />
