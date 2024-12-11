@@ -11,23 +11,12 @@ interface DataType {
   SrNo: number;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-const AppointmentTableInDoctor = ({data}: any) => {
-  const currentDate = new Date();
-=======
-=======
->>>>>>> c8fd4a23e1cc9f7b3915b60236c8c21613dd3d32
+
 const AppointmentTableInDoctor = ({ date }: any) => {
   const [selectedDate, setSelectedDate] = useState<string>(
     new Date().toISOString().slice(0, 10)
   ); // Defaults to today
-<<<<<<< HEAD
->>>>>>> cc229d2b932c38bada57f659c9ab8be5a9986f08
-
-=======
   
->>>>>>> c8fd4a23e1cc9f7b3915b60236c8c21613dd3d32
   useEffect(() => {
     if (date?.length > 0) {
       const fDate = new Date(date[0]?.schedule?.startDate?.slice(0, 10));

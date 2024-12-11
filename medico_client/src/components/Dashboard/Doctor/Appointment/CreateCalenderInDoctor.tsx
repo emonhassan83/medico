@@ -5,11 +5,10 @@ import FullCalendar from "@fullcalendar/react"; // Main package
 import dayGridPlugin from "@fullcalendar/daygrid"; // For month view
 import timeGridPlugin from "@fullcalendar/timegrid"; // For week/day views
 import listPlugin from "@fullcalendar/list"; // For list view
-import interactionPlugin from "@fullcalendar/interaction"; // For click and drag
-
+import interactionPlugin from "@fullcalendar/interaction";
 import "./AppointmentCalender.css";
-import AppointmentTableInDoctor from "./AppointmentTableInDoctor";
 import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
+import AppointmentTableInDoctor from "./AppointmentTableInDoctor";
 
 const formatDate = (dateString: any) => {
   const date = new Date(dateString);
@@ -27,20 +26,6 @@ interface Appointment {
   };
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-const CreateCalenderInDoctor = ({data}: any) => {
-  // Sample events
-  const [events, setEvents] = useState([
-    { title: "3 Appoint", date: "2024-11-28" },
-    { title: "2 Appoint", date: "2024-11-30" },
-    { title: "5 Appoint", date: "2024-11-14" },
-    { title: "1 Appoint", date: "2024-11-18" },
-    { title: "5 Appoint", date: "2024-11-27" },
-  ]);
-=======
-=======
->>>>>>> c8fd4a23e1cc9f7b3915b60236c8c21613dd3d32
 const CreateCalenderInDoctor = () => {
   const { data } = useGetMyAppointmentsQuery({});
   const [events, setEvents] = useState<any[]>([]);
@@ -98,11 +83,6 @@ const CreateCalenderInDoctor = () => {
 
     setDate(todaysAppointment);
   };
-<<<<<<< HEAD
->>>>>>> cc229d2b932c38bada57f659c9ab8be5a9986f08
-=======
->>>>>>> c8fd4a23e1cc9f7b3915b60236c8c21613dd3d32
-
   return (
     <div className="mt-5 flex flex-col md:flex-row  justify-between gap-10">
       <div className="bg-white p-5">
@@ -130,15 +110,8 @@ const CreateCalenderInDoctor = () => {
           />
         </div>
       </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <AppointmentTableInDoctor data={data}/>
-=======
       <AppointmentTableInDoctor date={date} />
->>>>>>> cc229d2b932c38bada57f659c9ab8be5a9986f08
-=======
-      <AppointmentTableInDoctor date={date} />
->>>>>>> c8fd4a23e1cc9f7b3915b60236c8c21613dd3d32
+
     </div>
   );
 };

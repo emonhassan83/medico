@@ -38,7 +38,7 @@ const AppointmentPageOfDoctor = () => {
         </Link>
       </div>
       <div>
-        <CreateCalenderInDoctor data={data} />
+        <CreateCalenderInDoctor />
       </div>
     </div>
   );
