@@ -16,6 +16,8 @@ import { MdEventNote } from "react-icons/md";
 import { GiNotebook } from "react-icons/gi";
 import { GrNotes } from "react-icons/gr";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile";
+import { useGetAllMetaDataQuery } from "@/redux/api/metaApi";
 
 const DoctorDashboard = () => {
   const { data: doctorsData, isLoading: isDoctorLoading } =
@@ -26,6 +28,9 @@ const DoctorDashboard = () => {
     useGetAllReceptionQuery({});
   const { data: AppointmentsData, isLoading: isAppointmentLoading } =
     useGetAllAppointmentsQuery({});
+
+    const { data: getAllMetaData, isLoading: isMetaLoading } =
+    useGetAllMetaDataQuery(undefined);
 
   if (
     isDoctorLoading ||
@@ -50,14 +55,7 @@ const DoctorDashboard = () => {
       <Row gutter={[32, 32]}>
         <Col span={24} md={8}>
           <div className="flex flex-col gap-7">
-            <WelcomeCard
-              admin={2}
-              doctor={doctorsData?.meta?.total || 0}
-              patient={patientsData?.meta?.total || 0}
-              receptionist={receptionistsData?.meta?.total || 0}
-              username="Alice"
-              role="Super Admin"
-            />
+            <WelcomeCardProfile/>
           </div>
         </Col>
         <Col span={24} md={16}>
@@ -81,17 +79,17 @@ const DoctorDashboard = () => {
               />
               <Card
                 title="Today's Appointments"
-                number={57}
+                number={getAllMetaData?.todayAppointments}
                 icon={<MdEventNote size={33} />}
               />
               <Card
                 title="Tomorrow's Appointments"
-                number={57}
+                number={getAllMetaData?.tomorrowAppointments}
                 icon={<GiNotebook size={33} />}
               />
-              <Card
+             <Card
                 title="Upcoming Appointments"
-                number={57}
+                number={getAllMetaData?.upcomingAppointments}
                 icon={<GrNotes size={33} />}
               />
             </div>

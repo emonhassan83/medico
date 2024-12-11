@@ -17,6 +17,7 @@ import { HiCurrencyDollar } from "react-icons/hi2";
 import { MdEventNote } from "react-icons/md";
 import { GiNotebook } from "react-icons/gi";
 import { GrNotes } from "react-icons/gr";
+import { useGetAllMetaDataQuery } from "@/redux/api/metaApi";
 
 
 
@@ -25,6 +26,7 @@ const ProfileView = () => {
   const { data: patientsData } = useGetAllPatientQuery({});
   const { data: receptionistsData } = useGetAllReceptionQuery({});
   const { data: AppointmentsData } = useGetAllAppointmentsQuery({});
+  const {data:getAllMetaData} = useGetAllMetaDataQuery(undefined)
 
 
   return (
@@ -44,36 +46,28 @@ const ProfileView = () => {
 
             {/* all cart starting here  */}
             <div className="grid grid-cols-3 gap-7">
+            <Card
+              title="Appointments"
+              number={AppointmentsData?.meta?.total || 0}
+              icon={<FaCalendarCheck size={33} />}
+            />
+              
               <Card
-                title="Appointments"
-                number={AppointmentsData?.meta?.total || 0}
-                icon={<FaCalendarCheck size={33} />}
-              />
+              title="Today's Appointments"
+              number={getAllMetaData?.todayAppointments || 1}
+              icon={<MdEventNote size={33} />}
+            />
               <Card
-                title="Revenue"
-                number={`$57`}
-                icon={<FaDollarSign size={33} />}
-              />
+              title="Tomorrow's Appointments"
+              number={getAllMetaData?.tomorrowAppointments}
+              icon={<GiNotebook size={33} />}
+            />
+              
               <Card
-                title="Today' Earning"
-                number={`$57`}
-                icon={<HiCurrencyDollar size={33} />}
-              />
-              <Card
-                title="Today's Appointments"
-                number={57}
-                icon={<MdEventNote size={33} />}
-              />
-              <Card
-                title="Tomorrow's Appointments"
-                number={57}
-                icon={<GiNotebook size={33} />}
-              />
-              <Card
-                title="Upcoming Appointments"
-                number={57}
-                icon={<GrNotes size={33} />}
-              />
+              title="Upcoming Appointments"
+              number={getAllMetaData?.upcomingAppointments || 2}
+              icon={<GrNotes size={33} />}
+            />
             </div>
            
           </div>
