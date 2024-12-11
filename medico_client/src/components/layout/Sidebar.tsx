@@ -100,15 +100,10 @@ export default function SideBar() {
   const {data} = useGetMyProfileQuery(undefined)
   // console.log('user:', data)
 
-  
   useEffect(() => {
     const { role } = getUserInfo() as any;
     setUserRole(role);
   }, []);
-
-  
-
-
 
   return (
     <>
