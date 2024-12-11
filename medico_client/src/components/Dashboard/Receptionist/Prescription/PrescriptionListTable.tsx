@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { Table } from "antd";
 import Link from "next/link";
@@ -8,6 +9,8 @@ import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
 
 const PrescriptionListTable = () => {
   const { data } = useGetAllPrescriptionQuery({});
+  // console.log(data);
+  // console.log(data);
 
   const dataSource = data?.prescription?.map((presecription: any) => ({
     patientName: presecription?.patient?.firstName,

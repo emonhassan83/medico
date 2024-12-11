@@ -13,7 +13,7 @@ import { toast } from "sonner";
 
 const SpecialtiesTable = () => {
   const { data, refetch, isLoading, error } = useGetAllSpecialtiesQuery({});
-  console.log(data);
+  // console.log(data);
 
   const columns = [
     {

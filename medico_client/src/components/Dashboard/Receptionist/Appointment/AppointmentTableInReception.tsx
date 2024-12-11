@@ -19,7 +19,7 @@ const AppointmentTableInReception = () => {
   const currentDate = new Date();
 
   const { data, isLoading } = useGetAllAppointmentsQuery({});
-  console.log(data);
+  // console.log(data);
 
   // Format the date
   const formattedDate = currentDate.toLocaleDateString("en-US", {

@@ -13,16 +13,6 @@ import { storeUserInfo } from "@/services/auth.services";
 import { userLogin } from "@/services/actions/loginUsers";
 import { useRouter } from "next/navigation";
 
-export const defaultValues = {
-  password: "",
-  patient: {
-    firstName: "",
-    lastName: "",
-    email: "",
-    confirmPassword: "",
-  },
-};
-
 const RegisterPage = () => {
   const router = useRouter();
 
@@ -68,6 +58,16 @@ const RegisterPage = () => {
     }
   };
 
+const defaultValues = {
+  password: "",
+  patient: {
+    firstName: "",
+    lastName: "",
+    email: "",
+    confirmPassword: "",
+  },
+};
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
       <div className="w-full max-w-lg rounded-lg">
@@ -81,7 +81,9 @@ const RegisterPage = () => {
             </p>
           </div>
           <div className="px-8 pb-8">
-            <MedicoForm onSubmit={handleRegister} defaultValues={defaultValues}>
+            <MedicoForm onSubmit={handleRegister} 
+            defaultValues={defaultValues}
+            >
               <MedicoInput label="First Name" type="text" name="patient.firstName" />
               <MedicoInput label="Last Name" type="text" name="patient.lastName" />
               <MedicoInput label="Contact No" type="text" name="patient.contactNumber" />

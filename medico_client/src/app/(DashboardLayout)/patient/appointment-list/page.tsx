@@ -41,7 +41,7 @@ const PatientAppointment = () => {
 
   //update status function in here
   const handleCancel = async (appointmentId: string) => {
-    console.log(appointmentId);
+    // console.log(appointmentId);
     try {
       await appointmentStatusChange({
         id: appointmentId,

@@ -14,12 +14,6 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useState } from "react";
 
-export const defaultValues = {
-  appointmentId: "",
-  instructions: "",
-  followUpDate: "",
-};
-
 const CreatePrescription = () => {
   const { data } = useGetAllAppointmentsQuery({});
   const [createPrescription] = useCreatePrescriptionMutation();
@@ -95,6 +89,12 @@ const CreatePrescription = () => {
     "script",
   ];
 
+const defaultValues = {
+  appointmentId: "",
+  instructions: "",
+  followUpDate: "",
+};
+
   return (
     <>
       {/* Header Section */}
@@ -161,3 +161,15 @@ const CreatePrescription = () => {
 };
 
 export default CreatePrescription;
+
+// import React from 'react';
+
+// const page = () => {
+//   return (
+//     <div>
+//       create prescription
+//     </div>
+//   );
+// };
+
+// export default page;

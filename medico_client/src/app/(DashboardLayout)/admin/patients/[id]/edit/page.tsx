@@ -18,14 +18,14 @@ import {
 import { useRouter } from "next/navigation";
 
 const UpdatePatients = ({ params }: any) => {
-  console.log(params.id);
+  // console.log(params.id);
   const router = useRouter();
   const [photo, setPhoto] = useState("");
   const [updatePatient] = useUpdatePatientMutation();
 
   const [load, setLoad] = useState(false);
   const { data, isLoading } = useGetSinglePatientQuery(params.id);
-  console.log(data);
+  // console.log(data);
 
   // useEffect(() => {
   //   if (data) {
@@ -82,9 +82,9 @@ const UpdatePatients = ({ params }: any) => {
           },
         },
       };
-      console.log(payload);
+      // console.log(payload);
       const result = await updatePatient(payload).unwrap();
-      console.log(result);
+      // console.log(result);
       if (result) {
         toast.success("Patients updated successfully!");
         router.push("/admin/patients");

@@ -17,7 +17,7 @@ const PatientTableAdmin = () => {
   const [deletePatient] = useDeletePatientMutation();
   const [searchText, setSearchText] = useState("");
 
-console.log(data)
+// console.log(data)
   
   //   Filter data based on search text
   const filteredData = data?.patients?.filter((pt: any) =>
@@ -26,10 +26,10 @@ console.log(data)
 
   ///delete operation---------------------------------
   const handleDeletRow = async (id: string) => {
-    console.log(id);
+    // console.log(id);
     try {
       const res = await deletePatient(id).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res?.id) {
         toast.success("Delete patient successfully");
         refetch();

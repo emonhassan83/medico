@@ -3,14 +3,13 @@
 import React from "react";
 import { Table } from "antd";
 import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
-import { toast } from "sonner";
 import { ColumnsType } from "antd/es/table";
 import Link from "next/link";
 
 const InvoiceTableOfDoctor = () => {
   const { data, isLoading } = useGetMyAppointmentsQuery({});
-  console.log(data);
   const appointments = data?.appointments;
+  console.log(appointments);
 
   const columns: ColumnsType<any> = [
     {
@@ -21,29 +20,41 @@ const InvoiceTableOfDoctor = () => {
       render: (_: any, __: any, index: number) => index + 1,
     },
     {
-      title: "Appointment Date",
+      title: "Billing Name",
+      dataIndex: "patient",
+      key: "patient",
+      render: (patient: any) => `${patient.firstName} ${patient.lastName}`,
+    },
+    {
+      title: "Transition Date",
       dataIndex: "createdAt",
       key: "appointmentDate",
       render: (date: string) => new Date(date).toLocaleDateString(),
     },
-
     {
-      title: "Appointment Time",
-      dataIndex: "schedule",
-      key: "schedule",
-      render: (schedule: any) =>
-        `${schedule?.startDate?.slice(11, 19)} to ${schedule?.startDate?.slice(
-          11,
-          19
-        )}`,
+      title: "Transition Id",
+      dataIndex: "payment",
+      key: "payment",
+      render: (payment: any) =>
+        <div>{payment?.transactionId}</div>
     },
-
+    
     {
-      title: " Status",
-      dataIndex: "paymentStatus",
-      key: "paymentStatus",
+      title: "Amount",
+      dataIndex: "payment",
+      key: "payment",
+      render: (payment: any) =>
+        <div>{payment?.amount}</div>
     },
-
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (_: any, record: any) =>
+        record.paymentStatus === "PAID" || record.status === "INPROGRESS"
+          ? "PAID"
+          : "UNPAID",
+    },
     {
       title: "Option",
       dataIndex: "option",

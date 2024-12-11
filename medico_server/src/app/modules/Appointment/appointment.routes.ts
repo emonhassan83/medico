@@ -44,7 +44,7 @@ router.get(
 
 router.patch(
   '/status/:id',
-  auth(UserRole.RECEPTIONIST, UserRole.ADMIN, UserRole.DOCTOR),
+  auth(UserRole.RECEPTIONIST, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
   AppointmentController.changeAppointmentStatus,
 );
 

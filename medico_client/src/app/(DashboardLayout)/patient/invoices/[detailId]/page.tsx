@@ -1,28 +1,19 @@
 "use client";
-import { useGetAppointmentQuery } from "@/redux/api/appointmentApi";
+
+import {
+  useAppointmentStatusChangeMutation,
+  useGetAppointmentQuery,
+} from "@/redux/api/appointmentApi";
 import { Table } from "antd";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
 import { TiArrowLeft } from "react-icons/ti";
 import "./tableBgColor.css";
+import { useInitialPaymentMutation } from "@/redux/api/paymentApi";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-// Invoice data
-const dataSource = [
-  {
-    key: "1",
-    number: 1,
-    title: "dskla sjdflk",
-    amount: 200,
-  },
-  {
-    key: "2",
-    number: 2,
-    title: "t55lk3asdf",
-    amount: 50,
-  },
-];
-// Columns configuration
 const columns = [
   {
     title: "No.",
@@ -47,16 +38,46 @@ const columns = [
 ];
 
 const AppointmentDetails = ({ params }: any) => {
-  console.log(params);
   const { data } = useGetAppointmentQuery(params?.detailId);
-  console.log(data);
+  const [initialPayment] = useInitialPaymentMutation();
+  const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
+  const router = useRouter();
 
-  // Calculate total amount
-  const totalAmount = dataSource.reduce((sum, item) => sum + item.amount, 0);
+  const tableData = [
+    {
+      key: data?.id,
+      srNo: 1,
+      title: "Appointment Free",
+      amount: data?.doctor?.appointmentFee,
+    },
+  ];
 
-  // Add 5% tax
-  const tax = totalAmount * 0.05;
+  const totalAmount = data?.doctor?.appointmentFee;
+  const tax = Math.round(totalAmount * 0.05);
   const totalWithTax = totalAmount + tax;
+
+  const handlePayment = async (id: string) => {
+    try {
+      const response = await initialPayment(id).unwrap();
+
+      if (response.paymentUrl) {
+        const res = await appointmentStatusChange({
+          id: data?.id,
+          status: "INPROGRESS",
+        }).unwrap();
+
+        if (res?.id) {
+          router.push("/payment?status=success");
+          toast.success("Payment successfully!");
+        }
+      } else {
+        router.push("/payment?status=cancel");
+      }
+    } catch (err: any) {
+      toast.error(err.message);
+      console.error(err.message);
+    }
+  };
 
   return (
     <div className="mx-5">
@@ -118,7 +139,12 @@ const AppointmentDetails = ({ params }: any) => {
             <div>
               <h4 className="text-sm font-bold">Payment Details</h4>
               <p className="text-sm">Payment Mode: Online Payment</p>
-              <p className="text-sm">Payment Status: {data?.paymentStatus}</p>
+              <p className="text-sm">
+                Payment Status:{" "}
+                {data?.paymentStatus || data?.status === "SCHEDULED"
+                  ? "UNPAID"
+                  : "PAID"}
+              </p>
             </div>
             <div>
               {/* <div className="flex items-center gap-1">
@@ -139,7 +165,7 @@ const AppointmentDetails = ({ params }: any) => {
               Invoice Summary
             </h4>
             <Table
-              dataSource={dataSource}
+              dataSource={tableData}
               columns={columns}
               pagination={false}
               size="middle"
@@ -148,26 +174,36 @@ const AppointmentDetails = ({ params }: any) => {
             <div className="w-full flex justify-end border-b border-[#f3f0f0] py-3 text-[#595959]">
               <div className="w-1/2 flex items-center justify-between">
                 <p>Sub Total</p>
-                <p>${totalAmount}</p>
+                <p>{totalAmount}</p>
               </div>
             </div>
             <div className="w-full flex justify-end mt-3">
               <div className="w-1/2 flex items-center justify-between">
-                <p className="text-lg font-semibold">Text(5%)</p>
-                <p className="text-lg  text-[#495057]">${tax}</p>
+                <p className="text-lg font-semibold">Tax(5%)</p>
+                <p className="text-lg  text-[#495057]">{tax}</p>
               </div>
             </div>
             <div className="w-full flex justify-end mt-3">
               <div className="w-1/2 flex items-center justify-between">
                 <p className="text-lg font-semibold">Total</p>
-                <p className="text-lg  text-[#495057]">${totalWithTax}</p>
+                <p className="text-lg  text-[#495057]">{totalWithTax}</p>
               </div>
             </div>
           </div>
 
           {/* Payment Button */}
           <div className="mt-5">
-            <button className=" w-1/2 text-white  bg-[#556ee6] hover:bg-blue-700 py-3 rounded-md text-sm font-medium">
+            <button
+              disabled={
+                data?.paymentStatus === "PAID" || data?.status === "INPROGRESS"
+              }
+              onClick={() => handlePayment(data?.id)}
+              className={`w-1/2 text-white py-3 rounded-md text-sm font-medium ${
+                data?.paymentStatus === "PAID" || data?.status === "INPROGRESS"
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-[#556ee6] hover:bg-blue-700"
+              }`}
+            >
               Payment
             </button>
           </div>

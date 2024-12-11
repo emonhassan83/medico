@@ -24,7 +24,6 @@ const LatestAppointmentTable = () => {
   const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
   const { data, refetch } = useGetAllAppointmentsQuery({});
 
-
   // Map data with proper keys and types
   const tableData: AppointmentData[] =
     data?.appointments.slice(0, 4) ?.map((appointment: Appointment, index: number) => ({
@@ -41,7 +40,7 @@ const LatestAppointmentTable = () => {
 
   //update status function in here
   const handleCancel = async (appointmentId: string) => {
-    console.log(appointmentId);
+    // console.log(appointmentId);
     try {
       await appointmentStatusChange({
         id: appointmentId,

@@ -24,10 +24,10 @@ const PatientTable = () => {
 
   ///delete operation---------------------------------
   const handleDeleteRow = async (id: string) => {
-    console.log(id);
+    // console.log(id);
     try {
       const res = await deletePatient(id).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res?.id) {
         toast.success("Delete patient successfully");
         refetch();

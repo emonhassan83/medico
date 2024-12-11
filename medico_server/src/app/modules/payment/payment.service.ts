@@ -17,7 +17,7 @@ const initPayment = async (appointmentId: string) => {
   });
 
   const initPaymentData = {
-    amount: paymentData.amount,
+    amount: Math.round(paymentData.amount + (paymentData.amount * 0.05)),
     transactionId: paymentData.transactionId,
     name: paymentData.appointment.patient.firstName,
     email: paymentData.appointment.patient.email,
@@ -26,6 +26,7 @@ const initPayment = async (appointmentId: string) => {
   };
 
   const result = await SSLService.initPayment(initPaymentData);
+  
   return {
     paymentUrl: result.GatewayPageURL,
   };
