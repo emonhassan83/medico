@@ -16,32 +16,13 @@ import {
   useUpdateDoctorMutation,
 } from "@/redux/api/doctorApi";
 import { DoctorFormValues } from "@/types/doctor";
-
-// // Default Values
-// export const defaultValues: DoctorFormValues = {
-//   password: "",
-//   doctor: {
-//     firstName: "",
-//     lastName: "",
-//     email: "",
-//     contactNumber: "",
-//     address: "",
-//     gender: "",
-//     designation: "",
-//     registrationNumber: "",
-//     qualification: "",
-//     experience: "",
-//     appointmentFee: "",
-//     currentWorkingPlace: "",
-//     profilePhoto: "",
-//   },
-// };
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const Doctor = () => {
   const [photo, setPhoto] = useState("");
-  const { data: specialties } = useGetAllSpecialtiesQuery([]);
-  const [createDoctor] = useCreateDoctorMutation();
-  const [updateDoctor] = useUpdateDoctorMutation();
+  const { data: specialties, isLoading } = useGetAllSpecialtiesQuery([]);
+  const [createDoctor, {isLoading: isCreating}] = useCreateDoctorMutation();
+  const [updateDoctor, {isLoading: isUpdating}] = useUpdateDoctorMutation();
 
   const specialtiesOptions = specialties?.data?.map((item: any) => ({
     value: item.id,
@@ -108,6 +89,30 @@ const Doctor = () => {
     }
   };
 
+  // Default Values
+  const defaultValues: DoctorFormValues = {
+    password: "",
+    doctor: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      contactNumber: "",
+      address: "",
+      gender: "",
+      designation: "",
+      registrationNumber: "",
+      qualification: "",
+      experience: "",
+      appointmentFee: "",
+      currentWorkingPlace: "",
+      profilePhoto: "",
+    },
+  };
+
+  if (isLoading || isCreating || isUpdating) {
+    return <FullPageLoading/>;
+  }
+
   return (
     <>
       {/* Header Section */}
@@ -136,7 +141,7 @@ const Doctor = () => {
           Basic Information
         </div>
 
-        <MedicoForm onSubmit={handleCreateDoctor} >
+        <MedicoForm onSubmit={handleCreateDoctor} defaultValues={defaultValues}>
           {/* Rows of Input Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
             <MedicoInput label="First Name" type="text" name="firstName" />

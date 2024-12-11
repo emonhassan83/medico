@@ -1,33 +1,29 @@
 "use client";
+
 import React, { useState } from "react";
-import { Table, Button, Input, Divider, Space } from "antd";
+import { Table, Button, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import {
   useDeletePatientMutation,
-  useGetAllPatientQuery,
 } from "@/redux/api/patientApi";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { toast } from "sonner";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
-const PatientTable = () => {
-  const { data, refetch } = useGetAllPatientQuery([]);
-  const [deletePatient] = useDeletePatientMutation();
+const PatientTable = ({data, refetch} : any) => {
+  const [deletePatient, {isLoading}] = useDeletePatientMutation();
   const [searchText, setSearchText] = useState("");
-  
-  //   Filter data based on search text
+
   const filteredData = data?.patients?.filter((pt: any) =>
     pt.firstName.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  ///delete operation---------------------------------
   const handleDeleteRow = async (id: string) => {
-    // console.log(id);
     try {
       const res = await deletePatient(id).unwrap();
-      // console.log(res);
       if (res?.id) {
         toast.success("Delete patient successfully");
         refetch();
@@ -101,6 +97,11 @@ const PatientTable = () => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
+
+  if (isLoading) {
+    return <FullPageLoading/>;
+  }
+
   return (
     <div className="bg-white p-5">
       <div

@@ -15,6 +15,7 @@ import {
   useUpdateSpecialtiesMutation,
 } from "@/redux/api/specialtiesApi";
 import { useRouter } from "next/navigation";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const UpdateSpecialties = ({ params }: any) => {
   const router = useRouter();
@@ -22,8 +23,8 @@ const UpdateSpecialties = ({ params }: any) => {
   const { data, refetch, isLoading } = useGetSingleSpecialtiesQuery(
     params.updateId
   );
-  const [updateSpecialties] = useUpdateSpecialtiesMutation();
-  // console.log(data);
+  const [updateSpecialties, {isLoading: isUpdating}] = useUpdateSpecialtiesMutation();
+
   const handleFileUpload = async (file: File) => {
     try {
       const image = await uploadImageToImgbb(file);
@@ -61,6 +62,10 @@ const UpdateSpecialties = ({ params }: any) => {
     }
   };
 
+  if (isLoading || isUpdating) {
+    return <FullPageLoading/>;
+  }
+
   return (
     <>
       {/* Header Section */}
@@ -91,7 +96,6 @@ const UpdateSpecialties = ({ params }: any) => {
           Basic Information
         </div>
 
-        {!isLoading && data ? (
           <MedicoForm onSubmit={handleUpdateSpecialties} defaultValues={data}>
             {/* Rows of Input Fields */}
             <div className="flex flex-wrap gap-4 w-full">
@@ -163,9 +167,6 @@ const UpdateSpecialties = ({ params }: any) => {
               Update Specialties
             </Button>
           </MedicoForm>
-        ) : (
-          <p>isLoading...</p>
-        )}
       </div>
     </>
   );

@@ -15,7 +15,7 @@ const AppointmentTableInDoctor = ({ date }: any) => {
   const [selectedDate, setSelectedDate] = useState<string>(
     new Date().toISOString().slice(0, 10)
   ); // Defaults to today
-
+  
   useEffect(() => {
     if (date?.length > 0) {
       const fDate = new Date(date[0]?.schedule?.startDate?.slice(0, 10));

@@ -11,14 +11,19 @@ const Navbar = ({
   setOpen: Dispatch<SetStateAction<boolean>>;
   open: boolean;
 }) => {
-  const { data } = useGetMyProfileQuery({});
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const { data } = useGetMyProfileQuery({});
   const router = useRouter();
+  
+  const navigateRole = data && (data?.role)?.toLowerCase();
 
   useEffect(() => {
     router.refresh();
-  }, [data, router])
-  
+  }, [data, router]);
+
+  const handleNavigate = () => {
+    router.push(`/${navigateRole}/profile-view`);
+  };
 
   const handleLogout = () => {
     logoutUser(router);
@@ -100,13 +105,14 @@ const Navbar = ({
           </svg>
         </div>
         <div
+          onClick={handleNavigate}
           className={`${
             accountMenuOpen
               ? "translate-y-0 scale-100 opacity-100 !z-[99999] block"
-              : "translate-y-[50%] scale-0 opacity-0 !-z-50 cursor-default"
+              : "translate-y-[50%] scale-0 opacity-0 !-z-50 cursor-pointer"
           } bg-white w-max rounded-md shadow-lg absolute top-8 lg:top-12 right-0 p-[10px] flex flex-col transition-all duration-300 gap-2`}
         >
-          <p className="flex items-center gap-2 rounded-md p-2 pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50 hover:cursor-default">
+          <p className="flex items-center gap-2 rounded-md p-2 pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50 hover:cursor-pointer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -145,9 +151,9 @@ const Navbar = ({
 
           <div
             onClick={handleLogout}
-            className="mt-3 border-t border-gray-200 pt-[5px]"
+            className="mt-3 border-t border-gray-200 pt-[5px] cursor-pointer"
           >
-            <p className="flex items-center gap-2 rounded-md p-2 pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50 hover:cursor-default">
+            <p className="flex items-center gap-2 rounded-md p-2 pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50 hover:cursor-pointer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

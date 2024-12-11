@@ -1,9 +1,19 @@
+"use client";
+
 import MyAppointmentTable from "@/components/Dashboard/Doctor/Appointment/MyAppointmentTable";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
+import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
 
 const AppointmentList = () => {
+  const { data, isLoading } = useGetMyAppointmentsQuery({});
+
+  if (isLoading) {
+    return <FullPageLoading/>;
+  }
+
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
@@ -21,7 +31,7 @@ const AppointmentList = () => {
         </div>
       </div>
       <div className="pt-5">
-        <MyAppointmentTable />
+        <MyAppointmentTable data={data}/>
       </div>
     </div>
   );
