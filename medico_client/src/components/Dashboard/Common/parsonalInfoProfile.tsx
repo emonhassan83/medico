@@ -1,4 +1,4 @@
-import { useGetMyProfileQuery } from "@/redux/api/userApi";
+"use  client";
 
 
 const PersonalInfoProfile = ({data}: any) => {

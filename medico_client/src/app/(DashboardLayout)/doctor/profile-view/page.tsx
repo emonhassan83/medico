@@ -6,19 +6,20 @@ import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile
 import ProfileViewTableDoctor from "@/components/Dashboard/Doctor/profileViewTable/profileViewTable";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
 import { Row, Col } from "antd";
-import { FaCalendarCheck, FaDollarSign } from "react-icons/fa";
-import { HiCurrencyDollar } from "react-icons/hi2";
+import { FaCalendarCheck } from "react-icons/fa";
 import { MdEventNote } from "react-icons/md";
 import { GiNotebook } from "react-icons/gi";
 import { GrNotes } from "react-icons/gr";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetMyProfileQuery } from "@/redux/api/userApi";
+import { useGetAllMetaDataQuery } from "@/redux/api/metaApi";
 
 const ProfileView = () => {
   const { data, isLoading } = useGetMyProfileQuery({});
   const { data: AppointmentsData, isLoading: isAppointmentLoading } = useGetAllAppointmentsQuery({});
+  const {data:getAllMetaData, isLoading: isMetaLoading} = useGetAllMetaDataQuery({});
 
-  if (isLoading || isAppointmentLoading) {
+  if (isLoading || isAppointmentLoading || isMetaLoading) {
     return <FullPageLoading/>;
   }
 
@@ -39,36 +40,28 @@ const ProfileView = () => {
 
             {/* all cart starting here  */}
             <div className="grid grid-cols-3 gap-7">
+            <Card
+              title="Appointments"
+              number={AppointmentsData?.meta?.total || 0}
+              icon={<FaCalendarCheck size={33} />}
+            />
+              
               <Card
-                title="Appointments"
-                number={AppointmentsData?.meta?.total || 0}
-                icon={<FaCalendarCheck size={33} />}
-              />
+              title="Today's Appointments"
+              number={getAllMetaData?.todayAppointments || 1}
+              icon={<MdEventNote size={33} />}
+            />
               <Card
-                title="Revenue"
-                number={`$57`}
-                icon={<FaDollarSign size={33} />}
-              />
+              title="Tomorrow's Appointments"
+              number={getAllMetaData?.tomorrowAppointments}
+              icon={<GiNotebook size={33} />}
+            />
+              
               <Card
-                title="Today' Earning"
-                number={`$57`}
-                icon={<HiCurrencyDollar size={33} />}
-              />
-              <Card
-                title="Today's Appointments"
-                number={57}
-                icon={<MdEventNote size={33} />}
-              />
-              <Card
-                title="Tomorrow's Appointments"
-                number={57}
-                icon={<GiNotebook size={33} />}
-              />
-              <Card
-                title="Upcoming Appointments"
-                number={57}
-                icon={<GrNotes size={33} />}
-              />
+              title="Upcoming Appointments"
+              number={getAllMetaData?.upcomingAppointments || 2}
+              icon={<GrNotes size={33} />}
+            />
             </div>
            
           </div>
@@ -88,4 +81,4 @@ const ProfileView = () => {
   )
 }
 
-export default ProfileView
+export default ProfileView;
