@@ -1,9 +1,9 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import LoadingContext from "@/lib/LoadingContext/LoadingContext";
 import Link from "next/link";
-import { createContext, useState } from "react";
+import {  ReactNode, useState } from "react";
 
 const statusList = [
   { id: 1, status: 'scheduled', title: 'Scheduled Appointment List' },
@@ -12,15 +12,11 @@ const statusList = [
   { id: 4, status: 'canceled', title: 'Canceled Appointment List'},
 ];
 
-export const LoadingContext = createContext<{
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-} | null>(null);
-
-const layout = ({
+const Layout = ({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => {
+}: {
+  children: ReactNode;
+}) => {
   const [loading, setLoading] = useState(false);
   
   return (
@@ -56,4 +52,4 @@ const layout = ({
   );
 };
 
-export default layout;
+export default Layout;

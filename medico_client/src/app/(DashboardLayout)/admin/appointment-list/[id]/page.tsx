@@ -8,7 +8,7 @@ import {
 } from "@/redux/api/appointmentApi";
 import { ColumnsType } from "antd/es/table";
 import { toast } from "sonner";
-import { LoadingContext } from "../layout";
+import LoadingContext from "@/lib/LoadingContext/LoadingContext";
 
 type AppointmentStatus = "SCHEDULED" | "COMPLETED" | "CANCELED" | "INPROGRESS";
 type PaymentStatus = "PAID" | "UNPAID";

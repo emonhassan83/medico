@@ -1,9 +1,9 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import LoadingContext from "@/lib/LoadingContext/LoadingContext";
 import Link from "next/link";
-import { createContext, useState } from "react";
+import { useState, ReactNode } from "react";
 
 const statusList = [
   { id: 1, status: "scheduled", title: "Scheduled Appointment List" },
@@ -12,22 +12,19 @@ const statusList = [
   { id: 4, status: "canceled", title: "Canceled Appointment List" },
 ];
 
-export const LoadingContext = createContext<{
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-} | null>(null);
-
-const layout = ({
+const Layout = ({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => {
+}: {
+  children: ReactNode;
+}) => {
   const [loading, setLoading] = useState(false);
 
   return (
     <LoadingContext.Provider value={{ setLoading }}>
       <div className="relative">
-      {loading && <FullPageLoading />}
+        {loading && <FullPageLoading />}
 
+        {/* Header */}
         <div className="flex justify-between px-3 mt-8 mb-10">
           <div>
             <p className="uppercase">Appointment List</p>
@@ -37,9 +34,10 @@ const layout = ({
           </div>
         </div>
 
+        {/* Status Navigation */}
         <div className="flex justify-between gap-8 px-3 my-6">
-          {statusList?.map((value, i: number) => (
-            <div key={i}>
+          {statusList.map((value) => (
+            <div key={value.id}>
               <Link href={`/admin/appointment-list/${value.status}`}>
                 <button className="focus:text-blue-700 focus:border-b-[2px] focus:border-blue-500 pb-5 border-b text-sm">
                   {value.title}
@@ -48,10 +46,12 @@ const layout = ({
             </div>
           ))}
         </div>
+
+        {/* Children */}
         {children}
       </div>
     </LoadingContext.Provider>
   );
 };
 
-export default layout;
+export default Layout;
