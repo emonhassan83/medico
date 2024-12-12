@@ -1,15 +1,11 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { Table } from "antd";
-
-import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
-import { useGetMyProfileQuery } from "@/redux/api/userApi";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 
-const PrescriptionTableListInPatient = () => {
-  const { data } = useGetAllPrescriptionQuery({});
-  const { data: profile } = useGetMyProfileQuery(undefined);
+const PrescriptionTableListInPatient = ({data, profile}: any) => {
   const [dataSource, setDataSource] = useState<any>([]);
 
   useEffect(() => {

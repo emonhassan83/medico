@@ -10,9 +10,10 @@ import MedicoDatePiker from "@/components/Forms/MedicoDatePiker";
 import MedicoTimePicker from "@/components/Forms/MedicoTimePicker";
 import { useCreateScheduleMutation } from "@/redux/api/scheduleApi";
 import dayjs from "dayjs";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const CreateSchedules = () => {
-  const [createSchedule] = useCreateScheduleMutation();
+  const [createSchedule, { isLoading }] = useCreateScheduleMutation();
 
   const handleCreateSchedule = async (values: FieldValues) => {
     try {
@@ -26,7 +27,7 @@ const CreateSchedules = () => {
       const res = await createSchedule(formattedValues).unwrap();
 
       if (res) {
-          toast.success("Schedule created successfully!");
+        toast.success("Schedule created successfully!");
       }
     } catch (err: any) {
       toast.error(err.message);
@@ -34,12 +35,16 @@ const CreateSchedules = () => {
     }
   };
 
- const defaultValues = {
-  startDate: "",
-  endDate: "",
-  startTime: "",
-  endTime: "",
-};
+  const defaultValues = {
+    startDate: "",
+    endDate: "",
+    startTime: "",
+    endTime: "",
+  };
+
+  if (isLoading) {
+    return <FullPageLoading />;
+  }
 
   return (
     <>

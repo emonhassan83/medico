@@ -11,11 +11,12 @@ import { useCreatePrescriptionMutation } from "@/redux/api/prescriptionApi";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
 import MedicoSelect from "@/components/Forms/MedicoSelect";
 import MedicoTextArea from "@/components/Forms/MedicoTextArea";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const CreatePrescription = () => {
-  const { data } = useGetAllAppointmentsQuery({});
-  const [createPrescription] = useCreatePrescriptionMutation();
-  // const [value, setValue] = useState("");
+  const { data, isLoading } = useGetAllAppointmentsQuery({});
+  const [createPrescription, { isLoading: isFetching }] =
+    useCreatePrescriptionMutation();
 
   const prescribePatient = data?.appointments?.filter(
     (appointment: any) => appointment?.status === "INPROGRESS"
@@ -87,12 +88,15 @@ const CreatePrescription = () => {
   //   "script",
   // ];
 
-const defaultValues = {
-  appointmentId: "",
-  instructions: "",
-  followUpDate: "",
-};
+  const defaultValues = {
+    appointmentId: "",
+    instructions: "",
+    followUpDate: "",
+  };
 
+  if (isLoading || isFetching) {
+    return <FullPageLoading />;
+  }
   return (
     <>
       {/* Header Section */}
@@ -143,7 +147,7 @@ const defaultValues = {
             modules={modules}
             formats={formats}
           /> */}
-          <MedicoTextArea label="Instructions" name="instructions" rows={5}/>
+          <MedicoTextArea label="Instructions" name="instructions" rows={5} />
 
           {/* Submit Button */}
           <Button
@@ -160,15 +164,3 @@ const defaultValues = {
 };
 
 export default CreatePrescription;
-
-// import React from 'react';
-
-// const page = () => {
-//   return (
-//     <div>
-//       create prescription
-//     </div>
-//   );
-// };
-
-// export default page;

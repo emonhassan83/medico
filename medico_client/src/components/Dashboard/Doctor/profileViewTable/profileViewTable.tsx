@@ -1,10 +1,8 @@
-"use client"
+"use client";
+
 import TabOne from "@/app/(DashboardLayout)/receptionist/profile-view/components/TabOne/page";
 import { useState } from "react";
 import PatientTableAdmin from "../../Admin/dashbord/PatientTableAdmin";
-
-
-
 
 const ProfileViewTableDoctor = () => {
   const [activeTab, setActiveTab] = useState("tab1");

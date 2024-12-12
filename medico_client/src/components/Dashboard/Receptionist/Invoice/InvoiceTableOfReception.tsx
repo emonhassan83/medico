@@ -8,8 +8,7 @@ import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 
-const InvoiceTableOfReception = () => {
-  const { data, isLoading } = useGetAllAppointmentsQuery({});
+const InvoiceTableOfReception = ({data}: any) => {
   const appointments = data?.appointments;
 
   const columns: ColumnsType<any> = [

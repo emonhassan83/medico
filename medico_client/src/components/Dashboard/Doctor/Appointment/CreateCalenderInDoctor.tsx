@@ -5,11 +5,9 @@ import FullCalendar from "@fullcalendar/react"; // Main package
 import dayGridPlugin from "@fullcalendar/daygrid"; // For month view
 import timeGridPlugin from "@fullcalendar/timegrid"; // For week/day views
 import listPlugin from "@fullcalendar/list"; // For list view
-import interactionPlugin from "@fullcalendar/interaction"; // For click and drag
-
+import interactionPlugin from "@fullcalendar/interaction";
 import "./AppointmentCalender.css";
 import AppointmentTableInDoctor from "./AppointmentTableInDoctor";
-import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
 
 const formatDate = (dateString: any) => {
   const date = new Date(dateString);
@@ -27,8 +25,7 @@ interface Appointment {
   };
 }
 
-const CreateCalenderInDoctor = () => {
-  const { data } = useGetMyAppointmentsQuery({});
+const CreateCalenderInDoctor = ({data}: any) => {
   const [events, setEvents] = useState<any[]>([]);
   const [date, setDate] = useState<any[]>([]);
 
@@ -84,7 +81,6 @@ const CreateCalenderInDoctor = () => {
 
     setDate(todaysAppointment);
   };
-
   return (
     <div className="mt-5 flex flex-col md:flex-row  justify-between gap-10">
       <div className="bg-white p-5">
@@ -113,6 +109,7 @@ const CreateCalenderInDoctor = () => {
         </div>
       </div>
       <AppointmentTableInDoctor date={date} />
+
     </div>
   );
 };

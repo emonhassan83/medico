@@ -2,17 +2,11 @@
 
 import React from "react";
 import { Table } from "antd";
-import { toast } from "sonner";
 import { ColumnsType } from "antd/es/table";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { useGetAllSchedulesQuery } from "@/redux/api/scheduleApi";
 
-const SchedulesTabileInDoctor = () => {
-  const { data, isLoading } = useGetAllSchedulesQuery({});
-  console.log(data);
-
+const SchedulesTabileInDoctor = ({data}: any) => {
   const columns: ColumnsType<any> = [
     {
       title: "SL No",

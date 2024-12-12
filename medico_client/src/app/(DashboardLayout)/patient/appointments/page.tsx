@@ -1,9 +1,13 @@
+"use client";
+
 import CreateCalender from "@/components/Dashboard/PatientAppointment/CreateCalender";
+import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
 
 const AppointmentPage = () => {
+  const { data } = useGetMyAppointmentsQuery({});
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
@@ -29,7 +33,7 @@ const AppointmentPage = () => {
         </Link>
       </div>
       <div>
-        <CreateCalender />
+        <CreateCalender data={data} />
       </div>
     </div>
   );

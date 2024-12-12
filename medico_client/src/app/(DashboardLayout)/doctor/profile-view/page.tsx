@@ -1,33 +1,27 @@
-'use client'
+'use client';
 
 import Card from "@/components/Dashboard/Common/Card";
-import ParsonalInfoProfile from "@/components/Dashboard/Common/parsonalInfoProfile";
-import WelcomeCard from "@/components/Dashboard/Common/WelcomeCard";
+import PersonalInfoProfile from "@/components/Dashboard/Common/parsonalInfoProfile";
 import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile";
 import ProfileViewTableDoctor from "@/components/Dashboard/Doctor/profileViewTable/profileViewTable";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
-import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
-import { useGetAllPatientQuery } from "@/redux/api/patientApi";
-import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 import { Row, Col } from "antd";
-import { TiUserOutline } from "react-icons/ti";
-
-import { FaCalendarCheck, FaDollarSign } from "react-icons/fa";
-import { HiCurrencyDollar } from "react-icons/hi2";
+import { FaCalendarCheck } from "react-icons/fa";
 import { MdEventNote } from "react-icons/md";
 import { GiNotebook } from "react-icons/gi";
 import { GrNotes } from "react-icons/gr";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
+import { useGetMyProfileQuery } from "@/redux/api/userApi";
 import { useGetAllMetaDataQuery } from "@/redux/api/metaApi";
 
-
-
 const ProfileView = () => {
-  const { data: doctorsData } = useGetAllDoctorsQuery({});
-  const { data: patientsData } = useGetAllPatientQuery({});
-  const { data: receptionistsData } = useGetAllReceptionQuery({});
-  const { data: AppointmentsData } = useGetAllAppointmentsQuery({});
-  const {data:getAllMetaData} = useGetAllMetaDataQuery(undefined)
+  const { data, isLoading } = useGetMyProfileQuery({});
+  const { data: AppointmentsData, isLoading: isAppointmentLoading } = useGetAllAppointmentsQuery({});
+  const {data:getAllMetaData, isLoading: isMetaLoading} = useGetAllMetaDataQuery({});
 
+  if (isLoading || isAppointmentLoading || isMetaLoading) {
+    return <FullPageLoading/>;
+  }
 
   return (
     <div className="mx-5">
@@ -75,25 +69,16 @@ const ProfileView = () => {
         </Col>
       </Row>
 
-
-
       <div className="flex justify-between  mt-28 mx-8">
         <div className="w-1/3">
-        <ParsonalInfoProfile/>
+        <PersonalInfoProfile data={data}/>
         </div>
-
         <div className="w-2/3">
         <ProfileViewTableDoctor/>
         </div>
-
-      </div>
-
-       
-    
-
-        
+      </div>  
     </div>
   )
 }
 
-export default ProfileView
+export default ProfileView;

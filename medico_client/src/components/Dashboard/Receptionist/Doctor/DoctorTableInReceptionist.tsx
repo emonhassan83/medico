@@ -1,16 +1,13 @@
 "use client";
+
 import React, { useState } from "react";
 import { Table, Button, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
 import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 
-const DoctorTableInReceptionist = () => {
-  const { data } = useGetAllDoctorsQuery({});
-  // console.log(data);
+const DoctorTableInReceptionist = ({data}: any) => {
   const [searchText, setSearchText] = useState("");
 
   //   Filter data based on search text

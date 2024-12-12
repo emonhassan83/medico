@@ -1,12 +1,12 @@
 "use client";
-import CreateAppointmentForm from "@/components/Dashboard/PatientAppointment/CreateAppointmentForm";
 
+import CreateAppointmentForm from "@/components/Dashboard/PatientAppointment/CreateAppointmentForm";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
 import { TiArrowLeft } from "react-icons/ti";
 
-const CreateAppoinment = () => {
+const CreateAppointment = () => {
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-5">
@@ -45,4 +45,4 @@ const CreateAppoinment = () => {
   );
 };
 
-export default CreateAppoinment;
+export default CreateAppointment;

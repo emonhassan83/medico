@@ -11,6 +11,7 @@ interface DataType {
   SrNo: number;
 }
 
+
 const AppointmentTableInDoctor = ({ date }: any) => {
   const [selectedDate, setSelectedDate] = useState<string>(
     new Date().toISOString().slice(0, 10)

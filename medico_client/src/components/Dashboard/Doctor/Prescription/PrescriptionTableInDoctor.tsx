@@ -11,8 +11,7 @@ import {
 } from "@/redux/api/prescriptionApi";
 import { toast } from "sonner";
 
-const PrescriptionTableInDoctor = () => {
-  const { data } = useGetAllPrescriptionQuery({});
+const PrescriptionTableInDoctor = ({data}: any) => {
   const [deletePrescription] = useDeletePrescriptionMutation();
 
   const dataSource = data?.prescription?.map((prescription: any) => ({

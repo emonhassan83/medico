@@ -1,4 +1,5 @@
 "use client";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,7 +8,7 @@ import { BsSlash } from "react-icons/bs";
 import { FaEnvelope, FaMailBulk, FaPhoneAlt } from "react-icons/fa";
 
 const PrescriptionDetails = ({ params }: any) => {
-  const { data } = useGetAllPrescriptionQuery({});
+  const { data, isLoading } = useGetAllPrescriptionQuery({});
   const [filter, setFilter] = useState<any>({});
 
   useEffect(() => {
@@ -17,6 +18,9 @@ const PrescriptionDetails = ({ params }: any) => {
     }
   }, [data, params]);
 
+  if (isLoading) {
+    return <FullPageLoading/>;
+  }
   return (
     <div className="mx-5 pb-4">
       <div className="flex items-center justify-between mt-2">

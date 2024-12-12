@@ -1,8 +1,17 @@
+"use client";
+
 import CreateCalenderInReception from "@/components/Dashboard/Receptionist/Appointment/CreateCalenderInReception";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
+import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
 import Link from "next/link";
 import { BsSlash } from "react-icons/bs";
 
 const AppointmentPageOfDoctor = () => {
+  const { data, isLoading } = useGetAllAppointmentsQuery({});
+
+  if (isLoading) {
+    return <FullPageLoading />;
+  }
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
@@ -19,9 +28,9 @@ const AppointmentPageOfDoctor = () => {
           <Link href="#">Appointment</Link>
         </div>
       </div>
-      
+
       <div>
-        <CreateCalenderInReception />
+        <CreateCalenderInReception data={data} />
       </div>
     </div>
   );

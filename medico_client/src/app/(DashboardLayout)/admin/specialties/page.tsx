@@ -1,3 +1,5 @@
+"use client";
+
 import SpecialtiesTable from "@/components/Dashboard/Admin/Specialties/SpecialtiesTable";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetAllSpecialtiesQuery } from "@/redux/api/specialitiesApi";

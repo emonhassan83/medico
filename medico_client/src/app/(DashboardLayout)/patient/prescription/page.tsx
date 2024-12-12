@@ -1,10 +1,22 @@
-import DoctorTable from "@/components/Dashboard/PatientAppointment/DoctorTable";
+"use client";
+
 import PrescriptionTableListInPatient from "@/components/Dashboard/PatientAppointment/Prescription/PrescriptionTableListInPatient";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
+import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
+import { useGetMyProfileQuery } from "@/redux/api/userApi";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
 
-const MyPrescriptinPage = () => {
+const MyPrescriptionPage = () => {
+  const { data, isLoading } = useGetAllPrescriptionQuery([]);
+  const { data: profile, isLoading: isProfileLoading } = useGetMyProfileQuery(
+    {}
+  );
+
+  if (isLoading || isProfileLoading) {
+    return <FullPageLoading />;
+  }
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
@@ -22,10 +34,10 @@ const MyPrescriptinPage = () => {
         </div>
       </div>
       <div className="mt-5">
-        <PrescriptionTableListInPatient />
+        <PrescriptionTableListInPatient data={data} profile={profile} />
       </div>
     </div>
   );
 };
 
-export default MyPrescriptinPage;
+export default MyPrescriptionPage;

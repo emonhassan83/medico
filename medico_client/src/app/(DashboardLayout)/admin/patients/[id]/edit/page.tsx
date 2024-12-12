@@ -16,22 +16,13 @@ import {
   useUpdatePatientMutation,
 } from "@/redux/api/patientApi";
 import { useRouter } from "next/navigation";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const UpdatePatients = ({ params }: any) => {
-  // console.log(params.id);
   const router = useRouter();
   const [photo, setPhoto] = useState("");
-  const [updatePatient] = useUpdatePatientMutation();
-
-  const [load, setLoad] = useState(false);
+  const [updatePatient, {isLoading: isUpdating}] = useUpdatePatientMutation();
   const { data, isLoading } = useGetSinglePatientQuery(params.id);
-  // console.log(data);
-
-  // useEffect(() => {
-  //   if (data) {
-  //     setLoad(true);
-  //   }
-  // }, [data]);
 
   const handleFileUpload = async (file: File) => {
     try {
@@ -48,20 +39,6 @@ const UpdatePatients = ({ params }: any) => {
 
   const handleUpdatePatient = async (values: FieldValues) => {
     try {
-      // const payload = {
-      //   id: params.id,
-      //   body: {
-      //     ...values,
-      //     profilePhoto,
-      //   },
-      // };
-      const updatedData = {
-        ...values,
-        profilePhoto: photo || data?.profilePhoto,
-      };
-
-      // console.log(values);
-
       const payload = {
         id: params.id, // Patient's unique ID
         body: {
@@ -82,7 +59,7 @@ const UpdatePatients = ({ params }: any) => {
           },
         },
       };
-      // console.log(payload);
+
       const result = await updatePatient(payload).unwrap();
       // console.log(result);
       if (result) {
@@ -96,6 +73,9 @@ const UpdatePatients = ({ params }: any) => {
     }
   };
 
+if (isLoading || isUpdating) {
+  return <FullPageLoading/>;
+}
   return (
     <>
       {/* Header Section */}
@@ -127,7 +107,6 @@ const UpdatePatients = ({ params }: any) => {
           Basic Information
         </div>
 
-        {!isLoading && data ? (
           <MedicoForm onSubmit={handleUpdatePatient} defaultValues={data}>
             {/* Rows of Input Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
@@ -274,9 +253,6 @@ const UpdatePatients = ({ params }: any) => {
               Update Patient
             </Button>
           </MedicoForm>
-        ) : (
-          <p>Loading</p>
-        )}
       </div>
     </>
   );

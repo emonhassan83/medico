@@ -1,12 +1,18 @@
 "use client";
 
 import SchedulesTabileInDoctor from "@/components/Dashboard/Doctor/Schedules/SchedulesTabileInDoctor";
-import ScheduleTable from "@/components/Dashboard/Receptionist/Schedule/ScheduleTable";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
+import { useGetAllSchedulesQuery } from "@/redux/api/scheduleApi";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
 
 const DoctorSchedulesPage = () => {
+  const { data, isLoading } = useGetAllSchedulesQuery({});
+
+  if (isLoading) {
+    return <FullPageLoading/>
+  }
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
@@ -32,7 +38,7 @@ const DoctorSchedulesPage = () => {
         </Link>
       </div>
       <div className="mt-5">
-        <SchedulesTabileInDoctor />
+        <SchedulesTabileInDoctor data={data} />
       </div>
     </div>
   );

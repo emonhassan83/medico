@@ -1,22 +1,78 @@
-/* eslint-disable react/jsx-key */
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import MedicoForm from "@/components/Forms/MedicoForm";
 import MedicoInput from "@/components/Forms/MedicoInput";
 import { Button, Image, Card, Upload } from "antd";
 import { FieldValues } from "react-hook-form";
 import MedicoSelect from "@/components/Forms/MedicoSelect";
+import { useCreatePatientMutation, useUpdatePatientMutation } from "@/redux/api/patientApi";
+import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
+import { toast } from "sonner";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const CreatePatients = () => {
+  const [photo, setPhoto] = useState("");
+  const [createPatient, { isLoading: isCreating }] = useCreatePatientMutation();
+  const [updatePatient, { isLoading: isUpdating }] = useUpdatePatientMutation();
+
   const handleFileUpload = async (file: File) => {
-    // console.log(file);
+    try {
+      const image = await uploadImageToImgbb(file);
+
+      if (image) {
+        toast.success("Patient Photo Upload successfully");
+      }
+      setPhoto(image);
+    } catch (error) {
+      console.error("Failed to upload image:", error);
+    }
   };
 
   const handleCreatePatient = async (values: FieldValues) => {
-    // console.log(values);
+    try {
+      const patientData = {
+        password: "patient123",
+        patient: {
+          firstName: values?.firstName,
+          lastName: values?.lastName,
+          email: values?.email,
+          contactNumber: values?.contactNumber,
+          profilePhoto: photo,
+          address: values?.address,
+        },
+      };
+
+      const patientUpdateData = {
+        patientHealthData: {
+          gender: values?.gender,
+          bloodGroup: values?.bloodGroup,
+          height: values?.height,
+          weight: values?.weight,
+          diet: values?.diet,
+          pulse: values?.pulse,
+          dietaryPreferences: values?.dietaryPreferences,
+          maritalStatus: values?.maritalStatus,
+        },
+      };
+      const res = await createPatient(patientData).unwrap();
+
+      if (res?.id) {
+        const response = await updatePatient({
+          id: res.id,
+          data: patientUpdateData,
+        }).unwrap();
+
+        if (response.id) {
+          toast.success("Patient created successfully!");
+        }
+      }
+    } catch (err: any) {
+      toast.error(err.message);
+      console.error(err.message);
+    }
   };
 
   const defaultValues = {
@@ -38,6 +94,10 @@ const CreatePatients = () => {
     profilePhoto: "",
   },
 };
+
+if (isCreating || isUpdating) {
+  return <FullPageLoading />;
+}
 
   return (
     <>

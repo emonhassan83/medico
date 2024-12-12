@@ -1,9 +1,18 @@
+"use client";
+
 import DoctorTable from "@/components/Dashboard/PatientAppointment/DoctorTable";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
+import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
 
 const DoctorList = () => {
+  const { data, isLoading } = useGetAllDoctorsQuery({});
+
+  if (isLoading) {
+    return <FullPageLoading/>;
+  }
   return (
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
@@ -19,7 +28,7 @@ const DoctorList = () => {
         </div>
       </div>
       <div className="mt-5">
-        <DoctorTable />
+        <DoctorTable data={data} />
       </div>
     </div>
   );

@@ -1,17 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
 import { Table } from "antd";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
 import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
 
-const PrescriptionListTable = () => {
-  const { data } = useGetAllPrescriptionQuery({});
-  // console.log(data);
-  // console.log(data);
-
+const PrescriptionListTable = ({data}: any) => {
   const dataSource = data?.prescription?.map((presecription: any) => ({
     patientName: presecription?.patient?.firstName,
     doctorName: presecription?.doctor?.firstName,

@@ -1,7 +1,7 @@
 "use client";
+
 import Link from "next/link";
-import React, { useState } from "react";
-import { Button, Table, Tag, Space, TableColumnsType } from "antd";
+import { Button, Table, Space } from "antd";
 import { BsSlash } from "react-icons/bs";
 import {
   useAppointmentStatusChangeMutation,
@@ -21,8 +21,7 @@ type AppointmentData = {
 };
 
 const PatientAppointment = () => {
-  // const [appointments, setAppointments] = useState(dataSource);
-  const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
+  const [appointmentStatusChange, {isLoading: isUpdating}] = useAppointmentStatusChangeMutation();
   const { data, refetch, isLoading } = useGetAllAppointmentsQuery({});
   
   // Map data with proper keys and types
@@ -117,7 +116,7 @@ const PatientAppointment = () => {
     },
   ];
 
-  if (isLoading) {
+  if (isLoading || isUpdating) {
     return <FullPageLoading/>;
   }
 
