@@ -61,7 +61,7 @@ interface Appointment {
   // patient: Patient;
 }
 
-const MyAppointmentTable = ({data}: any) => {
+const MyAppointmentTable = ({ data }: any) => {
   const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
   const [deleteAppointment] = useDeleteAppointmentMutation();
 
@@ -111,6 +111,42 @@ const MyAppointmentTable = ({data}: any) => {
       title: "Appointment Status",
       dataIndex: "status",
       key: "status",
+      render: (status: AppointmentStatus) => {
+        let backgroundColor = "";
+        let color = "#000";
+
+        switch (status) {
+          case "CANCELED":
+            backgroundColor = "#ffcccc";
+            color = "#ff0000";
+            break;
+          case "COMPLETED":
+            backgroundColor = "#ccffcc";
+            color = "#008000";
+            break;
+          case "INPROGRESS":
+            backgroundColor = "#ffffcc";
+            color = "#b8860b";
+            break;
+          default:
+            backgroundColor = "transparent";
+            color = "#000";
+        }
+
+        return (
+          <span
+            style={{
+              backgroundColor,
+              color,
+              padding: "5px 10px",
+              borderRadius: "5px",
+              fontWeight: "bold",
+            }}
+          >
+            {status}
+          </span>
+        );
+      },
     },
     {
       title: "Payment Status",
@@ -136,24 +172,20 @@ const MyAppointmentTable = ({data}: any) => {
       key: "status",
       align: "center",
       render: (status: AppointmentStatus, item) => (
-        <div className="flex justify-center">
-          <Button
+        <div className="flex justify-center ">
+          <button
             onClick={() => handleChangeStatus(item.id, "CANCELED")}
-            color="default"
-            variant="filled"
-            size="small"
-            style={{ marginRight: 8 }}
+            className="bg-red-400 px-2 rounded-sm"
+            style={{ marginRight: 8, color: "white" }}
           >
             Canceled
-          </Button>
-          <Button
+          </button>
+          <button
             onClick={() => handleDeleteAppointment(item.id)}
-            color="danger"
-            variant="filled"
-            size="small"
+            className="bg-red-600 text-white px-3 rounded-sm"
           >
             Delete
-          </Button>
+          </button>
         </div>
       ),
     },

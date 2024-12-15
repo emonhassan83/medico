@@ -153,31 +153,31 @@ const updateIntoDB = async (
 
 //! TODO: FIX HERE DELETE USING TRANSITION CLIENT AND DELETE patientHealthData, medicalReport, patient, user TABLE DATA
 const deleteFromDB = async (id: string): Promise<Patient> => {
-  //   return await prisma.$transaction(async transactionClient => {
-  //     await transactionClient.patientHealthData.delete({
-  //       where: {
-  //         patientId: id,
-  //       },
-  //     });
-  //     await transactionClient.medicalReport.deleteMany({
-  //       where: {
-  //         patientId: id,
-  //       },
-  //     });
-  const deletedPatient = await prisma.patient.delete({
-    where: {
-      id,
-    },
+  return await prisma.$transaction(async transactionClient => {
+    await transactionClient.patientHealthData.delete({
+      where: {
+        patientId: id,
+      },
+    });
+    await transactionClient.medicalReport.deleteMany({
+      where: {
+        patientId: id,
+      },
+    });
+    const deletedPatient = await prisma.patient.delete({
+      where: {
+        id,
+      },
+    });
+
+    await transactionClient.user.delete({
+      where: {
+        email: deletedPatient.email,
+      },
+    });
+
+    return deletedPatient;
   });
-
-  // await transactionClient.user.delete({
-  //   where: {
-  //     email: deletedPatient.email,
-  //   },
-  // });
-
-  return deletedPatient;
-  //   });
 };
 
 const softDelete = async (id: string): Promise<Patient> => {

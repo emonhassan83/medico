@@ -23,16 +23,18 @@ const LatestAppointmentTable = () => {
 
   // Map data with proper keys and types
   const tableData: AppointmentData[] =
-    data?.appointments.slice(0, 4) ?.map((appointment: Appointment, index: number) => ({
-      key: appointment.id || `${index}`, // Use _id or fallback
-      srNo: index + 1,
-      status: appointment.status || "N/A",
-      doctorName: `${appointment?.doctor?.firstName || "N/A"} ${
-        appointment?.doctor?.lastName || ""
-      }`,
-      date: appointment.createdAt?.slice(0, 10) || "N/A",
-      time: appointment.createdAt?.slice(11, 19) || "N/A",
-    })) || [];
+    data?.appointments
+      ?.slice(0, 4)
+      ?.map((appointment: Appointment, index: number) => ({
+        key: appointment.id || `${index}`, // Use _id or fallback
+        srNo: index + 1,
+        status: appointment.status || "N/A",
+        doctorName: `${appointment?.doctor?.firstName || "N/A"} ${
+          appointment?.doctor?.lastName || ""
+        }`,
+        date: appointment.createdAt?.slice(0, 10) || "N/A",
+        time: appointment.createdAt?.slice(11, 19) || "N/A",
+      })) || [];
 
   //update status function in here
   const handleCancel = async (appointmentId: string) => {
@@ -97,20 +99,14 @@ const LatestAppointmentTable = () => {
         );
       },
     },
-   
   ];
 
   return (
     <div className="">
       {/* Table Section */}
       <div className="py-5 bg-white ">
-        <Table
-          dataSource={tableData}
-          columns={columns}
-          bordered
-        />
+        <Table dataSource={tableData} columns={columns} bordered />
       </div>
-     
     </div>
   );
 };
