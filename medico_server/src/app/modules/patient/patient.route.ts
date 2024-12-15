@@ -23,7 +23,11 @@ router.patch(
   PatientController.updateIntoDB,
 );
 
-router.delete('/:id', auth(UserRole.ADMIN), PatientController.deleteFromDB);
+router.delete(
+  '/:id',
+  auth(UserRole.ADMIN, UserRole.DOCTOR),
+  PatientController.deleteFromDB,
+);
 
 router.delete('/soft/:id', auth(UserRole.ADMIN), PatientController.softDelete);
 
