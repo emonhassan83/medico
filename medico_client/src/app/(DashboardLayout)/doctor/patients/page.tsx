@@ -1,6 +1,7 @@
 "use client";
 
 import PatientTable from "@/components/Dashboard/Admin/Patient/PatientTable";
+import PatientTableInDoctor from "@/components/Dashboard/Doctor/Patient/PatientTableInDoctor";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import Link from "next/link";
@@ -9,7 +10,7 @@ import { BsSlash } from "react-icons/bs";
 
 const PatientPage = () => {
   const { data, refetch, isLoading } = useGetAllPatientQuery([]);
-
+  console.log(data);
   if (isLoading) {
     return <FullPageLoading />;
   }
@@ -28,7 +29,8 @@ const PatientPage = () => {
         </div>
       </div>
       <div className="pt-5">
-        <PatientTable data={data} refetch={refetch} />
+        {/* <PatientTable data={data} refetch={refetch} /> */}
+        <PatientTableInDoctor data={data} refetch={refetch} />
       </div>
     </div>
   );

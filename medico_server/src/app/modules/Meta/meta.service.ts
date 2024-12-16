@@ -1,4 +1,4 @@
-import { PaymentStatus, UserRole } from '@prisma/client';
+import { PaymentStatus, Prisma, UserRole } from '@prisma/client';
 import prisma from '../../../shared/prisma';
 import { IAuthUser } from '../../../interfaces/common';
 
