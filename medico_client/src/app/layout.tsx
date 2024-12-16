@@ -7,7 +7,7 @@ import Providers from "@/lib/Providers/Providers";
 const poppins = Poppins({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Medico | Hospital Management System",
+  title: "Medico | Hospital & Clinic Management System",
   description: "Medico is a comprehensive healthcare management platform, offering seamless appointment scheduling, patient management, and real-time updates for healthcare professionals."
 };
 

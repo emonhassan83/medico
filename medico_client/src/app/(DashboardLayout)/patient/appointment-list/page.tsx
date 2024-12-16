@@ -10,6 +10,7 @@ import {
 import { Appointment } from "@/types/appointmentType";
 import { ColumnsType } from "antd/es/table";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 type AppointmentData = {
   key: string;
@@ -21,9 +22,10 @@ type AppointmentData = {
 };
 
 const PatientAppointment = () => {
-  const [appointmentStatusChange, {isLoading: isUpdating}] = useAppointmentStatusChangeMutation();
+  const [appointmentStatusChange, { isLoading: isUpdating }] =
+    useAppointmentStatusChangeMutation();
   const { data, refetch, isLoading } = useGetAllAppointmentsQuery({});
-  
+
   // Map data with proper keys and types
   const tableData: AppointmentData[] =
     data?.appointments?.map((appointment: Appointment, index: number) => ({
@@ -117,57 +119,66 @@ const PatientAppointment = () => {
   ];
 
   if (isLoading || isUpdating) {
-    return <FullPageLoading/>;
+    return <FullPageLoading />;
   }
 
   return (
-    <div className="mx-5">
-      {/* Header Section */}
-      <div className="flex items-center justify-between my-5">
-        <div>
-          <h2 className="text-[15px] text-[#495057] font-semibold">
-            APPOINTMENT LIST
-          </h2>
-        </div>
-        <div className="flex items-center gap-1 text-[#495057] text-sm">
-          <Link href="#" className="">
-            Dashboard
-          </Link>
-          <BsSlash className="text-[#ccc]" />
-          <Link href="#">Appointment</Link>
-        </div>
-      </div>
+    <>
+      <Meta
+        title="List Appointment | Medico - Hospital & Clinic Management System"
+        description="This is the patient list appointment of Medico where patients can manage and show their appointments."
+      />
 
-      {/* Table Section */}
-      <div className="p-5  bg-white ">
-        <Table
-          dataSource={tableData}
-          columns={columns}
-          pagination={{ pageSize: 10 }}
-          bordered
-        />
-      </div>
-      <div className="relative hidden md:block p-5">
-        {data?.meta?.page === 1 ? (
-          <div className="absolute text-[#495072] text-sm bottom-20">
-            {data?.meta?.total <= 10 ? (
-              <div>
-                showing 1 to {data?.meta?.total} of {data?.meta?.total} entries
-              </div>
-            ) : (
-              <div>
-                showing 1 to {data?.meta?.limit} of {data?.meta?.total} entries
-              </div>
-            )}
+      <div className="mx-5">
+        {/* Header Section */}
+        <div className="flex items-center justify-between my-5">
+          <div>
+            <h2 className="text-[15px] text-[#495057] font-semibold">
+              APPOINTMENT LIST
+            </h2>
           </div>
-        ) : (
-          <div className="absolute text-[#495072]  text-sm bottom-20">
-            showing 1 to (({data?.meta?.page} - 1)* {data?.meta?.limit} ) of{" "}
-            {data?.meta?.total} entries
+          <div className="flex items-center gap-1 text-[#495057] text-sm">
+            <Link href="#" className="">
+              Dashboard
+            </Link>
+            <BsSlash className="text-[#ccc]" />
+            <Link href="#">Appointment</Link>
           </div>
-        )}
+        </div>
+
+        {/* Table Section */}
+        <div className="p-5  bg-white ">
+          <Table
+            dataSource={tableData}
+            columns={columns}
+            pagination={{ pageSize: 10 }}
+            bordered
+          />
+        </div>
+        <div className="relative hidden md:block p-5">
+          {data?.meta?.page === 1 ? (
+            <div className="absolute text-[#495072] text-sm bottom-20">
+              {data?.meta?.total <= 10 ? (
+                <div>
+                  showing 1 to {data?.meta?.total} of {data?.meta?.total}{" "}
+                  entries
+                </div>
+              ) : (
+                <div>
+                  showing 1 to {data?.meta?.limit} of {data?.meta?.total}{" "}
+                  entries
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="absolute text-[#495072]  text-sm bottom-20">
+              showing 1 to (({data?.meta?.page} - 1)* {data?.meta?.limit} ) of{" "}
+              {data?.meta?.total} entries
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
