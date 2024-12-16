@@ -21,7 +21,7 @@ const roleBasedPrivateRoutes = {
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;  
+  const { pathname } = request.nextUrl;
   const accessToken = cookies().get("accessToken")?.value;
 
   //* redirect on role based private routes
@@ -48,11 +48,10 @@ export function middleware(request: NextRequest) {
   if (
     accessToken &&
     (commonPrivateRoutes.includes(pathname) ||
-       commonPrivateRoutes.some((route) => pathname.startsWith(route)))
- ) {
+      commonPrivateRoutes.some((route) => pathname.startsWith(route)))
+  ) {
     return NextResponse.next();
- }
-
+  }
 
   if (role && roleBasedPrivateRoutes[role as Role]) {
     const routes = roleBasedPrivateRoutes[role as Role]; //* get specific role based route
@@ -61,10 +60,27 @@ export function middleware(request: NextRequest) {
     }
   }
 
+  //* protected home page routes
+  if (pathname === "/") {
+    if (accessToken) {
+      return NextResponse.redirect(new URL(`/${redirectUrl}`, request.url));
+    } else {
+      return NextResponse.redirect(new URL(`/login`, request.url));
+    }
+  }
+
   return NextResponse.redirect(new URL(`/${redirectUrl}`, request.url));
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/login", "/register", "/admin/:page*", "/receptionist/:page*", "/doctor/:page*", "/patient/:page*"],
+  matcher: [
+    "/",
+    "/login",
+    "/register",
+    "/admin/:page*",
+    "/receptionist/:page*",
+    "/doctor/:page*",
+    "/patient/:page*",
+  ],
 };

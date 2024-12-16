@@ -12,6 +12,7 @@ import DisplayItemCard from "@/components/Dashboard/Common/DisplayItemCard";
 import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile";
 import { FaCalendarCheck } from "react-icons/fa";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const PatientDashboard = () => {
   const { data: doctorsData, isLoading: isDoctorLoading } =
@@ -33,6 +34,12 @@ const PatientDashboard = () => {
   }
 
   return (
+    <>
+     <Meta
+        title="Medico | Patient Dashboard"
+        description="This is the patient dashboard of Medico where patients can manage their appointments, prescriptions, and more."
+      />
+
     <div className="mx-4">
       <div className="mb-6 flex justify-between items-center">
         <h2 className="text-[#343A40] font-semibold text-[16px]  uppercase">
@@ -71,6 +78,7 @@ const PatientDashboard = () => {
         </Col>
       </Row>
     </div>
+    </>
   );
 };
 
