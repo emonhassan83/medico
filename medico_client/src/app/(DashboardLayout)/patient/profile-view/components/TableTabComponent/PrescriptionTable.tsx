@@ -68,7 +68,7 @@ const PrescriptionTable = () => {
       render: (data: any) => (
         <div className="flex gap-1">
           <Link href={`/patient/prescription/${data?.id}`}>
-            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white py-2 px-4 rounded-3xl">
+            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white py-1 px-2 rounded-3xl">
              View
             </button>
           </Link>
