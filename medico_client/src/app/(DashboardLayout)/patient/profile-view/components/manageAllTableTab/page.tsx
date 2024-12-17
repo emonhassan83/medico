@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import PrescriptionTableInDoctor from "@/components/Dashboard/Doctor/Prescription/PrescriptionTableInDoctor";
 import AppointmentTable from "../TableTabComponent/AppointmentTable";
+import PrescriptionTable from "../TableTabComponent/PrescriptionTable";
 
 const ManageAllTableTab = () => {
   const [activeTab, setActiveTab] = useState("tab2");
@@ -14,7 +14,7 @@ const ManageAllTableTab = () => {
       case "tab2":
         return <AppointmentTable/>
       case "tab3":
-        return <PrescriptionTableInDoctor/>
+        return <PrescriptionTable/>
       case "tab4":
         return <TabFour/>
       default:
