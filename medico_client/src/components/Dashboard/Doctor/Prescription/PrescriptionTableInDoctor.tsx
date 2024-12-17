@@ -3,11 +3,9 @@ import React from "react";
 import { Table } from "antd";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import {
-  useDeletePrescriptionMutation,
-  useGetAllPrescriptionQuery,
+  useDeletePrescriptionMutation
 } from "@/redux/api/prescriptionApi";
 import { toast } from "sonner";
 

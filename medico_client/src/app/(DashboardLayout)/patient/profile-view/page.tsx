@@ -2,19 +2,21 @@
 
 import ManageAllTableTab from "./components/manageAllTableTab/page";
 import Card from "@/components/Dashboard/Common/Card";
-import ParsonalInfoProfile from "@/components/Dashboard/Common/parsonalInfoProfile";
+import PersonalInfoProfile from "@/components/Dashboard/Common/parsonalInfoProfile";
 import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile";
 import Meta from "@/components/Dashboard/Meta/MetaData";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
+import { useGetMyProfileQuery } from "@/redux/api/userApi";
 import { Row, Col } from "antd";
 import { FaCalendarCheck } from "react-icons/fa";
 import { FaChartColumn, FaChartSimple } from "react-icons/fa6";
 
 const ProfileView = () => {
+  const {data, isLoading: isProfileLoading} = useGetMyProfileQuery({});
   const { data: AppointmentsData, isLoading } = useGetAllAppointmentsQuery({});
 
-  if (isLoading) {
+  if (isLoading || isProfileLoading) {
     return <FullPageLoading />;
   }
   return (
@@ -38,7 +40,7 @@ const ProfileView = () => {
           <Col span={24} md={8}>
             <div className="flex flex-col gap-7">
               <WelcomeCardProfile />
-              <ParsonalInfoProfile />
+              <PersonalInfoProfile data={data} />
             </div>
           </Col>
           <Col span={24} md={16}>
