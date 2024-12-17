@@ -5,12 +5,13 @@ import { Button, Table, Space } from "antd";
 import { BsSlash } from "react-icons/bs";
 import {
   useAppointmentStatusChangeMutation,
-  useGetAllAppointmentsQuery,
+  useGetMyAppointmentsQuery,
 } from "@/redux/api/appointmentApi";
 import { Appointment } from "@/types/appointmentType";
 import { ColumnsType } from "antd/es/table";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import Meta from "@/components/Dashboard/Meta/MetaData";
+import { toast } from "sonner";
 
 type AppointmentData = {
   key: string;
@@ -24,7 +25,7 @@ type AppointmentData = {
 const PatientAppointment = () => {
   const [appointmentStatusChange, { isLoading: isUpdating }] =
     useAppointmentStatusChangeMutation();
-  const { data, refetch, isLoading } = useGetAllAppointmentsQuery({});
+  const { data, refetch, isLoading } = useGetMyAppointmentsQuery({});
 
   // Map data with proper keys and types
   const tableData: AppointmentData[] =
@@ -42,14 +43,18 @@ const PatientAppointment = () => {
 
   //update status function in here
   const handleCancel = async (appointmentId: string) => {
-    // console.log(appointmentId);
     try {
-      await appointmentStatusChange({
+      const res = await appointmentStatusChange({
         id: appointmentId,
         status: "CANCELED",
       }).unwrap();
-      refetch(); // Explicitly fetch the latest data
-    } catch (error) {
+      refetch();
+
+      if (res?.id) {
+        toast.success("Appointment cancelled successfully!");
+      }
+    } catch (error: any) {
+      toast.error(error.message);
       console.error("Error updating status:", error);
     }
   };
@@ -104,15 +109,14 @@ const PatientAppointment = () => {
       key: "action",
       render: (_: any, record: AppointmentData) => (
         <Space>
-          {record.status !== "CANCELED" && (
-            <Button
-              type="primary"
-              style={{ backgroundColor: "#f46a6a" }}
-              onClick={() => handleCancel(record.key)}
-            >
-              Cancel
-            </Button>
-          )}
+          <Button
+            type="primary"
+            disabled={record.status === "CANCELED"}
+            style={{ backgroundColor: "#f46a6a" }}
+            onClick={() => handleCancel(record.key)}
+          >
+            Cancel
+          </Button>
         </Space>
       ),
     },

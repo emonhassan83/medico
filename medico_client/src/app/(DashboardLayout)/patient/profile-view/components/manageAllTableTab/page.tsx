@@ -1,14 +1,8 @@
-"use client"
+"use client";
+
 import { useState } from "react";
-import AppointmentTable from "../appointmentTable/page";
-import PrescriptionListInDoctor from "@/app/(DashboardLayout)/doctor/prescription/page";
 import PrescriptionTableInDoctor from "@/components/Dashboard/Doctor/Prescription/PrescriptionTableInDoctor";
-
-
-
-
-
-
+import AppointmentTable from "../TableTabComponent/AppointmentTable";
 
 const ManageAllTableTab = () => {
   const [activeTab, setActiveTab] = useState("tab2");
