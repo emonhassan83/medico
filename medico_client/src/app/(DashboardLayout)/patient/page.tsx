@@ -1,6 +1,5 @@
 "use client";
 
-import LatestAppointmentTable from "./dashbord-components/latestAppointmentTable/page";
 import Card from "@/components/Dashboard/Common/Card";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
 import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
@@ -13,6 +12,7 @@ import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile
 import { FaCalendarCheck } from "react-icons/fa";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import Meta from "@/components/Dashboard/Meta/MetaData";
+import LatestAppointmentTable from "./components/LatestAppointmentTable";
 
 const PatientDashboard = () => {
   const { data: doctorsData, isLoading: isDoctorLoading } =
