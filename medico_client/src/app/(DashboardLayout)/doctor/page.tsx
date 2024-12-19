@@ -9,7 +9,6 @@ import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 import { Row, Col } from "antd";
 import MonthlyEarningGraph from "@/components/Dashboard/Common/MonthlyEarningGraph";
 import DisplayItemCard from "@/components/Dashboard/Common/DisplayItemCard";
-import LatestAppointmentTable from "../patient/dashbord-components/latestAppointmentTable/page";
 import { FaCalendarCheck, FaDollarSign } from "react-icons/fa";
 import { HiCurrencyDollar } from "react-icons/hi2";
 import { MdEventNote } from "react-icons/md";
@@ -18,6 +17,7 @@ import { GrNotes } from "react-icons/gr";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile";
 import { useGetAllMetaDataQuery } from "@/redux/api/metaApi";
+import LatestAppointmentTable from "../patient/components/LatestAppointmentTable";
 
 const DoctorDashboard = () => {
   const { data: doctorsData, isLoading: isDoctorLoading } =
