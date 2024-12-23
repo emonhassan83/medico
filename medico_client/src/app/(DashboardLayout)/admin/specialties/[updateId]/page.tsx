@@ -16,6 +16,7 @@ import {
 } from "@/redux/api/specialtiesApi";
 import { useRouter } from "next/navigation";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const UpdateSpecialties = ({ params }: any) => {
   const router = useRouter();
@@ -68,6 +69,11 @@ const UpdateSpecialties = ({ params }: any) => {
 
   return (
     <>
+    <Meta
+        title="Specialties Update Page | Medico - Hospital & Clinic Management System"
+        description="This is the update page of Specialties of Medico where admin can manage show Specialties update, and more."
+      />
+
       {/* Header Section */}
       <div className="mx-4 flex items-center justify-between mt-4">
         <h2 className="text-lg text-[#495057] font-semibold">
