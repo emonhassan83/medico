@@ -21,6 +21,7 @@ import {
   maritalOptions,
 } from "@/components/SelectOptions/SelectOptions";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const CreatePatients = () => {
   const [photo, setPhoto] = useState("");
@@ -110,6 +111,10 @@ const CreatePatients = () => {
 
   return (
     <>
+      <Meta
+        title="Create Patient| Medico - Hospital & Clinic Management System"
+        description="This is the crate of patient page of Medico where admin can create of patient profile and more."
+      />
       {/* Header Section */}
       <div className="mx-4 flex items-center justify-between mt-4">
         <h2 className="text-lg text-[#495057] font-semibold">

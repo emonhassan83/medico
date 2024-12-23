@@ -76,8 +76,8 @@ const UpdateDoctor = ({ params }: any) => {
   return (
     <>
     <Meta
-        title="Doctors Details | Medico - Hospital & Clinic Management System"
-        description="This is the details page of doctors of Medico where admin can manage show doctor details, and more."
+        title="Doctors Update Page | Medico - Hospital & Clinic Management System"
+        description="This is the update page of doctors of Medico where admin can manage show doctor update, and more."
       />
       {/* Header Section */}
       <div className="mx-4 flex items-center justify-between mt-4">
