@@ -15,12 +15,14 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const ReceptionDetailPage = ({ params }: any) => {
   const router = useRouter();
   const [photo, setPhoto] = useState("");
   const { data, isLoading } = useGetReceptionistQuery(params?.updateId);
-  const [updateReceptionist, {isLoading: isUpdating}] = useUpdateReceptionistMutation();
+  const [updateReceptionist, { isLoading: isUpdating }] =
+    useUpdateReceptionistMutation();
 
   const handleFileUpload = async (file: File) => {
     try {
@@ -51,12 +53,17 @@ const ReceptionDetailPage = ({ params }: any) => {
     }
   };
 
-  if(isLoading || isUpdating){
-    return <FullPageLoading/>;
+  if (isLoading || isUpdating) {
+    return <FullPageLoading />;
   }
 
   return (
     <>
+      <Meta
+        title="Receptionist Update Page | Medico - Hospital & Clinic Management System"
+        description="This is the update page of Receptionist of Medico where admin can manage show Receptionist update, and more."
+      />
+
       {/* Header Section */}
       <div className="mx-4 flex items-center justify-between mt-4">
         <h2 className="text-lg text-[#495057] font-semibold">
@@ -85,83 +92,79 @@ const ReceptionDetailPage = ({ params }: any) => {
           Basic Information
         </div>
 
-          <MedicoForm onSubmit={handleUpdateReceptionist} defaultValues={data}>
-            {/* Rows of Input Fields */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-              <MedicoInput label="First Name" type="text" name="firstName" />
-              <MedicoInput label="Last Name" type="text" name="lastName" />
-              {/* <MedicoInput label="Email" type="text" name="email" /> */}
-              <MedicoInput
-                label="Contact No"
-                type="text"
-                name="contactNumber"
-              />
+        <MedicoForm onSubmit={handleUpdateReceptionist} defaultValues={data}>
+          {/* Rows of Input Fields */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+            <MedicoInput label="First Name" type="text" name="firstName" />
+            <MedicoInput label="Last Name" type="text" name="lastName" />
+            {/* <MedicoInput label="Email" type="text" name="email" /> */}
+            <MedicoInput label="Contact No" type="text" name="contactNumber" />
 
-              <MedicoInput label="Address" type="text" name="address" />
-              <div className="w-full">
-                <p
-                  className="block text-sm font-medium text-gray-700"
-                  style={{ marginBottom: "5px" }}
-                >
-                  Profile URL
-                </p>
-                <Card
-                  style={{
-                    height: "180px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  cover={
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "160px",
-                        width: "160px",
-                        margin: "auto",
-                        borderRadius: "8px",
-                      }}
+            <MedicoInput label="Address" type="text" name="address" />
+            <div className="w-full">
+              <p
+                className="block text-sm font-medium text-gray-700"
+                style={{ marginBottom: "5px" }}
+              >
+                Profile URL
+              </p>
+              <Card
+                style={{
+                  height: "180px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                cover={
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "160px",
+                      width: "160px",
+                      margin: "auto",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    <Upload
+                      customRequest={({ file }) =>
+                        handleFileUpload(file as File)
+                      }
+                      showUploadList={false}
+                      accept="image/*"
                     >
-                      <Upload
-                        customRequest={({ file }) =>
-                          handleFileUpload(file as File)
-                        }
-                        showUploadList={false}
-                        accept="image/*"
-                      >
-                        <Image
-                          src="https://i.ibb.co/Gx3Rg6S/download.jpg"
-                          alt="User Photo"
-                          preview={false}
-                          style={{
-                            marginTop: "40px",
-                            height: "140px",
-                            width: "140px",
-                            objectFit: "cover",
-                            cursor: "pointer",
-                            borderRadius: "50%",
-                            border: "2px solid #ddd",
-                          }}
-                        />
-                      </Upload>
-                    </div>
-                  }
-                />
-              </div>
+                      <Image
+                        src="https://i.ibb.co/Gx3Rg6S/download.jpg"
+                        alt="User Photo"
+                        preview={false}
+                        style={{
+                          marginTop: "40px",
+                          height: "140px",
+                          width: "140px",
+                          objectFit: "cover",
+                          cursor: "pointer",
+                          borderRadius: "50%",
+                          border: "2px solid #ddd",
+                        }}
+                      />
+                    </Upload>
+                  </div>
+                }
+              />
             </div>
+          </div>
 
-            {/* Submit Button */}
-            <Button
-              htmlType="submit"
-              size="large"
-              className="my-4 rounded-md bg-[#485EC4] px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full md:w-auto"
-            >
-              Update Receptionist
-            </Button>
-          </MedicoForm>
+          {/* Submit Button */}
+          <Button
+            htmlType="submit"
+            size="large"
+            className="my-4 rounded-md bg-[#485EC4] px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full md:w-auto"
+          >
+            Update Receptionist
+          </Button>
+        </MedicoForm>
       </div>
     </>
   );

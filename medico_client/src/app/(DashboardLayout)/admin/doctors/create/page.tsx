@@ -17,6 +17,7 @@ import {
 } from "@/redux/api/doctorApi";
 import { DoctorFormValues } from "@/types/doctor";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const Doctor = () => {
   const [photo, setPhoto] = useState("");
@@ -115,6 +116,11 @@ const Doctor = () => {
 
   return (
     <>
+    <Meta
+        title="Add New Doctor| Medico - Hospital & Clinic Management System"
+        description="This is the add new doctor page of doctors of Medico where admin can create doctor, and more."
+      />
+
       {/* Header Section */}
       <div className="mx-4 flex items-center justify-between mt-4">
         <h2 className="text-lg text-[#495057] font-semibold">Add New Doctor</h2>

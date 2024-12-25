@@ -11,6 +11,7 @@ import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
 import { toast } from "sonner";
 import { useCreateReceptionistMutation } from "@/redux/api/receptionistApi";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const CreateReceptionist = () => {
   const [photo, setPhoto] = useState("");
@@ -72,6 +73,10 @@ const CreateReceptionist = () => {
 
   return (
     <>
+    <Meta
+        title="Add New Receptionist| Medico - Hospital & Clinic Management System"
+        description="This is the add new receptionist page of doctors of Medico where admin can create receptionist, and more."
+      />
       {/* Header Section */}
       <div className="mx-4 flex items-center justify-between mt-4">
         <h2 className="text-lg text-[#495057] font-semibold">

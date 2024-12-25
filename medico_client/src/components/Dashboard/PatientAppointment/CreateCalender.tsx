@@ -7,8 +7,7 @@ import timeGridPlugin from "@fullcalendar/timegrid"; // For week/day views
 import listPlugin from "@fullcalendar/list"; // For list view
 import interactionPlugin from "@fullcalendar/interaction"; // For click and drag
 import "./Calender.css";
-import AppointmentTable from "./AppointmentTable";
-import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
+import AppointmentTable from "./AppointmentTable";;
 
 const formatDate = (dateString: any) => {
   const date = new Date(dateString);

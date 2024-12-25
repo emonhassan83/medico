@@ -16,6 +16,7 @@ import {
 } from "@/redux/api/doctorApi";
 import { useRouter } from "next/navigation";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const UpdateDoctor = ({ params }: any) => {
   const { data, isLoading } = useGetDoctorQuery(params?.doctorId);
@@ -74,6 +75,10 @@ const UpdateDoctor = ({ params }: any) => {
 
   return (
     <>
+    <Meta
+        title="Doctors Update Page | Medico - Hospital & Clinic Management System"
+        description="This is the update page of doctors of Medico where admin can manage show doctor update, and more."
+      />
       {/* Header Section */}
       <div className="mx-4 flex items-center justify-between mt-4">
         <h2 className="text-lg text-[#495057] font-semibold">UPDATE DOCTOR</h2>

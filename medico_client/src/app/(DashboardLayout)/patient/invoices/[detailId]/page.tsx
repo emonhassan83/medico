@@ -51,6 +51,9 @@ const AppointmentDetails = ({ params }: any) => {
     useAppointmentStatusChangeMutation();
   const router = useRouter();
 
+  console.log(data);
+  
+
   const tableData = [
     {
       key: data?.id,
@@ -173,9 +176,9 @@ const AppointmentDetails = ({ params }: any) => {
                 <p className="text-sm">Payment Mode: Online Payment</p>
                 <p className="text-sm">
                   Payment Status:{" "}
-                  {data?.paymentStatus || data?.status === "SCHEDULED"
-                    ? "UNPAID"
-                    : "PAID"}
+                  {data?.paymentStatus === "PAID" || data?.status === "INPROGRESS"
+                    ? "PAID"
+                    : "UNPAID"}
                 </p>
               </div>
               <div>

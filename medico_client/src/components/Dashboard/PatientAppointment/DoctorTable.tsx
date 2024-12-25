@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { Table, Button, Input, Divider } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import Link from "next/link";
+import { FaEye } from "react-icons/fa";
 
 const DoctorTable = ({data}: any) => {
   const [searchText, setSearchText] = useState("");
@@ -44,6 +46,19 @@ const DoctorTable = ({data}: any) => {
       title: "Email",
       dataIndex: "email",
       key: "email",
+    },
+    {
+      title: "Options",
+      key: "action",
+      render: (data: any) => (
+        <div className="flex gap-1">
+          <Link href={`/patient/doctors/${data?.id}`}>
+            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full">
+              <FaEye />
+            </button>
+          </Link>
+        </div>
+      ),
     },
   ];
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
