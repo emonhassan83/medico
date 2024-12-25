@@ -11,9 +11,11 @@ import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
 import { toast } from "sonner";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import Meta from "@/components/Dashboard/Meta/MetaData";
+import { useUpdateAdminMutation } from "@/redux/api/adminApi";
 
 const UpdateAdminProfile = () => {
   const [photo, setPhoto] = useState("");
+  const [updateAdmin, {isLoading: updating}] = useUpdateAdminMutation();
 
   const handleFileUpload = async (file: File) => {
     try {
@@ -30,11 +32,14 @@ const UpdateAdminProfile = () => {
 
   const handleUpdateProfile = async (values: FieldValues) => {
     try {
-      //   const res = await createReceptionist(receptionistData).unwrap();
+        // const updateData = {
 
-      //   if (res?.id) {
-      //     toast.success("Receptionist created successfully!");
-      //   }
+        // }
+        // const res = await updateAdmin(values).unwrap();
+
+        // if (res?.id) {
+        //   toast.success("Receptionist created successfully!");
+        // }
     } catch (err: any) {
       toast.error(err.message);
       console.error(err.message);
