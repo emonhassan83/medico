@@ -6,7 +6,8 @@ import { TiUserOutline } from "react-icons/ti";
 
 const WelcomeCardProfile = () => {
   const { data } = useGetMyProfileQuery({});
-
+  const role = (data?.role).toLowerCase();
+  
   return (
     <div className="rounded">
       <div className="flex justify-between p-4 bg-blue-500/20">
@@ -38,7 +39,7 @@ const WelcomeCardProfile = () => {
         <div>
           <p className="text-[#495057] text-md mb-2">Last login:</p>
           <h1 className="text-[#74788D]">{data?.createdAt}</h1>
-          <Link href="/patient/profile-view/edit">
+          <Link href={`/${role}/profile-view/edit`}>
             <button className="bg-blue-700 text-white px-4 py-1 rounded mt-4 ">
               Edit Profile
             </button>
