@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react";
 import AppointmentTable from "./AppointmentTable";
+import InvoiceTable from "./InvoiceTable";
 
 
 
@@ -12,7 +13,7 @@ const TabComponent = () => {
       case "tab1":
         return <AppointmentTable />;
       case "tab2":
-        return <TabTwo />;
+        return <InvoiceTable />;
       default:
         return <AppointmentTable />;
     }
@@ -47,7 +48,4 @@ const TabComponent = () => {
     </div>
   );
 };
-
-const TabTwo = () => <div>Content for Invoices not avaiable </div>;
-
 export default TabComponent;
