@@ -23,7 +23,6 @@ const TabOne = () => {
   // const [appointments, setAppointments] = useState(dataSource);
   const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
   const { data, refetch } = useGetAllAppointmentsQuery({});
-  console.log(data?.appointments);
 
   // Map data with proper keys and types
   const tableData: AppointmentData[] =

@@ -1,6 +1,6 @@
 "use client";
 
-import TabComponent from "./components/TabComponent/page";
+import TabComponent from "./components/TabComponent";
 import Card from "@/components/Dashboard/Common/Card";
 import ParsonalInfoProfile from "@/components/Dashboard/Common/parsonalInfoProfile";
 import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile";
@@ -34,6 +34,7 @@ const ProfileView = () => {
   ) {
     return <FullPageLoading />;
   }
+
   return (
     <div className="mx-4">
       <div className="mb-6 flex justify-between items-center">

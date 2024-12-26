@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react";
-import TabOne from "../TabOne/page";
+import TabOne from "./TabOne/page";
 
 
 

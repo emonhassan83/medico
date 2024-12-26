@@ -14,7 +14,7 @@ router.get('/:id', auth(UserRole.ADMIN), ReceptionistController.getByIdFromDB);
 
 router.patch(
   '/:id',
-  auth(UserRole.ADMIN),
+  auth(UserRole.ADMIN, UserRole.RECEPTIONIST),
   validateRequest(receptionistValidationSchemas.update),
   ReceptionistController.updateIntoDB,
 );
