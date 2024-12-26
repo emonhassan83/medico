@@ -17,7 +17,8 @@ import { useUpdateReceptionistMutation } from "@/redux/api/receptionistApi";
 const UpdateAdminProfile = () => {
   const [photo, setPhoto] = useState("");
   const { data, isLoading: isProfileLoading } = useGetMyProfileQuery({});
-  const [updateReceptionist, { isLoading: updating }] = useUpdateReceptionistMutation();
+  const [updateReceptionist, { isLoading: updating }] =
+    useUpdateReceptionistMutation();
 
   const handleFileUpload = async (file: File) => {
     try {
@@ -33,19 +34,18 @@ const UpdateAdminProfile = () => {
   };
 
   const handleUpdateProfile = async (values: FieldValues) => {
+    const profilePhoto = photo ?? data?.profilePhoto ?? "";
+
     try {
       const updateData = {
         ...values,
-        profilePhoto: photo ? photo : data.profilePhoto,
+        profilePhoto,
       };
 
       const res = await updateReceptionist({
         id: data?.id,
         body: updateData,
       }).unwrap();
-
-      console.log(res);
-      
 
       if (res?.id) {
         toast.success("profile update successfully!");
