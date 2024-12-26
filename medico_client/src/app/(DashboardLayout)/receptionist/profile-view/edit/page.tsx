@@ -77,7 +77,7 @@ const UpdateAdminProfile = () => {
       {/* Header Section */}
       <div className="mx-4 flex items-center justify-between mt-4">
         <h2 className="text-lg text-[#495057] font-semibold">
-          Update Admin Profile
+          Update Receptionist  Profile
         </h2>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
           <Link href="/receptionist">Dashboard</Link>/
