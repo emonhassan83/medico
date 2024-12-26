@@ -7,25 +7,26 @@ import MedicoForm from "@/components/Forms/MedicoForm";
 import MedicoInput from "@/components/Forms/MedicoInput";
 import { Button, Image, Card, Upload } from "antd";
 import { FieldValues } from "react-hook-form";
+import MedicoSelect from "@/components/Forms/MedicoSelect";
 import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
 import { toast } from "sonner";
+import { useUpdateDoctorMutation } from "@/redux/api/doctorApi";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import Meta from "@/components/Dashboard/Meta/MetaData";
 import { useGetMyProfileQuery } from "@/redux/api/userApi";
-import { useUpdateReceptionistMutation } from "@/redux/api/receptionistApi";
 
-const UpdateAdminProfile = () => {
+const UpdateDoctor = () => {
   const [photo, setPhoto] = useState("");
-  const { data, isLoading: isProfileLoading } = useGetMyProfileQuery({});
-  const [updateReceptionist, { isLoading: updating }] =
-    useUpdateReceptionistMutation();
+  const { data: profile, isLoading } = useGetMyProfileQuery({});
+  const [updateDoctor, { isLoading: isUpdateLoading }] =
+    useUpdateDoctorMutation();
 
   const handleFileUpload = async (file: File) => {
     try {
       const image = await uploadImageToImgbb(file);
 
       if (image) {
-        toast.success("Receptionist Photo Upload successfully");
+        toast.success("Doctor Photo Upload successfully");
       }
       setPhoto(image);
     } catch (error) {
@@ -33,65 +34,66 @@ const UpdateAdminProfile = () => {
     }
   };
 
-  const handleUpdateProfile = async (values: FieldValues) => {
-    const profilePhoto = photo ?? data?.profilePhoto ?? "";
+  const handleUpdateDoctor = async (value: FieldValues) => {
+    const profilePhoto = photo ?? profile?.profilePhoto ?? "";
 
     try {
-      const updateData = {
-        ...values,
-        profilePhoto,
+      const payload = {
+        id: profile.id,
+        body: {
+          firstName: value?.firstName,
+          lastName: value?.lastName,
+          address: value?.address,
+          contactNumber: value?.contactNumber,
+          profilePhoto: profilePhoto,
+          registrationNumber: value?.registrationNumber,
+          experience: Number(value?.experience),
+          gender: value?.gender,
+          apointmentFee:
+            Number(value?.apointmentFee) || profile?.appointmentFee,
+          qualification: value?.qualification,
+          currentWorkingPlace: value?.currentWorkingPlace,
+          designation: value?.designation,
+        },
       };
 
-      const res = await updateReceptionist({
-        id: data?.id,
-        body: updateData,
-      }).unwrap();
+      const result = await updateDoctor(payload).unwrap();
 
-      if (res?.id) {
-        toast.success("profile update successfully!");
+      if (result?.id) {
+        toast.success("Doctor updated successfully!");
       }
-    } catch (err: any) {
-      toast.error(err.message);
-      console.error(err.message);
+    } catch (error: any) {
+      console.error(error?.message);
+      toast.error(error?.message);
     }
   };
 
-  const defaultValues = {
-    firstName: data?.firstName,
-    lastName: data?.lastName,
-    contactNumber: data?.contactNumber,
-    address: data?.address,
-    profilePhoto: data?.profilePhoto,
-  };
-
-  if (isProfileLoading || updating) {
+  if (isLoading || isUpdateLoading) {
     return <FullPageLoading />;
   }
 
   return (
     <>
       <Meta
-        title="Update Admin Profile| Medico - Hospital & Clinic Management System"
-        description="This is the Update Admin profile page of doctors of Medico where admin can create receptionist, and more."
+        title="Doctors Update Page | Medico - Hospital & Clinic Management System"
+        description="This is the update page of doctors of Medico where admin can manage show doctor update, and more."
       />
       {/* Header Section */}
       <div className="mx-4 flex items-center justify-between mt-4">
-        <h2 className="text-lg text-[#495057] font-semibold">
-          Update Receptionist  Profile
-        </h2>
+        <h2 className="text-lg text-[#495057] font-semibold">UPDATE DOCTOR</h2>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
-          <Link href="/receptionist">Dashboard</Link>/
-          <Link href="/receptionist/view-profile">Profile</Link>/
-          <Link href="#">Update Profile</Link>
+          <Link href="/doctor">Dashboard</Link>/
+          <Link href="/doctor/profile-view">Profile</Link>/
+          <Link href="#">Update Doctor</Link>
         </div>
       </div>
 
       <div className="mt-5 ml-4">
         <Link
-          href="/receptionist/profile-view"
+          href="/doctor/profile-view"
           className="text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
         >
-          <ArrowLeftOutlined className="mr-1" /> Back to Dashboard
+          <ArrowLeftOutlined className="mr-1" /> Back to Doctor Profile
         </Link>
       </div>
 
@@ -102,17 +104,47 @@ const UpdateAdminProfile = () => {
           Basic Information
         </div>
 
-        <MedicoForm
-          onSubmit={handleUpdateProfile}
-          defaultValues={defaultValues}
-        >
+        <MedicoForm onSubmit={handleUpdateDoctor} defaultValues={profile}>
           {/* Rows of Input Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
             <MedicoInput label="First Name" type="text" name="firstName" />
             <MedicoInput label="Last Name" type="text" name="lastName" />
+
             <MedicoInput label="Contact No" type="text" name="contactNumber" />
+
             <MedicoInput label="Address" type="text" name="address" />
-            <div className="w-full">
+            <MedicoSelect
+              name="gender"
+              label="Gender"
+              options={[
+                { value: "MALE", label: "Male" },
+                { value: "FEMALE", label: "Female" },
+                { value: "UNKNOWN", label: "Unknown" },
+              ]}
+            />
+
+            <MedicoInput label="Designation" type="text" name="designation" />
+            <MedicoInput
+              label="Registration Number"
+              type="text"
+              name="registrationNumber"
+            />
+
+            <MedicoInput
+              label="Qualification"
+              type="text"
+              name="qualification"
+            />
+
+            <MedicoInput label="Experience" type="text" name="experience" />
+            <MedicoInput label="Fee" type="text" name="appointmentFee" />
+
+            <MedicoInput
+              label="Current Working Place"
+              type="text"
+              name="currentWorkingPlace"
+            />
+            <div className="h-10 w-full">
               <p
                 className="block text-sm font-medium text-gray-700"
                 style={{ marginBottom: "5px" }}
@@ -133,8 +165,8 @@ const UpdateAdminProfile = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      height: "160px",
-                      width: "160px",
+                      height: "180px",
+                      width: "180px",
                       margin: "auto",
                       borderRadius: "8px",
                     }}
@@ -171,9 +203,9 @@ const UpdateAdminProfile = () => {
           <Button
             htmlType="submit"
             size="large"
-            className="my-4 rounded-md bg-[#485EC4] px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full md:w-auto"
+            className="mt-10 rounded-md bg-[#485EC4] px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full md:w-auto"
           >
-            Update Details
+            Update Doctor
           </Button>
         </MedicoForm>
       </div>
@@ -181,4 +213,4 @@ const UpdateAdminProfile = () => {
   );
 };
 
-export default UpdateAdminProfile;
+export default UpdateDoctor;

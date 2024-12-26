@@ -33,10 +33,12 @@ const UpdateAdminProfile = () => {
   };
 
   const handleUpdateProfile = async (values: FieldValues) => {
+    const profilePhoto = photo ?? data?.profilePhoto ?? "";
+
     try {
       const updateData = {
         ...values,
-        profilePhoto: photo ? photo : data.profilePhoto,
+        profilePhoto,
       };
 
       const res = await updateAdmin({
