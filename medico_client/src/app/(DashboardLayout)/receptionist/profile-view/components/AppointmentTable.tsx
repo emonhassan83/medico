@@ -1,10 +1,7 @@
 "use client";
-import Link from "next/link";
-import React, { useState } from "react";
-import { Button, Table, Tag, Space, TableColumnsType } from "antd";
-import { BsSlash } from "react-icons/bs";
+
+import { Table} from "antd";
 import {
-  useAppointmentStatusChangeMutation,
   useGetAllAppointmentsQuery,
 } from "@/redux/api/appointmentApi";
 import { Appointment } from "@/types/appointmentType";
@@ -19,11 +16,8 @@ type AppointmentData = {
   time: string;
 };
 
-const TabOne = () => {
-  // const [appointments, setAppointments] = useState(dataSource);
-  const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
-  const { data, refetch } = useGetAllAppointmentsQuery({});
-  console.log(data?.appointments);
+const AppointmentTable = () => {
+  const { data, isLoading } = useGetAllAppointmentsQuery({});
 
   // Map data with proper keys and types
   const tableData: AppointmentData[] =
@@ -37,21 +31,6 @@ const TabOne = () => {
       date: appointment.createdAt?.slice(0, 10) || "N/A",
       time: appointment.createdAt?.slice(11, 19) || "N/A",
     })) || [];
-  // console.log(tableData);
-
-  //update status function in here
-  const handleCancel = async (appointmentId: string) => {
-    // console.log(appointmentId);
-    try {
-      await appointmentStatusChange({
-        id: appointmentId,
-        status: "CANCELED",
-      }).unwrap();
-      refetch(); // Explicitly fetch the latest data
-    } catch (error) {
-      console.error("Error updating status:", error);
-    }
-  };
 
   const columns: ColumnsType<AppointmentData> = [
     {
@@ -117,4 +96,4 @@ const TabOne = () => {
   );
 };
 
-export default TabOne;
+export default AppointmentTable;

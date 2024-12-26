@@ -11,20 +11,21 @@ import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
 import { toast } from "sonner";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import Meta from "@/components/Dashboard/Meta/MetaData";
-import { useUpdateAdminMutation } from "@/redux/api/adminApi";
 import { useGetMyProfileQuery } from "@/redux/api/userApi";
+import { useUpdateReceptionistMutation } from "@/redux/api/receptionistApi";
 
 const UpdateAdminProfile = () => {
   const [photo, setPhoto] = useState("");
   const { data, isLoading: isProfileLoading } = useGetMyProfileQuery({});
-  const [updateAdmin, { isLoading: updating }] = useUpdateAdminMutation();
+  const [updateReceptionist, { isLoading: updating }] =
+    useUpdateReceptionistMutation();
 
   const handleFileUpload = async (file: File) => {
     try {
       const image = await uploadImageToImgbb(file);
 
       if (image) {
-        toast.success("Admin Photo Upload successfully");
+        toast.success("Receptionist Photo Upload successfully");
       }
       setPhoto(image);
     } catch (error) {
@@ -33,13 +34,15 @@ const UpdateAdminProfile = () => {
   };
 
   const handleUpdateProfile = async (values: FieldValues) => {
+    const profilePhoto = photo ?? data?.profilePhoto ?? "";
+
     try {
       const updateData = {
         ...values,
-        profilePhoto: photo ? photo : data.profilePhoto,
+        profilePhoto,
       };
 
-      const res = await updateAdmin({
+      const res = await updateReceptionist({
         id: data?.id,
         body: updateData,
       }).unwrap();
@@ -77,15 +80,15 @@ const UpdateAdminProfile = () => {
           Update Admin Profile
         </h2>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
-          <Link href="/admin">Dashboard</Link>/
-          <Link href="/admin/view-profile">Profile</Link>/
+          <Link href="/receptionist">Dashboard</Link>/
+          <Link href="/receptionist/view-profile">Profile</Link>/
           <Link href="#">Update Profile</Link>
         </div>
       </div>
 
       <div className="mt-5 ml-4">
         <Link
-          href="/admin/profile-view"
+          href="/receptionist/profile-view"
           className="text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
         >
           <ArrowLeftOutlined className="mr-1" /> Back to Dashboard

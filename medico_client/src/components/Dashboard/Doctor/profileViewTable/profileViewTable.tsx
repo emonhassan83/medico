@@ -1,6 +1,6 @@
 "use client";
 
-import TabOne from "@/app/(DashboardLayout)/receptionist/profile-view/components/TabOne/page";
+import TabOne from "@/app/(DashboardLayout)/receptionist/profile-view/components/AppointmentTable";
 import { useState } from "react";
 import PatientTableAdmin from "../../Admin/dashbord/PatientTableAdmin";
 

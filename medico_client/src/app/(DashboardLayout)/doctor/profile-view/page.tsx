@@ -63,9 +63,7 @@ const ProfileView = () => {
               icon={<GrNotes size={33} />}
             />
             </div>
-           
           </div>
-          
         </Col>
       </Row>
 
