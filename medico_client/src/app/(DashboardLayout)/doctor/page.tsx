@@ -1,15 +1,11 @@
 "use client";
 
 import Card from "@/components/Dashboard/Common/Card";
-import WelcomeCard from "@/components/Dashboard/Common/WelcomeCard";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
-import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
-import { useGetAllPatientQuery } from "@/redux/api/patientApi";
-import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 import { Row, Col } from "antd";
 import MonthlyEarningGraph from "@/components/Dashboard/Common/MonthlyEarningGraph";
 import DisplayItemCard from "@/components/Dashboard/Common/DisplayItemCard";
-import { FaCalendarCheck, FaDollarSign } from "react-icons/fa";
+import { FaCalendarCheck } from "react-icons/fa";
 import { HiCurrencyDollar } from "react-icons/hi2";
 import { MdEventNote } from "react-icons/md";
 import { GiNotebook } from "react-icons/gi";
@@ -18,26 +14,17 @@ import FullPageLoading from "@/components/Loader/FullPageLoader";
 import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile";
 import { useGetAllMetaDataQuery } from "@/redux/api/metaApi";
 import LatestAppointmentTable from "../patient/components/LatestAppointmentTable";
+import { useGetMyProfileQuery } from "@/redux/api/userApi";
 
 const DoctorDashboard = () => {
-  const { data: doctorsData, isLoading: isDoctorLoading } =
-    useGetAllDoctorsQuery({});
-  const { data: patientsData, isLoading: isPatientLoading } =
-    useGetAllPatientQuery({});
-  const { data: receptionistsData, isLoading: isReceptionLoading } =
-    useGetAllReceptionQuery({});
-  const { data: AppointmentsData, isLoading: isAppointmentLoading } =
+  const { data, isLoading: isProfileLoading } = useGetMyProfileQuery({});
+  const { data: appointments, refetch, isLoading: isAppointmentLoading } =
     useGetAllAppointmentsQuery({});
 
-    const { data: getAllMetaData, isLoading: isMetaLoading } =
+  const { data: getAllMetaData, isLoading: isMetaLoading } =
     useGetAllMetaDataQuery(undefined);
 
-  if (
-    isDoctorLoading ||
-    isPatientLoading ||
-    isReceptionLoading ||
-    isAppointmentLoading
-  ) {
+  if (isAppointmentLoading || isProfileLoading) {
     return <FullPageLoading />;
   }
 
@@ -55,7 +42,7 @@ const DoctorDashboard = () => {
       <Row gutter={[32, 32]}>
         <Col span={24} md={8}>
           <div className="flex flex-col gap-7">
-            <WelcomeCardProfile/>
+            <WelcomeCardProfile data={data} />
           </div>
         </Col>
         <Col span={24} md={16}>
@@ -64,14 +51,9 @@ const DoctorDashboard = () => {
             <div className="grid grid-cols-3 gap-7">
               <Card
                 title="Appointments"
-                number={AppointmentsData?.meta?.total || 0}
+                number={appointments?.meta?.total || 0}
                 icon={<FaCalendarCheck size={33} />}
               />
-              {/* <Card
-              title="Revenue"
-              number={`$57`}
-              icon={<TiUserOutline size={40} />}
-            /> */}
               <Card
                 title="Today' Earning"
                 number={`$57`}
@@ -87,7 +69,7 @@ const DoctorDashboard = () => {
                 number={getAllMetaData?.tomorrowAppointments}
                 icon={<GiNotebook size={33} />}
               />
-             <Card
+              <Card
                 title="Upcoming Appointments"
                 number={getAllMetaData?.upcomingAppointments}
                 icon={<GrNotes size={33} />}
@@ -108,7 +90,7 @@ const DoctorDashboard = () => {
           <p className="text-[#343A40] font-semibold text-[16px] text-lg">
             Latest Appointment
           </p>
-          <LatestAppointmentTable />
+          <LatestAppointmentTable appointments={appointments} refetch={refetch} />
         </div>
       </div>
     </div>
