@@ -20,6 +20,14 @@ const SpecialtiesTable = ({data}: any) => {
       key: "title",
     },
     {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+      render: (text: any) =>
+        text?.length > 150 ? `${text.slice(0, 100)}...` : text,
+      width: "40%",
+    },
+    {
       title: "Options",
       key: "action",
       render: (data: any) => (

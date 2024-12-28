@@ -5,19 +5,19 @@ import ReceptionistTableTab from "./ReceptionishTableTab";
 import PatientTableAdmin from "./PatientTableAdmin";
 import DoctorTableInReceptionistTab from "@/app/(DashboardLayout)/receptionist/dashbord/doctorTableInReceptionistTab/page";
 
-const DashbordTableTab = () => {
+const DashbordTableTab = ({doctors, receptionists, patients, refetch}: any) => {
   const [activeTab, setActiveTab] = useState("tab1");
 
   const renderContent = () => {
     switch (activeTab) {
       case "tab1":
-        return <DoctorTableInReceptionistTab />;
+        return <DoctorTableInReceptionistTab  doctors={doctors}/>;
       case "tab2":
-        return <ReceptionistTableTab />;
+        return <ReceptionistTableTab receptionists={receptionists} />;
       case "tab3":
-        return <PatientTableAdmin />;
+        return <PatientTableAdmin patients={patients} refetch={refetch} />;
       default:
-        return <DoctorTableInReceptionistTab />;
+        return <DoctorTableInReceptionistTab doctors={doctors} />;
     }
   };
 

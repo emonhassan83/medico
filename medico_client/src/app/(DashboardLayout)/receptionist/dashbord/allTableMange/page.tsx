@@ -1,12 +1,8 @@
-"use client"
+"use client";
+
 import { useState } from "react";
 import  DoctorsTableTab  from "../doctorTableTab/page";
 import PatientTableAdmin from "@/components/Dashboard/Admin/dashbord/PatientTableAdmin";
-
-
-
-
-
 
 const AllTableMange = () => {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -51,9 +47,6 @@ const AllTableMange = () => {
     </div>
   );
 };
-
-// const TabOne = () => <div>Content for Tab 1</div>;
-// const TabTwo = () => <div>Content for Patient not avaiable </div>;
 
 export default AllTableMange;
 
