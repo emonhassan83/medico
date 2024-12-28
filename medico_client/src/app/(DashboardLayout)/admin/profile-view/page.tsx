@@ -6,32 +6,17 @@ import ParsonalInfoProfile from "@/components/Dashboard/Common/parsonalInfoProfi
 import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
-import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
-import { useGetAllPatientQuery } from "@/redux/api/patientApi";
-import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 import { Row, Col } from "antd";
 import { FaCalendarCheck } from "react-icons/fa";
 import { FaChartColumn, FaChartSimple } from "react-icons/fa6";
 import { useGetMyProfileQuery } from "@/redux/api/userApi";
 
 const ProfileView = () => {
-  const { data: doctorsData, isLoading: isDoctorLoading } =
-    useGetAllDoctorsQuery({});
-  const { data: patientsData, isLoading: isPatientLoading } =
-    useGetAllPatientQuery({});
-  const { data: receptionistsData, isLoading: isReceptionistLoading } =
-    useGetAllReceptionQuery({});
-  const { data: AppointmentsData, isLoading: isAppointmentLoading } =
+  const { data: appointments, refetch, isLoading: isAppointmentLoading } =
     useGetAllAppointmentsQuery({});
   const { data, isLoading: isProfileLoading } = useGetMyProfileQuery({});
 
-  if (
-    isDoctorLoading ||
-    isPatientLoading ||
-    isReceptionistLoading ||
-    isAppointmentLoading ||
-    isProfileLoading
-  ) {
+  if (isAppointmentLoading || isProfileLoading) {
     return <FullPageLoading />;
   }
   return (
@@ -48,7 +33,7 @@ const ProfileView = () => {
       <Row gutter={[32, 32]}>
         <Col span={24} md={8}>
           <div className="flex flex-col gap-7">
-            <WelcomeCardProfile />
+            <WelcomeCardProfile data={data} />
             <ParsonalInfoProfile data={data} />
           </div>
         </Col>
@@ -58,7 +43,7 @@ const ProfileView = () => {
             <div className="flex gap-8">
               <Card
                 title="Appointments"
-                number={AppointmentsData?.meta?.total || 0}
+                number={appointments?.meta?.total || 0}
                 icon={<FaCalendarCheck size={33} />}
               />
 
@@ -78,7 +63,7 @@ const ProfileView = () => {
               <p className="text-[#343A40] font-semibold text-[16px] text-lg mb-2">
                 Latest Appointment
               </p>
-              <TabComponent />
+              <TabComponent appointments={appointments} refetch={refetch} />
             </div>
           </div>
         </Col>

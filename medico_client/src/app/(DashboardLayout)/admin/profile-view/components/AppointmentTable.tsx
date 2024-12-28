@@ -19,14 +19,13 @@ type AppointmentData = {
   time: string;
 };
 
-const AppointmentTable = () => {
+const AppointmentTable = ({appointments, refetch}: any) => {
   // const [appointments, setAppointments] = useState(dataSource);
   const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
-  const { data, refetch } = useGetAllAppointmentsQuery({});
 
   // Map data with proper keys and types
   const tableData: AppointmentData[] =
-    data?.appointments.slice(0, 4)?.map((appointment: Appointment, index: number) => ({
+  appointments?.appointments.slice(0, 4)?.map((appointment: Appointment, index: number) => ({
       key: appointment.id || `${index}`, // Use _id or fallback
       srNo: index + 1,
       status: appointment.status || "N/A",

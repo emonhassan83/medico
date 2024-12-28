@@ -1,19 +1,20 @@
-"use client"
+"use client";
+
 import { useState } from "react";
 import AppointmentTable from "./AppointmentTable";
 import InvoiceTable from "./InvoiceTable";
 
-const TabComponent = () => {
+const TabComponent = ({appointments}: any) => {
   const [activeTab, setActiveTab] = useState("tab1");
 
   const renderContent = () => {
     switch (activeTab) {
       case "tab1":
-        return <AppointmentTable />;
+        return <AppointmentTable appointments={appointments} />;
       case "tab2":
-        return <InvoiceTable />;
+        return <InvoiceTable appointments={appointments} />;
       default:
-        return <AppointmentTable />;
+        return <AppointmentTable appointments={appointments} />;
     }
   };
 

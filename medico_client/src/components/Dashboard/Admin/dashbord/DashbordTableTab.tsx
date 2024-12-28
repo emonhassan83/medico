@@ -3,7 +3,7 @@
 import { useState } from "react";
 import ReceptionistTableTab from "./ReceptionishTableTab";
 import PatientTableAdmin from "./PatientTableAdmin";
-import DoctorTableInReceptionistTab from "@/app/(DashboardLayout)/receptionist/dashbord/doctorTableInReceptionistTab/page";
+import DoctorTableInReceptionistTab from "@/app/(DashboardLayout)/receptionist/components/DoctorTableInReceptionist";
 
 const DashbordTableTab = ({doctors, receptionists, patients, refetch}: any) => {
   const [activeTab, setActiveTab] = useState("tab1");

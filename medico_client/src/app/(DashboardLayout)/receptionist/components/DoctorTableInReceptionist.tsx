@@ -1,9 +1,9 @@
 "use client";
+
 import React, { useState } from "react";
 import { Table } from "antd";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
-import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 
 const DoctorTableInReceptionistTab = ({doctors}: any) => {
   const [searchText, setSearchText] = useState("");
