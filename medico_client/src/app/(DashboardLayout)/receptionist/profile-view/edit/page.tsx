@@ -81,7 +81,7 @@ const UpdateAdminProfile = () => {
         </h2>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
           <Link href="/receptionist">Dashboard</Link>/
-          <Link href="/receptionist/view-profile">Profile</Link>/
+          <Link href="/receptionist/profile-view">Profile</Link>/
           <Link href="#">Update Profile</Link>
         </div>
       </div>

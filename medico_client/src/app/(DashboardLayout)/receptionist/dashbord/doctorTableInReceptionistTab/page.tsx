@@ -67,8 +67,6 @@ const DoctorTableInReceptionistTab = () => {
   };
   return (
     <div className="bg-white p-5">
-      
-
       <div>
         <Table
           dataSource={filteredData}
@@ -77,7 +75,6 @@ const DoctorTableInReceptionistTab = () => {
           rowKey="id"
         />
       </div>
-      
     </div>
   );
 };
