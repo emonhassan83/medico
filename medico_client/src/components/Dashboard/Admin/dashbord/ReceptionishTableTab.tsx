@@ -1,21 +1,15 @@
 "use client";
+
 import React, { useState } from "react";
-import { Table, Button, Input, Divider, Space } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { Table } from "antd";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 
-const ReceptionistTableTab = () => {
-  const { data } = useGetAllReceptionQuery({});
- 
-  // console.log(data);
+const ReceptionistTableTab = ({ receptionists }: any) => {
   const [searchText, setSearchText] = useState("");
 
   //   Filter data based on search text
-  const filteredData = data?.receptionist?.filter((pt: any) =>
+  const filteredData = receptionists?.receptionist?.filter((pt: any) =>
     pt.firstName.toLowerCase().includes(searchText.toLowerCase())
   );
   const columns = [
@@ -49,32 +43,11 @@ const ReceptionistTableTab = () => {
       title: "Options",
       key: "action",
       render: () => (
-        <div className="flex gap-1">
-          {/* update Button */}
-          <Link href="#">
-            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
-              <FaEye />
-            </button>
-          </Link>
-
-          {/* edit button */}
-          <Link href="#">
-            <button
-              className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-              //   onClick={() => handleEdit(items)}
-            >
-              <MdEdit />
-            </button>
-          </Link>
-
-          {/* delete button */}
-          <button
-            className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-            //   onClick={() => handleDelete(items)}
-          >
-            <RiDeleteBin6Fill />
+        <Link href="#">
+          <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
+            <FaEye />
           </button>
-        </div>
+        </Link>
       ),
     },
   ];
@@ -84,15 +57,7 @@ const ReceptionistTableTab = () => {
   };
   return (
     <div className="bg-white p-5 mx-auto">
-      
-      <div>
-        <Table
-          dataSource={filteredData}
-          columns={columns}
-          bordered
-          rowKey="id"
-        />
-      </div>
+      <Table dataSource={filteredData} columns={columns} bordered rowKey="id" />
     </div>
   );
 };

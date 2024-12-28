@@ -1,24 +1,20 @@
-"use client"
+"use client";
+
 import { useState } from "react";
-import  DoctorsTableTab  from "../doctorTableTab/page";
+import  DoctorsTableTab  from "./doctorTableTab";
 import PatientTableAdmin from "@/components/Dashboard/Admin/dashbord/PatientTableAdmin";
 
-
-
-
-
-
-const AllTableMange = () => {
+const AllTableMange = ({doctors, patients, refetch}: any) => {
   const [activeTab, setActiveTab] = useState("tab1");
 
   const renderContent = () => {
     switch (activeTab) {
       case "tab1":
-        return <DoctorsTableTab/>
+        return <DoctorsTableTab doctors={doctors}/>
       case "tab2":
-        return <PatientTableAdmin/>
+        return <PatientTableAdmin patients={patients} refetch={refetch} />
       default:
-        return <DoctorsTableTab/>
+        return <DoctorsTableTab doctors={doctors} />
     }
   };
 
@@ -51,9 +47,6 @@ const AllTableMange = () => {
     </div>
   );
 };
-
-// const TabOne = () => <div>Content for Tab 1</div>;
-// const TabTwo = () => <div>Content for Patient not avaiable </div>;
 
 export default AllTableMange;
 

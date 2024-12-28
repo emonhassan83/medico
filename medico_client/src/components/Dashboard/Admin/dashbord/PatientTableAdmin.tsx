@@ -1,41 +1,34 @@
 "use client";
+
 import React, { useState } from "react";
-import { Table, Button, Input, Divider, Space } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
-import {
-  useDeletePatientMutation,
-  useGetAllPatientQuery,
-} from "@/redux/api/patientApi";
+import { Table } from "antd";
+import { useDeletePatientMutation } from "@/redux/api/patientApi";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { toast } from "sonner";
 
-const PatientTableAdmin = () => {
-  const { data, refetch } = useGetAllPatientQuery([]);
-  const [deletePatient] = useDeletePatientMutation();
+const PatientTableAdmin = ({ patients, refetch }: any) => {
   const [searchText, setSearchText] = useState("");
+  const [deletePatient] = useDeletePatientMutation();
 
-// console.log(data)
-  
-  //   Filter data based on search text
-  const filteredData = data?.patients?.filter((pt: any) =>
+  //* Filter data based on search text
+  const filteredData = patients?.patients?.filter((pt: any) =>
     pt.firstName.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  ///delete operation---------------------------------
-  const handleDeletRow = async (id: string) => {
-    // console.log(id);
+  const handleDeletePatient = async (id: string) => {
     try {
       const res = await deletePatient(id).unwrap();
-      // console.log(res);
+
       if (res?.id) {
-        toast.success("Delete patient successfully");
+        toast.success("Delete patient successfully!");
         refetch();
       }
-    } catch (err) {
-      toast.error("Somthing went wrong");
+    } catch (err: any) {
+      toast.error(err?.message);
+      console.error(err?.message);
     }
   };
   const columns = [
@@ -91,7 +84,7 @@ const PatientTableAdmin = () => {
           {/* delete button */}
           <button
             className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-            onClick={() => handleDeletRow(data?.id)}
+            onClick={() => handleDeletePatient(data?.id)}
           >
             <RiDeleteBin6Fill />
           </button>
@@ -105,17 +98,7 @@ const PatientTableAdmin = () => {
   };
   return (
     <div className="bg-white p-5">
-     
-
-      <div>
-        <Table
-          dataSource={filteredData}
-          columns={columns}
-          bordered
-          rowKey="id"
-        />
-      </div>
-      
+      <Table dataSource={filteredData} columns={columns} bordered rowKey="id" />
     </div>
   );
 };

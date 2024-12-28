@@ -1,11 +1,10 @@
 "use client";
 
-import AllTableMange from "./dashbord/allTableMange/page";
+import AllTableMange from "./components/AllTableMange";
 import Card from "@/components/Dashboard/Common/Card";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
 import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 import { useGetAllPatientQuery } from "@/redux/api/patientApi";
-import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 import { Row, Col } from "antd";
 import DisplayItemCard from "@/components/Dashboard/Common/DisplayItemCard";
 import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile";
@@ -18,12 +17,10 @@ import { GrNotes } from "react-icons/gr";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const ReceptionistDashboard = () => {
-  const { data: doctorsData, isLoading: isDoctorLoading } =
+  const { data: doctors, isLoading: isDoctorLoading } =
     useGetAllDoctorsQuery({});
-  const { data: patientsData, isLoading: isPatientLoading } =
+  const { data: patients, refetch, isLoading: isPatientLoading } =
     useGetAllPatientQuery({});
-  const { data: receptionistsData, isLoading: isReceptionistLoading } =
-    useGetAllReceptionQuery({});
   const { data: AppointmentsData, isLoading: isAppointmentLoading } =
     useGetAllAppointmentsQuery({});
   const { data: getAllMetaData, isLoading: isMetaLoading } =
@@ -32,7 +29,6 @@ const ReceptionistDashboard = () => {
   if (
     isDoctorLoading ||
     isPatientLoading ||
-    isReceptionistLoading ||
     isAppointmentLoading ||
     isMetaLoading
   ) {
@@ -99,7 +95,7 @@ const ReceptionistDashboard = () => {
       {/* show Latest Users table  */}
       <div className="mt-6 mx-4">
         <p className="text-[#343A40] text-lg"> Latest Users </p>
-        <AllTableMange />
+        <AllTableMange doctors={doctors} patients={patients} refetch={refetch} />
       </div>
     </div>
   );

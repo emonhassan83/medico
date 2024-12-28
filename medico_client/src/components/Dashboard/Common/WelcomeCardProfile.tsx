@@ -1,11 +1,9 @@
-import { useGetMyProfileQuery } from "@/redux/api/userApi";
 import { Avatar } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { TiUserOutline } from "react-icons/ti";
 
-const WelcomeCardProfile = () => {
-  const { data } = useGetMyProfileQuery({});
+const WelcomeCardProfile = ({data}: any) => {
   const role = (data?.role).toLowerCase();
   
   return (

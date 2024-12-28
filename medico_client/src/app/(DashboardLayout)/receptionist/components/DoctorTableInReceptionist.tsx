@@ -1,17 +1,15 @@
 "use client";
+
 import React, { useState } from "react";
 import { Table } from "antd";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
-import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 
-const DoctorTableInReceptionistTab = () => {
-  const { data } = useGetAllDoctorsQuery({});
-  // console.log(data);
+const DoctorTableInReceptionistTab = ({doctors}: any) => {
   const [searchText, setSearchText] = useState("");
 
   //   Filter data based on search text
-  const filteredData = data?.doctors?.filter((pt: any) =>
+  const filteredData = doctors?.doctors?.filter((pt: any) =>
     pt.firstName.toLowerCase().includes(searchText.toLowerCase())
   );
   const columns = [
@@ -67,8 +65,6 @@ const DoctorTableInReceptionistTab = () => {
   };
   return (
     <div className="bg-white p-5">
-      
-
       <div>
         <Table
           dataSource={filteredData}
@@ -77,7 +73,6 @@ const DoctorTableInReceptionistTab = () => {
           rowKey="id"
         />
       </div>
-      
     </div>
   );
 };

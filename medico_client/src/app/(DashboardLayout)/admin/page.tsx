@@ -11,8 +11,6 @@ import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
 import { Row, Col } from "antd";
-import { TiUserOutline } from "react-icons/ti";
-
 import { FaCalendarCheck, FaDollarSign } from "react-icons/fa";
 import { HiCurrencyDollar } from "react-icons/hi2";
 import { MdEventNote } from "react-icons/md";
@@ -24,18 +22,17 @@ import FullPageLoading from "@/components/Loader/FullPageLoader";
 import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const AdminDashboard = () => {
-  const { data: doctorsData, isLoading: isDoctorLoading } =
-    useGetAllDoctorsQuery({});
-  const { data: patientsData, isLoading: isPatientLoading } =
+  const { data: doctors, isLoading: isDoctorLoading } = useGetAllDoctorsQuery({});
+  const { data: patients, refetch, isLoading: isPatientLoading } =
     useGetAllPatientQuery({});
-  const { data: receptionistsData, isLoading: isReceptionLoading } =
+  const { data: receptionists, isLoading: isReceptionLoading } =
     useGetAllReceptionQuery({});
   const { data: AppointmentsData, isLoading: isAppointmentLoading } =
     useGetAllAppointmentsQuery({});
   const { data: getAllMetaData, isLoading: isMetaLoading } =
     useGetAllMetaDataQuery(undefined);
   const { data: getMyProfileData, isLoading: isProfileLoading } =
-    useGetMyProfileQuery(undefined);
+    useGetMyProfileQuery({});
 
   if (
     isDoctorLoading ||
@@ -70,9 +67,9 @@ const AdminDashboard = () => {
             <div className="flex flex-col gap-7">
               <WelcomeCard
                 admin={2}
-                doctor={doctorsData?.meta?.total || 0}
+                doctor={doctors?.meta?.total || 0}
                 patient={getAllMetaData?.patientCount}
-                receptionist={receptionistsData?.meta?.total || 0}
+                receptionist={receptionists?.meta?.total || 0}
                 username={`${getMyProfileData?.firstName} ${getMyProfileData?.lastName}`}
                 role={getMyProfileData?.role}
               />
@@ -124,7 +121,7 @@ const AdminDashboard = () => {
           <p className="text-[#343A40] font-[600] text-[18px] mb-7 mt-5 ">
             Latest Users
           </p>
-          <DashbordTableTab />
+          <DashbordTableTab doctors={doctors} receptionists={receptionists} patients={patients} refetch={refetch} />
         </div>
       </div>
     </>
