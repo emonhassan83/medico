@@ -5,21 +5,19 @@ import AppointmentTable from "../TableTabComponent/AppointmentTable";
 import PrescriptionTable from "../TableTabComponent/PrescriptionTable";
 import InvoicesTable from "../TableTabComponent/InvoiceTable";
 
-const ManageAllTableTab = () => {
+const ManageAllTableTab = ({appointments, prescriptions}: any) => {
   const [activeTab, setActiveTab] = useState("tab2");
 
   const renderContent = () => {
     switch (activeTab) {
-      // case "tab1":
-      //   return <TabOne/>
       case "tab2":
-        return <AppointmentTable />;
+        return <AppointmentTable appointments={appointments} />;
       case "tab3":
-        return <PrescriptionTable />;
+        return <PrescriptionTable prescriptions={prescriptions}/>;
       case "tab4":
-        return <InvoicesTable />;
+        return <InvoicesTable appointments={appointments} />;
       default:
-        return <AppointmentTable />;
+        return <AppointmentTable appointments={appointments} />;
     }
   };
 

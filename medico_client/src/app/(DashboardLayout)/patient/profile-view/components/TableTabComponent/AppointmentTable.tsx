@@ -1,7 +1,6 @@
 "use client";
 
 import { Table } from "antd";
-import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
 import { Appointment } from "@/types/appointmentType";
 import { ColumnsType } from "antd/es/table";
 
@@ -14,12 +13,10 @@ type AppointmentData = {
   time: string;
 };
 
-const AppointmentTable = () => {
-  const { data, isLoading } = useGetMyAppointmentsQuery({});
-
+const AppointmentTable = ({appointments}: any) => {
   // Map data with proper keys and types
   const tableData: AppointmentData[] =
-    data?.appointments?.map((appointment: Appointment, index: number) => ({
+  appointments?.appointments?.map((appointment: Appointment, index: number) => ({
       key: appointment.id || `${index}`, // Use _id or fallback
       srNo: index + 1,
       status: appointment.status || "N/A",
@@ -88,22 +85,22 @@ const AppointmentTable = () => {
         />
       </div>
       <div className="relative hidden md:block p-5">
-        {data?.meta?.page === 1 ? (
+        {appointments?.meta?.page === 1 ? (
           <div className="absolute text-[#495072] text-sm bottom-20">
-            {data?.meta?.total <= 10 ? (
+            {appointments?.meta?.total <= 10 ? (
               <div>
-                showing 1 to {data?.meta?.total} of {data?.meta?.total} entries
+                showing 1 to {appointments?.meta?.total} of {appointments?.meta?.total} entries
               </div>
             ) : (
               <div>
-                showing 1 to {data?.meta?.limit} of {data?.meta?.total} entries
+                showing 1 to {appointments?.meta?.limit} of {appointments?.meta?.total} entries
               </div>
             )}
           </div>
         ) : (
           <div className="absolute text-[#495072]  text-sm bottom-20">
-            showing 1 to (({data?.meta?.page} - 1)* {data?.meta?.limit} ) of{" "}
-            {data?.meta?.total} entries
+            showing 1 to (({appointments?.meta?.page} - 1)* {appointments?.meta?.limit} ) of{" "}
+            {appointments?.meta?.total} entries
           </div>
         )}
       </div>
