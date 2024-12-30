@@ -7,6 +7,7 @@ import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile
 import Meta from "@/components/Dashboard/Meta/MetaData";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
+import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
 import { useGetMyProfileQuery } from "@/redux/api/userApi";
 import { Row, Col } from "antd";
 import { FaCalendarCheck } from "react-icons/fa";
@@ -14,7 +15,8 @@ import { FaChartColumn, FaChartSimple } from "react-icons/fa6";
 
 const ProfileView = () => {
   const {data, isLoading: isProfileLoading} = useGetMyProfileQuery({});
-  const { data: AppointmentsData, isLoading } = useGetAllAppointmentsQuery({});
+  const { data: appointments, isLoading } = useGetAllAppointmentsQuery({});
+  const { data: prescriptions, isLoading: isPrescriptionLoading } = useGetAllPrescriptionQuery([]);
 
   if (isLoading || isProfileLoading) {
     return <FullPageLoading />;
@@ -39,7 +41,7 @@ const ProfileView = () => {
         <Row gutter={[32, 32]}>
           <Col span={24} md={8}>
             <div className="flex flex-col gap-7">
-              <WelcomeCardProfile />
+              <WelcomeCardProfile data={data}/>
               <PersonalInfoProfile data={data} />
             </div>
           </Col>
@@ -48,7 +50,7 @@ const ProfileView = () => {
               <div className="flex gap-8">
                 <Card
                   title="Appointments"
-                  number={AppointmentsData?.meta?.total || 0}
+                  number={appointments?.meta?.total || 0}
                   icon={<FaCalendarCheck size={33} />}
                 />
                 <Card
@@ -66,7 +68,7 @@ const ProfileView = () => {
                 <p className="text-[#343A40] font-semibold text-[16px] text-lg">
                   Latest Appointment
                 </p>
-                <ManageAllTableTab />
+                <ManageAllTableTab appointments={appointments} prescriptions={prescriptions} />
               </div>
             </div>
           </Col>

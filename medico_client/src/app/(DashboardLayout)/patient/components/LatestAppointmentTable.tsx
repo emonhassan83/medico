@@ -1,10 +1,6 @@
 "use client";
 
-import { Button, Table, Tag, Space, TableColumnsType } from "antd";
-import {
-  useAppointmentStatusChangeMutation,
-  useGetAllAppointmentsQuery,
-} from "@/redux/api/appointmentApi";
+import { Table } from "antd";
 import { Appointment } from "@/types/appointmentType";
 import { ColumnsType } from "antd/es/table";
 
@@ -17,13 +13,10 @@ type AppointmentData = {
   time: string;
 };
 
-const LatestAppointmentTable = () => {
-  const [appointmentStatusChange] = useAppointmentStatusChangeMutation();
-  const { data, refetch } = useGetAllAppointmentsQuery({});
-
+const LatestAppointmentTable = ({ appointments, refetch }: any) => {
   // Map data with proper keys and types
   const tableData: AppointmentData[] =
-    data?.appointments
+    appointments?.appointments
       ?.slice(0, 4)
       ?.map((appointment: Appointment, index: number) => ({
         key: appointment.id || `${index}`, // Use _id or fallback
@@ -35,20 +28,6 @@ const LatestAppointmentTable = () => {
         date: appointment.createdAt?.slice(0, 10) || "N/A",
         time: appointment.createdAt?.slice(11, 19) || "N/A",
       })) || [];
-
-  //update status function in here
-  const handleCancel = async (appointmentId: string) => {
-    // console.log(appointmentId);
-    try {
-      await appointmentStatusChange({
-        id: appointmentId,
-        status: "CANCELED",
-      }).unwrap();
-      refetch(); // Explicitly fetch the latest data
-    } catch (error) {
-      console.error("Error updating status:", error);
-    }
-  };
 
   const columns: ColumnsType<AppointmentData> = [
     {

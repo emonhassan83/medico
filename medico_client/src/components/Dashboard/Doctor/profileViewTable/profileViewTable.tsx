@@ -4,17 +4,17 @@ import { useState } from "react";
 import AppointmentTable from "@/app/(DashboardLayout)/receptionist/profile-view/components/AppointmentTable";
 import PatientTableAdmin from "../../Admin/dashbord/PatientTableAdmin";
 
-const ProfileViewTableDoctor = () => {
+const ProfileViewTableDoctor = ({appointments, patients, refetch}: any) => {
   const [activeTab, setActiveTab] = useState("tab1");
 
   const renderContent = () => {
     switch (activeTab) {
       case "tab1":
-        return <AppointmentTable />;
+        return <AppointmentTable appointments={appointments}/>;
       case "tab2":
-        return <PatientTableAdmin/>
+        return <PatientTableAdmin  patients={patients} refetch={refetch}/>
       default:
-        return <AppointmentTable />;
+        return <AppointmentTable appointments={appointments} />;
     }
   };
 

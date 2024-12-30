@@ -1,7 +1,7 @@
 "use client";
 
 import Card from "@/components/Dashboard/Common/Card";
-import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
+import { useGetAllAppointmentsQuery, useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
 import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
@@ -13,21 +13,16 @@ import { FaCalendarCheck } from "react-icons/fa";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import Meta from "@/components/Dashboard/Meta/MetaData";
 import LatestAppointmentTable from "./components/LatestAppointmentTable";
+import { useGetMyProfileQuery } from "@/redux/api/userApi";
 
 const PatientDashboard = () => {
-  const { data: doctorsData, isLoading: isDoctorLoading } =
-    useGetAllDoctorsQuery({});
-  const { data: patientsData, isLoading: isPatientLoading } =
-    useGetAllPatientQuery({});
-  const { data: receptionistsData, isLoading: isReceptionistLoading } =
+  const { data, isLoading: isProfileLoading } = useGetMyProfileQuery({});
     useGetAllReceptionQuery({});
-  const { data: AppointmentsData, isLoading: isAppointmentLoading } =
-    useGetAllAppointmentsQuery({});
+  const { data: appointments, refetch, isLoading: isAppointmentLoading } =
+    useGetMyAppointmentsQuery({});
 
   if (
-    isDoctorLoading ||
-    isPatientLoading ||
-    isReceptionistLoading ||
+    isProfileLoading ||
     isAppointmentLoading
   ) {
     return <FullPageLoading />;
@@ -53,7 +48,7 @@ const PatientDashboard = () => {
         <Row gutter={[32, 32]}>
           <Col span={24} md={8}>
             <div className="flex flex-col gap-7">
-              <WelcomeCardProfile />
+              <WelcomeCardProfile data={data}/>
               <MonthlyEarningGraph />
             </div>
           </Col>
@@ -63,7 +58,7 @@ const PatientDashboard = () => {
               <div className="flex gap-8">
                 <Card
                   title="Appointments"
-                  number={AppointmentsData?.meta?.total || 0}
+                  number={appointments?.meta?.total || 0}
                   icon={<FaCalendarCheck size={33} />}
                 />
                 <DisplayItemCard />
@@ -72,7 +67,7 @@ const PatientDashboard = () => {
                 <p className="text-[#343A40] font-semibold text-[16px] text-lg">
                   Latest Appointment
                 </p>
-                <LatestAppointmentTable />
+                <LatestAppointmentTable appointments={appointments} refetch={refetch} />
               </div>
             </div>
           </Col>

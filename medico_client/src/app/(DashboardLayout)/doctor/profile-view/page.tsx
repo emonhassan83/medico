@@ -13,13 +13,15 @@ import { GrNotes } from "react-icons/gr";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetMyProfileQuery } from "@/redux/api/userApi";
 import { useGetAllMetaDataQuery } from "@/redux/api/metaApi";
+import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 
 const ProfileView = () => {
   const { data, isLoading } = useGetMyProfileQuery({});
-  const { data: AppointmentsData, isLoading: isAppointmentLoading } = useGetAllAppointmentsQuery({});
-  const {data:getAllMetaData, isLoading: isMetaLoading} = useGetAllMetaDataQuery({});
+  const { data: appointments, isLoading: isAppointmentLoading } = useGetAllAppointmentsQuery({});
+  const {data: patients, refetch, isLoading: isPatientLoading} = useGetAllPatientQuery([]);
+  const {data: getAllMetaData, isLoading: isMetaLoading} = useGetAllMetaDataQuery({});
 
-  if (isLoading || isAppointmentLoading || isMetaLoading) {
+  if (isLoading || isAppointmentLoading || isMetaLoading || isPatientLoading) {
     return <FullPageLoading/>;
   }
 
@@ -32,7 +34,7 @@ const ProfileView = () => {
       <Row gutter={[32, 32]}>
         <Col span={24} md={8}>
           <div className="flex flex-col gap-7">
-            <WelcomeCardProfile/>
+            <WelcomeCardProfile data={data}/>
           </div>
         </Col>
         <Col span={24} md={16}>
@@ -42,7 +44,7 @@ const ProfileView = () => {
             <div className="grid grid-cols-3 gap-7">
             <Card
               title="Appointments"
-              number={AppointmentsData?.meta?.total || 0}
+              number={appointments?.meta?.total || 0}
               icon={<FaCalendarCheck size={33} />}
             />
               
@@ -72,7 +74,7 @@ const ProfileView = () => {
         <PersonalInfoProfile data={data}/>
         </div>
         <div className="w-2/3">
-        <ProfileViewTableDoctor/>
+        <ProfileViewTableDoctor appointments={appointments} patients={patients} refetch={refetch} />
         </div>
       </div>  
     </div>
