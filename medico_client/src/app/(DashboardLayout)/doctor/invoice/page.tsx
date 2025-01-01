@@ -16,9 +16,9 @@ const DoctorInvoicePage = () => {
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
         <div>
-          <h2 className="text-xl text-[#495057] font-semibold">INVOICE LIST</h2>
+          <h2 className="text-lg text-[#495057] font-semibold">INVOICE LIST</h2>
         </div>
-        <div className="flex items-center gap-1 text-[#495057] text-lg">
+        <div className="flex items-center gap-1 text-[#495057] text-sm">
           <Link href="#" className="">
             Dashboard
           </Link>

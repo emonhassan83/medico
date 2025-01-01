@@ -99,11 +99,11 @@ const PatientTableInDoctor = ({ data, refetch }: any) => {
           marginBottom: "16px",
         }}
       >
-        <div>
+        {/* <div>
           <Button className="mr-2 bg-[#eaeaea] outline-none">Copy</Button>
           <Button className="mr-2 bg-[#eaeaea]">Excel</Button>
           <Button className=" bg-[#eaeaea]">PDF</Button>
-        </div>
+        </div> */}
         <Input
           placeholder="Search by name"
           prefix={<SearchOutlined />}
@@ -121,6 +121,7 @@ const PatientTableInDoctor = ({ data, refetch }: any) => {
           bordered
           size="small"
           rowKey="id"
+          scroll={{ x: "max-content" }}
         />
       </div>
       <div className="relative hidden md:block">

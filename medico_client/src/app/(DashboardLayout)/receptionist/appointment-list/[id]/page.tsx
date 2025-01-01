@@ -140,7 +140,8 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
       title: "Patient Name",
       dataIndex: "patient",
       key: "patient",
-      render: (patient: Patient) => `${patient?.firstName} ${patient?.lastName}`,
+      render: (patient: Patient) =>
+        `${patient?.firstName} ${patient?.lastName}`,
     },
     {
       title: "Patient Contact No",
@@ -259,8 +260,11 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
       <Table
         dataSource={appointments}
         columns={columns}
-        rowKey="id"
         pagination={{ pageSize: 10 }}
+        bordered
+        size="small"
+        scroll={{ x: "max-content" }}
+        rowKey="id"
       />
     </div>
   );

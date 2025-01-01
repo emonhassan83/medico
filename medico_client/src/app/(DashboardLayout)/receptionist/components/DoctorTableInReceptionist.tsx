@@ -5,7 +5,7 @@ import { Table } from "antd";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 
-const DoctorTableInReceptionistTab = ({doctors}: any) => {
+const DoctorTableInReceptionistTab = ({ doctors }: any) => {
   const [searchText, setSearchText] = useState("");
 
   //   Filter data based on search text
@@ -70,6 +70,8 @@ const DoctorTableInReceptionistTab = ({doctors}: any) => {
           dataSource={filteredData}
           columns={columns}
           bordered
+          size="small"
+          scroll={{ x: "max-content" }}
           rowKey="id"
         />
       </div>

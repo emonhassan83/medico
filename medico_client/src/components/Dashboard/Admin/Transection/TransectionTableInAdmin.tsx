@@ -4,7 +4,7 @@ import React from "react";
 import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 
-const TransectionTableInAdmin = ({data}: any) => {
+const TransectionTableInAdmin = ({ data }: any) => {
   const appointments = data?.appointments;
 
   const columns: ColumnsType<any> = [
@@ -25,15 +25,13 @@ const TransectionTableInAdmin = ({data}: any) => {
       title: "Transaction No",
       dataIndex: "payment",
       key: "payment",
-      render: (payment: any) =>
-        <div>{payment?.transactionId}</div>
+      render: (payment: any) => <div>{payment?.transactionId}</div>,
     },
     {
       title: "Amount($)",
       dataIndex: "payment",
       key: "payment",
-      render: (payment: any) =>
-        <div>{payment?.amount}</div>
+      render: (payment: any) => <div>{payment?.amount}</div>,
     },
     {
       title: "Date",
@@ -57,7 +55,8 @@ const TransectionTableInAdmin = ({data}: any) => {
           columns={columns}
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
-          size="middle"
+          size="small"
+          scroll={{ x: "max-content" }}
           rowKey="id"
         />
       </div>

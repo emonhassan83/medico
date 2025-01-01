@@ -10,7 +10,7 @@ interface DataType {
   SrNo: number;
 }
 
-const AppointmentTableInReception = ({date}: any) => {
+const AppointmentTableInReception = ({ date }: any) => {
   const [selectedDate, setSelectedDate] = useState<string>(
     new Date().toISOString().slice(0, 10)
   ); // Defaults to today
@@ -31,9 +31,7 @@ const AppointmentTableInReception = ({date}: any) => {
       .map((d: any, index: number) => ({
         key: d.id || `${index}`,
         srNo: index + 1,
-        doctor: `${d?.doctor?.firstName || "N/A"} ${
-          d?.doctor?.lastName || ""
-        }`,
+        doctor: `${d?.doctor?.firstName || "N/A"} ${d?.doctor?.lastName || ""}`,
         patient: `${d?.patient?.firstName || "N/A"} ${
           d?.patient?.lastName || ""
         }`,
@@ -88,6 +86,7 @@ const AppointmentTableInReception = ({date}: any) => {
           dataSource={tableData}
           size="middle"
           bordered
+          scroll={{ x: "max-content" }}
           pagination={false}
         />
       </div>

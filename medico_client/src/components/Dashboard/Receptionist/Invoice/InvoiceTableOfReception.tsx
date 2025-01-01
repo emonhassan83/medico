@@ -8,7 +8,7 @@ import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 
-const InvoiceTableOfReception = ({data}: any) => {
+const InvoiceTableOfReception = ({ data }: any) => {
   const appointments = data?.appointments;
 
   const columns: ColumnsType<any> = [
@@ -88,7 +88,8 @@ const InvoiceTableOfReception = ({data}: any) => {
           columns={columns}
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
-          size="middle"
+          size="small"
+          scroll={{ x: "max-content" }}
           rowKey="id"
         />
       </div>

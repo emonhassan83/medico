@@ -100,6 +100,7 @@ const PrescriptionTableInDoctor = ({ data }: any) => {
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
           size="small"
+          scroll={{ x: "max-content" }}
           rowKey="id"
         />
       </div>
