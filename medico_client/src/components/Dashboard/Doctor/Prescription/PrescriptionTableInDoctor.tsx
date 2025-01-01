@@ -4,12 +4,10 @@ import { Table } from "antd";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import {
-  useDeletePrescriptionMutation
-} from "@/redux/api/prescriptionApi";
+import { useDeletePrescriptionMutation } from "@/redux/api/prescriptionApi";
 import { toast } from "sonner";
 
-const PrescriptionTableInDoctor = ({data}: any) => {
+const PrescriptionTableInDoctor = ({ data }: any) => {
   const [deletePrescription] = useDeletePrescriptionMutation();
 
   const dataSource = data?.prescription?.map((prescription: any) => ({
@@ -101,8 +99,29 @@ const PrescriptionTableInDoctor = ({data}: any) => {
           columns={columns}
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
+          size="small"
           rowKey="id"
         />
+      </div>
+      <div className="relative hidden md:block">
+        {data?.meta?.page === 1 ? (
+          <div className="absolute text-[#495072] text-sm bottom-6">
+            {data?.meta?.total <= 10 ? (
+              <div>
+                showing 1 to {data?.meta?.total} of {data?.meta?.total} entries
+              </div>
+            ) : (
+              <div>
+                showing 1 to {data?.meta?.limit} of {data?.meta?.total} entries
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="absolute text-[#495072]  text-sm bottom-6">
+            showing 1 to (({data?.meta?.page} - 1)* {data?.meta?.limit} ) of{" "}
+            {data?.meta?.total} entries
+          </div>
+        )}
       </div>
     </div>
   );

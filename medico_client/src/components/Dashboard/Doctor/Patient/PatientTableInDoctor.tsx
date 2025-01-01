@@ -119,6 +119,7 @@ const PatientTableInDoctor = ({ data, refetch }: any) => {
           columns={columns}
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
+          size="small"
           rowKey="id"
         />
       </div>

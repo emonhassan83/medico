@@ -3,9 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { TiUserOutline } from "react-icons/ti";
 
-const WelcomeCardProfile = ({data}: any) => {
-  const role = (data?.role).toLowerCase();
-  
+const WelcomeCardProfile = ({ data }: any) => {
+  const role = data?.role?.toLowerCase();
+
   return (
     <div className="rounded">
       <div className="flex justify-between p-4 bg-blue-500/20">
