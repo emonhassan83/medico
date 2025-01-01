@@ -6,7 +6,7 @@ import { ColumnsType } from "antd/es/table";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 
-const SchedulesTabileInDoctor = ({data}: any) => {
+const SchedulesTabileInDoctor = ({ data }: any) => {
   const columns: ColumnsType<any> = [
     {
       title: "SL No",
@@ -66,7 +66,7 @@ const SchedulesTabileInDoctor = ({data}: any) => {
           columns={columns}
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
-          size="middle"
+          size="small"
           rowKey="id"
         />
       </div>

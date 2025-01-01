@@ -199,6 +199,7 @@ const MyAppointmentTable = ({ data }: any) => {
           columns={columns}
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
+          size="small"
           rowKey="id"
         />
       </div>
