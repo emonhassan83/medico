@@ -57,7 +57,14 @@ const ReceptionistTableTab = ({ receptionists }: any) => {
   };
   return (
     <div className="bg-white p-5 mx-auto">
-      <Table dataSource={filteredData} columns={columns} bordered rowKey="id" />
+      <Table
+        dataSource={filteredData}
+        columns={columns}
+        bordered
+        size="small"
+        scroll={{ x: "max-content" }}
+        rowKey="id"
+      />
     </div>
   );
 };

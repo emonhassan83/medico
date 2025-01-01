@@ -5,7 +5,7 @@ import { Table } from "antd";
 import Link from "next/link";
 import { MdEdit } from "react-icons/md";
 
-const SpecialtiesTable = ({data}: any) => {
+const SpecialtiesTable = ({ data }: any) => {
   const columns = [
     {
       title: "Sr. No",
@@ -51,6 +51,8 @@ const SpecialtiesTable = ({data}: any) => {
           columns={columns}
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
+          size="small"
+          scroll={{ x: "max-content" }}
           rowKey="id"
         />
       </div>
@@ -59,17 +61,19 @@ const SpecialtiesTable = ({data}: any) => {
           <div className="absolute text-[#495072] text-sm bottom-6">
             {data?.meta?.total <= 10 ? (
               <div>
-                showing 1 to {data?.meta?.total} of {data?.meta?.total} entries
+                showing 1 to {data?.meta?.total} of ({data?.meta?.total})
+                entries
               </div>
             ) : (
               <div>
-                showing 1 to {data?.meta?.limit} of {data?.meta?.total} entries
+                showing 1 to {data?.meta?.limit} of {data?.meta?.total - 1}
+                entries
               </div>
             )}
           </div>
         ) : (
           <div className="absolute text-[#495072]  text-sm bottom-6">
-            showing 1 to (({data?.meta?.page} - 1)* {data?.meta?.limit} ) of{" "}
+            showing 1 to (({data?.meta?.page})* {data?.meta?.limit} ) of{" "}
             {data?.meta?.total} entries
           </div>
         )}

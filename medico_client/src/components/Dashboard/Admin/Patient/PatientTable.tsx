@@ -3,9 +3,7 @@
 import React, { useState } from "react";
 import { Table, Button, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import {
-  useDeletePatientMutation,
-} from "@/redux/api/patientApi";
+import { useDeletePatientMutation } from "@/redux/api/patientApi";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
@@ -13,8 +11,8 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import { toast } from "sonner";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 
-const PatientTable = ({data, refetch} : any) => {
-  const [deletePatient, {isLoading}] = useDeletePatientMutation();
+const PatientTable = ({ data, refetch }: any) => {
+  const [deletePatient, { isLoading }] = useDeletePatientMutation();
   const [searchText, setSearchText] = useState("");
 
   const filteredData = data?.patients?.filter((pt: any) =>
@@ -99,7 +97,7 @@ const PatientTable = ({data, refetch} : any) => {
   };
 
   if (isLoading) {
-    return <FullPageLoading/>;
+    return <FullPageLoading />;
   }
 
   return (
@@ -111,11 +109,11 @@ const PatientTable = ({data, refetch} : any) => {
           marginBottom: "16px",
         }}
       >
-        <div>
+        {/* <div>
           <Button className="mr-2 bg-[#eaeaea] outline-none">Copy</Button>
           <Button className="mr-2 bg-[#eaeaea]">Excel</Button>
           <Button className=" bg-[#eaeaea]">PDF</Button>
-        </div>
+        </div> */}
         <Input
           placeholder="Search by name"
           prefix={<SearchOutlined />}
@@ -131,6 +129,8 @@ const PatientTable = ({data, refetch} : any) => {
           columns={columns}
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
+          size="small"
+          scroll={{ x: "max-content" }}
           rowKey="id"
         />
       </div>

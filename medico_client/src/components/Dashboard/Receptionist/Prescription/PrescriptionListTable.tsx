@@ -5,13 +5,13 @@ import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
 
-const PrescriptionListTable = ({data}: any) => {
+const PrescriptionListTable = ({ data }: any) => {
   const dataSource = data?.prescription?.map((presecription: any) => ({
     patientName: presecription?.patient?.firstName,
     doctorName: presecription?.doctor?.firstName,
     appointmentDate: presecription?.appointment?.createdAt?.slice(0, 10),
     appointmentTime: presecription?.appointment?.createdAt?.slice(11, 19),
-    id: presecription?.id
+    id: presecription?.id,
   }));
 
   const columns = [
@@ -66,6 +66,8 @@ const PrescriptionListTable = ({data}: any) => {
           columns={columns}
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
+          size="small"
+          scroll={{ x: "max-content" }}
           rowKey="id"
         />
       </div>

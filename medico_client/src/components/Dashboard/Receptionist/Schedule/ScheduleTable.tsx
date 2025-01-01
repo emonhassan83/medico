@@ -1,9 +1,7 @@
 import React from "react";
 import { Table, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
-import {
-  useDeleteScheduleMutation
-} from "@/redux/api/scheduleApi";
+import { useDeleteScheduleMutation } from "@/redux/api/scheduleApi";
 import { MdDelete } from "react-icons/md";
 import dayjs from "dayjs";
 import { toast } from "sonner";
@@ -19,7 +17,7 @@ interface DataType {
   isBooked: boolean;
 }
 
-const ScheduleTable = ({data}: any) => {
+const ScheduleTable = ({ data }: any) => {
   const [deleteSchedule] = useDeleteScheduleMutation();
   // console.log(data);
 
@@ -124,9 +122,10 @@ const ScheduleTable = ({data}: any) => {
         <Table<DataType>
           columns={columns}
           dataSource={formattedData}
-          size="middle"
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
+          size="small"
+          scroll={{ x: "max-content" }}
           rowKey="id"
         />
       </div>
