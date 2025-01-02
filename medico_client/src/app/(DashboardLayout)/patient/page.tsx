@@ -1,7 +1,10 @@
 "use client";
 
 import Card from "@/components/Dashboard/Common/Card";
-import { useGetAllAppointmentsQuery, useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
+import {
+  useGetAllAppointmentsQuery,
+  useGetMyAppointmentsQuery,
+} from "@/redux/api/appointmentApi";
 import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import { useGetAllReceptionQuery } from "@/redux/api/receptionistApi";
@@ -17,14 +20,14 @@ import { useGetMyProfileQuery } from "@/redux/api/userApi";
 
 const PatientDashboard = () => {
   const { data, isLoading: isProfileLoading } = useGetMyProfileQuery({});
-    useGetAllReceptionQuery({});
-  const { data: appointments, refetch, isLoading: isAppointmentLoading } =
-    useGetMyAppointmentsQuery({});
+  useGetAllReceptionQuery({});
+  const {
+    data: appointments,
+    refetch,
+    isLoading: isAppointmentLoading,
+  } = useGetMyAppointmentsQuery({});
 
-  if (
-    isProfileLoading ||
-    isAppointmentLoading
-  ) {
+  if (isProfileLoading || isAppointmentLoading) {
     return <FullPageLoading />;
   }
 
@@ -48,26 +51,34 @@ const PatientDashboard = () => {
         <Row gutter={[32, 32]}>
           <Col span={24} md={8}>
             <div className="flex flex-col gap-7">
-              <WelcomeCardProfile data={data}/>
+              <WelcomeCardProfile data={data} />
               <MonthlyEarningGraph />
             </div>
           </Col>
 
           <Col span={24} md={16}>
             <div className="flex flex-col">
-              <div className="flex gap-8">
-                <Card
-                  title="Appointments"
-                  number={appointments?.meta?.total || 0}
-                  icon={<FaCalendarCheck size={33} />}
-                />
-                <DisplayItemCard />
+              <div className="flex flex-wrap sm:flex-col md:flex-row gap-8">
+                <div className="flex sm:flex-col">
+                  <Card
+                    title="Appointments"
+                    number={appointments?.meta?.total || 0}
+                    icon={<FaCalendarCheck size={33} />}
+                  />
+                </div>
+                <div className="flex sm:flex-col">
+                  <DisplayItemCard />
+                </div>
               </div>
+
               <div className="mt-10">
                 <p className="text-[#343A40] font-semibold text-[16px] text-lg">
                   Latest Appointment
                 </p>
-                <LatestAppointmentTable appointments={appointments} refetch={refetch} />
+                <LatestAppointmentTable
+                  appointments={appointments}
+                  refetch={refetch}
+                />
               </div>
             </div>
           </Col>

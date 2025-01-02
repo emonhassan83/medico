@@ -72,6 +72,7 @@ const DoctorTableInReceptionistTab = ({ doctors }: any) => {
           bordered
           size="small"
           scroll={{ x: "max-content" }}
+          pagination={false}
           rowKey="id"
         />
       </div>

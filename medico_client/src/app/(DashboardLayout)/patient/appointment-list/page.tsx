@@ -157,6 +157,8 @@ const PatientAppointment = () => {
             columns={columns}
             pagination={{ pageSize: 10 }}
             bordered
+            size="small"
+            scroll={{ x: "max-content" }}
           />
         </div>
         <div className="relative hidden md:block p-5">

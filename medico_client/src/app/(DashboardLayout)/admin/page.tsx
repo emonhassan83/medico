@@ -22,9 +22,14 @@ import FullPageLoading from "@/components/Loader/FullPageLoader";
 import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const AdminDashboard = () => {
-  const { data: doctors, isLoading: isDoctorLoading } = useGetAllDoctorsQuery({});
-  const { data: patients, refetch, isLoading: isPatientLoading } =
-    useGetAllPatientQuery({});
+  const { data: doctors, isLoading: isDoctorLoading } = useGetAllDoctorsQuery(
+    {}
+  );
+  const {
+    data: patients,
+    refetch,
+    isLoading: isPatientLoading,
+  } = useGetAllPatientQuery({});
   const { data: receptionists, isLoading: isReceptionLoading } =
     useGetAllReceptionQuery({});
   const { data: AppointmentsData, isLoading: isAppointmentLoading } =
@@ -73,14 +78,16 @@ const AdminDashboard = () => {
                 username={`${getMyProfileData?.firstName} ${getMyProfileData?.lastName}`}
                 role={getMyProfileData?.role}
               />
-              <MonthlyEarningGraph />
-              <DisplayItemCard />
+              <div className="">
+                <MonthlyEarningGraph />
+              </div>
+              {/* <DisplayItemCard /> */}
             </div>
           </Col>
           <Col span={24} md={16}>
             <div className="flex flex-col ">
               {/* all cart starting here  */}
-              <div className="grid grid-cols-3 gap-0 ">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 ">
                 <Card
                   title="Appointments"
                   number={AppointmentsData?.meta?.total || 0}
@@ -112,16 +119,23 @@ const AdminDashboard = () => {
                   icon={<GrNotes size={33} />}
                 />
               </div>
-              <MonthlyRegisteredUsersGraph />
+              <div className="mt-5">
+                <MonthlyRegisteredUsersGraph />
+              </div>
             </div>
           </Col>
         </Row>
 
-        <div>
+        <div className="">
           <p className="text-[#343A40] font-[600] text-[18px] mb-7 mt-5 ">
             Latest Users
           </p>
-          <DashbordTableTab doctors={doctors} receptionists={receptionists} patients={patients} refetch={refetch} />
+          <DashbordTableTab
+            doctors={doctors}
+            receptionists={receptionists}
+            patients={patients}
+            refetch={refetch}
+          />
         </div>
       </div>
     </>

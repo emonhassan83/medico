@@ -28,7 +28,7 @@ const WelcomeCardProfile = ({ data }: any) => {
         </div>
       </div>
 
-      <div className="flex justify-between px-5">
+      <div className="flex justify-between px-5 bg-white pb-2">
         <div>
           <p className="text-[#495057] text-md mb-2">{`${data?.firstName} ${data?.lastName}...`}</p>
           <p className="text-[#74788D]">{data?.role}</p>

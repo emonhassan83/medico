@@ -84,7 +84,14 @@ const LatestAppointmentTable = ({ appointments, refetch }: any) => {
     <div className="">
       {/* Table Section */}
       <div className="py-5 bg-white ">
-        <Table dataSource={tableData} columns={columns} bordered />
+        <Table
+          dataSource={tableData}
+          columns={columns}
+          bordered
+          size="small"
+          scroll={{ x: "max-content" }}
+          pagination={false}
+        />
       </div>
     </div>
   );
