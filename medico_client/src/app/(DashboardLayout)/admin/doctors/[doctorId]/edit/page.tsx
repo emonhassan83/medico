@@ -63,9 +63,9 @@ const UpdateDoctor = ({ params }: any) => {
         toast.success("Doctor updated successfully!");
         router.push("/admin/doctors");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to update doctor:", error);
-      toast.error("Failed to update doctor. Please try again.");
+      toast.error(error?.message);
     }
   };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Col, Divider, Row } from "antd";
+import { Button } from "antd";
 import MedicoForm from "@/components/Forms/MedicoForm";
 import MedicoInput from "@/components/Forms/MedicoInput";
 import Link from "next/link";
@@ -12,6 +12,7 @@ import { registerUsers } from "@/services/actions/registerPatient";
 import { storeUserInfo } from "@/services/auth.services";
 import { userLogin } from "@/services/actions/loginUsers";
 import { useRouter } from "next/navigation";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const RegisterPage = () => {
   const router = useRouter();
@@ -69,6 +70,12 @@ const defaultValues = {
 };
 
   return (
+    <>
+    <Meta
+        title="Register | Medico - Hospital & Clinic Management System"
+        description="This is the Register page of Medico where all patients can Register their account and provide access to the service."
+      />
+
     <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
       <div className="w-full max-w-lg rounded-lg">
         <div className="bg-white">
@@ -125,6 +132,7 @@ const defaultValues = {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import FullPageLoading from "@/components/Loader/FullPageLoader";
 import LoadingContext from "@/lib/LoadingContext/LoadingContext";
 import Link from "next/link";
 import { useState, ReactNode } from "react";
+import { BsSlash } from "react-icons/bs";
 
 const statusList = [
   { id: 1, status: "scheduled", title: "Scheduled Appointment List" },
@@ -33,7 +34,11 @@ const Layout = ({ children }: { children: ReactNode }) => {
               <p className="uppercase">Appointment List</p>
             </div>
             <div className="flex text-sm">
-              <p>Dashboard</p>/<p>Appointment</p>
+              <Link href="/admin" className="">
+                Dashboard
+              </Link>
+              <BsSlash className="text-[#ccc]" />
+              <Link href="#">Appointment</Link>
             </div>
           </div>
 
