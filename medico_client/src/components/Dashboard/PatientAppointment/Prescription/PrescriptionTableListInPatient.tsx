@@ -5,7 +5,7 @@ import { Table } from "antd";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 
-const PrescriptionTableListInPatient = ({data, profile}: any) => {
+const PrescriptionTableListInPatient = ({ data, profile }: any) => {
   const [dataSource, setDataSource] = useState<any>([]);
 
   useEffect(() => {
@@ -79,6 +79,8 @@ const PrescriptionTableListInPatient = ({data, profile}: any) => {
           columns={columns}
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
+          size="small"
+          scroll={{ x: "max-content" }}
           rowKey="id"
         />
       </div>

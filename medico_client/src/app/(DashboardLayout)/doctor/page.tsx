@@ -18,8 +18,11 @@ import { useGetMyProfileQuery } from "@/redux/api/userApi";
 
 const DoctorDashboard = () => {
   const { data, isLoading: isProfileLoading } = useGetMyProfileQuery({});
-  const { data: appointments, refetch, isLoading: isAppointmentLoading } =
-    useGetAllAppointmentsQuery({});
+  const {
+    data: appointments,
+    refetch,
+    isLoading: isAppointmentLoading,
+  } = useGetAllAppointmentsQuery({});
 
   const { data: getAllMetaData, isLoading: isMetaLoading } =
     useGetAllMetaDataQuery(undefined);
@@ -48,7 +51,7 @@ const DoctorDashboard = () => {
         <Col span={24} md={16}>
           <div className="flex flex-col gap-y-7">
             {/* all cart starting here  */}
-            <div className="grid grid-cols-3 gap-7">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
               <Card
                 title="Appointments"
                 number={appointments?.meta?.total || 0}
@@ -80,17 +83,24 @@ const DoctorDashboard = () => {
       </Row>
 
       {/* secound row this line  */}
-      <div className="flex justify-between ">
-        <div className="w-1/3 px-4 mt-14">
-          <MonthlyEarningGraph />
-          <DisplayItemCard />
+      <div className="md:flex justify-between ">
+        <div className="md:w-1/3 px-4 mt-5 md:mt-14">
+          <div className="mb-5">
+            <MonthlyEarningGraph />
+          </div>
+          {/* <div>
+            <DisplayItemCard />
+          </div> */}
         </div>
 
-        <div className="w-2/3 mt-16 px-10">
+        <div className="md:w-2/3 mt-5 md:mt-16 px-4 md:px-10">
           <p className="text-[#343A40] font-semibold text-[16px] text-lg">
             Latest Appointment
           </p>
-          <LatestAppointmentTable appointments={appointments} refetch={refetch} />
+          <LatestAppointmentTable
+            appointments={appointments}
+            refetch={refetch}
+          />
         </div>
       </div>
     </div>

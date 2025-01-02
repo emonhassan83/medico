@@ -33,8 +33,10 @@ const columns: TableColumnsType<DataType> = [
 
 const AppointmentTable = ({ date }: { date: any }) => {
   // State to store the selected date
-  const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().slice(0, 10)); // Defaults to today
-  
+  const [selectedDate, setSelectedDate] = useState<string>(
+    new Date().toISOString().slice(0, 10)
+  ); // Defaults to today
+
   useEffect(() => {
     if (date?.length > 0) {
       const fDate = new Date(date[0]?.schedule?.startDate?.slice(0, 10));
@@ -44,13 +46,19 @@ const AppointmentTable = ({ date }: { date: any }) => {
   }, [date]);
 
   const tableData: any =
-    date?.filter((d: any) => d?.schedule?.startDate?.slice(0, 10) === selectedDate).map((d: any, index: number) => ({
-      key: d.id || `${index}`,
-      srNo: index + 1,
-      doctorName: `${d?.doctor?.firstName || "N/A"} ${d?.doctor?.lastName || ""}`,
-      number: `${d?.doctor?.contactNumber || "N/A"}`,
-      time: d.schedule?.startDate?.slice(11, 19) || "N/A",
-    })) || [];
+    date
+      ?.filter(
+        (d: any) => d?.schedule?.startDate?.slice(0, 10) === selectedDate
+      )
+      .map((d: any, index: number) => ({
+        key: d.id || `${index}`,
+        srNo: index + 1,
+        doctorName: `${d?.doctor?.firstName || "N/A"} ${
+          d?.doctor?.lastName || ""
+        }`,
+        number: `${d?.doctor?.contactNumber || "N/A"}`,
+        time: d.schedule?.startDate?.slice(11, 19) || "N/A",
+      })) || [];
 
   const fDate = new Date(selectedDate);
   const formattedDate = fDate?.toLocaleDateString("en-US", {
@@ -69,7 +77,9 @@ const AppointmentTable = ({ date }: { date: any }) => {
         <Table<DataType>
           columns={columns}
           dataSource={tableData}
-          size="middle"
+          bordered
+          size="small"
+          scroll={{ x: "max-content" }}
           pagination={false}
         />
       </div>

@@ -6,7 +6,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 
-const DoctorTable = ({data}: any) => {
+const DoctorTable = ({ data }: any) => {
   const [searchText, setSearchText] = useState("");
 
   // Filter data based on search text
@@ -73,11 +73,11 @@ const DoctorTable = ({data}: any) => {
           marginBottom: "16px",
         }}
       >
-        <div>
+        {/* <div>
           <Button className="mr-2 bg-[#eaeaea] outline-none">Copy</Button>
           <Button className="mr-2 bg-[#eaeaea]">Excel</Button>
           <Button className=" bg-[#eaeaea]">PDF</Button>
-        </div>
+        </div> */}
         <Input
           placeholder="Search by name"
           prefix={<SearchOutlined />}
@@ -93,6 +93,8 @@ const DoctorTable = ({data}: any) => {
           columns={columns}
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
+          size="small"
+          scroll={{ x: "max-content" }}
           rowKey="id"
         />
       </div>

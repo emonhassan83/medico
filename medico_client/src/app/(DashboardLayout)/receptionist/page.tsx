@@ -17,10 +17,14 @@ import { GrNotes } from "react-icons/gr";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 
 const ReceptionistDashboard = () => {
-  const { data: doctors, isLoading: isDoctorLoading } =
-    useGetAllDoctorsQuery({});
-  const { data: patients, refetch, isLoading: isPatientLoading } =
-    useGetAllPatientQuery({});
+  const { data: doctors, isLoading: isDoctorLoading } = useGetAllDoctorsQuery(
+    {}
+  );
+  const {
+    data: patients,
+    refetch,
+    isLoading: isPatientLoading,
+  } = useGetAllPatientQuery({});
   const { data: AppointmentsData, isLoading: isAppointmentLoading } =
     useGetAllAppointmentsQuery({});
   const { data: getAllMetaData, isLoading: isMetaLoading } =
@@ -50,13 +54,13 @@ const ReceptionistDashboard = () => {
         <Col span={24} md={8}>
           <div className="flex flex-col gap-7">
             <WelcomeCardProfile />
-            <DisplayItemCard />
+            {/* <DisplayItemCard /> */}
           </div>
         </Col>
         <Col span={24} md={16}>
           <div className="flex flex-col gap-y-7">
             {/* all cart starting here  */}
-            <div className="grid grid-cols-3 gap-7">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
               <Card
                 title="Appointments"
                 number={AppointmentsData?.meta?.total || 0}
@@ -95,7 +99,11 @@ const ReceptionistDashboard = () => {
       {/* show Latest Users table  */}
       <div className="mt-6 mx-4">
         <p className="text-[#343A40] text-lg"> Latest Users </p>
-        <AllTableMange doctors={doctors} patients={patients} refetch={refetch} />
+        <AllTableMange
+          doctors={doctors}
+          patients={patients}
+          refetch={refetch}
+        />
       </div>
     </div>
   );

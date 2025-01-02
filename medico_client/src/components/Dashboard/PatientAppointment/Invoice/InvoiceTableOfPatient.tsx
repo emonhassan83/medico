@@ -5,7 +5,7 @@ import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import Link from "next/link";
 
-const InvoiceTableOfPatient = ({data}: any) => {
+const InvoiceTableOfPatient = ({ data }: any) => {
   const appointments = data?.appointments;
 
   const columns: ColumnsType<any> = [
@@ -26,16 +26,14 @@ const InvoiceTableOfPatient = ({data}: any) => {
       title: "Transition Id",
       dataIndex: "payment",
       key: "payment",
-      render: (payment: any) =>
-        <div>{payment?.transactionId}</div>
+      render: (payment: any) => <div>{payment?.transactionId}</div>,
     },
-    
+
     {
       title: "Amount",
       dataIndex: "payment",
       key: "payment",
-      render: (payment: any) =>
-        <div>{payment?.amount}</div>
+      render: (payment: any) => <div>{payment?.amount}</div>,
     },
     {
       title: "Status",
@@ -71,7 +69,8 @@ const InvoiceTableOfPatient = ({data}: any) => {
           columns={columns}
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
-          size="middle"
+          size="small"
+          scroll={{ x: "max-content" }}
           rowKey="id"
         />
       </div>
