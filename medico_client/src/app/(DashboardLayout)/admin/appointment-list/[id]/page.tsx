@@ -9,6 +9,7 @@ import {
 import { ColumnsType } from "antd/es/table";
 import { toast } from "sonner";
 import LoadingContext from "@/lib/LoadingContext/LoadingContext";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 type AppointmentStatus = "SCHEDULED" | "COMPLETED" | "CANCELED" | "INPROGRESS";
 type PaymentStatus = "PAID" | "UNPAID";
@@ -256,6 +257,11 @@ const AppointmentDynamicPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="container">
+      <Meta
+        title="List of Appointment | Medico - Hospital & Clinic Management System"
+        description="This is the list of Appointment page of Medico where admin can show all patient Appointment, and more."
+      />
+
       <Table
         dataSource={appointments}
         columns={columns}
