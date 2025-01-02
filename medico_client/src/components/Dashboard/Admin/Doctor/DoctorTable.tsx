@@ -1,19 +1,35 @@
 "use client";
 
 import React, { useState } from "react";
-import { Table, Button, Input } from "antd";
+import { Table, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import { useDeleteDoctorMutation } from "@/redux/api/doctorApi";
+import { toast } from "sonner";
 
 const DoctorTAble = ({ data }: any) => {
   const [searchText, setSearchText] = useState("");
+  const [deleteDoctor, {isLoading}] = useDeleteDoctorMutation();
 
   //   Filter data based on search text
   const filteredData = data?.doctors?.filter((pt: any) =>
     pt.firstName.toLowerCase().includes(searchText.toLowerCase())
   );
+
+  const handleDeleteDoctor = async(id: string) => {
+    try {
+      const res = await deleteDoctor(id)?.unwrap();
+
+      if (res?.id) {
+        toast.success("Doctor deleted successfully!");
+      }
+    } catch (error: any) {
+      console.error(error?.message);
+      toast.error(error?.message);
+    }
+  }
 
   const columns = [
     {
@@ -57,7 +73,6 @@ const DoctorTAble = ({ data }: any) => {
           <Link href={`/admin/doctors/${data?.id}/edit`}>
             <button
               className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-              //   onClick={() => handleEdit(items)}
             >
               <MdEdit />
             </button>
@@ -66,7 +81,7 @@ const DoctorTAble = ({ data }: any) => {
           {/* delete button */}
           <button
             className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-            //   onClick={() => handleDelete(items)}
+              onClick={() => handleDeleteDoctor(data?.id)}
           >
             <RiDeleteBin6Fill />
           </button>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Table, Button, Input } from "antd";
+import { Table, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { useDeletePatientMutation } from "@/redux/api/patientApi";
 import Link from "next/link";
@@ -30,6 +30,7 @@ const PatientTable = ({ data, refetch }: any) => {
       toast.error("Something went wrong");
     }
   };
+
   const columns = [
     {
       title: "Sr. No",

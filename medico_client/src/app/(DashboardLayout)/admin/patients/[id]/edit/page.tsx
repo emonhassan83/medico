@@ -63,14 +63,13 @@ const UpdatePatients = ({ params }: any) => {
 
       const result = await updatePatient(payload).unwrap();
       // console.log(result);
-      if (result) {
+      if (result?.id) {
         toast.success("Patients updated successfully!");
         router.push("/admin/patients");
       }
-    } catch (error) {
-      // Handle error
-      toast.error("Failed to update patient!");
-      console.error("Update error:", error);
+    } catch (error: any) {
+      toast.error(error?.massage);
+      console.error("Update error:", error?.message);
     }
   };
 
