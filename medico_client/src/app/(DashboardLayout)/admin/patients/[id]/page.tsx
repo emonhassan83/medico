@@ -23,7 +23,7 @@ const PatientDetail = ({ params }: any) => {
   return (
     <>
       <Meta
-        title="Details Patient| Medico - Hospital & Clinic Management System"
+        title="Details Patient | Medico - Hospital & Clinic Management System"
         description="This is the details of patient list page of Medico where admin can view details of patient and more."
       />
 
