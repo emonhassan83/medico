@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { Table, Button, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
@@ -18,7 +19,7 @@ const ReceptionistTable = ({ data, refetch }: any) => {
     pt.firstName.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  const handleDeletRow = async (id: string) => {
+  const handleDeleteRow = async (id: string) => {
     try {
       const res = await deleteReceptionist(id).unwrap();
       // console.log(res);
@@ -26,8 +27,9 @@ const ReceptionistTable = ({ data, refetch }: any) => {
         toast.success("Delete reception successfully");
         refetch();
       }
-    } catch (err) {
-      toast.error("Somthing went wrong");
+    } catch (err: any) {
+      toast.error(err?.message);
+      console.error("Something went wrong", err?.message);
     }
   };
 
@@ -66,8 +68,7 @@ const ReceptionistTable = ({ data, refetch }: any) => {
           {/* edit button */}
           <Link href={`/admin/receptionists/${data?.id}`}>
             <button
-              className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-              //   onClick={() => handleEdit(items)}
+              className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full"
             >
               <MdEdit />
             </button>
@@ -76,7 +77,7 @@ const ReceptionistTable = ({ data, refetch }: any) => {
           {/* delete button */}
           <button
             className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-            onClick={() => handleDeletRow(data?.id)}
+            onClick={() => handleDeleteRow(data?.id)}
           >
             <RiDeleteBin6Fill />
           </button>

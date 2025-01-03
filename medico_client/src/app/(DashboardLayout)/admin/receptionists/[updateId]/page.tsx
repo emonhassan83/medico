@@ -43,13 +43,13 @@ const ReceptionDetailPage = ({ params }: any) => {
         body: formData,
       }).unwrap();
 
-      if (result) {
+      if (result?.id) {
         toast.success("Receptionist updated successfully!");
         router.push("/admin/receptionists");
       }
-    } catch (error) {
-      console.error("Failed to update receptionist:", error);
-      toast.error("Failed to update receptionist. Please try again.");
+    } catch (error: any) {
+      console.error("Failed to update receptionist:", error?.message);
+      toast.error(error?.message);
     }
   };
 
