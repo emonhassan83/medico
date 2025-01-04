@@ -20,7 +20,7 @@ const PrescriptionDetails = ({ params }: any) => {
   }, [data, params]);
 
   if (isLoading) {
-    return <FullPageLoading/>;
+    return <FullPageLoading />;
   }
   return (
     <div className="mx-5 pb-4">
