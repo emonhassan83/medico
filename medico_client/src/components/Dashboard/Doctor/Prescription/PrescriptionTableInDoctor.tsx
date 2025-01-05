@@ -70,16 +70,6 @@ const PrescriptionTableInDoctor = ({ data }: any) => {
               <FaEye />
             </button>
           </Link>
-
-          {/* <Link href="#">
-            <button
-              className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-              // onClick={() => handleEdit(items)}
-            >
-              <MdEmail />
-            </button>
-          </Link> */}
-          {/* delete button */}
           <button
             className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
             onClick={() => handleDeletePrescription(items?.id)}
