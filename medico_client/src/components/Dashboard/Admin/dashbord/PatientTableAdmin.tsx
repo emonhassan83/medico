@@ -72,22 +72,22 @@ const PatientTableAdmin = ({ patients, refetch }: any) => {
           </Link>
 
           {/* edit button */}
-          <Link href={`/admin/patients/${data?.id}/edit`}>
+          {/* <Link href={`/admin/patients/${data?.id}/edit`}>
             <button
               className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
               //   onClick={() => handleEdit(items)}
             >
               <MdEdit />
             </button>
-          </Link>
+          </Link> */}
 
           {/* delete button */}
-          <button
+          {/* <button
             className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
             onClick={() => handleDeletePatient(data?.id)}
           >
             <RiDeleteBin6Fill />
-          </button>
+          </button> */}
         </div>
       ),
     },

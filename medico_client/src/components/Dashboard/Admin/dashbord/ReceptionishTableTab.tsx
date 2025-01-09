@@ -39,17 +39,17 @@ const ReceptionistTableTab = ({ receptionists }: any) => {
       sorter: (a: any, b: any) =>
         a.email.toLowerCase().localeCompare(b.email.toLowerCase()),
     },
-    {
-      title: "Options",
-      key: "action",
-      render: () => (
-        <Link href="#">
-          <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
-            <FaEye />
-          </button>
-        </Link>
-      ),
-    },
+    // {
+    //   title: "Options",
+    //   key: "action",
+    //   render: () => (
+    //     <Link href="#">
+    //       <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
+    //         <FaEye />
+    //       </button>
+    //     </Link>
+    //   ),
+    // },
   ];
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
