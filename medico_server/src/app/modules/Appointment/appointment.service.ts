@@ -267,6 +267,7 @@ const getAllFromDB = async (filters: any, options: IPaginationOptions) => {
       patient: true,
       schedule: true,
       payment: true,
+      prescription: true,
     },
   });
   const total = await prisma.appointment.count({
@@ -292,6 +293,7 @@ const getByIdFromDB = async (id: string) => {
       doctor: true,
       patient: true,
       schedule: true,
+      payment: true,
     },
   });
   return result;

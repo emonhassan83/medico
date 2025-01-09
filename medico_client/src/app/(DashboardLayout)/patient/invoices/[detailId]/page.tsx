@@ -47,13 +47,8 @@ const AppointmentDetails = ({ params }: any) => {
   const { data, isLoading } = useGetAppointmentQuery(params?.detailId);
   const [initialPayment, { isLoading: isPayment }] =
     useInitialPaymentMutation();
-  const [appointmentStatusChange, { isLoading: isUpdating }] =
-    useAppointmentStatusChangeMutation();
   const router = useRouter();
-
-  console.log(data);
   
-
   const tableData = [
     {
       key: data?.id,
@@ -72,25 +67,17 @@ const AppointmentDetails = ({ params }: any) => {
       const response = await initialPayment(id).unwrap();
 
       if (response.paymentUrl) {
-        const res = await appointmentStatusChange({
-          id: data?.id,
-          status: "INPROGRESS",
-        }).unwrap();
-
-        if (res?.id) {
-          router.push("/payment?status=success");
-          toast.success("Payment successfully!");
-        }
+        router.push(response.paymentUrl);
       } else {
         router.push("/payment?status=cancel");
       }
     } catch (err: any) {
-      toast.error(err.message);
-      console.error(err.message);
+      toast.error(err?.message);
+      console.error(err?.message);
     }
   };
 
-  if (isLoading || isPayment || isUpdating) {
+  if (isLoading || isPayment) {
     return <FullPageLoading />;
   }
   return (
@@ -176,7 +163,7 @@ const AppointmentDetails = ({ params }: any) => {
                 <p className="text-sm">Payment Mode: Online Payment</p>
                 <p className="text-sm">
                   Payment Status:{" "}
-                  {data?.paymentStatus === "PAID" || data?.status === "INPROGRESS"
+                  {data?.payment?.status === "PAID"
                     ? "PAID"
                     : "UNPAID"}
                 </p>
@@ -235,8 +222,7 @@ const AppointmentDetails = ({ params }: any) => {
                 }
                 onClick={() => handlePayment(data?.id)}
                 className={`w-1/2 text-white py-3 rounded-md text-sm font-medium ${
-                  data?.paymentStatus === "PAID" ||
-                  data?.status === "INPROGRESS"
+                  data?.payment?.status === "PAID"
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-[#556ee6] hover:bg-blue-700"
                 }`}

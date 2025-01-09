@@ -27,7 +27,22 @@ const validatePayment = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const redirectSuccessPaymentUrl = catchAsync(async (req: Request, res: Response) => {
+  res.redirect('http://localhost:3000/payment?status=success');
+});
+
+const redirectCancelPaymentUrl = catchAsync(async (req: Request, res: Response) => {
+  res.redirect('http://localhost:3000/payment?status=cancel');
+});
+
+const redirectFailPaymentUrl = catchAsync(async (req: Request, res: Response) => {
+  res.redirect('http://localhost:3000/payment?status=fail');
+});
+
 export const PaymentController = {
   initPayment,
-  validatePayment
+  validatePayment,
+  redirectSuccessPaymentUrl,
+  redirectCancelPaymentUrl,
+  redirectFailPaymentUrl
 };
