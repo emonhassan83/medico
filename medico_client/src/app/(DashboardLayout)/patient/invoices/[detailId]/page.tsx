@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  useAppointmentStatusChangeMutation,
-  useGetAppointmentQuery,
-} from "@/redux/api/appointmentApi";
+import { useGetAppointmentQuery } from "@/redux/api/appointmentApi";
 import { Table } from "antd";
 import Link from "next/link";
 import React from "react";
@@ -48,7 +45,7 @@ const AppointmentDetails = ({ params }: any) => {
   const [initialPayment, { isLoading: isPayment }] =
     useInitialPaymentMutation();
   const router = useRouter();
-  
+
   const tableData = [
     {
       key: data?.id,
@@ -66,8 +63,8 @@ const AppointmentDetails = ({ params }: any) => {
     try {
       const response = await initialPayment(id).unwrap();
 
-      if (response.paymentUrl) {
-        router.push(response.paymentUrl);
+      if (response?.paymentUrl) {
+        router.push(response?.paymentUrl);
       } else {
         router.push("/payment?status=cancel");
       }
@@ -163,9 +160,7 @@ const AppointmentDetails = ({ params }: any) => {
                 <p className="text-sm">Payment Mode: Online Payment</p>
                 <p className="text-sm">
                   Payment Status:{" "}
-                  {data?.payment?.status === "PAID"
-                    ? "PAID"
-                    : "UNPAID"}
+                  {data?.payment?.status === "PAID" ? "PAID" : "UNPAID"}
                 </p>
               </div>
               <div>
@@ -224,7 +219,7 @@ const AppointmentDetails = ({ params }: any) => {
                 className={`w-1/2 text-white py-3 rounded-md text-sm font-medium ${
                   data?.payment?.status === "PAID"
                     ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-[#556ee6] hover:bg-blue-700"
+                    : "bg-[#556ee6] hover:bg-blue-700 cursor-pointer"
                 }`}
               >
                 Payment

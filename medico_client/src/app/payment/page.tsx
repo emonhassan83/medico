@@ -39,7 +39,7 @@ const PaymentPage = ({ searchParams }: PaymentPageProps) => {
               <Button type="primary" href="/patient" key="dashboard">
                 Go to Dashboard
               </Button>,
-              <Button type="default" href="/patient/appointments" key="home">
+              <Button type="default" href="/patient/invoices" key="home">
                 Back to Appointment
               </Button>,
             ]}
@@ -55,7 +55,7 @@ const PaymentPage = ({ searchParams }: PaymentPageProps) => {
                 <Button type="primary" href="/patient" key="dashboard">
                 Go to Dashboard
               </Button>,
-              <Button type="default" href="/appointments" key="home">
+              <Button type="default" href="/patient/invoices" key="home">
                 Back to Appointment
               </Button>,
             ]}
@@ -70,7 +70,7 @@ const PaymentPage = ({ searchParams }: PaymentPageProps) => {
                 <Button type="primary" href="/patient" key="dashboard">
                 Go to Dashboard
               </Button>,
-              <Button type="default" href="/appointments" key="home">
+              <Button type="default" href="/patient/invoices" key="home">
                 Back to Appointment
               </Button>,
             ]}
