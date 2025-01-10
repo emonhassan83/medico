@@ -40,7 +40,7 @@ const InvoiceTableOfPatient = ({ data }: any) => {
       dataIndex: "status",
       key: "status",
       render: (_: any, record: any) =>
-        record.paymentStatus === "PAID" || record.status === "INPROGRESS"
+        record.payment.status === "PAID"
           ? "PAID"
           : "UNPAID",
     },

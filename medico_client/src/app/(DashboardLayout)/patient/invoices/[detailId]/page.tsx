@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  useAppointmentStatusChangeMutation,
-  useGetAppointmentQuery,
-} from "@/redux/api/appointmentApi";
+import { useGetAppointmentQuery } from "@/redux/api/appointmentApi";
 import { Table } from "antd";
 import Link from "next/link";
 import React from "react";
@@ -47,12 +44,7 @@ const AppointmentDetails = ({ params }: any) => {
   const { data, isLoading } = useGetAppointmentQuery(params?.detailId);
   const [initialPayment, { isLoading: isPayment }] =
     useInitialPaymentMutation();
-  const [appointmentStatusChange, { isLoading: isUpdating }] =
-    useAppointmentStatusChangeMutation();
   const router = useRouter();
-
-  console.log(data);
-  
 
   const tableData = [
     {
@@ -71,26 +63,18 @@ const AppointmentDetails = ({ params }: any) => {
     try {
       const response = await initialPayment(id).unwrap();
 
-      if (response.paymentUrl) {
-        const res = await appointmentStatusChange({
-          id: data?.id,
-          status: "INPROGRESS",
-        }).unwrap();
-
-        if (res?.id) {
-          router.push("/payment?status=success");
-          toast.success("Payment successfully!");
-        }
+      if (response?.paymentUrl) {
+        router.push(response?.paymentUrl);
       } else {
         router.push("/payment?status=cancel");
       }
     } catch (err: any) {
-      toast.error(err.message);
-      console.error(err.message);
+      toast.error(err?.message);
+      console.error(err?.message);
     }
   };
 
-  if (isLoading || isPayment || isUpdating) {
+  if (isLoading || isPayment) {
     return <FullPageLoading />;
   }
   return (
@@ -176,9 +160,7 @@ const AppointmentDetails = ({ params }: any) => {
                 <p className="text-sm">Payment Mode: Online Payment</p>
                 <p className="text-sm">
                   Payment Status:{" "}
-                  {data?.paymentStatus === "PAID" || data?.status === "INPROGRESS"
-                    ? "PAID"
-                    : "UNPAID"}
+                  {data?.payment?.status === "PAID" ? "PAID" : "UNPAID"}
                 </p>
               </div>
               <div>
@@ -235,10 +217,9 @@ const AppointmentDetails = ({ params }: any) => {
                 }
                 onClick={() => handlePayment(data?.id)}
                 className={`w-1/2 text-white py-3 rounded-md text-sm font-medium ${
-                  data?.paymentStatus === "PAID" ||
-                  data?.status === "INPROGRESS"
+                  data?.payment?.status === "PAID"
                     ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-[#556ee6] hover:bg-blue-700"
+                    : "bg-[#556ee6] hover:bg-blue-700 cursor-pointer"
                 }`}
               >
                 Payment
