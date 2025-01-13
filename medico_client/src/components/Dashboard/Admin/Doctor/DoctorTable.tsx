@@ -8,17 +8,18 @@ import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { useDeleteDoctorMutation } from "@/redux/api/doctorApi";
 import { toast } from "sonner";
+import { FaEye } from "react-icons/fa";
 
 const DoctorTAble = ({ data }: any) => {
   const [searchText, setSearchText] = useState("");
-  const [deleteDoctor, {isLoading}] = useDeleteDoctorMutation();
+  const [deleteDoctor, { isLoading }] = useDeleteDoctorMutation();
 
   //   Filter data based on search text
   const filteredData = data?.doctors?.filter((pt: any) =>
     pt.firstName.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  const handleDeleteDoctor = async(id: string) => {
+  const handleDeleteDoctor = async (id: string) => {
     try {
       const res = await deleteDoctor(id)?.unwrap();
 
@@ -29,7 +30,7 @@ const DoctorTAble = ({ data }: any) => {
       console.error(error?.message);
       toast.error(error?.message);
     }
-  }
+  };
 
   const columns = [
     {
@@ -69,11 +70,15 @@ const DoctorTAble = ({ data }: any) => {
       key: "action",
       render: (data: any) => (
         <div className="flex gap-1">
+          <Link href={`/admin/doctors/${data?.id}`}>
+            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
+              <FaEye />
+            </button>
+          </Link>
+
           {/* edit button */}
           <Link href={`/admin/doctors/${data?.id}/edit`}>
-            <button
-              className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-            >
+            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
               <MdEdit />
             </button>
           </Link>
@@ -81,7 +86,7 @@ const DoctorTAble = ({ data }: any) => {
           {/* delete button */}
           <button
             className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-              onClick={() => handleDeleteDoctor(data?.id)}
+            onClick={() => handleDeleteDoctor(data?.id)}
           >
             <RiDeleteBin6Fill />
           </button>

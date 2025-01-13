@@ -31,7 +31,7 @@ export const receptionistApi = baseApi.injectEndpoints({
 
     //get single receptionist
     getReceptionist: build.query({
-      query: (id: string | undefined) => ({
+      query: (id: string | string[] | undefined) => ({
         url: `/receptionist/${id}`,
         method: "GET",
       }),

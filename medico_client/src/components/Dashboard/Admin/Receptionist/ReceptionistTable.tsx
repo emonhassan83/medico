@@ -9,6 +9,7 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import { useDeleteReceptionistMutation } from "@/redux/api/receptionistApi";
 import { toast } from "sonner";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import { FaEye } from "react-icons/fa";
 
 const ReceptionistTable = ({ data, refetch }: any) => {
   const [deleteReceptionist, { isLoading }] = useDeleteReceptionistMutation();
@@ -65,11 +66,14 @@ const ReceptionistTable = ({ data, refetch }: any) => {
       key: "action",
       render: (data: any) => (
         <div className="flex gap-1">
-          {/* edit button */}
+          <Link href={`/admin/receptionists/${data?.id}/details`}>
+            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
+              <FaEye />
+            </button>
+          </Link>
+
           <Link href={`/admin/receptionists/${data?.id}`}>
-            <button
-              className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full"
-            >
+            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full">
               <MdEdit />
             </button>
           </Link>
