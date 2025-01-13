@@ -15,6 +15,7 @@ const initPayment = async (paymentData: IPaymentData) => {
       success_url: config.ssl.success_url,
       fail_url: config.ssl.fail_url,
       cancel_url: config.ssl.cancel_url,
+      // ipn_url: "https://medico-client-tau.vercel.app/payment/ipn",
       ipn_url: "http://localhost:3030/ipn",
       shipping_method: "N/A",
       product_name: "Appointment",
@@ -39,6 +40,8 @@ const initPayment = async (paymentData: IPaymentData) => {
       ship_country: "N/A",
     };
 
+    console.log("data", data);
+    
     const response = await axios({
       method: "POST",
       url: config.ssl.ssl_payment_api,
@@ -47,6 +50,8 @@ const initPayment = async (paymentData: IPaymentData) => {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     });
+    console.log("Response", response);
+    
 
     return response.data;
   } catch (error: any) {

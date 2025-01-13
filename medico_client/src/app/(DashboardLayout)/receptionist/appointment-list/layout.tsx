@@ -1,5 +1,6 @@
 "use client";
 
+import Meta from "@/components/Dashboard/Meta/MetaData";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import LoadingContext from "@/lib/LoadingContext/LoadingContext";
 import Link from "next/link";
@@ -20,6 +21,12 @@ const Layout = ({
   const [loading, setLoading] = useState(false);
   
   return (
+    <>
+    <Meta
+        title="List of Appointment | Medico - Hospital & Clinic Management System"
+        description="This is the list of Appointment page of Medico where admin can show all patient Appointment, and more."
+      />
+
     <LoadingContext.Provider value={{ setLoading }}>
       <div className="relative">
       {loading && <FullPageLoading />}
@@ -49,6 +56,7 @@ const Layout = ({
       {children}
     </div>
     </LoadingContext.Provider>
+    </>
   );
 };
 

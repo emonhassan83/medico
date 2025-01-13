@@ -2,6 +2,7 @@
 
 import PatientTable from "@/components/Dashboard/Admin/Patient/PatientTable";
 import PatientTableInDoctor from "@/components/Dashboard/Doctor/Patient/PatientTableInDoctor";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import Link from "next/link";
@@ -15,6 +16,12 @@ const PatientPage = () => {
     return <FullPageLoading />;
   }
   return (
+    <>
+    <Meta
+        title="List of Patients | Medico - Hospital & Clinic Management System"
+        description="This is the list of patients page of Medico where patients can show all patients and their details information."
+      />
+
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
         <div>
@@ -29,10 +36,10 @@ const PatientPage = () => {
         </div>
       </div>
       <div className="pt-5">
-        {/* <PatientTable data={data} refetch={refetch} /> */}
         <PatientTableInDoctor data={data} refetch={refetch} />
       </div>
     </div>
+    </>
   );
 };
 

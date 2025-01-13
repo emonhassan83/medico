@@ -1,6 +1,7 @@
 "use client";
 
 import SchedulesTabileInDoctor from "@/components/Dashboard/Doctor/Schedules/SchedulesTabileInDoctor";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetAllSchedulesQuery } from "@/redux/api/scheduleApi";
 import Link from "next/link";
@@ -14,6 +15,12 @@ const DoctorSchedulesPage = () => {
     return <FullPageLoading/>
   }
   return (
+    <>
+    <Meta
+        title="List of Schedules | Medico - Hospital & Clinic Management System"
+        description="This is the list of schedules page of Medico where doctors can show all their schedules and view details information."
+      />
+
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
         <div>
@@ -41,6 +48,7 @@ const DoctorSchedulesPage = () => {
         <SchedulesTabileInDoctor data={data} />
       </div>
     </div>
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 "use client";
 
 import InvoiceTableOfDoctor from "@/components/Dashboard/Doctor/Invoice/InvoiceTableOfDoctor";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
 import Link from "next/link";
@@ -13,6 +14,12 @@ const DoctorInvoicePage = () => {
     return <FullPageLoading />;
   }
   return (
+    <>
+    <Meta
+        title="List of Invoices | Medico - Hospital & Clinic Management System"
+        description="This is the list of invoices page of Medico where doctors can show all their invoices and view details information."
+      />
+
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
         <div>
@@ -30,6 +37,7 @@ const DoctorInvoicePage = () => {
         <InvoiceTableOfDoctor data={data} />
       </div>
     </div>
+    </>
   );
 };
 

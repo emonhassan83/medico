@@ -66,7 +66,7 @@ const AppointmentDetails = ({ params }: any) => {
       if (response?.paymentUrl) {
         router.push(response?.paymentUrl);
       } else {
-        router.push("/payment?status=cancel");
+        router.push("/payment?status=success");
       }
     } catch (err: any) {
       toast.error(err?.message);

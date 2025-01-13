@@ -1,5 +1,6 @@
 "use client";
 
+import Meta from "@/components/Dashboard/Meta/MetaData";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
 import Image from "next/image";
@@ -23,6 +24,12 @@ const PrescriptionDetails = ({ params }: any) => {
     return <FullPageLoading />;
   }
   return (
+    <>
+    <Meta
+        title="Details Prescription | Medico - Hospital & Clinic Management System"
+        description="This is the details of prescription page of Medico where doctors can show all their details prescription and view details information."
+      />
+
     <div className="mx-5 pb-4">
       <div className="flex items-center justify-between mt-2">
         <div>
@@ -118,6 +125,7 @@ const PrescriptionDetails = ({ params }: any) => {
         />
       </div>
     </div>
+    </>
   );
 };
 

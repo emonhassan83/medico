@@ -1,5 +1,6 @@
 "use client";
 
+import Meta from "@/components/Dashboard/Meta/MetaData";
 import CreateCalenderInReception from "@/components/Dashboard/Receptionist/Appointment/CreateCalenderInReception";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
@@ -13,6 +14,12 @@ const AppointmentPageOfDoctor = () => {
     return <FullPageLoading />;
   }
   return (
+   <>
+   <Meta
+        title="Book Appointment | Medico - Hospital & Clinic Management System"
+        description="This is the receptionist list appointment of Medico where a can show receptionist their appointments with calender date."
+      />
+
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
         <div>
@@ -33,6 +40,7 @@ const AppointmentPageOfDoctor = () => {
         <CreateCalenderInReception data={data} />
       </div>
     </div>
+   </>
   );
 };
 

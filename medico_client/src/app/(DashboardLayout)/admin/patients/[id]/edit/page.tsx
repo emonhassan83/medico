@@ -79,7 +79,7 @@ const UpdatePatients = ({ params }: any) => {
   return (
     <>
       <Meta
-        title="Update Patient| Medico - Hospital & Clinic Management System"
+        title="Update Patient | Medico - Hospital & Clinic Management System"
         description="This is the update of patient page of Medico where admin can update of patient and more."
       />
 
