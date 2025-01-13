@@ -64,19 +64,14 @@ const PatientTable = ({ data, refetch }: any) => {
       key: "action",
       render: (data: any) => (
         <div className="flex gap-1">
-          {/* update Button */}
           <Link href={`/admin/patients/${data?.id}`}>
             <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
               <FaEye />
             </button>
           </Link>
 
-          {/* edit button */}
           <Link href={`/admin/patients/${data?.id}/edit`}>
-            <button
-              className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
-              //   onClick={() => handleEdit(items)}
-            >
+            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
               <MdEdit />
             </button>
           </Link>

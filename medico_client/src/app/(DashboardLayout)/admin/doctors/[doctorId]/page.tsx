@@ -13,7 +13,7 @@ import {
 } from "react-icons/fa";
 
 const DoctorDetail = ({ params }: any) => {
-  const { data, isLoading } = useGetDoctorQuery(params.id);
+  const { data, isLoading } = useGetDoctorQuery(params.doctorId);
 
   if (isLoading) {
     return <FullPageLoading />;

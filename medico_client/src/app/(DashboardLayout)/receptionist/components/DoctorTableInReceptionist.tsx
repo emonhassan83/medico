@@ -48,9 +48,9 @@ const DoctorTableInReceptionistTab = ({ doctors }: any) => {
     {
       title: "Options",
       key: "action",
-      render: () => (
+      render: (data: any) => (
         <div className="flex gap-1">
-          <Link href="#">
+          <Link href={`/admin/doctors/${data?.id}`}>
             <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
               <FaEye />
             </button>
