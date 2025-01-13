@@ -1,6 +1,7 @@
 "use client";
 
 import PrescriptionTableInDoctor from "@/components/Dashboard/Doctor/Prescription/PrescriptionTableInDoctor";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
 import Link from "next/link";
@@ -14,6 +15,12 @@ const PrescriptionListInDoctor = () => {
     return <FullPageLoading/>;
   }
   return (
+    <>
+    <Meta
+        title="List of Prescription | Medico - Hospital & Clinic Management System"
+        description="This is the list of prescription page of Medico where doctors can show all their prescription and view details information."
+      />
+
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
         <div>
@@ -41,6 +48,7 @@ const PrescriptionListInDoctor = () => {
         <PrescriptionTableInDoctor data={data} />
       </div>
     </div>
+    </>
   );
 };
 

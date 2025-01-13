@@ -14,6 +14,7 @@ import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetMyProfileQuery } from "@/redux/api/userApi";
 import { useGetAllMetaDataQuery } from "@/redux/api/metaApi";
 import { useGetAllPatientQuery } from "@/redux/api/patientApi";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const ProfileView = () => {
   const { data, isLoading } = useGetMyProfileQuery({});
@@ -26,6 +27,12 @@ const ProfileView = () => {
   }
 
   return (
+    <>
+    <Meta
+        title="Profile | Medico - Hospital & Clinic Management System"
+        description="This is the profile page of Medico where doctors can show all their information and update their information."
+      />
+
     <div className="mx-5">
        <div className="mb-6 flex justify-between items-center">
         <h2 className="text-[#343A40] font-semibold text-[16px]  uppercase">Profile</h2>
@@ -78,6 +85,7 @@ const ProfileView = () => {
         </div>
       </div>  
     </div>
+    </>
   )
 }
 

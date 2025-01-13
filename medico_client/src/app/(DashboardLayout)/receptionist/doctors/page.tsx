@@ -1,5 +1,6 @@
 "use client";
 
+import Meta from "@/components/Dashboard/Meta/MetaData";
 import DoctorTableInReceptionist from "@/components/Dashboard/Receptionist/Doctor/DoctorTableInReceptionist";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
@@ -14,6 +15,12 @@ const Doctor = () => {
     return <FullPageLoading />;
   }
   return (
+    <>
+    <Meta
+        title="List of Doctors | Medico - Hospital & Clinic Management System"
+        description="This is the doctors of list of Medico where admin can manage their doctor profile manage like update and delete, and more."
+      />
+
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
         <div>
@@ -32,6 +39,7 @@ const Doctor = () => {
         <DoctorTableInReceptionist data={data} />
       </div>
     </div>
+    </>
   );
 };
 

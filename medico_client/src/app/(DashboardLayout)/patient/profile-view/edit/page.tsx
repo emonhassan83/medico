@@ -17,6 +17,7 @@ import {
 import { useRouter } from "next/navigation";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetMyProfileQuery } from "@/redux/api/userApi";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const UpdateProfile = () => {
   const router = useRouter();
@@ -78,6 +79,11 @@ const UpdateProfile = () => {
   }
   return (
     <>
+    <Meta
+        title="Patient Update Page | Medico - Hospital & Clinic Management System"
+        description="This is the update page of patients of Medico where admin can manage show patient update, and more."
+      />
+
       {/* Header Section */}
       <div className="mx-4 flex items-center justify-between mt-4">
         <h2 className="text-lg text-[#495057] font-semibold">Edit Profile</h2>

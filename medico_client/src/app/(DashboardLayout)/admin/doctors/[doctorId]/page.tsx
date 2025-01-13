@@ -1,5 +1,6 @@
 "use client";
 import Card from "@/components/Dashboard/Common/Card";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetDoctorQuery } from "@/redux/api/doctorApi";
 import Image from "next/image";
@@ -19,6 +20,12 @@ const DoctorDetail = ({ params }: any) => {
     return <FullPageLoading />;
   }
   return (
+    <>
+    <Meta
+        title="Details of Doctors | Medico - Hospital & Clinic Management System"
+        description="This is the doctors details page of Medico where admin can manage their doctor profile manage like update and delete, and more."
+      />
+
     <div className="mx-8">
       <div className="flex items-center justify-between mt-2">
         <div>
@@ -234,6 +241,7 @@ const DoctorDetail = ({ params }: any) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

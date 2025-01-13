@@ -14,6 +14,7 @@ import MedicoTextArea from "@/components/Forms/MedicoTextArea";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 const ReactQuillNoSSR = dynamic(() => import("react-quill"), { ssr: false });
 
 const CreatePrescription = () => {
@@ -100,6 +101,11 @@ const CreatePrescription = () => {
   }
   return (
     <>
+    <Meta
+        title="Create Prescription | Medico - Hospital & Clinic Management System"
+        description="This is the details of prescription page of Medico where doctors can create prescription and add details information."
+      />
+
       {/* Header Section */}
       <div className="mx-4 flex items-center justify-between mt-4">
         <h2 className="text-lg text-[#495057] font-semibold">
