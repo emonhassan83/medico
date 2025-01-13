@@ -1,4 +1,5 @@
 "use client";
+import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetReceptionistQuery } from "@/redux/api/receptionistApi";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,11 +7,14 @@ import React from "react";
 import { BsSlash } from "react-icons/bs";
 
 const ReceptionistDetails = ({ params }: any) => {
-  console.log(params.updateId);
-  const { data } = useGetReceptionistQuery(params.updateId);
+  const { data, isLoading } = useGetReceptionistQuery(params.updateId);
 
-  console.log(data);
+  if (isLoading) {
+    return <FullPageLoading/>;
+  }
+
   return (
+    <>
     <div className="mx-8">
       <div className="flex items-center justify-between mt-2">
         <div>
@@ -120,6 +124,7 @@ const ReceptionistDetails = ({ params }: any) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
