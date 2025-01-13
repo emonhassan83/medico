@@ -1,6 +1,7 @@
 "use client";
 
 import MyAppointmentTable from "@/components/Dashboard/Doctor/Appointment/MyAppointmentTable";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetMyAppointmentsQuery } from "@/redux/api/appointmentApi";
 import Link from "next/link";
@@ -15,6 +16,12 @@ const AppointmentList = () => {
   }
 
   return (
+    <>
+    <Meta
+        title="List Appointment | Medico - Hospital & Clinic Management System"
+        description="This is the doctor list appointment of Medico where doctors can manage and show their appointments."
+      />
+
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
         <div>
@@ -34,6 +41,7 @@ const AppointmentList = () => {
         <MyAppointmentTable data={data}/>
       </div>
     </div>
+    </>
   );
 };
 

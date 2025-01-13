@@ -1,6 +1,7 @@
 "use client";
 
 import CreateAppointmentFormInDoctor from "@/components/Dashboard/Doctor/Appointment/CreateAppointmentFormInDoctor";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
@@ -8,6 +9,12 @@ import { TiArrowLeft } from "react-icons/ti";
 
 const CreateAppointment = () => {
   return (
+    <>
+    <Meta
+        title="Create Appointment | Medico - Hospital & Clinic Management System"
+        description="This is the doctor create appointment of Medico where doctors can create their appointments."
+      />
+
     <div className="mx-5">
       <div className="flex items-center justify-between mt-5">
         <div>
@@ -43,6 +50,7 @@ const CreateAppointment = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

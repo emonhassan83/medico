@@ -4,7 +4,6 @@ import Card from "@/components/Dashboard/Common/Card";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
 import { Row, Col } from "antd";
 import MonthlyEarningGraph from "@/components/Dashboard/Common/MonthlyEarningGraph";
-import DisplayItemCard from "@/components/Dashboard/Common/DisplayItemCard";
 import { FaCalendarCheck } from "react-icons/fa";
 import { HiCurrencyDollar } from "react-icons/hi2";
 import { MdEventNote } from "react-icons/md";
@@ -15,6 +14,7 @@ import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile
 import { useGetAllMetaDataQuery } from "@/redux/api/metaApi";
 import LatestAppointmentTable from "../patient/components/LatestAppointmentTable";
 import { useGetMyProfileQuery } from "@/redux/api/userApi";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const DoctorDashboard = () => {
   const { data, isLoading: isProfileLoading } = useGetMyProfileQuery({});
@@ -32,6 +32,12 @@ const DoctorDashboard = () => {
   }
 
   return (
+    <>
+    <Meta
+        title="Dashboard | Medico - Hospital & Clinic Management System"
+        description="This is the doctor dashboard of Medico where doctors can manage their appointments, prescriptions, and more."
+      />
+
     <div className="mx-4">
       <div className="mb-6 flex justify-between items-center">
         <h2 className="text-[#343A40] font-semibold text-[16px]  uppercase">
@@ -104,6 +110,7 @@ const DoctorDashboard = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
