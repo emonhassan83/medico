@@ -45,7 +45,7 @@ const AppointmentDetails = ({ params }: any) => {
   const [initialPayment, { isLoading: isPayment }] =
     useInitialPaymentMutation();
   const router = useRouter();
-
+  
   const tableData = [
     {
       key: data?.id,
@@ -212,8 +212,7 @@ const AppointmentDetails = ({ params }: any) => {
             <div className="mt-5">
               <button
                 disabled={
-                  data?.paymentStatus === "PAID" ||
-                  data?.status === "INPROGRESS"
+                  data?.payment?.status === "PAID"
                 }
                 onClick={() => handlePayment(data?.id)}
                 className={`w-1/2 text-white py-3 rounded-md text-sm font-medium ${
