@@ -7,7 +7,10 @@ import React from "react";
 import { BsSlash } from "react-icons/bs";
 import { TiArrowLeft } from "react-icons/ti";
 import "./tableBgColor.css";
-import { useInitialPaymentMutation } from "@/redux/api/paymentApi";
+import {
+  useInitialPaymentMutation,
+  useValidatePaymentMutation,
+} from "@/redux/api/paymentApi";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { FaPhoneVolume } from "react-icons/fa6";
@@ -44,6 +47,8 @@ const AppointmentDetails = ({ params }: any) => {
   const { data, isLoading } = useGetAppointmentQuery(params?.detailId);
   const [initialPayment, { isLoading: isPayment }] =
     useInitialPaymentMutation();
+  const [validatePayment, { isLoading: isPaymentValidate }] =
+    useValidatePaymentMutation();
   const router = useRouter();
 
   const tableData = [
@@ -65,6 +70,13 @@ const AppointmentDetails = ({ params }: any) => {
 
       if (response?.paymentUrl) {
         router.push(response?.paymentUrl);
+        
+        //* validate to payment manually
+        const res = await validatePayment(id).unwrap();
+        if (res.message) {
+          toast.success("Payment validated successfully!")
+        }
+
       } else {
         router.push("/payment?status=success");
       }
@@ -74,9 +86,10 @@ const AppointmentDetails = ({ params }: any) => {
     }
   };
 
-  if (isLoading || isPayment) {
+  if (isLoading || isPayment || isPaymentValidate) {
     return <FullPageLoading />;
   }
+
   return (
     <>
       <Meta
@@ -211,10 +224,7 @@ const AppointmentDetails = ({ params }: any) => {
             {/* Payment Button */}
             <div className="mt-5">
               <button
-                disabled={
-                  data?.paymentStatus === "PAID" ||
-                  data?.status === "INPROGRESS"
-                }
+                disabled={data?.payment?.status === "PAID"}
                 onClick={() => handlePayment(data?.id)}
                 className={`w-1/2 text-white py-3 rounded-md text-sm font-medium ${
                   data?.payment?.status === "PAID"

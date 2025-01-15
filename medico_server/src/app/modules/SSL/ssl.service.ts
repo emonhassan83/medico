@@ -39,8 +39,6 @@ const initPayment = async (paymentData: IPaymentData) => {
       ship_postcode: 1000,
       ship_country: "N/A",
     };
-
-    console.log("data", data);
     
     const response = await axios({
       method: "POST",
@@ -50,10 +48,9 @@ const initPayment = async (paymentData: IPaymentData) => {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     });
-    console.log("Response", response);
-    
 
     return response.data;
+    
   } catch (error: any) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Payment error occurred");
   }
