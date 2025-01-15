@@ -8,6 +8,12 @@ router.post(
     PaymentController.initPayment
 );
 
+//* validate payment manually
+router.patch(
+    '/validate/:appointmentId',
+    PaymentController.validatePaymentManually
+);
+
 router.post(
     '/success',
     PaymentController.redirectSuccessPaymentUrl

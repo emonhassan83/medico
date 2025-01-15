@@ -28,6 +28,19 @@ const validatePayment = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const validatePaymentManually = catchAsync(async (req: Request, res: Response) => {
+  const {appointmentId} = req.params;
+  
+  const result = await PaymentService.validatePaymentManually(appointmentId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Payment validate successfully!",
+    data: result,
+  });
+});
+
 const redirectSuccessPaymentUrl = catchAsync(async (req: Request, res: Response) => {
   res.redirect(`${config.client_url}/payment?status=success`);
 });
@@ -45,5 +58,6 @@ export const PaymentController = {
   validatePayment,
   redirectSuccessPaymentUrl,
   redirectCancelPaymentUrl,
-  redirectFailPaymentUrl
+  redirectFailPaymentUrl,
+  validatePaymentManually
 };

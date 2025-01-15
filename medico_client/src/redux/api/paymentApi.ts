@@ -10,9 +10,19 @@ const paymentApi = baseApi.injectEndpoints({
          }),
          invalidatesTags: [tagTypes.payment],
       }),
+
+      validatePayment: build.mutation({
+         query: (id: string) => {
+           return {
+             url: `/payment/validate/${id}`,
+             method: 'PATCH'
+           };
+         },
+         invalidatesTags: [tagTypes.payment],
+       }),
    }),
 });
 
-export const { useInitialPaymentMutation } = paymentApi;
+export const { useInitialPaymentMutation, useValidatePaymentMutation } = paymentApi;
 
 export default paymentApi;

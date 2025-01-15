@@ -78,7 +78,47 @@ const validatePayment = async (payload: any) => {
   };
 };
 
+const validatePaymentManually = async (appointmentId: any) => {
+  const response = await prisma.appointment.findFirst({
+    where: {
+      id: appointmentId,
+    },
+    include: {
+      payment: true
+    },
+  })
+
+  const responseData = {tran_id: response?.payment?.transactionId};
+  
+  await prisma.$transaction(async (tx) => {
+    const updatedPaymentData = await tx.payment.update({
+      where: {
+        transactionId: responseData.tran_id,
+      },
+      data: {
+        status: PaymentStatus.PAID,
+        paymentGatewayData: responseData,
+      },
+    });
+
+    await tx.appointment.update({
+      where: {
+        id: updatedPaymentData.appointmentId,
+      },
+      data: {
+        paymentStatus: PaymentStatus.PAID,
+        status: AppointmentStatus.INPROGRESS
+      },
+    });
+  });
+
+  return {
+    message: "Payment success!",
+  };
+};
+
 export const PaymentService = {
   initPayment,
   validatePayment,
+  validatePaymentManually
 };
