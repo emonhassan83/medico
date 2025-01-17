@@ -14,7 +14,7 @@ import { FaEye } from "react-icons/fa";
 const ReceptionistTable = ({ data, refetch }: any) => {
   const [deleteReceptionist, { isLoading }] = useDeleteReceptionistMutation();
   const [searchText, setSearchText] = useState("");
-
+  
   //   Filter data based on search text
   const filteredData = data?.receptionist?.filter((pt: any) =>
     pt.firstName.toLowerCase().includes(searchText.toLowerCase())
@@ -80,8 +80,14 @@ const ReceptionistTable = ({ data, refetch }: any) => {
 
           {/* delete button */}
           <button
-            className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
+            className={`flex items-center p-2 rounded-full text-white 
+              ${
+                data?.email === "sophia.taylor@example.com"
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-[#556ee6] hover:bg-blue-600"
+              }`}
             onClick={() => handleDeleteRow(data?.id)}
+            disabled={data?.email === "sophia.taylor@example.com"}
           >
             <RiDeleteBin6Fill />
           </button>

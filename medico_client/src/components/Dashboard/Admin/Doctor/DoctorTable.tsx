@@ -85,8 +85,14 @@ const DoctorTAble = ({ data }: any) => {
 
           {/* delete button */}
           <button
-            className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
+            className={`flex items-center p-2 rounded-full text-white 
+    ${
+      data?.email === "isabella.martinez@example.com"
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-[#556ee6] hover:bg-blue-600"
+    }`}
             onClick={() => handleDeleteDoctor(data?.id)}
+            disabled={data?.email === "isabella.martinez@example.com"}
           >
             <RiDeleteBin6Fill />
           </button>

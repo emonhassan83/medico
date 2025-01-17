@@ -16,7 +16,7 @@ const demoCredentials = [
   { role: "Admin", email: "alice.smith@example.com", password: "admin123" },
   {
     role: "Receptionist",
-    email: "emily.clark@example.com",
+    email: "sophia.taylor@example.com",
     password: "receptionist123",
   },
   { role: "Doctor", email: "isabella.martinez@example.com", password: "doctor123" },
