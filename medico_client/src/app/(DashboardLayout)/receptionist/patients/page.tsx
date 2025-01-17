@@ -1,6 +1,7 @@
 "use client";
 
 import PatientTable from "@/components/Dashboard/Admin/Patient/PatientTable";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import Link from "next/link";
@@ -14,6 +15,12 @@ const ReceptionistPatientPage = () => {
     return <FullPageLoading />;
   }
   return (
+    <>
+     <Meta
+        title="List of Patients | Medico - Hospital & Clinic Management System"
+        description="This is the list of patient list page of Medico where receptionist can manage patient like update and delete, and more."
+      />
+
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
         <div>
@@ -39,6 +46,7 @@ const ReceptionistPatientPage = () => {
         <PatientTable data={data} refetch={refetch} />
       </div>
     </div>
+    </>
   );
 };
 

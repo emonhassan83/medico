@@ -11,6 +11,7 @@ import MedicoTimePicker from "@/components/Forms/MedicoTimePicker";
 import { useCreateScheduleMutation } from "@/redux/api/scheduleApi";
 import dayjs from "dayjs";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const CreateSchedules = () => {
   const [createSchedule, { isLoading }] = useCreateScheduleMutation();
@@ -48,6 +49,11 @@ const CreateSchedules = () => {
 
   return (
     <>
+    <Meta
+        title="Create of Schedule | Medico - Hospital & Clinic Management System"
+        description="This is the create schedules page of Medico where receptionist can create all their schedules and view details information."
+      />
+
       {/* Header Section */}
       <div className="mx-4 flex items-center justify-between mt-4">
         <h2 className="text-lg text-[#495057] font-semibold">

@@ -10,6 +10,7 @@ import { Row, Col } from "antd";
 import { FaCalendarCheck } from "react-icons/fa";
 import { FaChartColumn, FaChartSimple } from "react-icons/fa6";
 import { useGetMyProfileQuery } from "@/redux/api/userApi";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const ProfileView = () => {
   const { data: appointments, refetch, isLoading: isAppointmentLoading } =
@@ -20,6 +21,12 @@ const ProfileView = () => {
     return <FullPageLoading />;
   }
   return (
+    <>
+    <Meta
+        title="Profile | Medico - Hospital & Clinic Management System"
+        description="This is the profile page of Medico where admin can show all their information and update their information."
+      />
+
     <div className="mx-4">
       <div className="mb-6 flex justify-between items-center">
         <h2 className="text-[#343A40] font-semibold text-[16px]  uppercase">
@@ -69,6 +76,7 @@ const ProfileView = () => {
         </Col>
       </Row>
     </div>
+    </>
   );
 };
 

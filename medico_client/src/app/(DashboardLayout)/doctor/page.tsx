@@ -27,7 +27,7 @@ const DoctorDashboard = () => {
   const { data: getAllMetaData, isLoading: isMetaLoading } =
     useGetAllMetaDataQuery(undefined);
 
-  if (isAppointmentLoading || isProfileLoading) {
+  if (isAppointmentLoading || isProfileLoading || isMetaLoading) {
     return <FullPageLoading />;
   }
 

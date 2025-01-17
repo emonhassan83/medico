@@ -1,4 +1,5 @@
 "use client";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetReceptionistQuery } from "@/redux/api/receptionistApi";
 import Image from "next/image";
@@ -15,6 +16,11 @@ const ReceptionistDetails = ({ params }: any) => {
 
   return (
     <>
+    <Meta
+        title="Receptionist Details | Medico - Hospital & Clinic Management System"
+        description="This is the receptionist details page of Medico where admin can show all their information."
+      />
+
     <div className="mx-8">
       <div className="flex items-center justify-between mt-2">
         <div>

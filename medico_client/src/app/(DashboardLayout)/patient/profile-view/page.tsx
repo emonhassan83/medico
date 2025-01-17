@@ -18,7 +18,7 @@ const ProfileView = () => {
   const { data: appointments, isLoading } = useGetAllAppointmentsQuery({});
   const { data: prescriptions, isLoading: isPrescriptionLoading } = useGetAllPrescriptionQuery([]);
 
-  if (isLoading || isProfileLoading) {
+  if (isLoading || isProfileLoading || isPrescriptionLoading) {
     return <FullPageLoading />;
   }
   return (

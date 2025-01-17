@@ -2,6 +2,7 @@
 
 import { Result, Button } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 interface PaymentPageProps {
   searchParams: { status: string };
@@ -11,6 +12,12 @@ const PaymentPage = ({ searchParams }: PaymentPageProps) => {
   const status = searchParams?.status || "";
 
   return (
+    <>
+    <Meta
+        title="Patient Payment | Medico - Hospital & Clinic Management System"
+        description="This is the patient payment page of Medico where patient can pay their pending payment then show this page, and more."
+      />
+
     <div
       style={{
         height: "100vh",
@@ -78,6 +85,7 @@ const PaymentPage = ({ searchParams }: PaymentPageProps) => {
         )}
       </div>
     </div>
+    </>
   );
 };
 
