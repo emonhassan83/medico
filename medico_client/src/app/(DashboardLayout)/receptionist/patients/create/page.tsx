@@ -12,6 +12,7 @@ import { useCreatePatientMutation, useUpdatePatientMutation } from "@/redux/api/
 import uploadImageToImgbb from "@/components/ImageUploader/ImageUploader";
 import { toast } from "sonner";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const CreatePatients = () => {
   const [photo, setPhoto] = useState("");
@@ -101,6 +102,11 @@ if (isCreating || isUpdating) {
 
   return (
     <>
+    <Meta
+        title="Create Patient | Medico - Hospital & Clinic Management System"
+        description="This is the crate of patient page of Medico where receptionist can create of patient profile and more."
+      />
+
       {/* Header Section */}
       <div className="mx-4 flex items-center justify-between mt-4">
         <h2 className="text-lg text-[#495057] font-semibold">

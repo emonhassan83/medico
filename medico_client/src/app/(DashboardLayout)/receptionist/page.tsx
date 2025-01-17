@@ -15,6 +15,7 @@ import { MdEventNote } from "react-icons/md";
 import { GiNotebook } from "react-icons/gi";
 import { GrNotes } from "react-icons/gr";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const ReceptionistDashboard = () => {
   const { data: doctors, isLoading: isDoctorLoading } = useGetAllDoctorsQuery(
@@ -40,6 +41,12 @@ const ReceptionistDashboard = () => {
   }
 
   return (
+    <>
+    <Meta
+        title="Dashboard | Medico - Hospital & Clinic Management System"
+        description="This is the receptionist dashboard of Medico where receptionists can manage their appointments, prescriptions, and more."
+      />
+
     <div className="mx-5">
       <div className="mb-6 flex justify-between items-center">
         <h2 className="text-[#343A40] font-semibold text-[16px]  uppercase">
@@ -106,6 +113,7 @@ const ReceptionistDashboard = () => {
         />
       </div>
     </div>
+    </>
   );
 };
 

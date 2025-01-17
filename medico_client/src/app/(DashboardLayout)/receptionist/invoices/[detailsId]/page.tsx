@@ -12,6 +12,7 @@ import { IoMail } from "react-icons/io5";
 import logo from "@/assets/logo/Logo.png";
 import Image from "next/image";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
+import Meta from "@/components/Dashboard/Meta/MetaData";
 
 const columns = [
   {
@@ -56,6 +57,12 @@ const AppointmentDetails = ({ params }: any) => {
     return <FullPageLoading />;
   }
   return (
+    <>
+    <Meta
+        title="Details of Invoice | Medico - Hospital & Clinic Management System"
+        description="This is the list of invoice page of Medico where receptionist can show all patient invoice, and more."
+      />
+
     <div className="mx-5">
       <div>
         <div className="flex items-center justify-between mt-5">
@@ -180,6 +187,7 @@ const AppointmentDetails = ({ params }: any) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

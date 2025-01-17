@@ -78,8 +78,14 @@ const PatientTable = ({ data, refetch }: any) => {
 
           {/* delete button */}
           <button
-            className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
+            className={`flex items-center p-2 rounded-full text-white 
+              ${
+                data?.email === "ethan.miller@example.com"
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-[#556ee6] hover:bg-blue-600"
+              }`}
             onClick={() => handleDeleteRow(data?.id)}
+            disabled={data?.email === "ethan.miller@example.com"}
           >
             <RiDeleteBin6Fill />
           </button>

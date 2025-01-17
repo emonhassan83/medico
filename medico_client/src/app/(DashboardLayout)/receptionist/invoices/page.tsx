@@ -1,5 +1,6 @@
 "use client";
 
+import Meta from "@/components/Dashboard/Meta/MetaData";
 import InvoiceTableOfReception from "@/components/Dashboard/Receptionist/Invoice/InvoiceTableOfReception";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
@@ -13,6 +14,12 @@ const ReceptionistInvoicesPage = () => {
     return <FullPageLoading />;
   }
   return (
+    <>
+    <Meta
+        title="List of Invoice | Medico - Hospital & Clinic Management System"
+        description="This is the list of invoice page of Medico where receptionist can show all patient invoice, and more."
+      />
+
     <div className="mx-5">
       <div className="flex items-center justify-between mt-2">
         <div>
@@ -30,6 +37,7 @@ const ReceptionistInvoicesPage = () => {
         <InvoiceTableOfReception data={data} />
       </div>
     </div>
+    </>
   );
 };
 

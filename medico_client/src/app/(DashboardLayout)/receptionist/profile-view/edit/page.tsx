@@ -71,8 +71,8 @@ const UpdateAdminProfile = () => {
   return (
     <>
       <Meta
-        title="Update Admin Profile| Medico - Hospital & Clinic Management System"
-        description="This is the Update Admin profile page of doctors of Medico where admin can create receptionist, and more."
+        title="Update Receptionist Profile | Medico - Hospital & Clinic Management System"
+        description="This is the Update Receptionist profile page of Receptionist of Medico where Receptionist can create patient, and more."
       />
       {/* Header Section */}
       <div className="mx-4 flex items-center justify-between mt-4">
