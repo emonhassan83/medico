@@ -6,7 +6,6 @@ import { useGetAllAppointmentsQuery } from "@/redux/api/appointmentApi";
 import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import { Row, Col } from "antd";
-import DisplayItemCard from "@/components/Dashboard/Common/DisplayItemCard";
 import WelcomeCardProfile from "@/components/Dashboard/Common/WelcomeCardProfile";
 import { FaCalendarCheck, FaDollarSign } from "react-icons/fa";
 import { useGetAllMetaDataQuery } from "@/redux/api/metaApi";
