@@ -28,7 +28,7 @@ const AdminTransactionPage = () => {
             </h2>
           </div>
           <div className="flex items-center gap-1 text-[#495057] text-sm">
-            <Link href="#" className="">
+            <Link href="/admin" className="">
               Dashboard
             </Link>
             <BsSlash className="text-[#ccc]" />

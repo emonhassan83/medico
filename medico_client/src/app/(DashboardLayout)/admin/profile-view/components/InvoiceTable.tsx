@@ -52,7 +52,7 @@ const InvoiceTable = ({appointments}: any) => {
       align: "center",
       render: (_: any, data: any) => (
         <div className="flex justify-center items-center gap-1">
-          <Link href={`/admin/transation`}>
+          <Link href={`/admin/transaction`}>
             <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
               <FaEye />
             </button>

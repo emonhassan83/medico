@@ -5,8 +5,6 @@ import { Table } from "antd";
 import { useDeletePatientMutation } from "@/redux/api/patientApi";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBin6Fill } from "react-icons/ri";
 import { toast } from "sonner";
 
 const PatientTableAdmin = ({ patients, refetch }: any) => {
@@ -65,7 +63,7 @@ const PatientTableAdmin = ({ patients, refetch }: any) => {
       render: (data: any) => (
         <div className="flex gap-1">
           {/* update Button */}
-          <Link href={`/admin/patients/${data?.id}`}>
+          <Link href={`/receptionist/patients/${data?.id}`}>
             <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
               <FaEye />
             </button>
