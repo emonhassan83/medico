@@ -22,12 +22,14 @@ const PatientTable = ({ data, refetch }: any) => {
   const handleDeleteRow = async (id: string) => {
     try {
       const res = await deletePatient(id).unwrap();
+      
       if (res?.id) {
         toast.success("Delete patient successfully");
         refetch();
       }
-    } catch (err) {
-      toast.error("Something went wrong");
+    } catch (err: any) {
+      toast.error(err?.message);
+      console.error(err?.message);
     }
   };
 
