@@ -26,7 +26,7 @@ const DoctorInvoicePage = () => {
           <h2 className="text-lg text-[#495057] font-semibold">INVOICE LIST</h2>
         </div>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
-          <Link href="#" className="">
+          <Link href="/doctor" className="">
             Dashboard
           </Link>
           <BsSlash className="text-[#ccc]" />
