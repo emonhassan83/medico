@@ -27,7 +27,7 @@ const Doctor = () => {
           <h2 className="text-lg text-[#495057] font-semibold">DOCTOR LIST</h2>
         </div>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
-          <Link href="#" className="">
+          <Link href="/receptionist" className="">
             Dashboard
           </Link>
           <BsSlash className="text-[#ccc]" />

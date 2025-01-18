@@ -5,6 +5,7 @@ import FullPageLoading from "@/components/Loader/FullPageLoader";
 import LoadingContext from "@/lib/LoadingContext/LoadingContext";
 import Link from "next/link";
 import {  ReactNode, useState } from "react";
+import { BsSlash } from "react-icons/bs";
 
 const statusList = [
   { id: 1, status: 'scheduled', title: 'Scheduled Appointment List' },
@@ -35,9 +36,13 @@ const Layout = ({
           <div>
             <p className="uppercase">Appointment List</p>
           </div>
-          <div className="flex text-sm">
-            <p>Dashboard</p>/<p>Appointment</p>
-          </div>
+          <div className="flex items-center gap-1 text-[#495057] text-sm">
+          <Link href="/receptionist" className="">
+            Dashboard
+          </Link>
+          <BsSlash className="text-[#ccc]" />
+          <Link href="#">Appointment</Link>
+        </div>
         </div>
 
       <div className="flex justify-between gap-8 px-3 my-6">

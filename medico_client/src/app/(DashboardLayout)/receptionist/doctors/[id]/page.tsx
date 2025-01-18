@@ -34,11 +34,11 @@ const DoctorDetail = ({ params }: any) => {
           </h2>
         </div>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
-          <Link href="#" className="">
+          <Link href="/receptionist" className="">
             Dashboard
           </Link>
           <BsSlash className="text-[#ccc]" />
-          <Link href="#">Doctor</Link>
+          <Link href="/receptionist/doctor">Doctor</Link>
           <BsSlash className="text-[#ccc]" />
           <Link href="#">Profile</Link>
         </div>

@@ -88,7 +88,7 @@ const DoctorDashboard = () => {
         </Col>
       </Row>
 
-      {/* secound row this line  */}
+      {/* second row this line  */}
       <div className="md:flex justify-between ">
         <div className="md:w-1/3 px-4 mt-5 md:mt-14">
           <div className="mb-5">

@@ -29,7 +29,7 @@ const SchedulesPage = () => {
           </h2>
         </div>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
-          <Link href="#" className="">
+          <Link href="/receptionist" className="">
             Dashboard
           </Link>
           <BsSlash className="text-[#ccc]" />
@@ -41,7 +41,7 @@ const SchedulesPage = () => {
           href="/receptionist/schedules/create"
           className="text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
         >
-          Add Schedules
+          + Add Schedules
         </Link>
       </div>
       <ScheduleTable data={data} />

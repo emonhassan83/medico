@@ -147,6 +147,7 @@ const CreatePrescription = () => {
             <MedicoDatePiker label="Follow Up Date" name="followUpDate" />
           </div>
 
+          <p className="block text-sm font-medium text-gray-700" style={{ marginBottom: "5px"}}>Instructions</p>
           <Controller
             name="instructions"
             defaultValue=""
