@@ -1,12 +1,12 @@
 "use client";
 
-import PatientTable from "@/components/Dashboard/Admin/Patient/PatientTable";
 import Meta from "@/components/Dashboard/Meta/MetaData";
 import FullPageLoading from "@/components/Loader/FullPageLoader";
 import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import Link from "next/link";
 import React from "react";
 import { BsSlash } from "react-icons/bs";
+import PatientTable from "./components/PatientTable";
 
 const ReceptionistPatientPage = () => {
   const { data, refetch, isLoading } = useGetAllPatientQuery([]);
@@ -27,7 +27,7 @@ const ReceptionistPatientPage = () => {
           <h2 className="text-lg text-[#495057] font-semibold">PATIENT LIST</h2>
         </div>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
-          <Link href="#" className="">
+          <Link href="/receptionist" className="">
             Dashboard
           </Link>
           <BsSlash className="text-[#ccc]" />
