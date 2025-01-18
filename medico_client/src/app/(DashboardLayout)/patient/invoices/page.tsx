@@ -27,13 +27,13 @@ const PatientInvoicesPage = () => {
               INVOICE LIST
             </h2>
           </div>
-          <div className="flex items-center gap-1 text-[#495057] text-lg">
-            <Link href="#" className="">
-              Dashboard
-            </Link>
-            <BsSlash className="text-[#ccc]" />
-            <Link href="#">Invoice</Link>
-          </div>
+          <div className="flex items-center gap-1 text-[#495057] text-sm">
+          <Link href="/patient" className="">
+            Dashboard
+          </Link>
+          <BsSlash className="text-[#ccc]" />
+          <Link href="#">Invoice</Link>
+        </div>
         </div>
         <div className="mt-5">
           <InvoiceTableOfPatient data={data} />

@@ -31,10 +31,10 @@ const ProfileView = () => {
       <div className="mx-4">
         <div className="mb-6 flex justify-between items-center">
           <h2 className="text-[#343A40] font-semibold text-[16px]  uppercase">
-            Dashboard
+            Profile
           </h2>
           <p className="text-[13px] text-[#74788D] font-normal">
-            Welcome to dashboard
+            Welcome to View Profile
           </p>
         </div>
 

@@ -24,7 +24,7 @@ const AppointmentPage = () => {
             </h2>
           </div>
           <div className="flex items-center gap-1 text-[#495057] text-sm">
-            <Link href="#" className="">
+            <Link href="/doctor" className="">
               Dashboard
             </Link>
             <BsSlash className="text-[#ccc]" />
@@ -33,7 +33,7 @@ const AppointmentPage = () => {
         </div>
         <div className="mt-5">
           <Link
-            href="/patient/create-appointment"
+            href="/patient/appointments/create"
             className="text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
           >
             + New Appointment
