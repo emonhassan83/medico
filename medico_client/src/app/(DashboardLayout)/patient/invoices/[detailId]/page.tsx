@@ -106,11 +106,11 @@ const AppointmentDetails = ({ params }: any) => {
               </h2>
             </div>
             <div className="flex items-center gap-[2px] text-[#495057] text-sm">
-              <Link href="#" className="">
+              <Link href="/patient" className="">
                 Dashboard
               </Link>
               <BsSlash className="text-[#ccc]" />
-              <Link href="#">Invoice List</Link>
+              <Link href="/patient/invoices">Invoice List</Link>
               <BsSlash className="text-[#ccc]" />
               <Link href="#">Invoice Details</Link>
             </div>

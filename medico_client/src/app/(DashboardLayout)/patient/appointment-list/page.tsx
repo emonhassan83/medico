@@ -111,7 +111,7 @@ const PatientAppointment = () => {
         <Space>
           <Button
             type="primary"
-            disabled={record.status === "CANCELED"}
+            disabled={record.status === "CANCELED" || record.status === "COMPLETED"}
             style={{ backgroundColor: "#f46a6a" }}
             onClick={() => handleCancel(record.key)}
           >
@@ -142,7 +142,7 @@ const PatientAppointment = () => {
             </h2>
           </div>
           <div className="flex items-center gap-1 text-[#495057] text-sm">
-            <Link href="#" className="">
+            <Link href="/patient" className="">
               Dashboard
             </Link>
             <BsSlash className="text-[#ccc]" />

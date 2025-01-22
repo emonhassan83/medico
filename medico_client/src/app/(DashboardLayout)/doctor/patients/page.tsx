@@ -11,7 +11,7 @@ import { BsSlash } from "react-icons/bs";
 
 const PatientPage = () => {
   const { data, refetch, isLoading } = useGetAllPatientQuery([]);
-  console.log(data);
+
   if (isLoading) {
     return <FullPageLoading />;
   }
@@ -28,7 +28,7 @@ const PatientPage = () => {
           <h2 className="text-lg text-[#495057] font-semibold">PATIENT LIST</h2>
         </div>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
-          <Link href="#" className="">
+          <Link href="/doctors" className="">
             Dashboard
           </Link>
           <BsSlash className="text-[#ccc]" />

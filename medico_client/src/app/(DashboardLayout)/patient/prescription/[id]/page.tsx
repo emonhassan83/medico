@@ -6,8 +6,8 @@ import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { BsSlash } from "react-icons/bs";
-import { FaEnvelope, FaMailBulk, FaPhoneAlt } from "react-icons/fa";
+import { BsArrow90DegLeft, BsSlash } from "react-icons/bs";
+import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 
 const PrescriptionDetails = ({ params }: any) => {
   const [filter, setFilter] = useState<any>({});
@@ -38,23 +38,24 @@ const PrescriptionDetails = ({ params }: any) => {
             </h2>
           </div>
           <div className="flex items-center gap-1 text-[#495057] text-sm">
-            <Link href="#" className="">
+            <Link href="/patient" className="">
               Dashboard
             </Link>
             <BsSlash className="text-[#ccc]" />
-            <Link href="#">Prescription List</Link>
+            <Link href="/patient/prescription">Prescription List</Link>
             <BsSlash className="text-[#ccc]" />
             <Link href="#">Prescription Details</Link>
           </div>
         </div>
-        <div className="mt-5">
-          <Link
-            href="/patient/prescription"
-            className="text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
-          >
-            Back to Prescription List
-          </Link>
-        </div>
+        <div className="flex items-center gap-2 mt-5">
+  <Link
+    href="/patient/prescription"
+    className="flex items-center gap-2 text-white text-sm bg-[#556ee6] py-2 px-4 rounded-md"
+  >
+    <BsArrow90DegLeft className="text-lg" />
+    Back to Prescription List
+  </Link>
+</div>
         <div className="mt-4 lg:mt-8 p-5 bg-white">
           <div className="text-xl font-medium flex justify-center items-center gap-1">
             <Image

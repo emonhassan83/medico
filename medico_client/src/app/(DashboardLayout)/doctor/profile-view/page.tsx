@@ -15,6 +15,8 @@ import { useGetMyProfileQuery } from "@/redux/api/userApi";
 import { useGetAllMetaDataQuery } from "@/redux/api/metaApi";
 import { useGetAllPatientQuery } from "@/redux/api/patientApi";
 import Meta from "@/components/Dashboard/Meta/MetaData";
+import Link from "next/link";
+import { BsSlash } from "react-icons/bs";
 
 const ProfileView = () => {
   const { data, isLoading } = useGetMyProfileQuery({});
@@ -36,7 +38,13 @@ const ProfileView = () => {
     <div className="mx-5">
        <div className="mb-6 flex justify-between items-center">
         <h2 className="text-[#343A40] font-semibold text-[16px]  uppercase">Profile</h2>
-        <p className="text-[16px] text-[#74788D] font-normal" >Dashboard / Profile</p>
+        <div className="flex items-center gap-1 text-[#495057] text-sm">
+          <Link href="/doctor" className="">
+            Dashboard
+          </Link>
+          <BsSlash className="text-[#ccc]" />
+          <Link href="#">Profile</Link>
+        </div>
       </div>
       <Row gutter={[32, 32]}>
         <Col span={24} md={8}>

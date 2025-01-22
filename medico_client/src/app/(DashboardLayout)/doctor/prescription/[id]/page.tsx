@@ -38,11 +38,11 @@ const PrescriptionDetails = ({ params }: any) => {
           </h2>
         </div>
         <div className="flex items-center gap-1 text-[#495057] text-sm">
-          <Link href="#" className="">
+          <Link href="/doctor" className="">
             Dashboard
           </Link>
           <BsSlash className="text-[#ccc]" />
-          <Link href="#">Prescription List</Link>
+          <Link href="/doctor/prescription">Prescription List</Link>
           <BsSlash className="text-[#ccc]" />
           <Link href="#">Prescription Details</Link>
         </div>
