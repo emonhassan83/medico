@@ -1,55 +1,70 @@
 "use client";
 import React, { useState } from "react";
-import { Table, Button, Input, Divider } from "antd";
+import { Table, Button, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import Link from "next/link";
+import { FaEye } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 
-const DoctorTable = () => {
+const DoctorTableInReceptionist = () => {
   const { data } = useGetAllDoctorsQuery({});
-  console.log(data?.doctors);
-  // console.log(data?.meta);
-
+  // console.log(data);
   const [searchText, setSearchText] = useState("");
 
-  // Filter data based on search text
-  const filteredData = data?.doctors?.filter((doctor) =>
-    doctor.firstName.toLowerCase().includes(searchText.toLowerCase())
+  //   Filter data based on search text
+  const filteredData = data?.doctors?.filter((pt: any) =>
+    pt.firstName.toLowerCase().includes(searchText.toLowerCase())
   );
-
   const columns = [
     {
       title: "Sr. No",
       dataIndex: "key",
       key: "key",
-      sorter: (a: any, b: any) => a.key - b.key,
       render: (_: any, __: any, index: number) => index + 1,
-    },
-    {
-      title: "Title",
-      dataIndex: "qualification",
-      key: "title",
     },
     {
       title: "Name",
       dataIndex: "firstName",
-      key: "name",
-    },
-    {
-      title: "Department",
-      dataIndex: "designation",
-      key: "designation",
+      key: "firstName",
+      sorter: (a: any, b: any) =>
+        a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase()),
     },
     {
       title: "Contact No",
       dataIndex: "contactNumber",
-      key: "contact",
+      key: "contactNumber",
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      sorter: (a: any, b: any) =>
+        a.email.toLowerCase().localeCompare(b.email.toLowerCase()),
+    },
+    {
+      title: "Appointment Fee",
+      dataIndex: "appointmentFee",
+      key: "appointmentFee",
+      sorter: (a: any, b: any) => a.appointmentFee - b.appointmentFee,
+    },
+
+    {
+      title: "Options",
+      key: "action",
+      render: () => (
+        <div className="flex gap-1">
+          <Link href="#">
+            <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
+              <FaEye />
+            </button>
+          </Link>
+        </div>
+      ),
     },
   ];
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
@@ -109,4 +124,4 @@ const DoctorTable = () => {
   );
 };
 
-export default DoctorTable;
+export default DoctorTableInReceptionist;

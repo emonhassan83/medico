@@ -1,21 +1,23 @@
 "use client";
 import React, { useState } from "react";
-import { Table, Button, Input, Divider, Space } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
-import { useGetAllPatientQuery } from "@/redux/api/patientApi";
+import { Table } from "antd";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
+import { MdEmail } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import { useGetAllPrescriptionQuery } from "@/redux/api/prescriptionApi";
 
-const PatientTable = () => {
-  const { data } = useGetAllPatientQuery({});
-  const [searchText, setSearchText] = useState("");
+const PrescriptionTableInDoctor = () => {
+  const { data } = useGetAllPrescriptionQuery({});
+  // console.log(data);
 
-  //   Filter data based on search text
-  const filteredData = data?.patients?.filter((pt: any) =>
-    pt.firstName.toLowerCase().includes(searchText.toLowerCase())
-  );
+  const dataSource = data?.prescription?.map((presecription: any) => ({
+    patientName: presecription?.patient?.firstName,
+    doctorName: presecription?.doctor?.firstName,
+    appointmentDate: presecription?.appointment?.createdAt?.slice(0, 10),
+    appointmentTime: presecription?.appointment?.createdAt?.slice(11, 19),
+  }));
+
   const columns = [
     {
       title: "Sr. No",
@@ -25,47 +27,45 @@ const PatientTable = () => {
       render: (_: any, __: any, index: number) => index + 1,
     },
     {
-      title: "Name",
-      dataIndex: "firstName",
-      key: "firstName",
+      title: "Patient Name",
+      dataIndex: "patientName",
+      key: "patientName",
     },
     {
-      title: "Contact No",
-      dataIndex: "contactNumber",
-      key: "contactNumber",
+      title: "Doctor Name",
+      dataIndex: "doctorName",
+      key: "doctorName",
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Appointment Date",
+      dataIndex: "appointmentDate",
+      key: "appointmentDate",
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Appointment Time",
+      dataIndex: "appointmentTime",
+      key: "appointmentTime",
     },
+
     {
       title: "Options",
       key: "action",
-      render: (data: any) => (
+      render: () => (
         <div className="flex gap-1">
-          {/* update Button */}
-          <Link href={`/admin/patients/${data?.id}`}>
+          <Link href="#">
             <button className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  ">
               <FaEye />
             </button>
           </Link>
 
-          {/* edit button */}
           <Link href="#">
             <button
               className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
               //   onClick={() => handleEdit(items)}
             >
-              <MdEdit />
+              <MdEmail />
             </button>
           </Link>
-
           {/* delete button */}
           <button
             className="flex items-center bg-[#556ee6] hover:bg-blue-600 text-white p-2 rounded-full  "
@@ -78,35 +78,11 @@ const PatientTable = () => {
     },
   ];
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  };
   return (
     <div className="bg-white p-5">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "16px",
-        }}
-      >
-        <div>
-          <Button className="mr-2 bg-[#eaeaea] outline-none">Copy</Button>
-          <Button className="mr-2 bg-[#eaeaea]">Excel</Button>
-          <Button className=" bg-[#eaeaea]">PDF</Button>
-        </div>
-        <Input
-          placeholder="Search by name"
-          prefix={<SearchOutlined />}
-          style={{ width: "200px" }}
-          value={searchText}
-          onChange={handleSearch}
-        />
-      </div>
-
       <div>
         <Table
-          dataSource={filteredData}
+          dataSource={dataSource}
           columns={columns}
           pagination={{ pageSize: data?.meta?.limit }}
           bordered
@@ -137,4 +113,4 @@ const PatientTable = () => {
   );
 };
 
-export default PatientTable;
+export default PrescriptionTableInDoctor;
