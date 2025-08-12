@@ -23,10 +23,16 @@ model User {
   createdAt          DateTime   @default(now())
   updatedAt          DateTime   @updatedAt
 
-  doctor       Doctor?
-  patient      Patient?
-  admin        Admin?
-  receptionist Receptionist?
+  doctor         Doctor?
+  patient        Patient?
+  admin          Admin?
+  receptionist   Receptionist?
+  pharmacist     Pharmacist?
+  labTech        LabTech?
+  financeManager FinanceManager?
+  nurse          Nurse?
+  support        Support?
+  reportAnalyst  ReportAnalyst?
 
   @@map("users")
 }
@@ -115,6 +121,102 @@ model Patient {
   review            Review[]
 
   @@map("patients")
+}
+
+model Pharmacist {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  firstName     String
+  lastName      String
+  profilePhoto  String?
+  contactNumber String
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(references: [email], fields: [email])
+
+  @@map("pharmacists")
+}
+
+model LabTech {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  firstName     String
+  lastName      String
+  profilePhoto  String?
+  contactNumber String
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(references: [email], fields: [email])
+
+  @@map("lab_tech")
+}
+
+model FinanceManager {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  firstName     String
+  lastName      String
+  profilePhoto  String?
+  contactNumber String
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(references: [email], fields: [email])
+
+  @@map("finance_manager")
+}
+
+model Nurse {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  firstName     String
+  lastName      String
+  profilePhoto  String?
+  contactNumber String
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(references: [email], fields: [email])
+
+  @@map("nurses")
+}
+
+model Support {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  firstName     String
+  lastName      String
+  profilePhoto  String?
+  contactNumber String
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(references: [email], fields: [email])
+
+  @@map("support")
+}
+
+model ReportAnalyst {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  firstName     String
+  lastName      String
+  profilePhoto  String?
+  contactNumber String
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(references: [email], fields: [email])
+
+  @@map("report_analyst")
 }
 
 model Specialties {
@@ -290,6 +392,13 @@ enum UserRole {
   RECEPTIONIST
   DOCTOR
   PATIENT
+  // Next implement features
+  PHARMACIST
+  LAB_TECH
+  FINANCE_MANAGER
+  NURSE
+  SUPPORT
+  REPORT_ANALYST
 }
 
 enum UserStatus {
