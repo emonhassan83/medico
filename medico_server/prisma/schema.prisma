@@ -33,6 +33,7 @@ model User {
   nurse          Nurse?
   support        Support?
   reportAnalyst  ReportAnalyst?
+  JobApplication JobApplication[]
 
   @@map("users")
 }
@@ -217,6 +218,48 @@ model ReportAnalyst {
   user          User     @relation(references: [email], fields: [email])
 
   @@map("report_analyst")
+}
+
+model JobPost {
+  id             String           @id @default(cuid())
+  title          String
+  requirements   String
+  skills         String[]
+  vacancy        Int
+  age            Int
+  location       String
+  experience     Int // in years
+  deadline       String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  JobApplication JobApplication[]
+
+  @@map("job_posts")
+}
+
+model JobApplication {
+  id          String            @id @default(uuid())
+  jobPostId   String
+  applicantId String
+  status      ApplicationStatus @default(PENDING)
+  appliedAt   DateTime          @default(now())
+  reviewedAt  DateTime?
+
+  jobPost   JobPost       @relation(fields: [jobPostId], references: [id])
+  applicant User          @relation(fields: [applicantId], references: [id])
+  documents JobDocument[]
+
+  @@unique([jobPostId, applicantId]) // One application per job per user
+}
+
+model JobDocument {
+  id               String   @id @default(cuid())
+  jobApplicationId String
+  fileUrl          String
+  fileType         String // e.g., "resume", "certificate"
+  uploadedAt       DateTime @default(now())
+
+  jobApplication JobApplication @relation(fields: [jobApplicationId], references: [id])
 }
 
 model Specialties {
@@ -440,4 +483,10 @@ enum AppointmentStatus {
 enum PaymentStatus {
   UNPAID
   PAID
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
