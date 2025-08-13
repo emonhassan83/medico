@@ -1,0 +1,4 @@
+/medico_server/node_modules/
+/medico_server/dist/
+/medico_server/.env
+/medico_server/logs/
