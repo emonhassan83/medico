@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import catchAsync from '../../../shared/catchAsync';
+import catchAsync from '../../shared/catchAsync';
 import { DoctorService } from './doctor.services';
-import sendResponse from '../../../shared/sendResponse';
+import sendResponse from '../../shared/sendResponse';
 import httpStatus from 'http-status';
-import pick from '../../../shared/pick';
+import pick from '../../shared/pick';
 import { doctorFilterableFields } from './doctor.constants';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {

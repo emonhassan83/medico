@@ -1,9 +1,9 @@
 import { Admin, Prisma, Receptionist, UserStatus } from '@prisma/client';
 import { receptionistSearchAbleFields } from './receptionist.constant';
-import prisma from '../../../shared/prisma';
+import prisma from '../../shared/prisma';
 import { IReceptionistFilterRequest } from './receptionist.interface';
-import { paginationHelpers } from '../../../helpers/paginationHelper';
-import { IPaginationOptions } from '../../../interfaces/pagination';
+import { IPaginationOptions } from '../../interfaces/pagination';
+import { paginationHelpers } from '../../helpers/paginationHelper';
 
 const getAllFromDB = async (
   params: IReceptionistFilterRequest,

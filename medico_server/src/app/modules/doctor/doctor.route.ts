@@ -3,7 +3,7 @@ import validateRequest from '../../middlewares/validateRequest';
 import { DoctorValidation } from './doctor.validation';
 import { DoctorController } from './doctor.controller';
 import auth from '../../middlewares/auth';
-import { ENUM_USER_ROLE } from '../../../enums/user';
+import { ENUM_USER_ROLE } from '../../enums/user';
 
 const router = express.Router();
 

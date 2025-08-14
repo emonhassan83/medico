@@ -1,16 +1,16 @@
 import express from 'express';
 import { userRoutes } from '../modules/user/user.route';
 import { AuthRoutes } from '../modules/auth/auth.routes';
-import { AdminRoutes } from '../modules/Admin/admin.routes';
+import { AdminRoutes } from '../modules/admin/admin.routes';
 import { PatientRoutes } from '../modules/patient/patient.route';
-import { ReceptionistRoutes } from '../modules/Receptionist/receptionist.routes';
-import { SpecialtiesRoutes } from '../modules/Specialties/specialties.routes';
+import { ReceptionistRoutes } from '../modules/receptionist/receptionist.routes';
+import { SpecialtiesRoutes } from '../modules/specialties/specialties.routes';
 import { PrescriptionsRoutes } from '../modules/prescription/prescription.route';
 import { ReviewRoutes } from '../modules/review/review.route';
-import { ScheduleRoutes } from '../modules/Schedule/schedule.routes';
-import { DoctorScheduleRoutes } from '../modules/DoctorSchedule/doctorSchedule.routes';
-import { AppointmentRoutes } from '../modules/Appointment/appointment.routes';
-import { MetaRoutes } from '../modules/Meta/meta.routes';
+import { ScheduleRoutes } from '../modules/schedule/schedule.routes';
+import { DoctorScheduleRoutes } from '../modules/doctorSchedule/doctorSchedule.routes';
+import { AppointmentRoutes } from '../modules/appointment/appointment.routes';
+import { MetaRoutes } from '../modules/meta/meta.routes';
 import { PaymentRoutes } from '../modules/payment/payment.routes';
 import { DoctorRoutes } from '../modules/doctor/doctor.route';
 

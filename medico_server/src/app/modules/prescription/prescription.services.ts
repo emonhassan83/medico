@@ -1,19 +1,19 @@
-import prisma from '../../../shared/prisma';
-import { IPaginationOptions } from '../../../interfaces/pagination';
-import { IAuthUser, IGenericResponse } from '../../../interfaces/common';
-import { paginationHelpers } from '../../../helpers/paginationHelper';
+import prisma from '../../shared/prisma';
 import {
   AppointmentStatus,
   PaymentStatus,
   Prescription,
   Prisma,
 } from '@prisma/client';
-import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
 import {
   prescriptionRelationalFields,
   prescriptionRelationalFieldsMapper,
 } from './prescription.constants';
+import ApiError from '../../errors/ApiError';
+import { IPaginationOptions } from '../../interfaces/pagination';
+import { IAuthUser, IGenericResponse } from '../../interfaces/common';
+import { paginationHelpers } from '../../helpers/paginationHelper';
 
 const insertIntoDB = async (
   data: Partial<Prescription>,

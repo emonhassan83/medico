@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import catchAsync from "../../../shared/catchAsync";
-import sendResponse from "../../../shared/sendResponse";
+import catchAsync from "../../shared/catchAsync";
+import sendResponse from "../../shared/sendResponse";
 import httpStatus from "http-status";
 import { DoctorScheduleService } from "./doctorSchedule.service";
-import pick from "../../../shared/pick";
+import pick from "../../shared/pick";
 import { scheduleFilterableFields } from "./doctorSchedule.constants";
-import { IAuthUser } from "../../../interfaces/common";
+import { IAuthUser } from "../../interfaces/common";
 
 const insertIntoDB = catchAsync(async (req: Request & { user?: any }, res: Response) => {
 

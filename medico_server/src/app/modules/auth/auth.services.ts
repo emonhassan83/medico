@@ -1,20 +1,20 @@
 import bcrypt from 'bcrypt';
 import httpStatus from 'http-status';
 import { JwtPayload, Secret } from 'jsonwebtoken';
-import config from '../../../config';
-import ApiError from '../../../errors/ApiError';
-import { jwtHelpers } from '../../../helpers/jwtHelpers';
+import config from '../../config';
 import {
     IChangePassword,
     ILoginUser,
     ILoginUserResponse,
     IRefreshTokenResponse,
 } from './auth.interface';
-import prisma from '../../../shared/prisma';
+import prisma from '../../shared/prisma';
 import { AuthUtils } from './auth.utils';
-import { hashedPassword } from '../../../helpers/hashPasswordHelper';
 import { sendEmail } from './sendResetMail';
 import { UserStatus } from '@prisma/client';
+import ApiError from '../../errors/ApiError';
+import { jwtHelpers } from '../../helpers/jwtHelpers';
+import { hashedPassword } from '../user/user.utils';
 
 const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
     const { email, password } = payload;

@@ -1,4 +1,4 @@
-import prisma from "../../../shared/prisma";
+import prisma from "../../shared/prisma";
 import { AppointmentStatus, PaymentStatus } from "@prisma/client";
 import { SSLService } from "../SSL/ssl.service";
 

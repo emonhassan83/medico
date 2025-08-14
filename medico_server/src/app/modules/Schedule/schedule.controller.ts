@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import catchAsync from "../../../shared/catchAsync";
-import sendResponse from "../../../shared/sendResponse";
+import catchAsync from "../../shared/catchAsync";
+import sendResponse from "../../shared/sendResponse";
 import httpStatus from "http-status";
 import { ScheduleService } from "./schedule.service";
-import pick from "../../../shared/pick";
-import { IAuthUser } from "../../../interfaces/common";
+import pick from "../../shared/pick";
+import { IAuthUser } from "../../interfaces/common";
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
     const result = await ScheduleService.insertIntoDB(req.body);

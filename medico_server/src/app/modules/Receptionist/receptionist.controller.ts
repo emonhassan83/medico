@@ -1,10 +1,10 @@
 import { RequestHandler} from 'express';
 import { ReceptionistService } from './receptionist.service';
-import pick from '../../../shared/pick';
+import pick from '../../shared/pick';
 import { receptionistFilterableFields } from './receptionist.constant';
-import sendResponse from '../../../shared/sendResponse';
+import sendResponse from '../../shared/sendResponse';
 import httpStatus from 'http-status';
-import catchAsync from '../../../shared/catchAsync';
+import catchAsync from '../../shared/catchAsync';
 
 const getAllFromDB: RequestHandler = catchAsync(
   async (req, res) => {

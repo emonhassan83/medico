@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
-import catchAsync from '../../../shared/catchAsync';
-import sendResponse from '../../../shared/sendResponse';
+import catchAsync from '../../shared/catchAsync';
+import sendResponse from '../../shared/sendResponse';
 import { UserServices } from './user.services';
 import { userFilterableFields } from './user.constant';
-import pick from '../../../shared/pick';
+import pick from '../../shared/pick';
 
 const createDoctor = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   //const { doctor, ...userData } = req.body;

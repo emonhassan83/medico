@@ -8,16 +8,16 @@ import {
   UserRole,
   UserStatus,
 } from '@prisma/client';
-import prisma from '../../../shared/prisma';
-import ApiError from '../../../errors/ApiError';
+import prisma from '../../shared/prisma';
 import httpStatus from 'http-status';
 import { hashedPassword } from './user.utils';
-import { IPaginationOptions } from '../../../interfaces/pagination';
 import { IUser, IUserFilterRequest } from './user.interface';
-import { IGenericResponse } from '../../../interfaces/common';
-import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { userSearchableFields } from './user.constant';
 import { Request } from 'express';
+import ApiError from '../../errors/ApiError';
+import { IPaginationOptions } from '../../interfaces/pagination';
+import { IGenericResponse } from '../../interfaces/common';
+import { paginationHelpers } from '../../helpers/paginationHelper';
 
 const createAdmin = async (req: Request): Promise<Admin> => {
   const hashPassword = await hashedPassword(req.body.password);

@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
-import catchAsync from '../../../shared/catchAsync';
-import sendResponse from '../../../shared/sendResponse';
+import catchAsync from '../../shared/catchAsync';
+import sendResponse from '../../shared/sendResponse';
 import httpStatus from 'http-status';
 import { AppointmentService } from './appointment.service';
-import pick from '../../../shared/pick';
+import pick from '../../shared/pick';
 import { appointmentFilterableFields } from './appointment.constant';
-import { IAuthUser } from '../../../interfaces/common';
+import { IAuthUser } from '../../interfaces/common';
 
 const createAppointment = catchAsync(
   async (req: Request & { user?: any }, res: Response) => {

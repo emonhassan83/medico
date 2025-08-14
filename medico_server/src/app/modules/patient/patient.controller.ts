@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import catchAsync from '../../../shared/catchAsync';
-import sendResponse from '../../../shared/sendResponse';
+import catchAsync from '../../shared/catchAsync';
+import sendResponse from '../../shared/sendResponse';
 import httpStatus from 'http-status';
-import pick from '../../../shared/pick';
+import pick from '../../shared/pick';
 import { PatientService } from './patient.services';
 import { patientFilterableFields } from './patient.constants';
 

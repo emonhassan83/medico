@@ -1,8 +1,8 @@
 import axios from "axios";
-import config from "../../../config";
+import config from "../../config";
 import httpStatus from "http-status";
 import { IPaymentData } from "./ssl.interface";
-import ApiError from "../../../errors/ApiError";
+import ApiError from "../../errors/ApiError";
 
 const initPayment = async (paymentData: IPaymentData) => {
   try {

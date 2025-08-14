@@ -1,9 +1,9 @@
 import httpStatus from 'http-status';
-import catchAsync from '../../../shared/catchAsync';
-import sendResponse from '../../../shared/sendResponse';
+import catchAsync from '../../shared/catchAsync';
+import sendResponse from '../../shared/sendResponse';
 import { Request, Response } from 'express';
 import { SpecialtiesService } from './specialties.service';
-import pick from '../../../shared/pick';
+import pick from '../../shared/pick';
 import { specialtiesFilterableFields } from './specialties.constant';
 
 const createSpecialties = catchAsync(async (req: Request, res: Response) => {

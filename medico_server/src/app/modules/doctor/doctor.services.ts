@@ -1,19 +1,17 @@
 import { Doctor, Prisma, Specialties, UserStatus } from '@prisma/client';
-import prisma from '../../../shared/prisma';
+import prisma from '../../shared/prisma';
 import {
   IDoctorFilterRequest,
   IDoctorUpdate,
   ISpecialties,
 } from './doctor.interface';
-import { IPaginationOptions } from '../../../interfaces/pagination';
-import { IGenericResponse } from '../../../interfaces/common';
-import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { doctorSearchableFields } from './doctor.constants';
-import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
-import { asyncForEach } from '../../../shared/utils';
-// import { deleteDoctorFromMeili } from './doctor.utils';
-// import { deleteDoctorFromMeili } from './doctor.utils';d
+import { asyncForEach } from '../../shared/utils';
+import { IPaginationOptions } from '../../interfaces/pagination';
+import { IGenericResponse } from '../../interfaces/common';
+import { paginationHelpers } from '../../helpers/paginationHelper';
+import ApiError from '../../errors/ApiError';
 
 const insertIntoDB = async (data: Doctor): Promise<Doctor> => {
   const result = await prisma.doctor.create({

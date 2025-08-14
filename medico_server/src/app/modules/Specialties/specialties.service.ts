@@ -1,9 +1,9 @@
-import { paginationHelpers } from '../../../helpers/paginationHelper';
-import { IPaginationOptions } from '../../../interfaces/pagination';
-import prisma from '../../../shared/prisma';
+import prisma from '../../shared/prisma';
 import { Prisma, Specialties, UserStatus } from '@prisma/client';
 import { ISpecialtiesFilterRequest } from './specialities.interface';
 import { specialtiesFilterableFields } from './specialties.constant';
+import { IPaginationOptions } from '../../interfaces/pagination';
+import { paginationHelpers } from '../../helpers/paginationHelper';
 
 const insertIntoDB = async (specialtiesData: any, userData: any) => {
   await prisma.user.findUniqueOrThrow({

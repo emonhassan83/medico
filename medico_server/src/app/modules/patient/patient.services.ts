@@ -1,12 +1,12 @@
 import { Patient, Prisma, UserStatus } from '@prisma/client';
-import { IGenericResponse } from '../../../interfaces/common';
-import { IPaginationOptions } from '../../../interfaces/pagination';
 import { IPatientFilterRequest, IPatientUpdate } from './patient.interface';
-import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { patientSearchableFields } from './patient.constants';
-import prisma from '../../../shared/prisma';
-import ApiError from '../../../errors/ApiError';
+import prisma from '../../shared/prisma';
 import httpStatus from 'http-status';
+import { IPaginationOptions } from '../../interfaces/pagination';
+import { IGenericResponse } from '../../interfaces/common';
+import { paginationHelpers } from '../../helpers/paginationHelper';
+import ApiError from '../../errors/ApiError';
 
 const getAllFromDB = async (
   filters: IPatientFilterRequest,

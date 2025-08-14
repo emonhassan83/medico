@@ -1,6 +1,6 @@
 import { PaymentStatus, Prisma, UserRole } from '@prisma/client';
-import prisma from '../../../shared/prisma';
-import { IAuthUser } from '../../../interfaces/common';
+import prisma from '../../shared/prisma';
+import { IAuthUser } from '../../interfaces/common';
 
 const fetchDashboardMetaData = async (user: IAuthUser) => {
   let metaData;

@@ -1,10 +1,10 @@
 import { addHours, addMinutes, format } from "date-fns";
-import prisma from "../../../shared/prisma";
+import prisma from "../../shared/prisma";
 import { Prisma, Schedule } from "@prisma/client";
 import { IFilterRequest, ISchedule } from "./schedule.interface";
-import { IPaginationOptions } from "../../../interfaces/pagination";
-import { IAuthUser } from "../../../interfaces/common";
-import { paginationHelpers } from "../../../helpers/paginationHelper";
+import { IPaginationOptions } from "../../interfaces/pagination";
+import { IAuthUser } from "../../interfaces/common";
+import { paginationHelpers } from "../../helpers/paginationHelper";
 
 const convertDateTime = async (date: Date) => {
   const offset = date.getTimezoneOffset() * 60000;
