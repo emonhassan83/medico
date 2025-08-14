@@ -23,10 +23,17 @@ model User {
   createdAt          DateTime   @default(now())
   updatedAt          DateTime   @updatedAt
 
-  doctor       Doctor?
-  patient      Patient?
-  admin        Admin?
-  receptionist Receptionist?
+  doctor         Doctor?
+  patient        Patient?
+  admin          Admin?
+  receptionist   Receptionist?
+  pharmacist     Pharmacist?
+  labTech        LabTech?
+  financeManager FinanceManager?
+  nurse          Nurse?
+  support        Support?
+  reportAnalyst  ReportAnalyst?
+  JobApplication JobApplication[]
 
   @@map("users")
 }
@@ -115,6 +122,144 @@ model Patient {
   review            Review[]
 
   @@map("patients")
+}
+
+model Pharmacist {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  firstName     String
+  lastName      String
+  profilePhoto  String?
+  contactNumber String
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(references: [email], fields: [email])
+
+  @@map("pharmacists")
+}
+
+model LabTech {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  firstName     String
+  lastName      String
+  profilePhoto  String?
+  contactNumber String
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(references: [email], fields: [email])
+
+  @@map("lab_tech")
+}
+
+model FinanceManager {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  firstName     String
+  lastName      String
+  profilePhoto  String?
+  contactNumber String
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(references: [email], fields: [email])
+
+  @@map("finance_manager")
+}
+
+model Nurse {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  firstName     String
+  lastName      String
+  profilePhoto  String?
+  contactNumber String
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(references: [email], fields: [email])
+
+  @@map("nurses")
+}
+
+model Support {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  firstName     String
+  lastName      String
+  profilePhoto  String?
+  contactNumber String
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(references: [email], fields: [email])
+
+  @@map("support")
+}
+
+model ReportAnalyst {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  firstName     String
+  lastName      String
+  profilePhoto  String?
+  contactNumber String
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(references: [email], fields: [email])
+
+  @@map("report_analyst")
+}
+
+model JobPost {
+  id             String           @id @default(cuid())
+  title          String
+  requirements   String
+  skills         String[]
+  vacancy        Int
+  age            Int
+  location       String
+  experience     Int // in years
+  deadline       String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  JobApplication JobApplication[]
+
+  @@map("job_posts")
+}
+
+model JobApplication {
+  id          String            @id @default(uuid())
+  jobPostId   String
+  applicantId String
+  status      ApplicationStatus @default(PENDING)
+  appliedAt   DateTime          @default(now())
+  reviewedAt  DateTime?
+
+  jobPost   JobPost       @relation(fields: [jobPostId], references: [id])
+  applicant User          @relation(fields: [applicantId], references: [id])
+  documents JobDocument[]
+
+  @@unique([jobPostId, applicantId]) // One application per job per user
+}
+
+model JobDocument {
+  id               String   @id @default(cuid())
+  jobApplicationId String
+  fileUrl          String
+  fileType         String // e.g., "resume", "certificate"
+  uploadedAt       DateTime @default(now())
+
+  jobApplication JobApplication @relation(fields: [jobApplicationId], references: [id])
 }
 
 model Specialties {
@@ -243,8 +388,6 @@ model Payment {
   transactionId      String        @unique
   status             PaymentStatus @default(UNPAID)
   paymentGatewayData Json?
-  // createdAt      DateTime          @default(now())
-  // updatedAt      DateTime          @updatedAt
 
   @@map("payments")
 }
@@ -292,6 +435,13 @@ enum UserRole {
   RECEPTIONIST
   DOCTOR
   PATIENT
+  // Next implement features
+  PHARMACIST
+  LAB_TECH
+  FINANCE_MANAGER
+  NURSE
+  SUPPORT
+  REPORT_ANALYST
 }
 
 enum UserStatus {
@@ -333,4 +483,10 @@ enum AppointmentStatus {
 enum PaymentStatus {
   UNPAID
   PAID
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
