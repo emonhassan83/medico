@@ -5,12 +5,18 @@ const create = z.object({
     email: z.string({
       required_error: 'Email is required',
     }),
-    name: z.string({
-      required_error: 'Name is required',
+    firstName: z.string({
+      required_error: "Name is required!"
+    }),
+    lastName: z.string({
+      required_error: "Name is required!"
     }),
     profilePhoto: z.string({
       required_error: 'Profile Photo is required',
-    }),
+    }).optional(),
+    coverPhoto: z.string({
+      required_error: 'Cover Photo is required',
+    }).optional(),
     contactNumber: z.string({
       required_error: 'Contact Number is required',
     }),
@@ -23,11 +29,11 @@ const create = z.object({
     gender: z.string({
       required_error: 'Gender is required',
     }),
-    apointmentFee: z.number({
+    appointmentFee: z.number({
       required_error: 'Blood group is required',
     }),
     qualification: z.string({
-      required_error: 'Apointment Fee is required',
+      required_error: 'Appointment Fee is required',
     }),
     currentWorkingPlace: z.string({
       required_error: 'Current Working Place is required',
@@ -41,14 +47,14 @@ const create = z.object({
 const update = z.object({
   body: z.object({
     firstName: z.string().optional(),
-    lasttName: z.string().optional(),
+    lastName: z.string().optional(),
     address: z.string().optional(),
     profilePhoto: z.string().optional(),
     contactNumber: z.string().optional(),
     registrationNumber: z.string().optional(),
     experience: z.number().optional(),
     gender: z.string().optional(),
-    apointmentFee: z.number().optional(),
+    appointmentFee: z.number().optional(),
     qualification: z.string().optional(),
     currentWorkingPlace: z.string().optional(),
     designation: z.string().optional(),

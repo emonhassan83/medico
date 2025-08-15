@@ -8,10 +8,9 @@ import catchAsync from '../../shared/catchAsync';
 
 const getAllFromDB: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
-    // console.log(req.query)
     const filters = pick(req.query, adminFilterableFields);
     const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
-    // console.log(options);
+
     const result = await AdminService.getAllFromDB(filters, options);
 
     sendResponse(res, {
@@ -25,9 +24,7 @@ const getAllFromDB: RequestHandler = catchAsync(
 );
 
 const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-
-  const result = await AdminService.getByIdFromDB(id);
+  const result = await AdminService.getByIdFromDB(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -37,9 +34,7 @@ const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
 });
 
 const updateIntoDB = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-
-  const result = await AdminService.updateIntoDB(id, req.body);
+  const result = await AdminService.updateIntoDB(req.params.id, req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -49,9 +44,7 @@ const updateIntoDB = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-
-  const result = await AdminService.deleteFromDB(id);
+  const result = await AdminService.deleteFromDB(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -61,9 +54,7 @@ const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
 });
 
 const softDeleteFromDB = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-
-  const result = await AdminService.softDeleteFromDB(id);
+  const result = await AdminService.softDeleteFromDB(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

@@ -19,6 +19,7 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, doctorFilterableFields);
   const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
+
   const result = await DoctorService.getAllFromDB(filters, options);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -30,8 +31,7 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const result = await DoctorService.getByIdFromDB(id);
+  const result = await DoctorService.getByIdFromDB( req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -41,11 +41,7 @@ const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
 });
 
 const updateIntoDB = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const payload = req.body;
-  // console.log(payload);
-  const { ...doctorData } = payload;
-  const result = await DoctorService.updateIntoDB(id, doctorData);
+  const result = await DoctorService.updateIntoDB(req.params.id, req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -55,8 +51,7 @@ const updateIntoDB = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const result = await DoctorService.deleteFromDB(id);
+  const result = await DoctorService.deleteFromDB(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -64,9 +59,9 @@ const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+
 const softDelete = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const result = await DoctorService.softDelete(id);
+  const result = await DoctorService.softDelete(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

@@ -20,75 +20,6 @@ const insertIntoDB = async (data: Doctor): Promise<Doctor> => {
   return result;
 };
 
-// const getAllFromDB = async (
-//   filters: IDoctorFilterRequest,
-//   options: IPaginationOptions,
-// ): Promise<IGenericResponse<Doctor[]>> => {
-//   const { limit, page, skip } = paginationHelpers.calculatePagination(options);
-//   const { searchTerm, ...filterData } = filters;
-
-//   const andConditions = [];
-
-//   if (searchTerm) {
-//     andConditions.push({
-//       OR: doctorSearchableFields.map(field => ({
-//         [field]: {
-//           contains: searchTerm,
-//           mode: 'insensitive',
-//         },
-//       })),
-//     });
-//   }
-
-//   if (Object.keys(filterData).length > 0) {
-//     andConditions.push({
-//       AND: Object.keys(filterData).map(key => ({
-//         [key]: {
-//           equals: (filterData as any)[key],
-//         },
-//       })),
-//     });
-//   }
-
-//   andConditions.push({
-//     isDeleted: false,
-//   });
-
-//   const whereConditions: Prisma.DoctorWhereInput =
-//     andConditions.length > 0 ? { AND: andConditions } : {};
-
-//   const result = await prisma.doctor.findMany({
-//     where: whereConditions,
-//     skip,
-//     take: limit,
-//     orderBy:
-//       options.sortBy && options.sortOrder
-//         ? { [options.sortBy]: options.sortOrder }
-//         : {
-//           averageRating: 'desc'
-//         },
-//     include: {
-//       review: {
-//         select: {
-//           rating: true
-//         }
-//       }
-//     }
-//   });
-//   const total = await prisma.doctor.count({
-//     where: whereConditions,
-//   });
-
-//   return {
-//     meta: {
-//       total,
-//       page,
-//       limit,
-//     },
-//     data: result,
-//   };
-// };
-
 const getAllFromDB = async (
   filters: IDoctorFilterRequest,
   options: IPaginationOptions,
@@ -178,7 +109,6 @@ const getAllFromDB = async (
 };
 
 const getByIdFromDB = async (id: string): Promise<Doctor | null> => {
-  // console.log(id);
   const result = await prisma.doctor.findUnique({
     where: {
       id,
@@ -198,7 +128,11 @@ const getByIdFromDB = async (id: string): Promise<Doctor | null> => {
       review: true,
     },
   });
-  // console.log(result);
+  
+  if (!result || result?.isDeleted) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Doctor profile not found!');
+  }
+
   return result;
 };
 
@@ -215,9 +149,10 @@ const updateIntoDB = async (
       data: doctorData,
     });
 
-    if (!result) {
+    if (!result || result?.isDeleted) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Unable to update Doctor');
     }
+
     if (specialties && specialties.length > 0) {
       const deleteSpecialties = specialties.filter(
         specialty => specialty.specialtiesId && specialty.isDeleted,
@@ -229,7 +164,7 @@ const updateIntoDB = async (
 
       await asyncForEach(
         deleteSpecialties,
-        async (deleteDoctorSpeciality: ISpecialties) => {
+        async (deleteDoctorSpecialty: ISpecialties) => {
           await transactionClient.doctorSpecialties.deleteMany({
             where: {
               AND: [
@@ -237,13 +172,14 @@ const updateIntoDB = async (
                   doctorId: id,
                 },
                 {
-                  specialtiesId: deleteDoctorSpeciality.specialtiesId,
+                  specialtiesId: deleteDoctorSpecialty.specialtiesId,
                 },
               ],
             },
           });
         },
       );
+
       await asyncForEach(
         newSpecialties,
         async (insertDoctorSpecialty: ISpecialties) => {
@@ -270,7 +206,7 @@ const updateIntoDB = async (
     return result;
   });
 
-  const responseData = await prisma.doctor.findUnique({
+  const response = await prisma.doctor.findUnique({
     where: {
       id,
     },
@@ -282,7 +218,7 @@ const updateIntoDB = async (
       },
     },
   });
-  return responseData;
+  return response;
 };
 
 const deleteFromDB = async (id: string): Promise<Doctor> => {
@@ -298,8 +234,6 @@ const deleteFromDB = async (id: string): Promise<Doctor> => {
         email: deleteDoctor.email,
       },
     });
-
-    // await deleteDoctorFromMeili(deleteDoctor.id);
 
     return deleteDoctor;
   });
