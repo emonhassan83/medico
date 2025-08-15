@@ -40,9 +40,9 @@ model User {
 
 model Admin {
   id            String   @id @unique @default(uuid())
-  email         String   @unique
   firstName     String
   lastName      String
+  email         String   @unique
   contactNumber String
   profilePhoto  String?
   address       String?
@@ -55,34 +55,20 @@ model Admin {
   @@map("admins")
 }
 
-model Receptionist {
-  id            String   @id @unique @default(uuid())
-  email         String   @unique
-  firstName     String
-  lastName      String
-  profilePhoto  String?
-  contactNumber String
-  address       String?
-  isDeleted     Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  user User @relation(references: [email], fields: [email])
-
-  @@map("receptionist")
-}
-
 model Doctor {
   id                  String              @id @default(uuid())
-  email               String              @unique
   firstName           String
   lastName            String
+  email               String              @unique
   profilePhoto        String?
+  coverPhoto          String?
+  bio                 String?
   contactNumber       String
   address             String?
+  gender              Gender
+  dateOfBirth         DateTime?
   registrationNumber  String
   experience          Int                 @default(0)
-  gender              Gender
   appointmentFee      Int
   qualification       String
   currentWorkingPlace String
@@ -103,16 +89,20 @@ model Doctor {
 }
 
 model Patient {
-  id            String   @id @unique @default(uuid())
-  email         String   @unique
+  id            String    @id @unique @default(uuid())
   firstName     String
   lastName      String
+  email         String    @unique
   profilePhoto  String?
+  coverPhoto    String?
+  bio           String?
   contactNumber String
   address       String?
-  isDeleted     Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  gender        Gender
+  dateOfBirth   DateTime?
+  isDeleted     Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   medicalReport     MedicalReport[]
   patientHealthData PatientHealthData?
@@ -124,98 +114,178 @@ model Patient {
   @@map("patients")
 }
 
+model Receptionist {
+  id                String   @id @unique @default(uuid())
+  firstName         String
+  lastName          String
+  email             String   @unique
+  profilePhoto      String?
+  coverPhoto        String?
+  bio               String?
+  contactNumber     String
+  address           String?
+  dateOfBirth       String?
+  experience        Int      @default(0)
+  gender            Gender
+  designation       String
+  qualification     String
+  specialization    String[]
+  yearsOfExperience Int      @default(0)
+  isDeleted         Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user User @relation(references: [email], fields: [email])
+
+  @@map("receptionist")
+}
+
 model Pharmacist {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  firstName     String
-  lastName      String
-  profilePhoto  String?
-  contactNumber String
-  address       String?
-  isDeleted     Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  user          User     @relation(references: [email], fields: [email])
+  id                String   @id @default(uuid())
+  firstName         String
+  lastName          String
+  email             String   @unique
+  profilePhoto      String?
+  coverPhoto        String?
+  bio               String?
+  contactNumber     String
+  address           String?
+  dateOfBirth       String?
+  experience        Int      @default(0)
+  gender            Gender
+  designation       String
+  qualification     String
+  specialization    String[]
+  yearsOfExperience Int      @default(0)
+  isDeleted         Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(references: [email], fields: [email])
 
   @@map("pharmacists")
 }
 
 model LabTech {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  firstName     String
-  lastName      String
-  profilePhoto  String?
-  contactNumber String
-  address       String?
-  isDeleted     Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  user          User     @relation(references: [email], fields: [email])
+  id                String   @id @default(uuid())
+  firstName         String
+  lastName          String
+  email             String   @unique
+  profilePhoto      String?
+  coverPhoto        String?
+  bio               String?
+  contactNumber     String
+  address           String?
+  dateOfBirth       String?
+  experience        Int      @default(0)
+  gender            Gender
+  designation       String
+  qualification     String
+  specialization    String[]
+  yearsOfExperience Int      @default(0)
+  isDeleted         Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(references: [email], fields: [email])
 
   @@map("lab_tech")
 }
 
 model FinanceManager {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  firstName     String
-  lastName      String
-  profilePhoto  String?
-  contactNumber String
-  address       String?
-  isDeleted     Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  user          User     @relation(references: [email], fields: [email])
+  id                String   @id @default(uuid())
+  firstName         String
+  lastName          String
+  email             String   @unique
+  profilePhoto      String?
+  coverPhoto        String?
+  bio               String?
+  contactNumber     String
+  address           String?
+  dateOfBirth       String?
+  experience        Int      @default(0)
+  gender            Gender
+  designation       String
+  qualification     String
+  specialization    String[]
+  yearsOfExperience Int      @default(0)
+  isDeleted         Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(references: [email], fields: [email])
 
   @@map("finance_manager")
 }
 
 model Nurse {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  firstName     String
-  lastName      String
-  profilePhoto  String?
-  contactNumber String
-  address       String?
-  isDeleted     Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  user          User     @relation(references: [email], fields: [email])
+  id                String   @id @default(uuid())
+  firstName         String
+  lastName          String
+  email             String   @unique
+  profilePhoto      String?
+  coverPhoto        String?
+  bio               String?
+  contactNumber     String
+  address           String?
+  dateOfBirth       String?
+  experience        Int      @default(0)
+  gender            Gender
+  designation       String
+  qualification     String
+  specialization    String[]
+  yearsOfExperience Int      @default(0)
+  isDeleted         Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(references: [email], fields: [email])
 
   @@map("nurses")
 }
 
 model Support {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  firstName     String
-  lastName      String
-  profilePhoto  String?
-  contactNumber String
-  address       String?
-  isDeleted     Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  user          User     @relation(references: [email], fields: [email])
+  id                String   @id @default(uuid())
+  firstName         String
+  lastName          String
+  email             String   @unique
+  profilePhoto      String?
+  coverPhoto        String?
+  bio               String?
+  contactNumber     String
+  address           String?
+  dateOfBirth       String?
+  experience        Int      @default(0)
+  gender            Gender
+  designation       String
+  qualification     String
+  specialization    String[]
+  yearsOfExperience Int      @default(0)
+  isDeleted         Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(references: [email], fields: [email])
 
   @@map("support")
 }
 
 model ReportAnalyst {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  firstName     String
-  lastName      String
-  profilePhoto  String?
-  contactNumber String
-  address       String?
-  isDeleted     Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  user          User     @relation(references: [email], fields: [email])
+  id                String   @id @default(uuid())
+  firstName         String
+  lastName          String
+  email             String   @unique
+  profilePhoto      String?
+  coverPhoto        String?
+  bio               String?
+  contactNumber     String
+  address           String?
+  dateOfBirth       String?
+  experience        Int      @default(0)
+  gender            Gender
+  designation       String
+  qualification     String
+  specialization    String[]
+  yearsOfExperience Int      @default(0)
+  isDeleted         Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(references: [email], fields: [email])
 
   @@map("report_analyst")
 }
@@ -227,8 +297,9 @@ model JobPost {
   skills         String[]
   vacancy        Int
   age            Int
-  location       String
   experience     Int // in years
+  salaryRange    String?
+  location       String?
   deadline       String
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
@@ -241,25 +312,19 @@ model JobApplication {
   id          String            @id @default(uuid())
   jobPostId   String
   applicantId String
+  socialUrl   String[]
+  cvResume   String
+  coverLater String
+  documents      Json?
+  notes          String?
   status      ApplicationStatus @default(PENDING)
   appliedAt   DateTime          @default(now())
   reviewedAt  DateTime?
 
-  jobPost   JobPost       @relation(fields: [jobPostId], references: [id])
-  applicant User          @relation(fields: [applicantId], references: [id])
-  documents JobDocument[]
+  jobPost   JobPost @relation(fields: [jobPostId], references: [id])
+  applicant User    @relation(fields: [applicantId], references: [id])
 
   @@unique([jobPostId, applicantId]) // One application per job per user
-}
-
-model JobDocument {
-  id               String   @id @default(cuid())
-  jobApplicationId String
-  fileUrl          String
-  fileType         String // e.g., "resume", "certificate"
-  uploadedAt       DateTime @default(now())
-
-  jobApplication JobApplication @relation(fields: [jobApplicationId], references: [id])
 }
 
 model Specialties {
@@ -286,8 +351,6 @@ model PatientHealthData {
   id                  String        @id @default(uuid())
   patientId           String        @unique
   patient             Patient       @relation(fields: [patientId], references: [id])
-  dateOfBirth         DateTime?
-  gender              Gender
   bloodGroup          BloodGroup
   hasAllergies        Boolean?      @default(false)
   hasDiabetes         Boolean?      @default(false)
