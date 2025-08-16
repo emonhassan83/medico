@@ -1,5 +1,6 @@
 export const patientSearchableFields: string[] = [
   'firstName',
+  'lastName',
   'email',
   'contactNo',
 ];

@@ -1,17 +1,9 @@
-export type IPatientFilterRequest = {
-  searchTerm?: string | undefined;
-  email?: string | undefined;
-  contactNo?: string | undefined;
-};
+import { Gender, BloodGroup, MaritalStatus } from '@prisma/client';
 
-export type IPatientUpdate = {
-  email: string;
-  name: string;
-  profilePhoto: string;
-  contactNumber: string;
-  address: string;
-  patientHealthData: IPatientHealthData;
-  medicalReport: IMedicalReport;
+export type IPatientFilterRequest = {
+  searchTerm?: string;
+  email?: string;
+  contactNo?: string;
 };
 
 export type IMedicalReport = {
@@ -20,28 +12,31 @@ export type IMedicalReport = {
 };
 
 export type IPatientHealthData = {
-  dateOfBirth: string | Date;
-  gender: 'MALE' | 'FEMALE';
-  bloodGroup:
-    | 'A_POSITIVE'
-    | 'A_NEGATIVE'
-    | 'B_POSITIVE'
-    | 'B_NEGATIVE'
-    | 'O_POSITIVE'
-    | 'O_NEGATIVE'
-    | 'AB_POSITIVE'
-    | 'AB_NEGATIVE';
+  dateOfBirth: Date | string;
+  gender: Gender; // Prisma enum
+  bloodGroup: BloodGroup; // Prisma enum
   hasAllergies: boolean;
   hasDiabetes: boolean;
-  height: string;
-  weight: string;
-  smokingStatus: boolean;
-  dietaryPreferences: string;
-  pregnancyStatus: boolean;
-  mentalHealthHistory: string;
-  immunizationStatus: boolean;
-  hasPastSurgeries: boolean;
-  recentAnxiety: boolean;
-  recentDepression: boolean;
-  maritalStatus: 'MARRIED' | 'UNMARRIED';
+  height?: string;
+  weight?: string;
+  smokingStatus?: boolean;
+  dietaryPreferences?: string;
+  pregnancyStatus?: boolean;
+  mentalHealthHistory?: string;
+  immunizationStatus?: boolean;
+  hasPastSurgeries?: boolean;
+  recentAnxiety?: boolean;
+  recentDepression?: boolean;
+  maritalStatus: MaritalStatus; // Prisma enum
+};
+
+export type IPatientUpdate = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  profilePhoto?: string;
+  contactNumber: string;
+  address?: string;
+  patientHealthData?: IPatientHealthData;
+  medicalReport?: IMedicalReport[];
 };

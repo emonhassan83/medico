@@ -9,6 +9,7 @@ import { patientFilterableFields } from './patient.constants';
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, patientFilterableFields);
   const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
+
   const result = await PatientService.getAllFromDB(filters, options);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -20,8 +21,7 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const result = await PatientService.getByIdFromDB(id);
+  const result = await PatientService.getByIdFromDB(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -31,8 +31,7 @@ const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
 });
 
 const updateIntoDB = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const result = await PatientService.updateIntoDB(id, req.body);
+  const result = await PatientService.updateIntoDB(req.params.id, req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -42,8 +41,7 @@ const updateIntoDB = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const result = await PatientService.deleteFromDB(id);
+  const result = await PatientService.deleteFromDB(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -51,9 +49,9 @@ const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+
 const softDelete = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const result = await PatientService.softDelete(id);
+  const result = await PatientService.softDelete(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

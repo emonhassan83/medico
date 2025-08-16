@@ -127,12 +127,25 @@ const updateIntoDB = async (
       });
     }
     if (medicalReport) {
-      const newMedicalReport = await transactionClient.medicalReport.create({
-        data: {
-          patientId: id,
-          ...medicalReport,
-        },
-      });
+      if (Array.isArray(medicalReport)) {
+        for (const report of medicalReport) {
+          await transactionClient.medicalReport.create({
+            data: {
+              patientId: id,
+              ...report,
+            },
+          });
+        }
+      } else {
+        await transactionClient.medicalReport.create({
+          data: {
+            patientId: id,
+            reportName: (medicalReport as any).reportName,
+            reportLink: (medicalReport as any).reportLink,
+            ...(typeof medicalReport === 'object' && medicalReport !== null ? medicalReport : {}),
+          },
+        });
+      }
     }
 
     return result;
