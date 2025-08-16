@@ -4,6 +4,7 @@ import prisma from '../../shared/prisma';
 import { IReceptionistFilterRequest } from './receptionist.interface';
 import { IPaginationOptions } from '../../interfaces/pagination';
 import { paginationHelpers } from '../../helpers/paginationHelper';
+import ApiError from '../../errors/ApiError';
 
 const getAllFromDB = async (
   params: IReceptionistFilterRequest,
@@ -76,6 +77,10 @@ const getByIdFromDB = async (id: string): Promise<Receptionist | null> => {
       isDeleted: false,
     },
   });
+
+  if (!result || result?.isDeleted) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Receptionist profile not found!');
+  }
 
   return result;
 };

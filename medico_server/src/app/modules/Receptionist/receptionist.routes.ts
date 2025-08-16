@@ -3,7 +3,7 @@ import { ReceptionistController } from './receptionist.controller';
 import validateRequest from '../../middlewares/validateRequest';
 import auth from '../../middlewares/auth';
 import { UserRole } from '@prisma/client';
-import { receptionistValidationSchemas } from './receptionist.validation';
+import { receptionistValidation } from './receptionist.validation';
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ router.get('/:id', auth(UserRole.ADMIN), ReceptionistController.getByIdFromDB);
 router.patch(
   '/:id',
   auth(UserRole.ADMIN, UserRole.RECEPTIONIST),
-  validateRequest(receptionistValidationSchemas.update),
+  validateRequest(receptionistValidation.ReceptionistSchema),
   ReceptionistController.updateIntoDB,
 );
 

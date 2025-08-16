@@ -39,16 +39,17 @@ model User {
 }
 
 model Admin {
-  id            String   @id @unique @default(uuid())
+  id            String     @id @unique @default(uuid())
   firstName     String
   lastName      String
-  email         String   @unique
+  email         String     @unique
   contactNumber String
   profilePhoto  String?
   address       String?
-  isDeleted     Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  status        UserStatus @default(ACTIVE)
+  isDeleted     Boolean    @default(false)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 
   user User @relation(references: [email], fields: [email])
 
@@ -74,6 +75,7 @@ model Doctor {
   currentWorkingPlace String
   designation         String
   doctorSpecialties   DoctorSpecialties[]
+  status              UserStatus          @default(PENDING)
   isDeleted           Boolean             @default(false)
   createdAt           DateTime            @default(now())
   updatedAt           DateTime            @updatedAt
@@ -100,6 +102,7 @@ model Patient {
   address       String?
   gender        Gender
   dateOfBirth   DateTime?
+  status        UserStatus @default(ACTIVE)
   isDeleted     Boolean   @default(false)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -131,6 +134,7 @@ model Receptionist {
   qualification     String
   specialization    String[]
   yearsOfExperience Int      @default(0)
+  status        UserStatus @default(PENDING)
   isDeleted         Boolean  @default(false)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -157,6 +161,7 @@ model Pharmacist {
   qualification     String
   specialization    String[]
   yearsOfExperience Int      @default(0)
+  status        UserStatus @default(PENDING)
   isDeleted         Boolean  @default(false)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -182,6 +187,7 @@ model LabTech {
   qualification     String
   specialization    String[]
   yearsOfExperience Int      @default(0)
+  status        UserStatus @default(PENDING)
   isDeleted         Boolean  @default(false)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -207,6 +213,7 @@ model FinanceManager {
   qualification     String
   specialization    String[]
   yearsOfExperience Int      @default(0)
+  status        UserStatus @default(PENDING)
   isDeleted         Boolean  @default(false)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -232,6 +239,7 @@ model Nurse {
   qualification     String
   specialization    String[]
   yearsOfExperience Int      @default(0)
+  status        UserStatus @default(PENDING)
   isDeleted         Boolean  @default(false)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -257,6 +265,7 @@ model Support {
   qualification     String
   specialization    String[]
   yearsOfExperience Int      @default(0)
+  status        UserStatus @default(PENDING)
   isDeleted         Boolean  @default(false)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -282,6 +291,7 @@ model ReportAnalyst {
   qualification     String
   specialization    String[]
   yearsOfExperience Int      @default(0)
+  status        UserStatus @default(PENDING)
   isDeleted         Boolean  @default(false)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -291,7 +301,7 @@ model ReportAnalyst {
 }
 
 model JobPost {
-  id             String           @id @default(cuid())
+  id             String           @id @default(uuid())
   title          String
   requirements   String
   skills         String[]
@@ -313,10 +323,10 @@ model JobApplication {
   jobPostId   String
   applicantId String
   socialUrl   String[]
-  cvResume   String
-  coverLater String
-  documents      Json?
-  notes          String?
+  cvResume    String
+  coverLater  String
+  documents   Json?
+  notes       String?
   status      ApplicationStatus @default(PENDING)
   appliedAt   DateTime          @default(now())
   reviewedAt  DateTime?

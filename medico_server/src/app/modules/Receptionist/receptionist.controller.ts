@@ -24,9 +24,7 @@ const getAllFromDB: RequestHandler = catchAsync(
 );
 
 const getByIdFromDB: RequestHandler = catchAsync(async (req, res) => {
-  const { id } = req.params;
-
-  const result = await ReceptionistService.getByIdFromDB(id);
+  const result = await ReceptionistService.getByIdFromDB(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -36,9 +34,7 @@ const getByIdFromDB: RequestHandler = catchAsync(async (req, res) => {
 });
 
 const updateIntoDB: RequestHandler = catchAsync(async (req, res) => {
-  const { id } = req.params;
-
-  const result = await ReceptionistService.updateIntoDB(id, req.body);
+  const result = await ReceptionistService.updateIntoDB(req.params.id, req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -48,9 +44,7 @@ const updateIntoDB: RequestHandler = catchAsync(async (req, res) => {
 });
 
 const deleteFromDB: RequestHandler = catchAsync(async (req, res) => {
-  const { id } = req.params;
-
-  const result = await ReceptionistService.deleteFromDB(id);
+  const result = await ReceptionistService.deleteFromDB(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -60,9 +54,7 @@ const deleteFromDB: RequestHandler = catchAsync(async (req, res) => {
 });
 
 const softDeleteFromDB: RequestHandler = catchAsync(async (req, res) => {
-  const { id } = req.params;
-
-  const result = await ReceptionistService.softDeleteFromDB(id);
+  const result = await ReceptionistService.softDeleteFromDB(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

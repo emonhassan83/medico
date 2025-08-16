@@ -86,6 +86,11 @@ const getByIdFromDB = async (id: string): Promise<Patient | null> => {
       patientHealthData: true,
     },
   });
+
+  if (!result || result?.isDeleted) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Patient profile not found!');
+  }
+
   return result;
 };
 
@@ -142,7 +147,9 @@ const updateIntoDB = async (
             patientId: id,
             reportName: (medicalReport as any).reportName,
             reportLink: (medicalReport as any).reportLink,
-            ...(typeof medicalReport === 'object' && medicalReport !== null ? medicalReport : {}),
+            ...(typeof medicalReport === 'object' && medicalReport !== null
+              ? medicalReport
+              : {}),
           },
         });
       }
