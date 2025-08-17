@@ -3,10 +3,10 @@ import { z } from 'zod';
 const update = z.object({
   body: z.object({
     firstName: z.string({
-      required_error: "Name is required!"
+      required_error: "First name is required!"
     }).optional(),
     lastName: z.string({
-      required_error: "Name is required!"
+      required_error: "Last name is required!"
     }).optional(),
     contactNumber: z.string({
       required_error: "Contact Number is required!",

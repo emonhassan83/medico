@@ -7,7 +7,6 @@ import { receptionistValidation } from './receptionist.validation';
 
 const router = express.Router();
 
-// router.get('/', auth(UserRole.ADMIN), ReceptionistController.getAllFromDB);
 router.get('/', ReceptionistController.getAllFromDB);
 
 router.get('/:id', auth(UserRole.ADMIN), ReceptionistController.getByIdFromDB);

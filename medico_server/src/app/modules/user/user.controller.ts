@@ -7,7 +7,6 @@ import { userFilterableFields } from './user.constant';
 import pick from '../../shared/pick';
 
 const createDoctor = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  //const { doctor, ...userData } = req.body;
   const result = await UserServices.createDoctor(req);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -18,7 +17,6 @@ const createDoctor = catchAsync(async (req: Request, res: Response, next: NextFu
 });
 
 const createAdmin = catchAsync(async (req: Request, res: Response) => {
-  //const { admin, ...userData } = req.body;
   const result = await UserServices.createAdmin(req);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -29,7 +27,6 @@ const createAdmin = catchAsync(async (req: Request, res: Response) => {
 });
 
 const createPatient = catchAsync(async (req: Request, res: Response) => {
-  //const { patient, ...userData } = req.body;
   const result = await UserServices.createPatient(req);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -50,8 +47,7 @@ const createReceptionist = catchAsync(async (req: Request, res: Response) => {
 });
 
 const changeProfileStatus = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const result = await UserServices.changeProfileStatus(id, req.body);
+  const result = await UserServices.changeProfileStatus(req.params.id, req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -63,6 +59,7 @@ const changeProfileStatus = catchAsync(async (req: Request, res: Response) => {
 const getAllUser = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, userFilterableFields);
   const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
+
   const result = await UserServices.getAllUser(filters, options);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -74,8 +71,7 @@ const getAllUser = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getMyProfile = catchAsync(async (req: Request, res: Response) => {
-  const user = req.user;
-  const result = await UserServices.getMyProfile(user);
+  const result = await UserServices.getMyProfile(req.user);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -86,8 +82,7 @@ const getMyProfile = catchAsync(async (req: Request, res: Response) => {
 });
 
 const updateMyProfile = catchAsync(async (req: Request, res: Response) => {
-  const user = req.user;
-  const result = await UserServices.updateMyProfile(user, req);
+  const result = await UserServices.updateMyProfile(req.user, req);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

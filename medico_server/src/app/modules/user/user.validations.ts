@@ -1,7 +1,6 @@
 import { Gender, UserStatus } from '@prisma/client';
 import { z } from 'zod';
 
-
 const createAdmin = z.object({
   body: z.object({
     password: z.string({
@@ -18,10 +17,17 @@ const createAdmin = z.object({
         .string({
           required_error: 'Email is required!',
         })
-        .email(),
+        .email('Invalid email address.'),
       contactNumber: z.string({
         required_error: 'Contact Number is required!',
       }),
+      address: z
+        .string({
+          required_error: 'Contact Number is required!',
+        })
+        .optional(),
+      profilePhoto: z.string().optional(),
+      coverPhoto: z.string().optional(),
     }),
   }),
 });
@@ -42,10 +48,29 @@ const createReceptionist = z.object({
         .string({
           required_error: 'Email is required!',
         })
-        .email(),
+        .email('Invalid email address.'),
       contactNumber: z.string({
         required_error: 'Contact Number is required!',
       }),
+      profilePhoto: z.string().optional(),
+      coverPhoto: z.string().optional(),
+      bio: z.string().optional(),
+      address: z.string({
+        required_error: 'Address is required!',
+      }),
+      dateOfBirth: z.string().optional(),
+      experience: z.number().int().default(0),
+      gender: z.nativeEnum(Gender, {
+        required_error: 'Gender is required!',
+      }),
+      designation: z.string({
+        required_error: 'Designation is required!',
+      }),
+      qualification: z.string({
+        required_error: 'Qualification is required!',
+      }),
+      specialization: z.array(z.string()).optional(),
+      yearsOfExperience: z.number().int().default(0),
     }),
   }),
 });
@@ -70,11 +95,18 @@ const createDoctor = z.object({
       contactNumber: z.string({
         required_error: 'Contact Number is required!',
       }),
+      profilePhoto: z.string().optional(),
+      coverPhoto: z.string().optional(),
+      bio: z.string().optional(),
       address: z
         .string({
           required_error: 'Address is required!',
         })
         .nullable(),
+      gender: z.nativeEnum(Gender, {
+        required_error: 'Gender is required!',
+      }),
+      dateOfBirth: z.string().optional(),
       registrationNumber: z.string({
         required_error: 'Reg number is required',
       }),
@@ -83,7 +115,6 @@ const createDoctor = z.object({
           required_error: 'Experience is required',
         })
         .int(),
-      gender: z.enum([Gender.MALE, Gender.FEMALE]),
       appointmentFee: z.number({
         required_error: 'Appointment fee is required',
       }),
@@ -97,7 +128,6 @@ const createDoctor = z.object({
         required_error: 'Designation is required!',
       }),
     }),
-
   }),
 });
 
@@ -107,22 +137,20 @@ const createPatient = z.object({
       required_error: 'Password is required!',
     }),
     patient: z.object({
-      email: z
-        .string({
-          required_error: 'Email is required for communication.',
-        })
-        .email('Please enter a valid email address.'),
       firstName: z.string({
         required_error: 'First name is required.',
       }),
       lastName: z.string({
         required_error: 'Last name is required.',
       }),
-      profilePhoto: z
+      email: z
         .string({
-          required_error: 'Profile Photo is required for records.',
+          required_error: 'Email is required for communication.',
         })
-        .optional(),
+        .email('Please enter a valid email address.'),
+      profilePhoto: z.string().optional(),
+      coverPhoto: z.string().optional(),
+      bio: z.string().optional(),
       contactNumber: z.string({
         required_error: 'Contact number is required for verification.',
       }),
@@ -131,14 +159,22 @@ const createPatient = z.object({
           required_error: 'Address is required for records.',
         })
         .optional(),
-
+      gender: z.nativeEnum(Gender, {
+        required_error: 'Gender is required!',
+      }),
+      dateOfBirth: z.string().optional(),
     }),
   }),
 });
 
 const updateStatus = z.object({
   body: z.object({
-    status: z.enum([UserStatus.ACTIVE, UserStatus.PENDING, UserStatus.BLOCKED, UserStatus.DELETED]),
+    status: z.enum([
+      UserStatus.ACTIVE,
+      UserStatus.PENDING,
+      UserStatus.BLOCKED,
+      UserStatus.DELETED,
+    ]),
   }),
 });
 

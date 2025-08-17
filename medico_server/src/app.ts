@@ -1,6 +1,5 @@
 import cors from 'cors';
 import express, { Application, NextFunction, Request, Response } from 'express';
-// import httpStatus from 'http-status';
 import httpStatus from "http-status";
 
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
@@ -11,8 +10,9 @@ const app: Application = express();
 
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001', "https://medico-client-tau.vercel.app"],
+    origin: true,
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   }),
 );
 
@@ -29,15 +29,6 @@ app.get('/up', async (req: Request, res: Response) => {
     message: 'Medico Server working....!',
   });
 });
-
-// Schedule to run every minute
-// cron.schedule('* * * * *', async (): Promise<void> => {
-//   try {
-//     await AppointmentServices.cancelUnpaidAppointments();
-//   } catch (error) {
-//     errorlogger.error(error);
-//   }
-// });
 
 //global error handler
 app.use(globalErrorHandler);
