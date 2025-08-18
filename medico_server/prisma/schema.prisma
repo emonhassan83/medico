@@ -23,16 +23,15 @@ model User {
   createdAt          DateTime   @default(now())
   updatedAt          DateTime   @updatedAt
 
-  doctor         Doctor?
-  patient        Patient?
   admin          Admin?
+  faculty        Faculty?
   receptionist   Receptionist?
   pharmacist     Pharmacist?
   labTech        LabTech?
-  financeManager FinanceManager?
   nurse          Nurse?
+  doctor         Doctor?
+  patient        Patient?
   support        Support?
-  reportAnalyst  ReportAnalyst?
   JobApplication JobApplication[]
 
   @@map("users")
@@ -43,9 +42,12 @@ model Admin {
   firstName     String
   lastName      String
   email         String     @unique
-  contactNumber String
   profilePhoto  String?
+  coverPhoto    String?
+  bio           String?
+  contactNumber String
   address       String?
+  dateOfBirth   String?
   status        UserStatus @default(ACTIVE)
   isDeleted     Boolean    @default(false)
   createdAt     DateTime   @default(now())
@@ -54,6 +56,157 @@ model Admin {
   user User @relation(references: [email], fields: [email])
 
   @@map("admins")
+}
+
+model Department {
+  id          String    @id @default(uuid())
+  name        String
+  code        String    @unique
+  description String?
+  location    String
+  building    String?
+  floorNumber Int?
+  isDeleted   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  faculty     Faculty[]
+
+  @@map("department")
+}
+
+model Faculty {
+  id                String     @id @default(uuid())
+  firstName         String
+  lastName          String
+  email             String     @unique
+  profilePhoto      String?
+  coverPhoto        String?
+  bio               String?
+  contactNumber     String
+  address           String?
+  dateOfBirth       String?
+  experience        Int        @default(0)
+  gender            Gender
+  designation       String
+  qualification     String
+  specialization    String[]
+  yearsOfExperience Int        @default(0)
+  status            UserStatus @default(PENDING)
+  isDeleted         Boolean    @default(false)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  // Relation
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id])
+  user         User        @relation(references: [email], fields: [email])
+
+  @@map("faculty")
+}
+
+model Receptionist {
+  id                String     @id @unique @default(uuid())
+  firstName         String
+  lastName          String
+  email             String     @unique
+  profilePhoto      String?
+  coverPhoto        String?
+  bio               String?
+  contactNumber     String
+  address           String?
+  dateOfBirth       String?
+  experience        Int        @default(0)
+  gender            Gender
+  designation       String
+  qualification     String
+  specialization    String[]
+  yearsOfExperience Int        @default(0)
+  status            UserStatus @default(PENDING)
+  isDeleted         Boolean    @default(false)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  user User @relation(references: [email], fields: [email])
+
+  @@map("receptionist")
+}
+
+model Pharmacist {
+  id                String     @id @default(uuid())
+  firstName         String
+  lastName          String
+  email             String     @unique
+  profilePhoto      String?
+  coverPhoto        String?
+  bio               String?
+  contactNumber     String
+  address           String?
+  dateOfBirth       String?
+  experience        Int        @default(0)
+  gender            Gender
+  designation       String
+  qualification     String
+  specialization    String[]
+  yearsOfExperience Int        @default(0)
+  status            UserStatus @default(PENDING)
+  isDeleted         Boolean    @default(false)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  user              User       @relation(references: [email], fields: [email])
+
+  @@map("pharmacists")
+}
+
+model LabTech {
+  id                String     @id @default(uuid())
+  firstName         String
+  lastName          String
+  email             String     @unique
+  profilePhoto      String?
+  coverPhoto        String?
+  bio               String?
+  contactNumber     String
+  address           String?
+  dateOfBirth       String?
+  experience        Int        @default(0)
+  gender            Gender
+  designation       String
+  qualification     String
+  specialization    String[]
+  yearsOfExperience Int        @default(0)
+  status            UserStatus @default(PENDING)
+  isDeleted         Boolean    @default(false)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  user              User       @relation(references: [email], fields: [email])
+
+  @@map("lab_tech")
+}
+
+model Nurse {
+  id                String     @id @default(uuid())
+  firstName         String
+  lastName          String
+  email             String     @unique
+  profilePhoto      String?
+  coverPhoto        String?
+  bio               String?
+  contactNumber     String
+  address           String?
+  dateOfBirth       String?
+  experience        Int        @default(0)
+  gender            Gender
+  designation       String
+  qualification     String
+  specialization    String[]
+  yearsOfExperience Int        @default(0)
+  status            UserStatus @default(PENDING)
+  isDeleted         Boolean    @default(false)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  user              User       @relation(references: [email], fields: [email])
+
+  @@map("nurses")
 }
 
 model Doctor {
@@ -91,10 +244,10 @@ model Doctor {
 }
 
 model Patient {
-  id            String    @id @unique @default(uuid())
+  id            String     @id @unique @default(uuid())
   firstName     String
   lastName      String
-  email         String    @unique
+  email         String     @unique
   profilePhoto  String?
   coverPhoto    String?
   bio           String?
@@ -103,9 +256,9 @@ model Patient {
   gender        Gender
   dateOfBirth   DateTime?
   status        UserStatus @default(ACTIVE)
-  isDeleted     Boolean   @default(false)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  isDeleted     Boolean    @default(false)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 
   medicalReport     MedicalReport[]
   patientHealthData PatientHealthData?
@@ -117,187 +270,30 @@ model Patient {
   @@map("patients")
 }
 
-model Receptionist {
-  id                String   @id @unique @default(uuid())
-  firstName         String
-  lastName          String
-  email             String   @unique
-  profilePhoto      String?
-  coverPhoto        String?
-  bio               String?
-  contactNumber     String
-  address           String?
-  dateOfBirth       String?
-  experience        Int      @default(0)
-  gender            Gender
-  designation       String
-  qualification     String
-  specialization    String[]
-  yearsOfExperience Int      @default(0)
-  status        UserStatus @default(PENDING)
-  isDeleted         Boolean  @default(false)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-
-  user User @relation(references: [email], fields: [email])
-
-  @@map("receptionist")
-}
-
-model Pharmacist {
-  id                String   @id @default(uuid())
-  firstName         String
-  lastName          String
-  email             String   @unique
-  profilePhoto      String?
-  coverPhoto        String?
-  bio               String?
-  contactNumber     String
-  address           String?
-  dateOfBirth       String?
-  experience        Int      @default(0)
-  gender            Gender
-  designation       String
-  qualification     String
-  specialization    String[]
-  yearsOfExperience Int      @default(0)
-  status        UserStatus @default(PENDING)
-  isDeleted         Boolean  @default(false)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  user              User     @relation(references: [email], fields: [email])
-
-  @@map("pharmacists")
-}
-
-model LabTech {
-  id                String   @id @default(uuid())
-  firstName         String
-  lastName          String
-  email             String   @unique
-  profilePhoto      String?
-  coverPhoto        String?
-  bio               String?
-  contactNumber     String
-  address           String?
-  dateOfBirth       String?
-  experience        Int      @default(0)
-  gender            Gender
-  designation       String
-  qualification     String
-  specialization    String[]
-  yearsOfExperience Int      @default(0)
-  status        UserStatus @default(PENDING)
-  isDeleted         Boolean  @default(false)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  user              User     @relation(references: [email], fields: [email])
-
-  @@map("lab_tech")
-}
-
-model FinanceManager {
-  id                String   @id @default(uuid())
-  firstName         String
-  lastName          String
-  email             String   @unique
-  profilePhoto      String?
-  coverPhoto        String?
-  bio               String?
-  contactNumber     String
-  address           String?
-  dateOfBirth       String?
-  experience        Int      @default(0)
-  gender            Gender
-  designation       String
-  qualification     String
-  specialization    String[]
-  yearsOfExperience Int      @default(0)
-  status        UserStatus @default(PENDING)
-  isDeleted         Boolean  @default(false)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  user              User     @relation(references: [email], fields: [email])
-
-  @@map("finance_manager")
-}
-
-model Nurse {
-  id                String   @id @default(uuid())
-  firstName         String
-  lastName          String
-  email             String   @unique
-  profilePhoto      String?
-  coverPhoto        String?
-  bio               String?
-  contactNumber     String
-  address           String?
-  dateOfBirth       String?
-  experience        Int      @default(0)
-  gender            Gender
-  designation       String
-  qualification     String
-  specialization    String[]
-  yearsOfExperience Int      @default(0)
-  status        UserStatus @default(PENDING)
-  isDeleted         Boolean  @default(false)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  user              User     @relation(references: [email], fields: [email])
-
-  @@map("nurses")
-}
-
 model Support {
-  id                String   @id @default(uuid())
+  id                String     @id @default(uuid())
   firstName         String
   lastName          String
-  email             String   @unique
+  email             String     @unique
   profilePhoto      String?
   coverPhoto        String?
   bio               String?
   contactNumber     String
   address           String?
   dateOfBirth       String?
-  experience        Int      @default(0)
+  experience        Int        @default(0)
   gender            Gender
   designation       String
   qualification     String
   specialization    String[]
-  yearsOfExperience Int      @default(0)
-  status        UserStatus @default(PENDING)
-  isDeleted         Boolean  @default(false)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  user              User     @relation(references: [email], fields: [email])
+  yearsOfExperience Int        @default(0)
+  status            UserStatus @default(PENDING)
+  isDeleted         Boolean    @default(false)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  user              User       @relation(references: [email], fields: [email])
 
   @@map("support")
-}
-
-model ReportAnalyst {
-  id                String   @id @default(uuid())
-  firstName         String
-  lastName          String
-  email             String   @unique
-  profilePhoto      String?
-  coverPhoto        String?
-  bio               String?
-  contactNumber     String
-  address           String?
-  dateOfBirth       String?
-  experience        Int      @default(0)
-  gender            Gender
-  designation       String
-  qualification     String
-  specialization    String[]
-  yearsOfExperience Int      @default(0)
-  status        UserStatus @default(PENDING)
-  isDeleted         Boolean  @default(false)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  user              User     @relation(references: [email], fields: [email])
-
-  @@map("report_analyst")
 }
 
 model JobPost {
@@ -511,10 +507,9 @@ enum UserRole {
   // Next implement features
   PHARMACIST
   LAB_TECH
-  FINANCE_MANAGER
+  FACULTY
   NURSE
   SUPPORT
-  REPORT_ANALYST
 }
 
 enum UserStatus {
