@@ -32,7 +32,7 @@
     "http-status": "^2.0.0",
     "husky": "^9.1.7",
     "jsonwebtoken": "^9.0.2",
-    "node-cron": "^3.0.3",
+    "node-cron": "^4.2.1",
     "nodemailer": "^6.9.16",
     "sslcommerz-lts": "^1.1.0",
     "ts-node-dev": "^2.0.0",
