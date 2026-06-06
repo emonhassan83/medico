@@ -33,7 +33,7 @@
     "husky": "^9.1.7",
     "jsonwebtoken": "^9.0.2",
     "node-cron": "^3.0.3",
-    "nodemailer": "^6.9.16",
+    "nodemailer": "^8.0.5",
     "sslcommerz-lts": "^1.1.0",
     "ts-node-dev": "^2.0.0",
     "winston": "^3.17.0",
