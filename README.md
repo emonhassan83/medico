@@ -1,185 +1,152 @@
-## MEDICO APP
+# Medico - Healthcare Management Platform
 
- Medico is a comprehensive medical management system designed to streamline operations in a healthcare setting. It caters to four primary roles: Admin, Receptionist, Doctor, and Patient, offering tailored features for account management, appointment scheduling, prescription handling, invoicing, and department specialization. With a robust technology stack of TypeScript, Next.js, Ant Design, Node.js, and Prisma ORM, Medico ensures a secure, user-friendly, and efficient platform for managing healthcare workflows.
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)](https://expressjs.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Ant Design](https://img.shields.io/badge/Ant%20Design-0170FE?style=for-the-badge&logo=antdesign&logoColor=white)](https://ant.design/)
+
+**Medico** is an enterprise-grade healthcare management and clinical operations system designed to streamline workflows in modern medical centers. It connects four core user personas—**Admin**, **Receptionist**, **Doctor**, and **Patient**—delivering specialized capabilities for account governance, doctor scheduling, appointment booking, clinical prescription issuance, invoicing, and secure payment processing.
+
+---
+
+## 📸 System Preview
 
 ![HomePage Screenshot](https://i.ibb.co.com/XWH0ws4/Screenshot-2024-12-11-135659.png)
 
-### Project Features
+---
 
-#### Admin
-- **User Management:**
-  - [x] Manage Receptionist
-    - Create Receptionists Profile
-    - Manage Receptionists functionality Update, Delete Profile 
- - [x] Manage Doctor
-    - Create Doctors Profile
-    - Manage Doctors functionality Update, Delete Profile 
- - [x] Manage Patient
-    - Create Patients Profile
-    - Manage Patients functionality Update, Delete Profile
+## 🌟 Role-Based Features
 
-- **Doctor Specialties Management:**
-  - Create Doctor Specialties
-  - Manage Doctor Specialties like functionality Update Specialties
+### 👑 Admin
+- **Staff Governance**: Provision, manage, and toggle active status for Receptionists, Doctors, and Patients.
+- **Clinical Specialties**: Create and curate medical departments and doctor specializations.
+- **Global Appointments**: Oversee all hospital appointments with state transition controls.
+- **Financial Analytics**: Review hospital-wide billing transactions and revenue streams.
 
-- **Appointment Management:**
-  - Manage Appointment functionality change status and delete Appointment
+### 📋 Receptionist
+- **Calendar & Appointment Hub**: View appointments dynamically mapped across a calendar grid.
+- **Doctor Availability Scheduling**: Create and publish bookable calendar slots for medical specialists.
+- **Patient Management**: Onboard walk-in patients and manage their demographic records.
+- **Billing & Invoices**: View invoices and perform manual payment verification for cash/offline patients.
 
-- **Transaction:**
-  - Viewing all transactions from the appointments
+### 🩺 Doctor
+- **Consultation Calendar**: Track personal appointment appointments filtered by date and status.
+- **Schedule Customization**: Create customized availability slots for patient consultations.
+- **Patient Records**: Inspect patient histories and manage profile updates during visits.
+- **Prescription System**: Issue rich-text digital prescriptions with dosages, medicines, and clinical advice.
+- **Doctor Invoices**: Review payment statuses associated with completed consultations.
 
-#### Receptionist
-- **Manage Appointment:**
-  - Viewing all Appointment based on Calender Date 
-  - Manage Appointment functionality change status and delete Appointment
+### 🏥 Patient
+- **Doctor Discovery**: Search specialists by clinical department, name, and availability.
+- **Appointment Booking**: Select available time slots and schedule consultations in real-time.
+- **Online Payment**: Pay consultation fees through **SSLCommerz** gateway with instant invoice generation.
+- **Prescription Hub**: Access and print digital prescriptions issued by consulting doctors.
+- **Consultation Reviews**: Rate and review doctors based on medical experience.
 
-- **Manage Schedule:**
-  - Receptionist create available Schedule for Doctor
-  - Manage Schedule functionality delete Schedule
+---
 
-- **Viewing Doctor:**
-  - Viewing all doctor, pagination, search function and viewing details Doctor
+## 🏗️ Technology Stack
 
-- **Manage Patient:**
-  - Create Patients Profile
-  - Manage Patients functionality Update, Delete Profile
+| Layer | Technologies |
+| :--- | :--- |
+| **Frontend** | Next.js 14 (App Router), React 18, TypeScript, Ant Design 5 (antd), Tailwind CSS, Redux Toolkit (RTK Query), FullCalendar, React Quill, Sonner |
+| **Backend** | Node.js, Express.js, TypeScript, Prisma ORM, PostgreSQL |
+| **Authentication** | JWT (JSON Web Tokens), HttpOnly Cookies, Bcrypt Password Hashing, RBAC Middleware |
+| **Integrations** | SSLCommerz Payment Gateway, Google SMTP (Nodemailer) |
+| **Validation & Error** | Zod Schema Validation, Centralized Global Error Handler |
 
-- **Viewing Prescription:**
-  - Viewing all patients prescription, pagination and viewing details prescription
+---
 
-- **Viewing Invoices:**
-  - Viewing all invoices from the appointments and viewing details all Invoices
+## 📚 Technical Documentation
 
-#### Doctor
-- **Manage Appointment:**
-  - Viewing all Doctor Appointment based on Calender Date 
-  - Manage Doctor Appointment functionality change status and delete Appointment
+Comprehensive engineering documentation is available in the [`docs/`](./docs/) directory:
 
-- **Manage Schedule:**
-  - Doctor create available doctor Schedule for Patient
-  - Manage Schedule functionality delete Schedule
+- 📐 [**System Architecture**](./docs/ARCHITECTURE.md) - Layered system design, sequence diagrams & ERD.
+- 🔐 [**Authentication & RBAC**](./docs/AUTHENTICATION.md) - JWT lifecycle, route guards & IDOR prevention.
+- 📡 [**API Guidelines**](./docs/API_GUIDELINES.md) - REST conventions, response/error schemas & endpoints.
+- 🗄️ [**Database & Seeding**](./docs/DATABASE_SEEDING.md) - Prisma migrations, schema models & seeding steps.
+- 🚀 [**Deployment Guide**](./docs/DEPLOYMENT.md) - Production topology, Vercel & Docker instructions.
+- 📁 [**Folder Structure**](./docs/FOLDER_STRUCTURE.md) - Complete monorepo layout & conventions.
+- 💻 [**Local Development**](./docs/development.md) - Setup guide, prerequisites & environment variables.
+- 🧪 [**Testing Workflow**](./docs/TESTING_WORKFLOW.md) - Quality assurance, security checks & cURL tests.
+- 📏 [**Coding Rules**](./docs/CODING_RULES.md) - TypeScript conventions, controller/service patterns.
+- 🤖 [**AI System Prompt**](./docs/AI_SYSTEM_PROMPT.md) - Context and system instructions for AI assistants.
 
-- **Viewing Patient:**
-  - Viewing all patient, pagination, search function and viewing details Patient
-  - Manage Patients functionality Update Profile
+---
 
-- **Manage Prescription:**
-  - Create Prescription for Patient
-  - Manage Prescription functionality Update, Delete Prescription
+## 🚀 Quick Start Guide
 
-- **Viewing Invoices:**
-  - Viewing doctor appointment all invoices from the appointments and viewing details all Invoices
+### 1. Clone Repository
+```bash
+git clone https://github.com/emonhassan83/medico.git
+cd medico
+```
 
-#### Patient
-- **Manage Appointment:**
-  - Viewing all Doctor Appointment based on Calender Date 
-  - Create Patient Appointment and cancel patient Appointment
+### 2. Configure & Run Backend (`server/`)
+```bash
+cd server
+npm install
 
-- **Viewing Doctor:**
-  - Viewing all doctor, pagination, search function and viewing details Doctor
+# Setup environment variables
+cp .env.example .env   # (or create .env following docs/development.md)
 
-- **Viewing Prescription:**
-  - Viewing patient all Prescriptions and view details Prescription
+# Run Prisma database migration and generate client
+npx prisma migrate dev --name init
+npx prisma generate
 
-- **Viewing Invoices:**
-  - Viewing patient appointment all invoices from the appointments and viewing details all Invoices
-  - Viewing patient details invoice here patient can payment their pending payments
+# Seed initial admin and specialties
+npm run seed
 
-### Project common features
-  - [x] User Registration or Create a User & Login a User
-  - [x] Get User Information & Update their Information
-  - [x] Viewing metadata information based on role
+# Start server
+npm run dev
+```
+> Server runs on: `http://localhost:5000` (Healthcheck: `http://localhost:5000/up`)
 
-### Project Backend Structure
-  - [x] Create a Node.js Express project.
-  - [x] Use TypeScript for development.
-- [x] Database Integration:
-  - [x] Set up Prisma with PostgreSQL.
-- [x] Data Models:
-  - [x] Define Prisma Schema table for User, Pet, buyerManagement, Adoption Request.
-  - [x] Implement data types and validations based on the provided structure.
-  - [x] Implement user authentication, authorization, and user-related information.
-- [x] Validation:
-  - [x] Use Zod for enforcing data validation rules.
-- [x] Error Handling:
-  - [x] Handling Global Error Handler
-  - [x] Handle better way to error for using AppError.
-  - [x] Handling mongoose error and duplicate error.
+### 3. Configure & Run Frontend (`client/`)
+```bash
+cd ../client
+npm install
 
-### Project Contributors: 
+# Setup environment variables
+cp .env.example .env.local  # Set NEXT_PUBLIC_API_BASE_URL=http://localhost:5000/api/v1
+
+# Start frontend development server
+npm run dev
+```
+> Frontend runs on: `http://localhost:3000`
+
+---
+
+## 🔑 Default Credentials (After Seeding)
+
+| Role | Email | Password |
+| :--- | :--- | :--- |
+| **Super Admin** | `admin@medico.com` | `Admin@1234` |
+
+---
+
+## 🛡️ Security Hardening
+
+- **IDOR Safeguards**: Protected password reset and resource modification endpoints verifying token subject against targeted identity.
+- **Route Guards**: Strict Role-Based Access Control (`auth(...)`) on all protected routes.
+- **CORS Whitelist**: Explicit origin verification to prevent unauthorized cross-origin requests.
+- **Dependency Health**: Audited and patched transitive dependencies with package overrides.
+
+---
+
+## 👥 Contributors
+
 1. **Arafat Dayan**: Team Leader & Frontend Developer
-2. **Emon Hassan Mirdha**: Team-Co Leader & Full Stack Developer & GitHub Manager
+2. **Emon Hassan Mirdha**: Team-Co Leader, Full Stack Developer & GitHub Manager
 3. **Mohammad Shahansha**: Full Stack Developer
 4. **Milon Ahamed Shuvo**: Frontend Developer
 
+---
 
-### Project Setup Instruction
-1. Clone the repo: 
-```bash
-   https://github.com/emonhassan83/medico.git
-   ```
-2. Go to App Directory:
-```bash
-   cd medico
-   ```
+## 📄 License & Links
 
-#### Setup Frontend
-1. Go to frontend directory:
-```bash
-   cd medico_client
-   ```
-
-2. Install Dependencies:
-
-```bash
-npm install
-# or
-yarn install
-```
-
-3. Run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-#### Setup Backend
-
-1. Go to backend directory:
-
- ```bash
-   cd medico_server
-   ```
-
-2. Install Dependencies:
-
-```bash
-npm install
-# or
-yarn install
-```
-
-3. Run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-### Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-#### Frontend-deployed-url: https://medico-client-tau.vercel.app/
-#### Project_documentation: https://docs.google.com/document/d/1EIPPaqCY52pIjBy-C_hwas9d2KSGZgCVM7IhZ5W2xEM/edit?usp=sharing
+- **Frontend Live URL**: [https://medico-client-tau.vercel.app/](https://medico-client-tau.vercel.app/)
+- **License**: ISC

@@ -5,12 +5,26 @@ import httpStatus from "http-status";
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import routes from './app/routes';
 import cookieParser from 'cookie-parser';
+import config from './app/config';
 
 const app: Application = express();
 
+const allowedOrigins = [
+  config.client_url,
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'https://medico-client-tau.vercel.app',
+].filter(Boolean) as string[];
+
 app.use(
   cors({
-    origin: true,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin) || config.env !== 'production') {
+        callback(null, true);
+      } else {
+        callback(new Error('Blocked by CORS policy'));
+      }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   }),

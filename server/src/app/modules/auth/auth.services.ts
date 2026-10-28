@@ -19,7 +19,7 @@ import { hashedPassword } from '../user/user.utils';
 const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
     const { email, password } = payload;
 
-    const isUserExist = await prisma.user.findUnique({
+    const isUserExist = await prisma.user.findFirst({
         where: {
             email,
             status: UserStatus.ACTIVE
@@ -177,8 +177,8 @@ const resetPassword = async (payload: { id: string, newPassword: string }, token
 
     const isVarified = jwtHelpers.verifyToken(token, config.jwt.secret as string);
 
-    if (!isVarified) {
-        throw new ApiError(httpStatus.UNAUTHORIZED, "Something went wrong!")
+    if (!isVarified || isVarified.id !== payload.id) {
+        throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid or unauthorized reset token!");
     }
 
     const password = await bcrypt.hash(payload.newPassword, Number(config.bycrypt_salt_rounds));

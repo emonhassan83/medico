@@ -9,8 +9,13 @@ const auth =
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       //get authorization token
-      const token = req.headers.authorization;
-      // console.log(token);
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        throw new ApiError(httpStatus.UNAUTHORIZED, 'You are not authorized');
+      }
+      const token = authHeader.startsWith('Bearer ')
+        ? authHeader.slice(7).trim()
+        : authHeader.trim();
       if (!token) {
         throw new ApiError(httpStatus.UNAUTHORIZED, 'You are not authorized');
       }

@@ -1,6 +1,8 @@
 import prisma from "../../shared/prisma";
 import { AppointmentStatus, PaymentStatus } from "@prisma/client";
 import { SSLService } from "../SSL/ssl.service";
+import httpStatus from "http-status";
+import ApiError from "../../errors/ApiError";
 
 const initPayment = async (appointmentId: string) => {
   const paymentData = await prisma.payment.findFirstOrThrow({
@@ -78,18 +80,26 @@ const validatePayment = async (payload: any) => {
   };
 };
 
-const validatePaymentManually = async (appointmentId: any) => {
+const validatePaymentManually = async (appointmentId: string) => {
   const response = await prisma.appointment.findFirst({
     where: {
       id: appointmentId,
     },
     include: {
-      payment: true
+      payment: true,
     },
-  })
+  });
 
-  const responseData = {tran_id: response?.payment?.transactionId};
-  
+  if (!response) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Appointment not found!');
+  }
+
+  if (!response.payment || !response.payment.transactionId) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'No pending payment record found for this appointment!');
+  }
+
+  const responseData = { tran_id: response.payment.transactionId };
+
   await prisma.$transaction(async (tx) => {
     const updatedPaymentData = await tx.payment.update({
       where: {
@@ -107,13 +117,13 @@ const validatePaymentManually = async (appointmentId: any) => {
       },
       data: {
         paymentStatus: PaymentStatus.PAID,
-        status: AppointmentStatus.INPROGRESS
+        status: AppointmentStatus.INPROGRESS,
       },
     });
   });
 
   return {
-    message: "Payment success!",
+    message: 'Payment verified and appointment marked as paid successfully!',
   };
 };
 
