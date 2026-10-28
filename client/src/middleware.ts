@@ -1,5 +1,4 @@
 import { jwtDecode } from "jwt-decode";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
@@ -22,7 +21,7 @@ const roleBasedPrivateRoutes = {
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const accessToken = cookies().get("accessToken")?.value;
+  const accessToken = request.cookies.get("accessToken")?.value;
 
   //* redirect on role based private routes
   let decodedData = null;
