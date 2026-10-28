@@ -58,3 +58,12 @@ Thumbs.db
 .turbo
 .parcel-cache
 scratch/
+
+# Legacy / Automation Scripts
+/medico_server/node_modules/
+/medico_server/dist/
+/medico_server/.env
+/medico_server/logs/
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
