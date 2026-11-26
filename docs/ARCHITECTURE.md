@@ -1,24 +1,22 @@
-# Medico - System Architecture & Engineering Blueprint
+# Petfinder - System Architecture & Engineering Blueprint
 
-This document details the layered architectural pattern, component boundaries, asynchronous flows, and database design of the **Medico** healthcare operations platform.
+This document specifies the software architecture, data modeling, component boundaries, asynchronous flows, and design patterns governing the **Petfinder** pet adoption and rescue management system.
 
 ---
 
-## 1. High-Level System Overview
+## 1. High-Level System Architecture
 
-Medico is a full-stack, decoupled healthcare management system consisting of a **Next.js 14 App Router** frontend, an **Express.js TypeScript** API server, **Prisma ORM**, and a relational **PostgreSQL** database:
+Petfinder is architected as a decoupled, multi-tier system comprising a **Next.js 16** frontend (App Router, Turbopack, Material UI, Redux Toolkit), an **Express.js TypeScript** REST API server, **Prisma ORM**, and a **PostgreSQL** relational database.
 
 ```mermaid
 graph TD
-    Client["Client: Next.js 14 (App Router, Redux Toolkit, Ant Design)"]
+    Client["Client: Next.js 16 (App Router, Redux Toolkit, MUI)"]
     Server["API Server: Node.js / Express.js (TypeScript)"]
     DB[("PostgreSQL Database (Prisma ORM)")]
-    SSL["SSLCommerz Payment Gateway"]
     SMTP["Google SMTP Service (Nodemailer)"]
 
-    Client -->|HTTPS / REST API| Server
-    Server -->|SQL Transactions via Prisma Engine| DB
-    Server -->|Payment Init & IPN Validation| SSL
+    Client -->|HTTPS / REST API JSON| Server
+    Server -->|Type-safe SQL Queries via Prisma| DB
     Server -->|Password Reset & Alerts| SMTP
 ```
 
@@ -26,7 +24,7 @@ graph TD
 
 ## 2. Layered Application Architecture (Server)
 
-The Express application follows a decoupled **Modular Layered Architecture**:
+The backend follows a modular, layered design pattern enforcing strict separation of concerns across each incoming request:
 
 ```mermaid
 sequenceDiagram
@@ -42,75 +40,195 @@ sequenceDiagram
 
     Client->>Router: HTTP Request (Method, Route, Headers)
     Router->>Auth: Validate JWT & User Role
-    Auth->>Validator: Validate Schema (Body, Params, Query)
+    Auth->>Validator: Validate Request Body / Params (Zod)
     Validator->>Controller: Route to Controller Handler
     Controller->>Service: Call Business Logic with Sanitized Payload
     Service->>Prisma: Query / Mutation Transaction
     Prisma->>DB: Execute SQL Query
     DB-->>Prisma: Return Result Set
-    Prisma-->>Service: Hydrated Entity
+    Prisma-->>Service: Hydrated Prisma Model
     Service-->>Controller: Return Formatted Result
     Controller-->>Client: Standardized JSON Response (sendResponse)
 ```
 
-### Architectural Responsibilities:
+### Layer Responsibilities
 
-1. **Routing Layer (`src/app/routes/`)**: Registers modular route groups under `/api/v1`.
+1. **Routing Layer (`src/app/routes/`)**: Registers modular route groups under the `/api/v1` namespace.
 2. **Middleware Layer (`src/app/middlewares/`)**:
-   - `auth.ts`: Validates JWT bearer tokens and checks role access permissions.
-   - `validateRequest.ts`: Enforces Zod contract validation before controller invocation.
-   - `globalErrorHandler.ts`: Catches errors, maps Prisma/Zod exceptions to unified JSON formats.
+   - `auth.ts`: Decodes and validates JWT bearer tokens, checks token validity, and enforces user role constraints.
+   - `validateRequest.ts`: Intercepts and parses incoming request payloads against Zod validation schemas.
+   - `globalErrorHandler.ts`: Catches exceptions, maps Prisma and Zod errors to consistent HTTP responses, and handles environment-specific error stack formatting.
 3. **Controller Layer (`*.controller.ts`)**:
-   - Unwraps request body, parameters, query, and session user.
-   - Delegates business workflows to services.
-   - Standardizes output using `sendResponse()`.
-4. **Service Layer (`*.services.ts` / `*.service.ts`)**:
-   - Encapsulates domain logic, financial calculations, state transitions, and third-party integrations (Nodemailer, SSLCommerz).
-   - Manages Prisma database transactions (`prisma.$transaction`).
+   - Extracts and unwraps query parameters, route parameters, request bodies, and authenticated user credentials.
+   - Delegates business execution to the corresponding service module.
+   - Envelopes output using `sendResponse()`.
+4. **Service Layer (`*.service.ts`)**:
+   - Encapsulates business logic, data calculations, authorization checks, and third-party integrations (e.g. Nodemailer).
+   - Coordinates database transactions (`prisma.$transaction`) to guarantee atomicity.
 5. **Data Access Layer (`prisma/schema.prisma` & `src/app/shared/prisma.ts`)**:
-   - Singleton Prisma client instance.
-   - Type-safe models with relations, enum constraints, and cascade policies.
+   - Provides a singleton Prisma client instance across the application lifecycle.
+   - Exposes strongly typed entity models, relations, cascades, and enum definitions.
 
 ---
 
 ## 3. Database Entity Relationship Model
 
-Medico's data model links users across four core domain models:
+The relational PostgreSQL schema links users, pet listings, adoption requests, blogs, comments, and donations:
 
 ```mermaid
 erDiagram
-    User ||--o| Admin : "extends"
-    User ||--o| Receptionist : "extends"
-    User ||--o| Doctor : "extends"
-    User ||--o| Patient : "extends"
-    Doctor ||--o{ DoctorSpecialties : "has"
-    Specialties ||--o{ DoctorSpecialties : "categorizes"
-    Doctor ||--o{ DoctorSchedules : "opens"
-    Schedule ||--o{ DoctorSchedules : "time-slot"
-    Patient ||--o{ Appointment : "books"
-    Doctor ||--o{ Appointment : "conducts"
-    Appointment ||--o| Payment : "invoices"
-    Appointment ||--o| Prescription : "generates"
-    Doctor ||--o{ Review : "receives"
-    Patient ||--o{ Review : "writes"
+    User ||--o{ Pet : "publishes/manages"
+    User ||--o{ AdoptionRequest : "submits"
+    Pet ||--o{ AdoptionRequest : "applied for"
+    User ||--o{ Blog : "authors"
+    Blog ||--o{ Comment : "contains"
+    User ||--o{ Comment : "writes"
+    User ||--o{ Donation : "contributes"
+
+    User {
+        String id PK
+        String name
+        String email UK
+        String password
+        UserRole role
+        String contactNumber
+        String address
+        Gender gender
+        UserStatus status
+        Boolean isDeleted
+        DateTime createdAt
+        DateTime updatedAt
+    }
+
+    Pet {
+        String id PK
+        String name
+        String image
+        String species
+        String breed
+        String color
+        Int age
+        Gender gender
+        String size
+        String location
+        String description
+        String temperament
+        String medicalHistory
+        String adoptionRequirements
+        String healthStatus
+        String userId FK
+        DateTime createdAt
+        DateTime updatedAt
+    }
+
+    AdoptionRequest {
+        String id PK
+        String userId FK
+        String petId FK
+        RequestStatus status
+        String petsHousehold
+        String petOwnershipExperience
+        OpinionOption petsNeutered
+        OpinionOption secureOutdoorArea
+        AnimelSleep animalSleep
+        OpinionOption animalAlonePeriodsTime
+        String detailsSupport
+        DateTime createdAt
+        DateTime updatedAt
+    }
+
+    Blog {
+        String id PK
+        String title
+        String description
+        String image
+        String reference
+        String[] tags
+        String category
+        BlogStatus status
+        Int like
+        String userId FK
+        DateTime publishedAt
+        DateTime updatedAt
+    }
+
+    Comment {
+        String id PK
+        String content
+        String blogId FK
+        String userId FK
+        DateTime createdAt
+        DateTime updatedAt
+    }
+
+    Donation {
+        String id PK
+        Float amount
+        String donorName
+        String donorEmail
+        String message
+        String userId FK
+        DateTime donatedAt
+        DateTime updatedAt
+    }
 ```
 
 ---
 
 ## 4. Key Architectural Subsystems
 
-### A. Appointment Scheduling & Slot Locking
-- Receptionists and Doctors generate bookable `Schedule` blocks (start time, end time, date).
-- Associating schedules with doctors creates `DoctorSchedules`.
-- When a Patient books an appointment, the schedule slot is claimed, status transitions to `SCHEDULED`, and a pending `Payment` record is created.
+### A. Adoption Request Lifecycle & State Machine
 
-### B. Payment & SSLCommerz Integration
-- Patients initiate payment for scheduled appointments via `POST /api/v1/payment/init-payment/:appointmentId`.
-- The server generates a unique transaction ID (`tran_id`), calculates charges with fees, and redirects to SSLCommerz Gateway.
-- Upon callback (`/success`, `/fail`, `/cancel`) or IPN validation, Prisma executes an atomic `$transaction` that marks the payment as `PAID` and updates the appointment status to `INPROGRESS`.
-- Admins and Receptionists have authenticated access to verify offline/cash payments manually.
+The adoption workflow enforces strict validation and state transitions:
 
-### C. Medical Prescription Issuance
-- Doctors create prescriptions linked to completed or in-progress appointments.
-- Rich clinical instructions, medicine schedules, and follow-up directives are persisted.
-- Patients and Receptionists have read-only access to view and print invoices and prescriptions.
+```mermaid
+stateDiagram-v2
+    [*] --> PENDING : User Submits Questionnaire
+    PENDING --> APPROVED : Admin Approves Application
+    PENDING --> REJECTED : Admin Rejects Application
+    PENDING --> PENDING : User Updates Answers
+    APPROVED --> [*]
+    REJECTED --> [*]
+```
+
+1. **Submission**: Authenticated users submit a comprehensive application assessing living conditions, household pets, outdoor security, and daily solitude periods.
+2. **Review & Triage**: Shelter staff (`ADMIN` / `SUPER_ADMIN`) review submissions through `/api/v1/adoption-requests`.
+3. **Status Update**: Applications transition from `PENDING` to either `APPROVED` or `REJECTED` via a dedicated patch endpoint (`PATCH /api/v1/adoption-requests/:requestId/status`).
+
+---
+
+### B. Role-Based Access Control (RBAC) Matrix
+
+Petfinder maintains three distinct hierarchical roles:
+
+| Module / Action | `USER` | `ADMIN` | `SUPER_ADMIN` |
+| :--- | :---: | :---: | :---: |
+| Browse & Search Pets | ✅ | ✅ | ✅ |
+| Submit Adoption Application | ✅ | ❌ | ❌ |
+| Create / Edit / Delete Pet Listing | ❌ | ✅ | ✅ |
+| Review / Approve Adoption Requests | ❌ | ✅ | ✅ |
+| Publish / Manage Blogs | ❌ | ✅ | ✅ |
+| Comment on Blogs | ✅ | ✅ | ✅ |
+| Make Donations | ✅ | ✅ | ✅ |
+| View Platform Analytics (`/meta`) | Personal | Shelter-wide | Full Platform |
+| Promote / Demote Roles | ❌ | ✅ | ✅ |
+| Soft-Delete User Accounts | ❌ | ❌ | ✅ |
+
+---
+
+### C. Authentication & Session Security Flow
+
+1. **Access Token Generation**: Upon successful authentication via `POST /api/v1/auth/login`, an HMAC SHA-256 JWT access token is signed with `JWT_SECRET` (default lifespan: 7 days) and returned in the JSON payload.
+2. **Refresh Token Rotation**: A separate long-lived refresh token signed with `REFRESH_TOKEN_SECRET` is placed in an `httpOnly`, `sameSite`, and secure cookie (`refreshToken`).
+3. **Password Recovery Workflow**:
+   - User requests reset via `POST /api/v1/auth/forgot-password`.
+   - The server verifies user status, generates a short-lived token (15m expiry), constructs a secure link, and dispatches an HTML email via Google SMTP (Nodemailer).
+   - User verifies token and submits new credentials via `POST /api/v1/auth/reset-password`.
+
+---
+
+### D. Analytics & Meta Aggregator (`/meta`)
+
+The `/api/v1/meta` route provides role-aware business intelligence:
+- **`SUPER_ADMIN` & `ADMIN`**: Computes total registered users, active pet listings, adoption conversion ratios (pending vs. approved), and gross donation volume.
+- **`USER`**: Delivers a personalized summary of submitted adoption applications, active requests, and contribution history.
